@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>여봉이 더쿠 계급 테스트</title>
 
-  <!-- 구글 애드센스 -->
+  <!-- Google Adsense -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
     crossorigin="anonymous"></script>
 
-  <!-- 카카오 SDK -->
+  <!-- Kakao SDK -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
           crossorigin="anonymous"></script>
 
@@ -143,7 +143,12 @@
 </div>
 
 <script>
-/* ===== 페이지 제어 ===== */
+/* Kakao init */
+if (!Kakao.isInitialized()) {
+  Kakao.init("e9794a44d4c69a353097f55a960e6cab");
+}
+
+/* 페이지 제어 */
 const pages = ["page-home","page-intro","page-quiz","page-loading","page-result"];
 function show(id){
   pages.forEach(p=>document.getElementById(p).classList.add("hidden"));
@@ -152,7 +157,7 @@ function show(id){
 function goHome(){ show("page-home"); }
 function showIntro(){ show("page-intro"); }
 
-/* ===== 질문 ===== */
+/* 질문 */
 const questions = [
   { q:"방에 굿즈 몇 개?", o:[[0,"0~3개"],[5,"4~20개"],[10,"21개 이상"]] },
   { q:"1년간 본 애니 수?", o:[[0,"0~3"],[5,"4~12"],[10,"13개 이상"]] },
@@ -161,84 +166,4 @@ const questions = [
   { q:"오타쿠 소리 들으면?", o:[[10,"자랑"],[5,"인정"],[0,"부정"]] }
 ];
 
-let idx=0, score=0;
-
-function startTest(){
-  idx=0; score=0;
-  render();
-  show("page-quiz");
-}
-function render(){
-  const q=questions[idx];
-  document.getElementById("q-text").textContent=q.q;
-  const wrap=document.getElementById("options");
-  wrap.innerHTML="";
-  q.o.forEach(v=>{
-    const b=document.createElement("button");
-    b.className="option-btn";
-    b.textContent=v[1];
-    b.onclick=()=>next(v[0]);
-    wrap.appendChild(b);
-  });
-}
-function next(p){
-  score+=p;
-  if(idx<questions.length-1){ idx++; render(); }
-  else{
-    show("page-loading");
-    setTimeout(showResult,2000);
-  }
-}
-function showResult(){
-  let t="";
-  if(score<=10)t="1단계 킹반인";
-  else if(score<=20)t="2단계 평민 덕쿠";
-  else if(score<=30)t="3단계 기사 더쿠";
-  else if(score<=40)t="4단계 백작 더쿠";
-  else t="5단계 킹오브 더쿠";
-  document.getElementById("result-title").textContent=t;
-  show("page-result");
-}
-
-/* ===== 공유 ===== */
-function openShare(){ document.getElementById("share-popup").classList.remove("hidden"); }
-function closeShare(){ document.getElementById("share-popup").classList.add("hidden"); }
-
-/* 🔥 카카오 공유 (Link 방식 – 콘솔 설정 불필요) */
-function shareKakao(){
-  if(!Kakao.isInitialized()){
-    Kakao.init("e9794a44d4c69a353097f55a960e6cab"); // ← 교체
-  }
-  Kakao.Link.sendDefault({
-    objectType:"feed",
-    content:{
-      title:"여봉이 더쿠 계급 테스트",
-      description:"나는 몇 단계 더쿠일까?",
-      imageUrl:"https://bongstudiosad.com/og-image.png",
-      link:{
-        mobileWebUrl:"https://bongstudiosad.com",
-        webUrl:"https://bongstudiosad.com"
-      }
-    },
-    buttons:[{
-      title:"테스트 하러 가기",
-      link:{
-        mobileWebUrl:"https://bongstudiosad.com",
-        webUrl:"https://bongstudiosad.com"
-      }
-    }]
-  });
-}
-
-/* 인스타 */
-function shareInstagram(){
-  navigator.clipboard.writeText("https://bongstudiosad.com");
-  location.href="instagram://story-camera";
-  setTimeout(()=>alert("링크가 복사됐어요! 스토리에 붙여넣기 해주세요"),600);
-}
-
-/* 시작 */
-show("page-home");
-</script>
-</body>
-</html>
+let
