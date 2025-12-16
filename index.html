@@ -196,6 +196,29 @@
       border-radius:12px;
       text-decoration:none;
     }
+
+    /* 결과 이미지 영역(실제 이미지 표시용) */
+    .result-image-wrap {
+      margin:12px 0;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px dashed #ff9cae;
+      background:#fff4f6;
+    }
+    .result-image-wrap img {
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .result-image-placeholder {
+      height:180px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#666;
+      font-size:13px;
+      padding:16px;
+    }
   </style>
 </head>
 
@@ -304,19 +327,12 @@
       <span class="tag">더쿠 계급 결과</span>
       <h1 id="result-title">1단계 킹반인</h1>
 
-      <div style="
-        height:180px;
-        background:#fff4f6;
-        border-radius:16px;
-        border:1px dashed #ff9cae;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin:12px 0;
-      ">
-        <span style="font-size:13px;">
+      <!-- ✅ 결과 이미지 실제 표시 영역 -->
+      <div class="result-image-wrap">
+        <img id="result-image" alt="결과 이미지" style="display:none;">
+        <div id="result-image-placeholder" class="result-image-placeholder">
           여기 결과별 이미지가 들어갈 영역
-        </span>
+        </div>
       </div>
 
       <!-- 에이블리 배너 -->
@@ -350,12 +366,37 @@
     <h2>결과 공유하기</h2>
     <p style="font-size:14px;color:#666;">친구들도 더쿠 계급 한 번 재보자!</p>
     <button class="btn" onclick="shareKakao()">카카오톡</button>
-    <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagram()">인스타 스토리</button>
+
+    <!-- ✅ 인스타 스토리: 결과 이미지 포함 공유(지원 기기에서 자동 적용) -->
+    <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagramStoryWithImage()">
+      인스타 스토리
+    </button>
+
+    <!-- ✅ X 공유: 링크 포함 -->
+    <button class="btn secondary" style="margin-top:10px;" onclick="shareX()">
+      X(트위터) 공유
+    </button>
+
     <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
   </div>
 </div>
 
 <script>
+  /* ========= 공통 설정 ========= */
+  const SITE_URL = "https://bongstudiosad.com";
+
+  const resultMeta = {
+    kingbanin: { title:"1단계 킹반인", desc:"아직은 킹반인... 하지만 언제든 더쿠의 길로 입문 가능!", imageUrl:`${SITE_URL}/img/result_kingbanin.png` },
+    pyeongmin: { title:"2단계 평민 더쿠", desc:"티는 안 내도 덕심이 차오르는 평민 더쿠!", imageUrl:`${SITE_URL}/img/result_pyeongmin.png` },
+    knight:   { title:"3단계 기사 더쿠", desc:"최애를 위해 뭐든 할 수 있는 기사 더쿠!", imageUrl:`${SITE_URL}/img/result_knight.png` },
+    count:    { title:"4단계 백작 더쿠", desc:"굿즈 창고가 거의 왕국급인 백작 더쿠!", imageUrl:`${SITE_URL}/img/result_count.png` },
+    kingof:   { title:"5단계 킹오브 더쿠", desc:"더쿠 중의 더쿠, 킹오브 더쿠! 이쯤 되면 인생이 콘텐츠다.", imageUrl:`${SITE_URL}/img/result_kingof.png` }
+  };
+
+  function getCurrentMeta() {
+    return resultMeta[currentResultKey] || resultMeta.kingbanin;
+  }
+
   /* ========= 페이지 전환 ========= */
   const pages = {
     home: document.getElementById("page-home"),
@@ -464,6 +505,24 @@
     }
   }
 
+  function setResultImage(url) {
+    const img = document.getElementById("result-image");
+    const placeholder = document.getElementById("result-image-placeholder");
+
+    img.onload = () => {
+      img.style.display = "block";
+      placeholder.style.display = "none";
+    };
+    img.onerror = () => {
+      img.style.display = "none";
+      placeholder.style.display = "flex";
+      placeholder.textContent = "결과 이미지 로드 실패 (이미지 경로 확인 필요)";
+    };
+
+    img.crossOrigin = "anonymous"; // 같은 도메인이면 OK. (캔버스 공유용)
+    img.src = url;
+  }
+
   function calculateResult() {
     let title;
     if (totalScore <= 10) {
@@ -483,6 +542,10 @@
       currentResultKey = "kingof";
     }
     document.getElementById("result-title").textContent = title;
+
+    // ✅ 결과 이미지도 같이 세팅
+    const meta = getCurrentMeta();
+    setResultImage(meta.imageUrl);
   }
 
   function restartQuiz() {
@@ -505,14 +568,7 @@
       return;
     }
 
-    const resultMeta = {
-      kingbanin: { title:"1단계 킹반인", desc:"아직은 킹반인... 하지만 언제든 더쿠의 길로 입문 가능!", imageUrl:"https://bongstudiosad.com/img/result_kingbanin.png" },
-      pyeongmin: { title:"2단계 평민 더쿠", desc:"티는 안 내도 덕심이 차오르는 평민 더쿠!", imageUrl:"https://bongstudiosad.com/img/result_pyeongmin.png" },
-      knight: { title:"3단계 기사 더쿠", desc:"최애를 위해 뭐든 할 수 있는 기사 더쿠!", imageUrl:"https://bongstudiosad.com/img/result_knight.png" },
-      count: { title:"4단계 백작 더쿠", desc:"굿즈 창고가 거의 왕국급인 백작 더쿠!", imageUrl:"https://bongstudiosad.com/img/result_count.png" },
-      kingof: { title:"5단계 킹오브 더쿠", desc:"더쿠 중의 더쿠, 킹오브 더쿠! 이쯤 되면 인생이 콘텐츠다.", imageUrl:"https://bongstudiosad.com/img/result_kingof.png" }
-    };
-    const meta = resultMeta[currentResultKey] || resultMeta.kingbanin;
+    const meta = getCurrentMeta();
 
     Kakao.Share.sendDefault({
       objectType: "feed",
@@ -520,22 +576,182 @@
         title: `여봉이 더쿠 계급 테스트 - ${meta.title}`,
         description: meta.desc,
         imageUrl: meta.imageUrl,
-        link: { mobileWebUrl: "https://bongstudiosad.com", webUrl: "https://bongstudiosad.com" }
+        link: { mobileWebUrl: SITE_URL, webUrl: SITE_URL }
       },
       buttons: [
-        { title: "나도 테스트하기", link: { mobileWebUrl: "https://bongstudiosad.com", webUrl: "https://bongstudiosad.com" } }
+        { title: "나도 테스트하기", link: { mobileWebUrl: SITE_URL, webUrl: SITE_URL } }
       ]
     });
   }
 
-  /* ========= 인스타 공유 ========= */
-  function shareInstagram() {
-    const url = "https://bongstudiosad.com";
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url);
+  /* ========= X(트위터) 공유 (링크 포함) ========= */
+  function shareX() {
+    const meta = getCurrentMeta();
+    const shareText = encodeURIComponent(`내 결과는 ${meta.title} 🤭\n너도 해봐 👉`);
+    const shareUrl = encodeURIComponent(SITE_URL);
+    const intent = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+    window.open(intent, "_blank", "noopener,noreferrer");
+  }
+
+  /* ========= 인스타 스토리 공유(결과 이미지 자동 적용: 가능한 기기에서) =========
+     - 웹에서 'instagram://story-camera'로는 "자동 이미지 첨부"가 안 되는 케이스가 많아서,
+       결과 이미지를 1080x1920으로 생성 → Web Share API(공유 시트)로 넘기는 방식이 가장 안정적임.
+  */
+  function loadImage(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = url;
+    });
+  }
+
+  function canvasToBlob(canvas, type = "image/png", quality) {
+    return new Promise((resolve) => canvas.toBlob(resolve, type, quality));
+  }
+
+  async function buildStoryImageBlob() {
+    const meta = getCurrentMeta();
+
+    // 인스타 스토리 권장 비율: 1080x1920
+    const W = 1080;
+    const H = 1920;
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+
+    const ctx = canvas.getContext("2d");
+
+    // 배경
+    const grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, "#ffeef2");
+    grad.addColorStop(1, "#ffffff");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // 상단 타이틀
+    ctx.fillStyle = "#ff4d6d";
+    ctx.font = "bold 56px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("여봉이 더쿠 계급 테스트", W / 2, 160);
+
+    // 결과 타이틀
+    ctx.fillStyle = "#222";
+    ctx.font = "bold 72px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText(meta.title, W / 2, 290);
+
+    // 설명(2줄 정도)
+    ctx.fillStyle = "#555";
+    ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
+    wrapText(ctx, meta.desc, W / 2, 360, 880, 46);
+
+    // 결과 이미지(중앙 카드)
+    try {
+      const img = await loadImage(meta.imageUrl);
+      const maxW = 860;
+      const maxH = 860;
+      const scale = Math.min(maxW / img.width, maxH / img.height);
+      const dw = img.width * scale;
+      const dh = img.height * scale;
+
+      // 카드 배경
+      const cardX = (W - 920) / 2;
+      const cardY = 480;
+      roundRect(ctx, cardX, cardY, 920, 960, 48);
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255, 156, 174, 0.9)";
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      // 이미지
+      ctx.drawImage(img, (W - dw) / 2, cardY + 60, dw, dh);
+    } catch (e) {
+      // 이미지가 안 떠도 공유는 되게
+      ctx.fillStyle = "#888";
+      ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
+      ctx.fillText("결과 이미지 로드 실패", W / 2, 980);
+    }
+
+    // 하단 링크
+    ctx.fillStyle = "#ff6b81";
+    ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText("👉 나도 테스트 하러가기", W / 2, 1780);
+
+    ctx.fillStyle = "#333";
+    ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText(SITE_URL, W / 2, 1840);
+
+    return await canvasToBlob(canvas, "image/png");
+  }
+
+  function wrapText(ctx, text, centerX, startY, maxWidth, lineHeight) {
+    const words = (text || "").split(" ");
+    let line = "";
+    let y = startY;
+
+    ctx.textAlign = "center";
+    for (let i = 0; i < words.length; i++) {
+      const testLine = line + words[i] + " ";
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && i > 0) {
+        ctx.fillText(line.trim(), centerX, y);
+        line = words[i] + " ";
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    if (line.trim()) ctx.fillText(line.trim(), centerX, y);
+  }
+
+  function roundRect(ctx, x, y, width, height, radius) {
+    const r = Math.min(radius, width / 2, height / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + width, y, x + width, y + height, r);
+    ctx.arcTo(x + width, y + height, x, y + height, r);
+    ctx.arcTo(x, y + height, x, y, r);
+    ctx.arcTo(x, y, x + width, y, r);
+    ctx.closePath();
+  }
+
+  async function shareInstagramStoryWithImage() {
+    const meta = getCurrentMeta();
+
+    // 링크는 클립보드도 같이(스토리에서 붙여넣기용)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(SITE_URL);
+    }
+
+    const blob = await buildStoryImageBlob();
+    const file = new File([blob], "yoboong_result_story.png", { type: "image/png" });
+
+    // ✅ Web Share API 지원 기기: 공유시트 → Instagram 선택하면 스토리에 이미지가 붙는 케이스가 많음
+    if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
+      await navigator.share({
+        files: [file],
+        title: `여봉이 더쿠 계급 테스트 - ${meta.title}`,
+        text: `${meta.title} 결과!\n${SITE_URL}`
+      });
+      return;
+    }
+
+    // ✅ 폴백: 이미지 다운로드 + 인스타 카메라 열기
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "yoboong_result_story.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+
     window.location.href = "instagram://story-camera";
     setTimeout(() => {
-      alert("링크를 클립보드에 복사해뒀어.\n인스타 스토리에서 붙여넣기 하면 돼.");
-    }, 800);
+      alert("스토리용 결과 이미지를 다운로드했어.\n인스타 스토리에서 방금 저장한 이미지를 올리면 돼!\n(링크는 클립보드에 복사됨)");
+    }, 700);
   }
 
   /* 시작은 홈 */
