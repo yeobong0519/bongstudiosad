@@ -5,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>여봉이 더쿠 계급 테스트</title>
 
+  <!-- Google Adsense -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
+    crossorigin="anonymous"></script>
+
   <!-- Kakao SDK -->
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+          crossorigin="anonymous"></script>
   <script>
     Kakao.init("e9794a44d4c69a353097f55a960e6cab");
+    console.log("Kakao init:", Kakao.isInitialized());
   </script>
-
-  <!-- 쿠팡 파트너스 -->
-  <script src="https://ads-partners.coupang.com/g.js"></script>
 
   <style>
     body {
@@ -28,6 +32,7 @@
       padding: 20px 16px 40px;
       box-sizing: border-box;
     }
+
     .card {
       background: #fff;
       border-radius: 18px;
@@ -35,10 +40,21 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.05);
       margin-bottom: 18px;
     }
+
     h1 { font-size: 24px; margin: 0 0 8px; }
     h2 { font-size: 20px; margin: 12px 0 8px; }
     h3 { font-size: 16px; margin: 8px 0 4px; }
     p  { margin: 4px 0; line-height: 1.45; color:#555; }
+
+    .tag {
+      display:inline-block;
+      background:#ffe1ea;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:#b71c1c;
+      margin-bottom:6px;
+    }
 
     .btn {
       width: 100%;
@@ -56,156 +72,452 @@
       background: #eceef3;
       color:#333;
     }
+    .btn:active { transform: scale(0.98); }
 
     .option-btn {
       width: 100%;
       text-align: left;
       border-radius: 14px;
       border: 1px solid #ddd;
-      padding: 12px;
+      padding: 12px 12px;
       margin-top: 10px;
       background: #fff;
+      font-size: 14px;
       cursor: pointer;
     }
-
-    .hidden { display:none !important; }
-
-    .ad-link {
-      display:block;
-      margin-top:16px;
-      padding:14px;
-      border-radius:14px;
-      background:#fff4f6;
-      text-align:center;
-      font-weight:600;
-      color:#ff4d6d;
-      text-decoration:none;
+    .option-btn:hover {
+      background: #fff5f7;
+      border-color: #ff6b81;
     }
+
+    .progress-bar-bg {
+      width:100%;
+      height:7px;
+      background:#ddd;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:6px;
+    }
+    .progress-bar-fill {
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#ff6b81,#ffa07a);
+      transition:0.3s;
+    }
+
+    .spinner {
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      border:6px solid #ffd1da;
+      border-top-color:#ff6b81;
+      animation: spin 1s linear infinite;
+      margin:20px auto 0;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    footer {
+      text-align:center;
+      font-size:12px;
+      color:#888;
+      margin-top:16px;
+    }
+
+    /* 팝업 공통 */
+    .overlay {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+    }
+    .popup-card {
+      width:85%;
+      max-width:380px;
+      background:#fff;
+      border-radius:18px;
+      padding:22px;
+      text-align:center;
+      margin:0 auto;
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+    }
+
+    .hidden { display: none !important; }
   </style>
 </head>
 
 <body>
 <div class="app">
 
-<!-- ===== INTRO (1페이지) ===== -->
-<div id="page-intro" class="page">
-  <div class="card" style="text-align:center;">
-    <h1>여봉이 더쿠 계급 테스트</h1>
-    <p>내가 왕이 될 상인가?</p>
+  <!-- ========== PAGE: INTRO (표지 / 테스트 1개 구성) ========== -->
+  <div id="page-intro" class="page">
+    <div class="card" style="text-align:center;">
+      <span class="tag">여봉이 더쿠 계급 테스트</span>
+      <h1>여봉이 더쿠 계급 테스트</h1>
+      <p>내가 왕이 될 상인가?</p>
 
-    <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
+      <div style="
+        height:160px;
+        background:#fff4f6;
+        border-radius:16px;
+        border:1px dashed #ff9cae;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin:16px 0;
+      ">
+        <span style="font-size:13px;color:#666;">
+          여기에 테스트 표지용 여봉이 이미지가 들어갈 자리
+        </span>
+      </div>
 
-    <!-- ✅ 앱링크 광고 -->
-    <a class="ad-link"
-       href="https://applink.a-bly.com/bongstudios"
-       target="_blank">
-      🔥 여봉이 추천 아이템 보러가기
-    </a>
-  </div>
-</div>
+      <p style="font-size:13px;color:#666;">
+        총 5문항 · 1분 컷 · 결과는 더쿠 계급으로 나와요.
+      </p>
 
-<!-- ===== QUIZ ===== -->
-<div id="page-quiz" class="page hidden">
-  <div class="card">
-    <h3 id="progress-text">1 / 5</h3>
-    <h2 id="question-text"></h2>
-    <div id="options-wrap"></div>
+      <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
 
-    <!-- ✅ 쿠팡 파트너스 광고 -->
-    <div style="margin-top:16px;text-align:center;">
-      <script>
-        new PartnersCoupang.G({
-          "id":950709,
-          "template":"banner",
-          "trackingCode":"AF4962310",
-          "width":"728",
-          "height":"90"
-        });
-      </script>
+      <!-- ✅ 에이블리 광고(표지) -->
+      <a href="https://applink.a-bly.com/bongstudios"
+         target="_blank"
+         style="
+           display:block;
+           margin-top:14px;
+           text-align:center;
+           padding:12px;
+           background:#ffeef2;
+           color:#ff6b81;
+           font-weight:700;
+           border-radius:12px;
+           text-decoration:none;
+         ">
+        여봉이 굿즈샵 바로가기
+      </a>
     </div>
   </div>
-</div>
 
-<!-- ===== RESULT ===== -->
-<div id="page-result" class="page hidden">
-  <div class="card" style="text-align:center;">
-    <h1 id="result-title"></h1>
+  <!-- ========== PAGE: QUIZ (1~5문항) ========== -->
+  <div id="page-quiz" class="page hidden">
+    <div class="card">
+      <span class="tag">여봉이 더쿠 계급 테스트</span>
+      <h3 id="progress-text">1 / 5</h3>
+      <div class="progress-bar-bg">
+        <div id="progress-bar" class="progress-bar-fill"></div>
+      </div>
 
-    <!-- ✅ 앱링크 광고 -->
-    <a class="ad-link"
-       href="https://applink.a-bly.com/bongstudios"
-       target="_blank">
-      💖 결과 보고 여봉이 추천템 보러가기
-    </a>
+      <h2 id="question-text" style="margin-top:16px;">질문</h2>
+      <div id="options-wrap"></div>
 
-    <button class="btn" onclick="restartQuiz()">다시하기</button>
+      <!-- ✅ 쿠팡 파트너스(질문페이지 하단) : 요청 코드로 교체 -->
+      <div style="margin-top:14px; display:flex; justify-content:center;">
+        <a href="https://link.coupang.com/a/deLJN1"
+           target="_blank"
+           referrerpolicy="unsafe-url">
+          <img src="https://ads-partners.coupang.com/banners/950711?subId=&traceId=V0-301-bae0f72e5e59e45f-I950711&w=150&h=60"
+               alt="">
+        </a>
+      </div>
+    </div>
+
+    <!-- ✅ 이전 '테스트 목록으로' 버튼은 표지로 변경 -->
+    <button class="btn secondary" onclick="showPage('intro')">← 표지로</button>
   </div>
+
+  <!-- ========== PAGE: LOADING (결과 만드는 중) ========== -->
+  <div id="page-loading" class="page hidden">
+    <div class="card" style="text-align:center;">
+      <h2>🧮 설문 완료! 결과 만드는 중…</h2>
+      <p>여봉이가 하나하나 계급을 계산하고 있어요.</p>
+      <div class="spinner"></div>
+      <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: RESULT (결과) ========== -->
+  <div id="page-result" class="page hidden">
+    <div class="card" style="text-align:center;">
+      <span class="tag">더쿠 계급 결과</span>
+      <h1 id="result-title">1단계 킹반인</h1>
+
+      <div style="
+        height:180px;
+        background:#fff4f6;
+        border-radius:16px;
+        border:1px dashed #ff9cae;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin:12px 0;
+      ">
+        <span style="font-size:13px;">
+          여기 결과별 이미지(킹반인/평민 더쿠/기사 더쿠/백작 더쿠/킹오브 더쿠)가 들어갈 영역
+        </span>
+      </div>
+
+      <!-- ✅ 에이블리 광고(결과) -->
+      <a href="https://applink.a-bly.com/bongstudios"
+         target="_blank"
+         style="
+           display:block;
+           margin:10px 0 6px;
+           text-align:center;
+           padding:12px;
+           background:#ffeef2;
+           color:#ff6b81;
+           font-weight:700;
+           border-radius:12px;
+           text-decoration:none;
+         ">
+        여봉이 굿즈샵 바로가기
+      </a>
+
+      <div style="display:flex; gap:10px; margin-top:18px;">
+        <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
+        <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
+      </div>
+    </div>
+
+    <!-- ✅ 이전 '테스트 목록으로' 버튼은 표지로 변경 -->
+    <button class="btn secondary" onclick="showPage('intro')">← 표지로</button>
+  </div>
+
+  <footer>© YOBOONG TEST</footer>
 </div>
 
+<!-- 공유 팝업 -->
+<div id="share-popup" class="overlay hidden">
+  <div class="popup-card" style="max-width:320px;">
+    <h2>결과 공유하기</h2>
+    <p style="font-size:14px;color:#666;">친구들도 더쿠 계급 한 번 재보자!</p>
+    <button class="btn" onclick="shareKakao()">카카오톡</button>
+    <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagram()">인스타 스토리</button>
+    <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
+  </div>
 </div>
 
 <script>
+  /* ========= 페이지 전환 ========= */
   const pages = {
     intro: document.getElementById("page-intro"),
     quiz: document.getElementById("page-quiz"),
+    loading: document.getElementById("page-loading"),
     result: document.getElementById("page-result"),
   };
 
-  function showPage(p){
-    Object.values(pages).forEach(v=>v.classList.add("hidden"));
-    pages[p].classList.remove("hidden");
-    window.scrollTo(0,0);
+  function showPage(name) {
+    Object.values(pages).forEach(p => p.classList.add("hidden"));
+    pages[name].classList.remove("hidden");
+    window.scrollTo({ top: 0 });
   }
 
-  const questions = [
-    { q:"피규어 개수는?", a:[{t:"거의 없음",p:0},{t:"조금",p:5},{t:"많음",p:10}] },
-    { q:"애니 시청량?", a:[{t:"가끔",p:0},{t:"자주",p:5},{t:"매일",p:10}] },
-    { q:"굿즈 지출?", a:[{t:"적음",p:0},{t:"보통",p:5},{t:"많음",p:10}] },
-    { q:"덕밍아웃?", a:[{t:"절대 안함",p:0},{t:"가끔",p:5},{t:"당당",p:10}] },
-    { q:"오타쿠 소리 들으면?", a:[{t:"부정",p:0},{t:"인정",p:5},{t:"자랑",p:10}] }
+  /* ========= 퀴즈 로직 ========= */
+  const otakuQuestions = [
+    {
+      text: "방에 직접 산 피규어/굿즈의 개수는!?",
+      options: [
+        { label: "A. 0~3개 / 가끔 끌리면 사는 정도?", point: 0 },
+        { label: "B. 4~20개 / 장식장을 적당히 꾸밀 정도!", point: 5 },
+        { label: "C. 21개 이상 / 내 방이 아니라 굿즈님들의 방이다!", point: 10 },
+      ],
+    },
+    {
+      text: "최근 1년간 본 애니메이션 개수는!?",
+      options: [
+        { label: "A. 0~3개 / 가끔 넷플에 핫한 거 있으면 보는?", point: 0 },
+        { label: "B. 4~12개 / 핫한 거 외에도 재밌어 보이면 챙겨보는 편", point: 5 },
+        { label: "C. 13개 이상 / 근데 이걸 몇 편 봤는지 셀 수가 있나?", point: 10 },
+      ],
+    },
+    {
+      text: "최애 캐릭터한테 돈 얼마나 썼어? (누적)",
+      options: [
+        { label: "A. 10만 원 이하 / 진짜 탐나는 게 있으면 한 번쯤..?", point: 0 },
+        { label: "B. 11~50만 원 / 일단 마음에 드는 게 있으면 다 질러보자!", point: 5 },
+        { label: "C. 51만 원 이상 / 내 월급이 텅 빈 탓일까..", point: 10 },
+      ],
+    },
+    {
+      text: "친구한테 애니메이션을 추천해본 적 있다?",
+      options: [
+        { label: "A. \"야! 이거 안 보면 진짜 인생 여전이다 꼭 봐라!!\"", point: 10 },
+        { label: "B. \"이거 조금 재밌다는데… 한번 봐볼래..?\" (은근슬쩍 추천)", point: 5 },
+        { label: "C. 한 번도 없는데..?", point: 0 },
+      ],
+    },
+    {
+      text: "친구들이 너 보고 “너 진짜 오타쿠다”라고 하면 기분이?",
+      options: [
+        { label: "A. “당연하지 ㅋㅋ” 하면서 자랑스러워함", point: 10 },
+        { label: "B. “뭐… 좀 좋아하긴 하지” 하고 슬쩍 인정", point: 5 },
+        { label: "C. “아니라고!!” 하면서 강하게 부정함", point: 0 },
+      ],
+    },
   ];
 
-  let idx=0, score=0;
+  let currentIndex = 0;
+  let totalScore = 0;
 
-  function startQuiz(){
-    idx=0; score=0;
-    render();
+  // 현재 결과 key (공유용)
+  let currentResultKey = "kingbanin";
+
+  const qText = document.getElementById("question-text");
+  const optionsWrap = document.getElementById("options-wrap");
+  const progressText = document.getElementById("progress-text");
+  const progressBar = document.getElementById("progress-bar");
+
+  function startQuiz() {
+    currentIndex = 0;
+    totalScore = 0;
+    currentResultKey = "kingbanin";
+    renderQuestion();
     showPage("quiz");
   }
 
-  function render(){
-    document.getElementById("progress-text").textContent = `${idx+1} / 5`;
-    document.getElementById("question-text").textContent = questions[idx].q;
-    const wrap=document.getElementById("options-wrap");
-    wrap.innerHTML="";
-    questions[idx].a.forEach(o=>{
-      const b=document.createElement("button");
-      b.className="option-btn";
-      b.textContent=o.t;
-      b.onclick=()=>select(o.p);
-      wrap.appendChild(b);
+  function renderQuestion() {
+    const q = otakuQuestions[currentIndex];
+    qText.textContent = q.text;
+    progressText.textContent = `${currentIndex + 1} / ${otakuQuestions.length}`;
+    progressBar.style.width = `${((currentIndex + 1) / otakuQuestions.length) * 100}%`;
+
+    optionsWrap.innerHTML = "";
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt.label;
+      btn.onclick = () => selectOption(opt.point);
+      optionsWrap.appendChild(btn);
     });
   }
 
-  function select(p){
-    score+=p;
-    if(idx<4){ idx++; render(); }
-    else showResult();
+  function selectOption(point) {
+    totalScore += point;
+    if (currentIndex < otakuQuestions.length - 1) {
+      currentIndex++;
+      renderQuestion();
+    } else {
+      showPage("loading");
+      setTimeout(() => {
+        calculateResult();
+        showPage("result");
+      }, 3000);
+    }
   }
 
-  function showResult(){
-    let r="킹반인";
-    if(score>10) r="평민 더쿠";
-    if(score>20) r="기사 더쿠";
-    if(score>30) r="백작 더쿠";
-    if(score>40) r="킹오브 더쿠";
-    document.getElementById("result-title").textContent=r;
-    showPage("result");
+  function calculateResult() {
+    let title;
+    if (totalScore <= 10) {
+      title = "1단계 킹반인";
+      currentResultKey = "kingbanin";
+    } else if (totalScore <= 20) {
+      title = "2단계 평민 더쿠";
+      currentResultKey = "pyeongmin";
+    } else if (totalScore <= 30) {
+      title = "3단계 기사 더쿠";
+      currentResultKey = "knight";
+    } else if (totalScore <= 40) {
+      title = "4단계 백작 더쿠";
+      currentResultKey = "count";
+    } else {
+      title = "5단계 킹오브 더쿠";
+      currentResultKey = "kingof";
+    }
+    document.getElementById("result-title").textContent = title;
   }
 
-  function restartQuiz(){
-    showPage("intro");
+  function restartQuiz() {
+    document.getElementById("share-popup").classList.add("hidden");
+    startQuiz();
   }
+
+  /* ========= 공유 팝업 ========= */
+  function openSharePopup() {
+    document.getElementById("share-popup").classList.remove("hidden");
+  }
+  function closeSharePopup() {
+    document.getElementById("share-popup").classList.add("hidden");
+  }
+
+  /* ========= 카카오 공유 ========= */
+  function shareKakao() {
+    if (!window.Kakao || !Kakao.isInitialized()) {
+      alert("카카오톡 공유 준비 중이야. 잠시 후 다시 시도해줘!");
+      return;
+    }
+
+    const resultMeta = {
+      kingbanin: {
+        title: "1단계 킹반인",
+        desc: "아직은 킹반인... 하지만 언제든 더쿠의 길로 입문 가능!",
+        imageUrl: "https://bongstudiosad.com/img/result_kingbanin.png"
+      },
+      pyeongmin: {
+        title: "2단계 평민 더쿠",
+        desc: "티는 안 내도 덕심이 차오르는 평민 더쿠!",
+        imageUrl: "https://bongstudiosad.com/img/result_pyeongmin.png"
+      },
+      knight: {
+        title: "3단계 기사 더쿠",
+        desc: "최애를 위해 뭐든 할 수 있는 기사 더쿠!",
+        imageUrl: "https://bongstudiosad.com/img/result_knight.png"
+      },
+      count: {
+        title: "4단계 백작 더쿠",
+        desc: "굿즈 창고가 거의 왕국급인 백작 더쿠!",
+        imageUrl: "https://bongstudiosad.com/img/result_count.png"
+      },
+      kingof: {
+        title: "5단계 킹오브 더쿠",
+        desc: "더쿠 중의 더쿠, 킹오브 더쿠! 이쯤 되면 인생이 콘텐츠다.",
+        imageUrl: "https://bongstudiosad.com/img/result_kingof.png"
+      }
+    };
+
+    const meta = resultMeta[currentResultKey] || resultMeta["kingbanin"];
+
+    Kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: `여봉이 더쿠 계급 테스트 - ${meta.title}`,
+        description: meta.desc,
+        imageUrl: meta.imageUrl,
+        link: {
+          mobileWebUrl: "https://bongstudiosad.com",
+          webUrl: "https://bongstudiosad.com"
+        }
+      },
+      buttons: [
+        {
+          title: "나도 테스트하기",
+          link: {
+            mobileWebUrl: "https://bongstudiosad.com",
+            webUrl: "https://bongstudiosad.com"
+          }
+        }
+      ]
+    });
+  }
+
+  /* ========= 인스타 공유 ========= */
+  function shareInstagram() {
+    const url = "https://bongstudiosad.com";
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url);
+    }
+    window.location.href = "instagram://story-camera";
+    setTimeout(() => {
+      alert("링크를 클립보드에 복사해뒀어.\n인스타 스토리에서 붙여넣기 하면 돼.");
+    }, 800);
+  }
+
+  /* 시작은 표지 */
+  showPage("intro");
 </script>
 </body>
 </html>
