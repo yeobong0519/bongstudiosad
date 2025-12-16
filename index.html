@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>여봉이의 놀이터</title>
+  <title>여봉이 더쿠 계급 테스트</title>
 
-  <!-- Google Adsense -->
+  <!-- Google Adsense (유지) -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
     crossorigin="anonymous"></script>
@@ -41,6 +41,8 @@
 
     h1 { font-size: 24px; margin: 0 0 8px; }
     h2 { font-size: 20px; margin: 12px 0 8px; }
+    h3 { font-size: 16px; margin: 8px 0 4px; }
+    p  { margin: 4px 0; line-height: 1.45; color:#555; }
 
     .tag {
       display:inline-block;
@@ -50,17 +52,15 @@
       font-size:12px;
       color:#b71c1c;
       margin-bottom:6px;
-      font-weight:700;
     }
 
-    /* ===== 버튼 기본 ===== */
     .btn {
       width: 100%;
       padding: 14px 16px;
       border: none;
       border-radius: 999px;
       font-size: 15px;
-      font-weight: 800;
+      font-weight: 700;
       margin-top: 12px;
       cursor: pointer;
       background: #ff2d55;
@@ -71,10 +71,11 @@
       color:#222;
     }
 
-    /* ===== 공유 버튼 시그니처 컬러 ===== */
+    /* ===== 공유 채널 시그니처 컬러 (변경된 부분) ===== */
     .btn.kakao {
       background: #FEE500;
       color: #000000;
+      font-weight: 800;
     }
     .btn.insta {
       background: linear-gradient(
@@ -85,10 +86,12 @@
         #515BD4
       );
       color: #ffffff;
+      font-weight: 800;
     }
     .btn.xshare {
       background: #000000;
       color: #ffffff;
+      font-weight: 800;
     }
 
     .overlay {
@@ -99,7 +102,7 @@
     }
     .popup-card {
       width:85%;
-      max-width:360px;
+      max-width:380px;
       background:#fff;
       border-radius:18px;
       padding:22px;
@@ -124,11 +127,13 @@
 <div class="app">
 
   <!-- HOME -->
-  <div id="page-home">
+  <div id="page-home" class="page">
     <div class="card">
+      <!-- ✅ 문구 변경 -->
       <span class="tag">여봉이의 놀이터</span>
       <h1>여봉이의 테스트 연구소 🧪</h1>
 
+      <h3 style="margin-top:16px;">테스트 목록</h3>
       <button class="btn" onclick="openIntro()">🧸 여봉이 더쿠 계급 테스트</button>
       <button class="btn secondary" onclick="alert('다른 테스트는 준비 중이야!')">
         🎲 다른 테스트 곧 오픈 예정!
@@ -137,25 +142,26 @@
   </div>
 
   <!-- INTRO -->
-  <div id="page-intro" class="hidden">
+  <div id="page-intro" class="page hidden">
     <div class="card" style="text-align:center;">
       <span class="tag">여봉이 더쿠 계급 테스트</span>
       <h1>여봉이 더쿠 계급 테스트</h1>
-      <p>총 5문항 · 1분 컷</p>
       <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
     </div>
-    <button class="btn secondary" onclick="showPage('home')">← 돌아가기</button>
+    <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
   </div>
 
   <!-- RESULT -->
-  <div id="page-result" class="hidden">
+  <div id="page-result" class="page hidden">
     <div class="card" style="text-align:center;">
-      <span class="tag">테스트 결과</span>
-      <h1 id="result-title">킹반인</h1>
+      <span class="tag">더쿠 계급 결과</span>
+      <h1 id="result-title">1단계 킹반인</h1>
 
-      <button class="btn" onclick="openSharePopup()">공유하기</button>
+      <div style="display:flex; gap:10px; margin-top:18px;">
+        <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
+        <button class="btn secondary" style="flex:1;" onclick="showPage('home')">처음으로</button>
+      </div>
     </div>
-    <button class="btn secondary" onclick="showPage('home')">← 처음으로</button>
   </div>
 
   <footer>© YOBOONG TEST</footer>
@@ -166,17 +172,10 @@
   <div class="popup-card">
     <h2>결과 공유하기</h2>
 
-    <button class="btn kakao" onclick="shareKakao()">
-      카카오톡 공유하기
-    </button>
-
-    <button class="btn insta" onclick="shareInstagramStoryOptimal()">
-      인스타그램 스토리 공유하기
-    </button>
-
-    <button class="btn xshare" onclick="shareX()">
-      X 공유하기
-    </button>
+    <!-- ✅ 색상만 변경 -->
+    <button class="btn kakao" onclick="shareKakao()">카카오톡 공유하기</button>
+    <button class="btn insta" onclick="shareInstagramStoryOptimal()">인스타그램 스토리 공유하기</button>
+    <button class="btn xshare" onclick="shareX()">X 공유하기</button>
 
     <button class="btn secondary" onclick="closeSharePopup()">닫기</button>
   </div>
@@ -199,9 +198,9 @@
     document.getElementById("share-popup").classList.add("hidden");
   }
 
-  function shareKakao(){ alert("카카오 공유 연동됨"); }
-  function shareInstagramStoryOptimal(){ alert("인스타 공유 연동됨"); }
-  function shareX(){ alert("X 공유 연동됨"); }
+  function shareKakao(){ alert("카카오 공유"); }
+  function shareInstagramStoryOptimal(){ alert("인스타 공유"); }
+  function shareX(){ alert("X 공유"); }
 </script>
 
 </body>
