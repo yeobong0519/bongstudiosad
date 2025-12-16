@@ -219,4 +219,47 @@
 
   function showPage(p){
     Object.values(pages).forEach(v=>v.classList.add("hidden"));
-    pages[p].classList.
+    pages[p].classList.remove("hidden");
+    window.scrollTo(0,0);
+  }
+
+  const qs = [
+    {q:"피규어 몇 개?", a:[[0,"거의 없음"],[5,"조금"],[10,"많음"]]},
+    {q:"애니 시청량?", a:[[0,"가끔"],[5,"자주"],[10,"매일"]]},
+    {q:"굿즈 지출?", a:[[0,"적음"],[5,"보통"],[10,"많음"]]},
+    {q:"덕밍아웃?", a:[[0,"안함"],[5,"가끔"],[10,"당당"]]},
+    {q:"오타쿠 소리?", a:[[0,"부정"],[5,"인정"],[10,"자랑"]]}
+  ];
+
+  let i=0,s=0;
+
+  function startQuiz(){ i=0; s=0; render(); showPage('quiz'); }
+  function render(){
+    progress-text.textContent=`${i+1} / 5`;
+    progress-bar.style.width=`${(i+1)*20}%`;
+    question-text.textContent=qs[i].q;
+    options-wrap.innerHTML="";
+    qs[i].a.forEach(o=>{
+      const b=document.createElement("button");
+      b.className="option-btn";
+      b.textContent=o[1];
+      b.onclick=()=>sel(o[0]);
+      options-wrap.appendChild(b);
+    });
+  }
+  function sel(p){
+    s+=p;
+    if(i<4){i++; render();}
+    else{
+      result-title.textContent =
+        s>40?"킹오브 더쿠":
+        s>30?"백작 더쿠":
+        s>20?"기사 더쿠":
+        s>10?"평민 더쿠":"킹반인";
+      showPage('result');
+    }
+  }
+  function restartQuiz(){ showPage('home'); }
+</script>
+</body>
+</html>
