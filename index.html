@@ -299,7 +299,7 @@
       <h2 id="question-text" style="margin-top:16px;">질문</h2>
       <div id="options-wrap"></div>
 
-      <!-- ✅ 쿠팡 파트너스 320x100 (요청 코드) -->
+      <!-- ✅ 쿠팡 파트너스 320x100 -->
       <div style="margin-top:14px; display:flex; justify-content:center;">
         <a href="https://link.coupang.com/a/deL5IN" target="_blank" referrerpolicy="unsafe-url">
           <img src="https://ads-partners.coupang.com/banners/950717?subId=&traceId=V0-301-bae0f72e5e59e45f-I950717&w=320&h=100"
@@ -365,17 +365,24 @@
   <div class="popup-card" style="max-width:320px;">
     <h2>결과 공유하기</h2>
     <p style="font-size:14px;color:#666;">친구들도 더쿠 계급 한 번 재보자!</p>
+
     <button class="btn" onclick="shareKakao()">카카오톡</button>
 
-    <!-- ✅ 인스타 스토리: 결과 이미지 포함 공유(지원 기기에서 자동 적용) -->
-    <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagramStoryWithImage()">
-      인스타 스토리
+    <!-- ✅ 인스타 -->
+    <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagramStoryOptimal()">
+      인스타 스토리(이미지)
     </button>
 
-    <!-- ✅ X 공유: 링크 포함 -->
-    <button class="btn secondary" style="margin-top:10px;" onclick="shareX()">
-      X(트위터) 공유
+    <!-- ✅ X -->
+    <button class="btn secondary" style="margin-top:10px;" onclick="shareXTextLink()">
+      X(텍스트+링크)
     </button>
+    <button class="btn secondary" style="margin-top:10px;" onclick="shareXImageOptimal()">
+      X(이미지+링크)
+    </button>
+
+    <!-- 상태 표시 -->
+    <div id="share-status" style="margin-top:12px;font-size:12px;color:#777;min-height:18px;"></div>
 
     <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
   </div>
@@ -471,6 +478,7 @@
     currentIndex = 0;
     totalScore = 0;
     currentResultKey = "kingbanin";
+    resetShareCache(); // ✅ 결과 변경 대비
     renderQuestion();
     showPage("quiz");
   }
@@ -519,7 +527,7 @@
       placeholder.textContent = "결과 이미지 로드 실패 (이미지 경로 확인 필요)";
     };
 
-    img.crossOrigin = "anonymous"; // 같은 도메인이면 OK. (캔버스 공유용)
+    img.crossOrigin = "anonymous"; // 같은 도메인(https://bongstudiosad.com)면 OK
     img.src = url;
   }
 
@@ -543,22 +551,32 @@
     }
     document.getElementById("result-title").textContent = title;
 
-    // ✅ 결과 이미지도 같이 세팅
+    // ✅ 결과 이미지 세팅
     const meta = getCurrentMeta();
     setResultImage(meta.imageUrl);
+
+    // ✅ 공유 캐시 리셋 후, “미리 생성”은 공유팝업 열 때 수행(속도/안정성)
+    resetShareCache();
   }
 
   function restartQuiz() {
     closeSharePopup();
+    resetShareCache();
     startQuiz();
   }
 
   /* ========= 공유 팝업 ========= */
   function openSharePopup() {
     document.getElementById("share-popup").classList.remove("hidden");
+    // ✅ 최적: 팝업 열리면 이미지 미리 생성 시작
+    setShareStatus("스토리 이미지 준비 중…");
+    prebuildStoryShareAsset()
+      .then(() => setShareStatus("공유 준비 완료!"))
+      .catch(() => setShareStatus("이미지 준비 실패: 결과 이미지 경로/도메인 확인 필요"));
   }
   function closeSharePopup() {
     document.getElementById("share-popup").classList.add("hidden");
+    setShareStatus("");
   }
 
   /* ========= 카카오 공유 ========= */
@@ -584,19 +602,7 @@
     });
   }
 
-  /* ========= X(트위터) 공유 (링크 포함) ========= */
-  function shareX() {
-    const meta = getCurrentMeta();
-    const shareText = encodeURIComponent(`내 결과는 ${meta.title} 🤭\n너도 해봐 👉`);
-    const shareUrl = encodeURIComponent(SITE_URL);
-    const intent = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
-    window.open(intent, "_blank", "noopener,noreferrer");
-  }
-
-  /* ========= 인스타 스토리 공유(결과 이미지 자동 적용: 가능한 기기에서) =========
-     - 웹에서 'instagram://story-camera'로는 "자동 이미지 첨부"가 안 되는 케이스가 많아서,
-       결과 이미지를 1080x1920으로 생성 → Web Share API(공유 시트)로 넘기는 방식이 가장 안정적임.
-  */
+  /* ========= 인스타/스토리 이미지 생성 ========= */
   function loadImage(url) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -609,81 +615,6 @@
 
   function canvasToBlob(canvas, type = "image/png", quality) {
     return new Promise((resolve) => canvas.toBlob(resolve, type, quality));
-  }
-
-  async function buildStoryImageBlob() {
-    const meta = getCurrentMeta();
-
-    // 인스타 스토리 권장 비율: 1080x1920
-    const W = 1080;
-    const H = 1920;
-    const canvas = document.createElement("canvas");
-    canvas.width = W;
-    canvas.height = H;
-
-    const ctx = canvas.getContext("2d");
-
-    // 배경
-    const grad = ctx.createLinearGradient(0, 0, W, H);
-    grad.addColorStop(0, "#ffeef2");
-    grad.addColorStop(1, "#ffffff");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W, H);
-
-    // 상단 타이틀
-    ctx.fillStyle = "#ff4d6d";
-    ctx.font = "bold 56px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("여봉이 더쿠 계급 테스트", W / 2, 160);
-
-    // 결과 타이틀
-    ctx.fillStyle = "#222";
-    ctx.font = "bold 72px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText(meta.title, W / 2, 290);
-
-    // 설명(2줄 정도)
-    ctx.fillStyle = "#555";
-    ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
-    wrapText(ctx, meta.desc, W / 2, 360, 880, 46);
-
-    // 결과 이미지(중앙 카드)
-    try {
-      const img = await loadImage(meta.imageUrl);
-      const maxW = 860;
-      const maxH = 860;
-      const scale = Math.min(maxW / img.width, maxH / img.height);
-      const dw = img.width * scale;
-      const dh = img.height * scale;
-
-      // 카드 배경
-      const cardX = (W - 920) / 2;
-      const cardY = 480;
-      roundRect(ctx, cardX, cardY, 920, 960, 48);
-      ctx.fillStyle = "rgba(255,255,255,0.9)";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(255, 156, 174, 0.9)";
-      ctx.lineWidth = 6;
-      ctx.stroke();
-
-      // 이미지
-      ctx.drawImage(img, (W - dw) / 2, cardY + 60, dw, dh);
-    } catch (e) {
-      // 이미지가 안 떠도 공유는 되게
-      ctx.fillStyle = "#888";
-      ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
-      ctx.fillText("결과 이미지 로드 실패", W / 2, 980);
-    }
-
-    // 하단 링크
-    ctx.fillStyle = "#ff6b81";
-    ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText("👉 나도 테스트 하러가기", W / 2, 1780);
-
-    ctx.fillStyle = "#333";
-    ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText(SITE_URL, W / 2, 1840);
-
-    return await canvasToBlob(canvas, "image/png");
   }
 
   function wrapText(ctx, text, centerX, startY, maxWidth, lineHeight) {
@@ -717,41 +648,237 @@
     ctx.closePath();
   }
 
-  async function shareInstagramStoryWithImage() {
+  async function buildStoryImageBlob() {
     const meta = getCurrentMeta();
 
-    // 링크는 클립보드도 같이(스토리에서 붙여넣기용)
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(SITE_URL);
+    const W = 1080;
+    const H = 1920;
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+
+    const ctx = canvas.getContext("2d");
+
+    // 배경
+    const grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, "#ffeef2");
+    grad.addColorStop(1, "#ffffff");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // 상단 타이틀
+    ctx.fillStyle = "#ff4d6d";
+    ctx.font = "bold 56px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("여봉이 더쿠 계급 테스트", W / 2, 160);
+
+    // 결과 타이틀
+    ctx.fillStyle = "#222";
+    ctx.font = "bold 72px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText(meta.title, W / 2, 290);
+
+    // 설명
+    ctx.fillStyle = "#555";
+    ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
+    wrapText(ctx, meta.desc, W / 2, 360, 880, 46);
+
+    // 결과 이미지 카드
+    try {
+      const img = await loadImage(meta.imageUrl);
+      const maxW = 860;
+      const maxH = 860;
+      const scale = Math.min(maxW / img.width, maxH / img.height);
+      const dw = img.width * scale;
+      const dh = img.height * scale;
+
+      const cardX = (W - 920) / 2;
+      const cardY = 480;
+      roundRect(ctx, cardX, cardY, 920, 960, 48);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255, 156, 174, 0.9)";
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      ctx.drawImage(img, (W - dw) / 2, cardY + 60, dw, dh);
+    } catch (e) {
+      // 이미지가 안 떠도 공유는 가능하게
+      ctx.fillStyle = "#888";
+      ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
+      ctx.fillText("결과 이미지 로드 실패", W / 2, 980);
     }
 
-    const blob = await buildStoryImageBlob();
-    const file = new File([blob], "yoboong_result_story.png", { type: "image/png" });
+    // 하단 링크
+    ctx.fillStyle = "#ff6b81";
+    ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText("👉 나도 테스트 하러가기", W / 2, 1780);
 
-    // ✅ Web Share API 지원 기기: 공유시트 → Instagram 선택하면 스토리에 이미지가 붙는 케이스가 많음
-    if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
-      await navigator.share({
-        files: [file],
-        title: `여봉이 더쿠 계급 테스트 - ${meta.title}`,
-        text: `${meta.title} 결과!\n${SITE_URL}`
-      });
-      return;
+    ctx.fillStyle = "#333";
+    ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText(SITE_URL, W / 2, 1840);
+
+    return await canvasToBlob(canvas, "image/png");
+  }
+
+  /* =========================
+     공유 최적 모듈 (Instagram / X)
+     ========================= */
+  const SHARE = {
+    storyFileCache: null,
+    storyBlobCache: null,
+    buildPromise: null,
+    busy: false
+  };
+
+  function setShareStatus(msg) {
+    const el = document.getElementById("share-status");
+    if (!el) return;
+    el.textContent = msg || "";
+  }
+
+  function setShareBusy(on) {
+    SHARE.busy = on;
+    const popup = document.getElementById("share-popup");
+    if (!popup) return;
+    popup.querySelectorAll("button").forEach(btn => {
+      if (btn.textContent.includes("닫기")) return;
+      btn.disabled = !!on;
+      btn.style.opacity = on ? "0.75" : "1";
+      btn.style.cursor = on ? "not-allowed" : "pointer";
+    });
+  }
+
+  async function safeClipboardWrite(text) {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  function resetShareCache() {
+    SHARE.storyFileCache = null;
+    SHARE.storyBlobCache = null;
+    SHARE.buildPromise = null;
+    SHARE.busy = false;
+    setShareStatus("");
+  }
+
+  async function prebuildStoryShareAsset() {
+    if (SHARE.storyFileCache && SHARE.storyBlobCache) return { file: SHARE.storyFileCache, blob: SHARE.storyBlobCache };
+    if (SHARE.buildPromise) return SHARE.buildPromise;
+
+    SHARE.buildPromise = (async () => {
+      const blob = await buildStoryImageBlob();
+      const file = new File([blob], "yoboong_result_story.png", { type: "image/png" });
+      SHARE.storyBlobCache = blob;
+      SHARE.storyFileCache = file;
+      return { file, blob };
+    })();
+
+    try {
+      return await SHARE.buildPromise;
+    } finally {
+      SHARE.buildPromise = null;
     }
+  }
 
-    // ✅ 폴백: 이미지 다운로드 + 인스타 카메라 열기
+  function canWebShareFiles(file) {
+    try {
+      return !!(navigator.share && navigator.canShare && navigator.canShare({ files: [file] }));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function downloadBlob(blob, filename) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "yoboong_result_story.png";
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
+  }
 
-    window.location.href = "instagram://story-camera";
-    setTimeout(() => {
-      alert("스토리용 결과 이미지를 다운로드했어.\n인스타 스토리에서 방금 저장한 이미지를 올리면 돼!\n(링크는 클립보드에 복사됨)");
-    }, 700);
+  async function shareInstagramStoryOptimal() {
+    if (SHARE.busy) return;
+    setShareBusy(true);
+    setShareStatus("인스타 공유 준비 중…");
+
+    const meta = getCurrentMeta();
+    await safeClipboardWrite(SITE_URL);
+
+    try {
+      const { file, blob } = await prebuildStoryShareAsset();
+
+      if (canWebShareFiles(file)) {
+        setShareStatus("공유 시트 여는 중… (인스타그램 선택)");
+        await navigator.share({
+          files: [file],
+          title: `여봉이 테스트 - ${meta.title}`,
+          text: `${meta.title} 결과!\n${SITE_URL}`,
+          url: SITE_URL
+        });
+        setShareStatus("공유 완료!");
+        return;
+      }
+
+      setShareStatus("공유시트 미지원: 이미지 저장 후 인스타 스토리 열기");
+      downloadBlob(blob, "yoboong_result_story.png");
+      setTimeout(() => {
+        window.location.href = "instagram://story-camera";
+      }, 350);
+      setShareStatus("이미지 저장 후 인스타 스토리에 추가해줘. (링크는 클립보드)");
+    } catch (e) {
+      console.error(e);
+      setShareStatus("인스타 공유 실패: 결과 이미지 경로/도메인(CORS) 확인 필요");
+    } finally {
+      setShareBusy(false);
+    }
+  }
+
+  function shareXTextLink() {
+    const meta = getCurrentMeta();
+    const text = encodeURIComponent(`내 결과는 ${meta.title} 🤭\n너도 해봐 👉`);
+    const url = encodeURIComponent(SITE_URL);
+    const intent = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+    window.open(intent, "_blank", "noopener,noreferrer");
+  }
+
+  async function shareXImageOptimal() {
+    if (SHARE.busy) return;
+    setShareBusy(true);
+    setShareStatus("X 이미지 공유 준비 중…");
+
+    const meta = getCurrentMeta();
+
+    try {
+      const { file } = await prebuildStoryShareAsset();
+
+      if (canWebShareFiles(file)) {
+        setShareStatus("공유 시트 여는 중… (X 선택)");
+        await navigator.share({
+          files: [file],
+          title: `여봉이 테스트 - ${meta.title}`,
+          text: `내 결과는 ${meta.title} 🤭\n${SITE_URL}`,
+          url: SITE_URL
+        });
+        setShareStatus("공유 완료!");
+        return;
+      }
+
+      setShareStatus("공유시트 미지원: 텍스트+링크로 공유");
+      shareXTextLink();
+    } catch (e) {
+      console.error(e);
+      setShareStatus("X 공유 실패: 브라우저/기기 공유 기능 확인 필요");
+    } finally {
+      setShareBusy(false);
+    }
   }
 
   /* 시작은 홈 */
