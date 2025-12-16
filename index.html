@@ -219,6 +219,16 @@
       font-size:13px;
       padding:16px;
     }
+
+    /* ✅ 공유 팝업 버튼 시그니처 컬러 */
+    .btn.share-kakao {
+      background-color: #FEE500 !important;
+      color: #000000 !important;
+    }
+    .btn.share-x {
+      background-color: #000000 !important;
+      color: #FFFFFF !important;
+    }
   </style>
 </head>
 
@@ -228,9 +238,13 @@
   <!-- HOME (목차) -->
   <div id="page-home" class="page">
     <div class="card">
-      <span class="tag">여봉이 테스트</span>
-      <h1>여봉이의 심심풀이 성향 테스트</h1>
-      <p>오늘은 어떤 테스트로 놀아볼까?</p>
+      <!-- ✅ 수정: 여봉이 테스트 -> 여봉이의 놀이터 -->
+      <span class="tag">여봉이의 놀이터</span>
+
+      <!-- ✅ 수정: 여봉이의 심심풀이 성향 테스트 -> 여봉이의 테스트 연구소(실험이모지) -->
+      <h1>여봉이의 테스트 연구소 🧪</h1>
+
+      <!-- ✅ 삭제: 오늘은 어떤 테스트로 놀아볼까? -->
 
       <h3 style="margin-top:16px;">테스트 목록</h3>
       <button class="btn" onclick="openIntro()">🧸 여봉이 더쿠 계급 테스트</button>
@@ -366,19 +380,19 @@
     <h2>결과 공유하기</h2>
     <p style="font-size:14px;color:#666;">친구들도 더쿠 계급 한 번 재보자!</p>
 
-    <button class="btn" onclick="shareKakao()">카카오톡</button>
+    <!-- ✅ 카카오: 시그니처 -->
+    <button class="btn share-kakao" onclick="shareKakao()">카카오톡</button>
 
-    <!-- ✅ 인스타 -->
-    <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagramStoryOptimal()">
-      인스타 스토리(이미지)
-    </button>
+    <!-- ✅ 인스타: 유지 -->
+   <button class="btn" style="margin-top:10px;background:#ffb6c1;"  onclick="shareInstagramStoryOptimal()">
+  인스타 공유하기
+ </button>
 
-    <!-- ✅ X -->
-    <button class="btn secondary" style="margin-top:10px;" onclick="shareXTextLink()">
-      X(텍스트+링크)
-    </button>
-    <button class="btn secondary" style="margin-top:10px;" onclick="shareXImageOptimal()">
-      X(이미지+링크)
+    <!-- ✅ 변경: X(텍스트+링크) 버튼 삭제 -->
+
+    <!-- ✅ 변경: X(이미지+링크) 버튼 문구 -> X 공유하기 -->
+    <button class="btn share-x" style="margin-top:10px;" onclick="shareXImageOptimal()">
+      X 공유하기
     </button>
 
     <!-- 상태 표시 -->
@@ -527,7 +541,7 @@
       placeholder.textContent = "결과 이미지 로드 실패 (이미지 경로 확인 필요)";
     };
 
-    img.crossOrigin = "anonymous"; // 같은 도메인(https://bongstudiosad.com)면 OK
+    img.crossOrigin = "anonymous";
     img.src = url;
   }
 
@@ -551,11 +565,9 @@
     }
     document.getElementById("result-title").textContent = title;
 
-    // ✅ 결과 이미지 세팅
     const meta = getCurrentMeta();
     setResultImage(meta.imageUrl);
 
-    // ✅ 공유 캐시 리셋 후, “미리 생성”은 공유팝업 열 때 수행(속도/안정성)
     resetShareCache();
   }
 
@@ -568,7 +580,6 @@
   /* ========= 공유 팝업 ========= */
   function openSharePopup() {
     document.getElementById("share-popup").classList.remove("hidden");
-    // ✅ 최적: 팝업 열리면 이미지 미리 생성 시작
     setShareStatus("스토리 이미지 준비 중…");
     prebuildStoryShareAsset()
       .then(() => setShareStatus("공유 준비 완료!"))
@@ -659,30 +670,25 @@
 
     const ctx = canvas.getContext("2d");
 
-    // 배경
     const grad = ctx.createLinearGradient(0, 0, W, H);
     grad.addColorStop(0, "#ffeef2");
     grad.addColorStop(1, "#ffffff");
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    // 상단 타이틀
     ctx.fillStyle = "#ff4d6d";
     ctx.font = "bold 56px system-ui, -apple-system, Segoe UI, sans-serif";
     ctx.textAlign = "center";
     ctx.fillText("여봉이 더쿠 계급 테스트", W / 2, 160);
 
-    // 결과 타이틀
     ctx.fillStyle = "#222";
     ctx.font = "bold 72px system-ui, -apple-system, Segoe UI, sans-serif";
     ctx.fillText(meta.title, W / 2, 290);
 
-    // 설명
     ctx.fillStyle = "#555";
     ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
     wrapText(ctx, meta.desc, W / 2, 360, 880, 46);
 
-    // 결과 이미지 카드
     try {
       const img = await loadImage(meta.imageUrl);
       const maxW = 860;
@@ -702,13 +708,11 @@
 
       ctx.drawImage(img, (W - dw) / 2, cardY + 60, dw, dh);
     } catch (e) {
-      // 이미지가 안 떠도 공유는 가능하게
       ctx.fillStyle = "#888";
       ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
       ctx.fillText("결과 이미지 로드 실패", W / 2, 980);
     }
 
-    // 하단 링크
     ctx.fillStyle = "#ff6b81";
     ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
     ctx.fillText("👉 나도 테스트 하러가기", W / 2, 1780);
@@ -720,9 +724,6 @@
     return await canvasToBlob(canvas, "image/png");
   }
 
-  /* =========================
-     공유 최적 모듈 (Instagram / X)
-     ========================= */
   const SHARE = {
     storyFileCache: null,
     storyBlobCache: null,
@@ -841,14 +842,6 @@
     }
   }
 
-  function shareXTextLink() {
-    const meta = getCurrentMeta();
-    const text = encodeURIComponent(`내 결과는 ${meta.title} 🤭\n너도 해봐 👉`);
-    const url = encodeURIComponent(SITE_URL);
-    const intent = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
-    window.open(intent, "_blank", "noopener,noreferrer");
-  }
-
   async function shareXImageOptimal() {
     if (SHARE.busy) return;
     setShareBusy(true);
@@ -871,8 +864,12 @@
         return;
       }
 
-      setShareStatus("공유시트 미지원: 텍스트+링크로 공유");
-      shareXTextLink();
+      // 공유시트 미지원이면 기존대로 텍스트+링크 인텐트로 폴백
+      const text = encodeURIComponent(`내 결과는 ${meta.title} 🤭\n너도 해봐 👉`);
+      const url = encodeURIComponent(SITE_URL);
+      const intent = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+      window.open(intent, "_blank", "noopener,noreferrer");
+      setShareStatus("텍스트+링크로 공유창 열었어!");
     } catch (e) {
       console.error(e);
       setShareStatus("X 공유 실패: 브라우저/기기 공유 기능 확인 필요");
