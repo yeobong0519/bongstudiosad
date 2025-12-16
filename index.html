@@ -2,530 +2,112 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <title>카카오톡 공유 테스트</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>여봉이 더쿠 계급 테스트</title>
-
-  <!-- ✅ 구글 애드센스 -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
-    crossorigin="anonymous"></script>
-
-  <!-- ✅ 카카오 SDK -->
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
-          crossorigin="anonymous"></script>
-
   <style>
     body {
-      margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f5f7;
-      color: #222;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
-    .app {
-      max-width: 480px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding: 20px 16px 40px;
-      box-sizing: border-box;
-    }
-    .hidden { display: none !important; }
-
-    .card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 20px 18px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      margin-bottom: 18px;
-    }
-
-    h1 { font-size: 24px; margin: 0 0 8px; }
-    h2 { font-size: 20px; margin: 12px 0 8px; }
-    h3 { font-size: 16px; margin: 8px 0 4px; }
-    p  { margin: 4px 0; line-height: 1.45; color:#555; }
-
-    .tag {
-      display:inline-block;
-      background:#ffe1ea;
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color:#b71c1c;
-      margin-bottom:6px;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 14px 16px;
-      border: none;
-      border-radius: 999px;
-      font-size: 15px;
-      font-weight: 600;
-      margin-top: 12px;
-      cursor: pointer;
-      background: #ff6b81;
-      color: #fff;
-    }
-    .btn.secondary {
-      background: #eceef3;
-      color:#333;
-    }
-    .btn:active { transform: scale(0.98); }
-
-    .option-btn {
-      width: 100%;
-      text-align: left;
-      border-radius: 14px;
-      border: 1px solid #ddd;
-      padding: 12px 12px;
-      margin-top: 10px;
-      background: #fff;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .option-btn:hover {
-      background: #fff5f7;
-      border-color: #ff6b81;
-    }
-
-    .progress-bar-bg {
-      width:100%;
-      height:7px;
-      background:#ddd;
-      border-radius:999px;
-      overflow:hidden;
-      margin-top:6px;
-    }
-    .progress-bar-fill {
-      height:100%;
-      width:0%;
-      background:linear-gradient(90deg,#ff6b81,#ffa07a);
-      transition:0.3s;
-    }
-
-    .spinner {
-      width:60px;
-      height:60px;
-      border-radius:50%;
-      border:6px solid #ffd1da;
-      border-top-color:#ff6b81;
-      animation: spin 1s linear infinite;
-      margin:20px auto 0;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .ad-banner {
-      width: 100%;
-      border-radius: 12px;
-      background: #f4f4f4;
-      border: 1px dashed #ccc;
-      padding: 10px;
-      font-size: 12px;
-      color: #777;
-      box-sizing: border-box;
-      margin-top: 12px;
+    .wrap {
+      background: #ffffff;
+      padding: 32px 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
       text-align: center;
+      width: 320px;
     }
-
-    footer {
-      text-align:center;
-      font-size:12px;
-      color:#888;
-      margin-top:16px;
+    h1 {
+      font-size: 20px;
+      margin-bottom: 8px;
     }
-
-    /* 팝업 공통 */
-    .overlay {
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.55);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      z-index:999;
+    p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 24px;
+      line-height: 1.5;
     }
-    .popup-card {
-      width:85%;
-      max-width:380px;
-      background:#fff;
-      border-radius:18px;
-      padding:22px;
-      text-align:center;
+    button {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: #ff6f8c;
+      color: #fff;
+      font-weight: 600;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .log {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #888;
+      word-break: break-all;
     }
   </style>
 </head>
-
 <body>
-<div class="app">
-
-  <!-- ========== PAGE: HOME (목차) ========== -->
-  <div id="page-home" class="page">
-    <div class="card">
-      <span class="tag">여봉이 테스트</span>
-      <h1>여봉이의 심심풀이 성향 테스트</h1>
-      <p>오늘은 어떤 테스트로 놀아볼까?</p>
-
-      <h3 style="margin-top:16px;">테스트 목록</h3>
-      <button class="btn" onclick="openIntro()">🧸 여봉이 더쿠 계급 테스트</button>
-      <button class="btn secondary hidden">💼 여봉이 직업 테스트 (숨김)</button>
-      <button class="btn secondary hidden">❤️ 여봉이 연애 테스트 (숨김)</button>
-      <button class="btn secondary" onclick="alert('다른 테스트는 준비 중이야!')">
-        🎲 다른 테스트 곧 오픈 예정!
-      </button>
-
-      <div class="ad-banner">
-        메인 페이지 광고 영역 (추후 애드센스/쿠팡 광고 코드 삽입)
-      </div>
-
-      <a href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
-         target="_blank"
-         style="
-           display:block;
-           margin-top:12px;
-           text-align:center;
-           padding:12px;
-           background:#ffeef2;
-           color:#ff6b81;
-           font-weight:600;
-           border-radius:12px;
-           text-decoration:none;
-         ">
-        여봉이 인스타 바로가기
-      </a>
-    </div>
-  </div>
-
-  <!-- ========== PAGE: INTRO (표지) ========== -->
-  <div id="page-intro" class="page hidden">
-    <div class="card" style="text-align:center;">
-      <span class="tag">여봉이 더쿠 계급 테스트</span>
-      <h1>여봉이 더쿠 계급 테스트</h1>
-      <p>내가 왕이 될 상인가?</p>
-
-      <div style="
-        height:160px;
-        background:#fff4f6;
-        border-radius:16px;
-        border:1px dashed #ff9cae;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin:16px 0;
-      ">
-        <span style="font-size:13px;color:#666;">
-          여기에 테스트 표지용 여봉이 이미지가 들어갈 자리
-        </span>
-      </div>
-
-      <p style="font-size:13px;color:#666;">
-        총 5문항 · 1분 컷 · 결과는 더쿠 계급으로 나와요.
-      </p>
-
-      <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
-    </div>
-    <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
-  </div>
-
-  <!-- ========== PAGE: QUIZ (1~5문항) ========== -->
-  <div id="page-quiz" class="page hidden">
-    <div class="card">
-      <span class="tag">여봉이 더쿠 계급 테스트</span>
-      <h3 id="progress-text">1 / 5</h3>
-      <div class="progress-bar-bg">
-        <div id="progress-bar" class="progress-bar-fill"></div>
-      </div>
-
-      <h2 id="question-text" style="margin-top:16px;">질문</h2>
-      <div id="options-wrap"></div>
-
-      <div class="ad-banner">
-        설문 페이지 광고 영역
-      </div>
-    </div>
-    <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
-  </div>
-
-  <!-- ========== PAGE: LOADING (결과 만드는 중) ========== -->
-  <div id="page-loading" class="page hidden">
-    <div class="card" style="text-align:center;">
-      <h2>🧮 설문 완료! 결과 만드는 중…</h2>
-      <p>여봉이가 하나하나 계급을 계산하고 있어요.</p>
-      <div class="spinner"></div>
-      <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
-    </div>
-  </div>
-
-  <!-- ========== PAGE: RESULT (결과) ========== -->
-  <div id="page-result" class="page hidden">
-    <div class="card" style="text-align:center;">
-      <span class="tag">더쿠 계급 결과</span>
-      <h1 id="result-title">1단계 킹반인</h1>
-
-      <div style="
-        height:180px;
-        background:#fff4f6;
-        border-radius:16px;
-        border:1px dashed #ff9cae;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin:12px 0;
-      ">
-        <span style="font-size:13px;">
-          여기 결과별 이미지(킹반인/평민 덕쿠/기사 더쿠/백작 더쿠/킹오브 더쿠)가 들어갈 영역
-        </span>
-      </div>
-
-      <div class="ad-banner">
-        결과 페이지 광고 영역
-      </div>
-
-      <div style="display:flex; gap:10px; margin-top:18px;">
-        <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
-        <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
-      </div>
-
-      <a href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
-         target="_blank"
-         style="
-           display:block;
-           margin-top:12px;
-           text-align:center;
-           padding:12px;
-           background:#ffeef2;
-           color:#ff6b81;
-           font-weight:600;
-           border-radius:12px;
-           text-decoration:none;
-         ">
-        여봉이 인스타 바로가기
-      </a>
-    </div>
-    <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
-  </div>
-
-  <footer>© YOBOONG TEST</footer>
-</div>
-
-<!-- ========== 팝업: 광고 보고 결과 보기 (지금은 UI만, 필요 시 사용) ========== -->
-<div id="result-popup" class="overlay hidden">
-  <div class="popup-card">
-    <h2>잠깐, 결과 준비 중이야!</h2>
-    <p style="font-size:14px;color:#555;">
-      이 테스트는 광고 수익으로 유지되고 있어요.<br/>
-      잠깐만 광고 한 번 보고 <b>결과 보기</b> 눌러줘!
+  <div class="wrap">
+    <h1>카카오톡 공유 테스트</h1>
+    <p>
+      아래 버튼을 눌러서 카카오톡 공유가<br />
+      정상으로 뜨는지 먼저 확인하는 테스트 페이지야.
     </p>
-    <div style="
-      width:100%;height:120px;
-      background:#f4f4f4;
-      border-radius:12px;
-      margin:16px 0;
-      display:flex;align-items:center;justify-content:center;
-      font-size:13px;color:#777;">
-      팝업 광고 영역 (애드센스 코드 삽입 예정)
-    </div>
-    <button class="btn" onclick="closeResultPopup()">광고 보고 결과 보기</button>
+
+    <!-- 카카오톡 공유 테스트 버튼 -->
+    <button type="button" onclick="testShare()">
+      카카오톡으로 공유하기
+    </button>
+
+    <div class="log" id="log"></div>
   </div>
-</div>
 
-<!-- ========== 팝업: 공유하기 ========== -->
-<div id="share-popup" class="overlay hidden">
-  <div class="popup-card" style="max-width:320px;">
-    <h2>결과 공유하기</h2>
-    <p style="font-size:14px;color:#666;">친구들도 더쿠 계급 한 번 재보자!</p>
-    <button class="btn" onclick="shareKakao()">카카오톡</button>
-    <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagram()">인스타 스토리</button>
-    <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
-  </div>
-</div>
+  <!-- 1. 카카오 JavaScript SDK 로드 -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+          crossorigin="anonymous"></script>
 
-<script>
-  /* ========= 공통 페이지 전환 ========= */
-  const pages = {
-    home: document.getElementById("page-home"),
-    intro: document.getElementById("page-intro"),
-    quiz: document.getElementById("page-quiz"),
-    loading: document.getElementById("page-loading"),
-    result: document.getElementById("page-result"),
-  };
-  function showPage(name) {
-    Object.values(pages).forEach(p => p.classList.add("hidden"));
-    pages[name].classList.remove("hidden");
-    window.scrollTo({ top: 0 });
-  }
+  <!-- 2. SDK 로드 후 즉시 초기화 & 공유 함수 정의 -->
+  <script>
+    // ★★ 여기에 카카오 JavaScript 키 붙여넣기 ★★
+    Kakao.init('여기에_카카오_JavaScript_키_붙여넣기');
 
-  function openIntro() { showPage("intro"); }
+    // 제대로 들어갔는지 확인용 로그
+    document.getElementById('log').innerText =
+      'Kakao SDK 초기화 상태: ' + Kakao.isInitialized();
 
-  /* ========= 퀴즈 로직 ========= */
-  const otakuQuestions = [
-    {
-      text: "방에 직접 산 피규어/굿즈의 개수는!?",
-      options: [
-        { label: "A. 0~3개 / 가끔 끌리면 사는 정도?", point: 0 },
-        { label: "B. 4~20개 / 장식장을 적당히 꾸밀 정도!", point: 5 },
-        { label: "C. 21개 이상 / 내 방이 아니라 굿즈님들의 방이다!", point: 10 },
-      ],
-    },
-    {
-      text: "최근 1년간 본 애니메이션 개수는!?",
-      options: [
-        { label: "A. 0~3개 / 가끔 넷플에 핫한 거 있으면 보는?", point: 0 },
-        { label: "B. 4~12개 / 핫한 거 외에도 재밌어 보이면 챙겨보는 편", point: 5 },
-        { label: "C. 13개 이상 / 근데 이걸 몇 편 봤는지 셀 수가 있나?", point: 10 },
-      ],
-    },
-    {
-      text: "최애 캐릭터한테 돈 얼마나 썼어? (누적)",
-      options: [
-        { label: "A. 10만 원 이하 / 진짜 탐나는 게 있으면 한 번쯤..?", point: 0 },
-        { label: "B. 11~50만 원 / 일단 마음에 드는 게 있으면 다 질러보자!", point: 5 },
-        { label: "C. 51만 원 이상 / 내 월급이 텅 빈 탓일까..", point: 10 },
-      ],
-    },
-    {
-      text: "친구한테 애니메이션을 추천해본 적 있다?",
-      options: [
-        { label: "A. \"야! 이거 안 보면 진짜 인생 여전이다 꼭 봐라!!\"", point: 10 },
-        { label: "B. \"이거 조금 재밌다는데… 한번 봐볼래..?\" (은근슬쩍 추천)", point: 5 },
-        { label: "C. 한 번도 없는데..?", point: 0 },
-      ],
-    },
-    {
-      text: "친구들이 너 보고 “너 진짜 오타쿠다”라고 하면 기분이?",
-      options: [
-        { label: "A. “당연하지 ㅋㅋ” 하면서 자랑스러워함", point: 10 },
-        { label: "B. “뭐… 좀 좋아하긴 하지” 하고 슬쩍 인정", point: 5 },
-        { label: "C. “아니라고!!” 하면서 강하게 부정함", point: 0 },
-      ],
-    },
-  ];
-
-  let currentIndex = 0;
-  let totalScore = 0;
-
-  const qText = document.getElementById("question-text");
-  const optionsWrap = document.getElementById("options-wrap");
-  const progressText = document.getElementById("progress-text");
-  const progressBar = document.getElementById("progress-bar");
-
-  function startQuiz() {
-    currentIndex = 0;
-    totalScore = 0;
-    renderQuestion();
-    showPage("quiz");
-  }
-
-  function renderQuestion() {
-    const q = otakuQuestions[currentIndex];
-    qText.textContent = q.text;
-    progressText.textContent = `${currentIndex + 1} / ${otakuQuestions.length}`;
-    progressBar.style.width = `${((currentIndex + 1) / otakuQuestions.length) * 100}%`;
-
-    optionsWrap.innerHTML = "";
-    q.options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.className = "option-btn";
-      btn.textContent = opt.label;
-      btn.onclick = () => selectOption(opt.point);
-      optionsWrap.appendChild(btn);
-    });
-  }
-
-  function selectOption(point) {
-    totalScore += point;
-    if (currentIndex < otakuQuestions.length - 1) {
-      currentIndex++;
-      renderQuestion();
-    } else {
-      showPage("loading");
-      setTimeout(() => {
-        calculateResult();
-        showPage("result");
-      }, 3000);
-    }
-  }
-
-  function calculateResult() {
-    let title;
-    if (totalScore <= 10)       title = "1단계 킹반인";
-    else if (totalScore <= 20)  title = "2단계 평민 덕쿠";
-    else if (totalScore <= 30)  title = "3단계 기사 더쿠";
-    else if (totalScore <= 40)  title = "4단계 백작 더쿠";
-    else                        title = "5단계 킹오브 더쿠";
-    document.getElementById("result-title").textContent = title;
-  }
-
-  function restartQuiz() {
-    document.getElementById("result-popup").classList.add("hidden");
-    document.getElementById("share-popup").classList.add("hidden");
-    startQuiz();
-  }
-
-  function closeResultPopup() {
-    document.getElementById("result-popup").classList.add("hidden");
-  }
-
-  /* ========= 공유 팝업 ========= */
-  function openSharePopup() {
-    document.getElementById("share-popup").classList.remove("hidden");
-  }
-  function closeSharePopup() {
-    document.getElementById("share-popup").classList.add("hidden");
-  }
-
-  /* ========= 카카오 공유 (Link 방식) ========= */
-  function shareKakao() {
-    try {
-      if (!window.Kakao) {
-        alert("카카오톡 공유를 준비 중이에요. 잠시 후 다시 시도해줘!");
-        return;
-      }
-      if (!Kakao.isInitialized()) {
-        Kakao.init("e9794a44d4c69a353097f55a960e6cab"); // 행님 JS 키
-      }
-
-      Kakao.Link.sendDefault({
-        objectType: "feed",
+    // 3. 공유용 테스트 함수 (버튼에서 호출)
+    function testShare() {
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
         content: {
-          title: "여봉이 더쿠 계급 테스트",
-          description: "나는 몇 단계 더쿠일까? bongstudiosad.com에서 확인해봐!",
-          imageUrl: "https://bongstudiosad.com/og-image.png", // 이후 썸네일 이미지로 교체
+          title: '여봉이 더쿠 계급 테스트',
+          description: '나는 몇 등급 더쿠일까? 지금 바로 테스트해봐!',
+          // 테스트용으로 카카오 공식 이미지 사용 (이미 존재하는 URL)
+          imageUrl: 'https://developers.kakao.com/tool/resource/static/img/logo/kakaolink/kakaolink_btn_medium.png',
           link: {
-            mobileWebUrl: "https://bongstudiosad.com",
-            webUrl: "https://bongstudiosad.com"
+            mobileWebUrl: 'https://bongstudiosad.com',
+            webUrl: 'https://bongstudiosad.com'
           }
         },
         buttons: [
           {
-            title: "테스트 하러 가기",
+            title: '테스트 하러가기',
             link: {
-              mobileWebUrl: "https://bongstudiosad.com",
-              webUrl: "https://bongstudiosad.com"
+              mobileWebUrl: 'https://bongstudiosad.com',
+              webUrl: 'https://bongstudiosad.com'
             }
           }
         ]
       });
-    } catch (e) {
-      alert("카카오 공유 중에 문제가 생겼어. 조금 있다가 다시 시도해줘!");
     }
-  }
-
-  /* ========= 인스타 스토리 공유 ========= */
-  function shareInstagram() {
-    const url = "https://bongstudiosad.com";
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url);
-    }
-    window.location.href = "instagram://story-camera";
-    setTimeout(() => {
-      alert("링크를 클립보드에 복사해뒀어!\n인스타 스토리에서 붙여넣기 하면 돼.");
-    }, 800);
-  }
-
-  /* 시작은 메인 페이지 */
-  showPage("home");
-</script>
+  </script>
 </body>
 </html>
