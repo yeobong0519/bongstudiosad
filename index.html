@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>여봉이 더쿠 계급 테스트</title>
+  
+  <!-- ✅ Open Graph (카카오톡/메신저 링크 미리보기 기본 이미지) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bongstudiosad.com/" />
+  <meta property="og:title" content="여봉이 더쿠 레벨 테스트" />
+  <meta property="og:description" content="여봉이 더쿠 레벨 테스트 - 결과는 더쿠 레벨로 나와요" />
+  <meta property="og:image" content="https://bongstudiosad.com/img/og_default.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="여봉이 더쿠 레벨 테스트" />
+  <meta name="twitter:description" content="여봉이 더쿠 레벨 테스트 - 결과는 더쿠 레벨로 나와요" />
+  <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
+
+<title>여봉이 더쿠 레벨 테스트</title>
 
   <!-- Google Adsense (유지) -->
   <script async
@@ -29,6 +44,11 @@
   </script>
 
   <style>
+    :root{
+      --themeColor:#0f5a2a;    /* 결과 레벨별로 JS에서 변경 */
+      --themeTitleColor:#111;  /* (유지) */
+    }
+
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -228,8 +248,8 @@
     }
 
     .poster-header {
-      background:#0f5a2a; /* ✅ 테스트용(나중에 이미지 대표색으로 교체) */
-      color:#fff;
+      background: var(--themeColor);
+      color:#fff; /* ✅ 요청: 배경색 위 흰색 글씨 유지 */
       font-weight:900;
       font-size:20px;
       padding:14px 14px;
@@ -244,13 +264,8 @@
       background:#fff;
     }
 
-    .poster-quote {
-      padding:14px 12px 16px;
-      font-weight:800;
-      font-size:16px;
-      text-align:center;
-      color:#111;
-    }
+    /* ✅ 요청: 이미지 하단 텍스트 제거(한 줄과 내용 동일) */
+    .poster-quote { display:none !important; }
 
     .result-detail-card {
       text-align:left;
@@ -285,8 +300,14 @@
 
     .result-table .highlight {
       font-weight:900;
-      color:#0f5a2a;
+      color: var(--themeColor);
     }
+
+    /* ✅ 요청: 한 줄 텍스트 내용 볼드 */
+    #detail-oneline { font-weight:900; color:#111; }
+
+    /* ✅ 요청: 결과페이지 최상단 LV 글씨색은 검정으로 전부 통일 */
+    #result-title { color:#000000 !important; }
   </style>
 </head>
 
@@ -300,7 +321,7 @@
       <h1>여봉이의 테스트 연구소 🧪</h1>
 
       <h3 style="margin-top:16px;">테스트 목록</h3>
-      <button class="btn" onclick="openIntro()">🧸 여봉이 더쿠 계급 테스트</button>
+      <button class="btn" onclick="openIntro()">🧸 여봉이 더쿠 레벨 테스트</button>
       <button class="btn secondary hidden">💼 여봉이 직업 테스트 (숨김)</button>
       <button class="btn secondary hidden">❤️ 여봉이 연애 테스트 (숨김)</button>
       <button class="btn secondary" onclick="alert('다른 테스트는 준비 중이야!')">
@@ -326,8 +347,8 @@
   <!-- INTRO (표지) -->
   <div id="page-intro" class="page hidden">
     <div class="card" style="text-align:center;">
-      <span class="tag">여봉이 더쿠 계급 테스트</span>
-      <h1>여봉이 더쿠 계급 테스트</h1>
+      <span class="tag">여봉이 더쿠 레벨 테스트</span>
+      <h1>여봉이 더쿠 레벨 테스트</h1>
       <p>내가 왕이 될 상인가?</p>
 
       <div style="
@@ -346,7 +367,7 @@
       </div>
 
       <p style="font-size:13px;color:#666;">
-        총 5문항 · 1분 컷 · 결과는 더쿠 계급으로 나와요.
+        총 5문항 · 1분 컷 · 결과는 더쿠 레벨로 나와요.
       </p>
 
       <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
@@ -357,7 +378,7 @@
   <!-- QUIZ -->
   <div id="page-quiz" class="page hidden">
     <div class="card">
-      <span class="tag">여봉이 더쿠 계급 테스트</span>
+      <span class="tag">여봉이 더쿠 레벨 테스트</span>
       <h3 id="progress-text">1 / 5</h3>
       <div class="progress-bar-bg">
         <div id="progress-bar" class="progress-bar-fill"></div>
@@ -375,7 +396,7 @@
   <div id="page-loading" class="page hidden">
     <div class="card" style="text-align:center;">
       <h2>🧮 설문 완료! 결과 만드는 중…</h2>
-      <p>여봉이가 하나하나 계급을 계산하고 있어요.</p>
+      <p>여봉이가 너의 레벨을 측정중이야</p>
       <div class="spinner"></div>
       <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
     </div>
@@ -384,8 +405,8 @@
   <!-- RESULT -->
   <div id="page-result" class="page hidden">
     <div class="card" style="text-align:center;">
-      <span class="tag">더쿠 계급 결과</span>
-      <h1 id="result-title">1단계 킹반인</h1>
+      <span class="tag">더쿠 레벨 측정 결과</span>
+      <h1 id="result-title">LV1. 킹반인</h1>
 
       <!-- ✅ Kakao AdFit 320x50 -->
       <div style="margin:14px 0; display:flex; justify-content:center;">
@@ -397,7 +418,7 @@
 
       <!-- ✅ 결과 포스터(이미지처럼) -->
       <div class="result-poster">
-        <div id="poster-header" class="poster-header">LV1 킹반인</div>
+        <div id="poster-header" class="poster-header">LV1. 킹반인</div>
         <div class="poster-image">
           <img id="poster-image" alt="결과 포스터 이미지">
         </div>
@@ -495,12 +516,62 @@
   /* ========= 공통 설정 ========= */
   const SITE_URL = "https://bongstudiosad.com";
 
+  
+
+  /* ✅ 2페이지 표지: intro_1~intro_5 자동 반복 (GIF 느낌) */
+  const INTRO_SLIDES = [
+    `${SITE_URL}/img/intro_1.png`,
+    `${SITE_URL}/img/intro_2.png`,
+    `${SITE_URL}/img/intro_3.png`,
+    `${SITE_URL}/img/intro_4.png`,
+    `${SITE_URL}/img/intro_5.png`,
+  ];
+  let introSlideIdx = 0;
+  let introTimer = null;
+
+  function preloadIntroSlides() {
+    INTRO_SLIDES.forEach(src => { const i = new Image(); i.src = src; });
+  }
+
+  function startIntroSlider() {
+    const el = document.getElementById("intro-slider");
+    if (!el) return;
+    preloadIntroSlides();
+    if (introTimer) clearInterval(introTimer);
+    el.src = INTRO_SLIDES[introSlideIdx];
+    introTimer = setInterval(() => {
+      introSlideIdx = (introSlideIdx + 1) % INTRO_SLIDES.length;
+      el.src = INTRO_SLIDES[introSlideIdx];
+    }, 650);
+  }
+
+  function stopIntroSlider() {
+    if (introTimer) clearInterval(introTimer);
+    introTimer = null;
+  }
+
+/* ✅ 결과 레벨별 테마(상단 배경색) */
+  const levelTheme = {
+    kingbanin: { bg:"#000000", title:"#000000" },  // LV1 검정
+    pyeongmin: { bg:"#8B5A2B", title:"#8B5A2B" },  // LV2 갈색
+    knight:   { bg:"#808080", title:"#808080" },  // LV3 회색
+    count:    { bg:"#0f5a2a", title:"#0f5a2a" },   // LV4 초록 유지
+    kingof:   { bg:"#E53935", title:"#E53935" },   // LV5 적빨강
+  };
+
+  function applyLevelTheme() {
+    const t = levelTheme[currentResultKey] || levelTheme.kingbanin;
+    document.documentElement.style.setProperty("--themeColor", t.bg);
+    // --themeTitleColor는 (유지)지만 최상단 LV 글씨는 CSS에서 검정 고정 처리됨
+    document.documentElement.style.setProperty("--themeTitleColor", t.title);
+  }
+
   const resultMeta = {
-    kingbanin: { title:"1단계 킹반인", desc:"아직은 킹반인... 하지만 언제든 더쿠의 길로 입문 가능!", imageUrl:`${SITE_URL}/img/result_kingbanin.png` },
-    pyeongmin: { title:"2단계 평민 더쿠", desc:"티는 안 내도 덕심이 차오르는 평민 더쿠!", imageUrl:`${SITE_URL}/img/result_pyeongmin.png` },
-    knight:   { title:"3단계 기사 더쿠", desc:"최애를 위해 뭐든 할 수 있는 기사 더쿠!", imageUrl:`${SITE_URL}/img/result_knight.png` },
-    count:    { title:"4단계 백작 더쿠", desc:"굿즈 창고가 거의 왕국급인 백작 더쿠!", imageUrl:`${SITE_URL}/img/result_count.png` },
-    kingof:   { title:"5단계 킹오브 더쿠", desc:"더쿠 중의 더쿠, 킹오브 더쿠! 이쯤 되면 인생이 콘텐츠다.", imageUrl:`${SITE_URL}/img/result_kingof.png` }
+    kingbanin: { title:"LV1. 킹반인", desc:"아직은 킹반인... 하지만 언제든 더쿠의 길로 입문 가능!", imageUrl:`${SITE_URL}/img/result_kingbanin.png` },
+    pyeongmin: { title:"LV2. 평민 더쿠", desc:"티는 안 내도 덕심이 차오르는 평민 더쿠!", imageUrl:`${SITE_URL}/img/result_pyeongmin.png` },
+    knight:   { title:"LV3. 기사 더쿠", desc:"최애를 위해 뭐든 할 수 있는 기사 더쿠!", imageUrl:`${SITE_URL}/img/result_knight.png` },
+    count:    { title:"LV4. 귀족 더쿠", desc:"굿즈 창고가 거의 왕국급인 귀족 더쿠!", imageUrl:`${SITE_URL}/img/result_count.png` },
+    kingof:   { title:"LV5. 킹 오브 더쿠", desc:"더쿠 중의 더쿠, 킹 오브 더쿠! 이쯤 되면 인생이 콘텐츠다.", imageUrl:`${SITE_URL}/img/result_kingof.png` }
   };
 
   function getCurrentMeta() {
@@ -510,7 +581,7 @@
   /* ✅ 결과 상세 텍스트 데이터(행님 원문 기반) */
   const resultDetail = {
     kingbanin: {
-      header: "LV1 킹반인",
+      header: "LV1. 킹반인",
       quote: "아무것도 모르지만.. 아무것도 모르지 않는다!",
       oneline: "“아무것도 모르지만.. 아무것도 모르지 않는다!”",
       summary:
@@ -529,7 +600,7 @@
     },
 
     pyeongmin: {
-      header: "LV2 평민더쿠",
+      header: "LV2. 평민 더쿠",
       quote: "이거 아는건데 티내고싶다...티내면안된다..",
       oneline: "“이거 아는건데 티내고싶다...티내면안된다..”",
       summary: "이미 두터운 팬층이지만 스스로 “이정도는 아니지” 생각함",
@@ -547,7 +618,7 @@
     },
 
     knight: {
-      header: "LV3 기사 더쿠",
+      header: "LV3. 기사 더쿠",
       quote: "이 세계는 내가 지킨다",
       oneline: "“이 세계는 내가 지킨다”",
       summary: "덕질은 취미가 아니야. 일상이야",
@@ -565,7 +636,7 @@
     },
 
     count: {
-      header: "LV4 귀족 더쿠",
+      header: "LV4. 귀족 더쿠",
       quote: "덕질이 곧 권력이야",
       oneline: "“덕질이 곧 권력이야”",
       summary: "품격있는 덕질의 귀족",
@@ -583,7 +654,7 @@
     },
 
     kingof: {
-      header: "LV5 킹오브 더쿠",
+      header: "LV5. 킹 오브 더쿠",
       quote: "덕질 그 자체가 바로 나",
       oneline: "“덕질 그 자체가 바로 나”",
       summary: "최강의 경지에 오른 더쿠",
@@ -593,7 +664,11 @@
         "거의 모든 세계관, 비하인드 흑역사 까지 머리속에 존재",
         "LV1 - LV4를 이끄는 존재",
       ],
-      actions: [],
+      actions: [
+        "입덕의 정석 가이드 투어",
+        "새로운 형식의 굿즈, 컨텐츠, 밈을 생성하는 위대한 존재",
+        "너 덕분에 방금 다른 더쿠가 탄생했어 !",
+      ],
       comment: "“축하해..! 너는 이미 전설이야!!”",
     },
   };
@@ -622,7 +697,7 @@
     window.scrollTo({ top: 0 });
   }
 
-  function openIntro() { showPage("intro"); }
+  function openIntro() { showPage("intro"); startIntroSlider(); }
 
   /* ========= 퀴즈 로직 ========= */
   const otakuQuestions = [
@@ -678,6 +753,7 @@
   const progressBar = document.getElementById("progress-bar");
 
   function startQuiz() {
+    stopIntroSlider();
     currentIndex = 0;
     totalScore = 0;
     currentResultKey = "kingbanin";
@@ -716,7 +792,7 @@
     }
   }
 
-  /* ✅ 결과 포스터 이미지 세팅(기존 setResultImage를 poster-image로 교체) */
+  /* ✅ 결과 포스터 이미지 세팅 */
   function setResultImage(url) {
     const img = document.getElementById("poster-image");
     if (!img) return;
@@ -728,8 +804,16 @@
     const meta = getCurrentMeta();
     const detail = resultDetail[currentResultKey] || resultDetail.kingbanin;
 
+    // ✅ 테마 적용(상단 배경색)
+    applyLevelTheme();
+
+    // 헤더/타이틀
     document.getElementById("poster-header").textContent = detail.header;
-    document.getElementById("poster-quote").textContent = `“${detail.quote}”`;
+    document.getElementById("result-title").textContent = meta.title;
+
+    // ✅ 이미지 하단 텍스트(quote) 제거: 요소는 남기되 내용 비움(구성 유지)
+    const pq = document.getElementById("poster-quote");
+    if (pq) pq.textContent = "";
 
     // 포스터 이미지
     setResultImage(meta.imageUrl);
@@ -743,28 +827,19 @@
   }
 
   function calculateResult() {
-    let title;
     if (totalScore <= 10) {
-      title = "1단계 킹반인";
       currentResultKey = "kingbanin";
     } else if (totalScore <= 20) {
-      title = "2단계 평민 더쿠";
       currentResultKey = "pyeongmin";
     } else if (totalScore <= 30) {
-      title = "3단계 기사 더쿠";
       currentResultKey = "knight";
     } else if (totalScore <= 40) {
-      title = "4단계 백작 더쿠";
       currentResultKey = "count";
     } else {
-      title = "5단계 킹오브 더쿠";
       currentResultKey = "kingof";
     }
-    document.getElementById("result-title").textContent = title;
 
-    // ✅ 결과 렌더(포스터 + 표)
     renderResultDetail();
-
     resetShareCache();
   }
 
@@ -825,7 +900,7 @@
     Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: `여봉이 더쿠 계급 테스트 - ${meta.title}`,
+        title: `여봉이 더쿠 레벨 테스트 - ${meta.title}`,
         description: meta.desc,
         imageUrl: meta.imageUrl,
         link: { mobileWebUrl: SITE_URL, webUrl: SITE_URL }
@@ -902,7 +977,7 @@
     ctx.fillStyle = "#ff4d6d";
     ctx.font = "bold 56px system-ui, -apple-system, Segoe UI, sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText("여봉이 더쿠 계급 테스트", W / 2, 160);
+    ctx.fillText("여봉이 더쿠 레벨 테스트", W / 2, 160);
 
     ctx.fillStyle = "#222";
     ctx.font = "bold 72px system-ui, -apple-system, Segoe UI, sans-serif";
