@@ -207,29 +207,6 @@
       text-decoration:none;
     }
 
-    /* 결과 이미지 영역(실제 이미지 표시용) */
-    .result-image-wrap {
-      margin:12px 0;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px dashed #ff9cae;
-      background:#fff4f6;
-    }
-    .result-image-wrap img {
-      width:100%;
-      height:auto;
-      display:block;
-    }
-    .result-image-placeholder {
-      height:180px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#666;
-      font-size:13px;
-      padding:16px;
-    }
-
     /* ✅ 공유 팝업 버튼 시그니처 컬러 */
     .btn.share-kakao {
       background-color: #FEE500 !important;
@@ -238,6 +215,77 @@
     .btn.share-x {
       background-color: #000000 !important;
       color: #FFFFFF !important;
+    }
+
+    /* ✅ 결과 포스터 + 표(설명) 전용 */
+    .result-poster {
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      margin:14px 0 16px;
+      box-shadow:0 10px 24px rgba(0,0,0,0.08);
+      border:1px solid rgba(0,0,0,0.05);
+    }
+
+    .poster-header {
+      background:#0f5a2a; /* ✅ 테스트용(나중에 이미지 대표색으로 교체) */
+      color:#fff;
+      font-weight:900;
+      font-size:20px;
+      padding:14px 14px;
+      text-align:left;
+      letter-spacing:-0.2px;
+    }
+
+    .poster-image img {
+      width:100%;
+      height:auto;
+      display:block;
+      background:#fff;
+    }
+
+    .poster-quote {
+      padding:14px 12px 16px;
+      font-weight:800;
+      font-size:16px;
+      text-align:center;
+      color:#111;
+    }
+
+    .result-detail-card {
+      text-align:left;
+      margin-top:12px;
+    }
+
+    .result-table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+
+    .result-table th {
+      width:92px;
+      text-align:left;
+      vertical-align:top;
+      padding:10px 8px;
+      color:#555;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .result-table td {
+      padding:10px 8px;
+      line-height:1.5;
+      color:#333;
+    }
+
+    .result-table tr:not(:last-child) {
+      border-bottom:1px solid #eee;
+    }
+
+    .result-table .highlight {
+      font-weight:900;
+      color:#0f5a2a;
     }
   </style>
 </head>
@@ -347,12 +395,39 @@
              data-ad-height="50"></ins>
       </div>
 
-      <!-- ✅ 결과 이미지 실제 표시 영역 -->
-      <div class="result-image-wrap">
-        <img id="result-image" alt="결과 이미지" style="display:none;">
-        <div id="result-image-placeholder" class="result-image-placeholder">
-          여기 결과별 이미지가 들어갈 영역
+      <!-- ✅ 결과 포스터(이미지처럼) -->
+      <div class="result-poster">
+        <div id="poster-header" class="poster-header">LV1 킹반인</div>
+        <div class="poster-image">
+          <img id="poster-image" alt="결과 포스터 이미지">
         </div>
+        <div id="poster-quote" class="poster-quote">“테스트용 문구”</div>
+      </div>
+
+      <!-- ✅ 결과 설명(표 형식) -->
+      <div class="result-detail-card">
+        <table class="result-table">
+          <tr>
+            <th>한 줄</th>
+            <td id="detail-oneline"></td>
+          </tr>
+          <tr>
+            <th>요약</th>
+            <td id="detail-summary"></td>
+          </tr>
+          <tr>
+            <th>성향</th>
+            <td id="detail-traits"></td>
+          </tr>
+          <tr>
+            <th>행동</th>
+            <td id="detail-actions"></td>
+          </tr>
+          <tr>
+            <th>코멘트</th>
+            <td id="detail-comment" class="highlight"></td>
+          </tr>
+        </table>
       </div>
 
       <!-- 에이블리 배너 -->
@@ -430,6 +505,106 @@
 
   function getCurrentMeta() {
     return resultMeta[currentResultKey] || resultMeta.kingbanin;
+  }
+
+  /* ✅ 결과 상세 텍스트 데이터(행님 원문 기반) */
+  const resultDetail = {
+    kingbanin: {
+      header: "LV1 킹반인",
+      quote: "아무것도 모르지만.. 아무것도 모르지 않는다!",
+      oneline: "“아무것도 모르지만.. 아무것도 모르지 않는다!”",
+      summary:
+        "일반인과 더쿠의 경계선, 일반인이라 생각하지만,\n알고리즘의 지배를 받아가며 무엇이든 될수있는 단계",
+      traits: [
+        "나 이정도까진 몰라 ㅋㅋ",
+        "어 ? 이거 쇼츠(릴스)로 봤던건데?",
+        "이 가격의 굿즈를 산다고?!!",
+      ],
+      actions: [
+        "좋아하는건 있지만 딥하게 들어가진 않는편",
+        "덕질하는 사람을 보면 신기하면서도 신기함!",
+        "아는게 있으면 신남 “ 오!!! 나 이거 본거같아!!!”",
+      ],
+      comment: "어느순간 “아!? 이걸왜 이제봤지..? 할 예정”",
+    },
+
+    pyeongmin: {
+      header: "LV2 평민더쿠",
+      quote: "이거 아는건데 티내고싶다...티내면안된다..",
+      oneline: "“이거 아는건데 티내고싶다...티내면안된다..”",
+      summary: "이미 두터운 팬층이지만 스스로 “이정도는 아니지” 생각함",
+      traits: [
+        "이미 관련 계정들 팔로우다 되어있음",
+        "고민은 하지만 굿즈를 사야함",
+        "알고리즘이 꾸준하게 콘텐츠를 밀어줌",
+      ],
+      actions: [
+        "내 덕질을 기록하기 시작함",
+        "지인에게 은근슬쩍 추천을 하기 시작",
+        "입덕 부정기의 끝을 보는중",
+      ],
+      comment: "“넌 이미 입덕했다. 아닐꺼같지? 나도 그랬어”",
+    },
+
+    knight: {
+      header: "LV3 기사 더쿠",
+      quote: "이 세계는 내가 지킨다",
+      oneline: "“이 세계는 내가 지킨다”",
+      summary: "덕질은 취미가 아니야. 일상이야",
+      traits: [
+        "계획하지 않아도 일정에 덕질 포함",
+        "신작, 떡밥? 놓치지 않을꺼에요",
+        "콜라보&이벤트&굿즈 최고야 짜릿해",
+      ],
+      actions: [
+        "모든 정보를 소문내주겠어!",
+        "“이걸 안봤어? 이건 봐야돼, 이건 진짜 재밌어”란말을 입에 달고삼",
+        "팝업스토어&행사에 가면 항상 있는편",
+      ],
+      comment: "“내가 있어야 덕질 기사단이 산다!”",
+    },
+
+    count: {
+      header: "LV4 귀족 더쿠",
+      quote: "덕질이 곧 권력이야",
+      oneline: "“덕질이 곧 권력이야”",
+      summary: "품격있는 덕질의 귀족",
+      traits: [
+        "취향이 확고하며, 이미 한분야의 마스터",
+        "굿즈취향도 확고함, 기준에 못미치는건 굿즈가 아니야",
+        "왠만한 세계관은 이해하고 바로 설명가능",
+      ],
+      actions: [
+        "고퀄 굿즈, 한정판 굿즈에 열광",
+        "덕질에도 나만의 철학이있음",
+        "나만의 콘텐츠도 창작할수 있는 단계",
+      ],
+      comment: "여기부터는 덕질도 품위가 있는거야",
+    },
+
+    kingof: {
+      header: "LV5 킹오브 더쿠",
+      quote: "덕질 그 자체가 바로 나",
+      oneline: "“덕질 그 자체가 바로 나”",
+      summary: "최강의 경지에 오른 더쿠",
+      traits: [
+        "말이 필요없는 덕질 연차, 99%를 통달한 왕의 영역",
+        "모든 덕질은 “나의” 기준으로 돌아가는중",
+        "거의 모든 세계관, 비하인드 흑역사 까지 머리속에 존재",
+        "LV1 - LV4를 이끄는 존재",
+      ],
+      actions: [],
+      comment: "“축하해..! 너는 이미 전설이야!!”",
+    },
+  };
+
+  function nl2br(text) {
+    return (text || "").replace(/\n/g, "<br>");
+  }
+
+  function listToLines(arr) {
+    if (!arr || !arr.length) return "• (해당 없음)";
+    return arr.map(v => `• ${v}`).join("<br>");
   }
 
   /* ========= 페이지 전환 ========= */
@@ -541,22 +716,30 @@
     }
   }
 
+  /* ✅ 결과 포스터 이미지 세팅(기존 setResultImage를 poster-image로 교체) */
   function setResultImage(url) {
-    const img = document.getElementById("result-image");
-    const placeholder = document.getElementById("result-image-placeholder");
-
-    img.onload = () => {
-      img.style.display = "block";
-      placeholder.style.display = "none";
-    };
-    img.onerror = () => {
-      img.style.display = "none";
-      placeholder.style.display = "flex";
-      placeholder.textContent = "결과 이미지 로드 실패 (이미지 경로 확인 필요)";
-    };
-
+    const img = document.getElementById("poster-image");
+    if (!img) return;
     img.crossOrigin = "anonymous";
     img.src = url;
+  }
+
+  function renderResultDetail() {
+    const meta = getCurrentMeta();
+    const detail = resultDetail[currentResultKey] || resultDetail.kingbanin;
+
+    document.getElementById("poster-header").textContent = detail.header;
+    document.getElementById("poster-quote").textContent = `“${detail.quote}”`;
+
+    // 포스터 이미지
+    setResultImage(meta.imageUrl);
+
+    // 표 텍스트
+    document.getElementById("detail-oneline").innerHTML = nl2br(detail.oneline);
+    document.getElementById("detail-summary").innerHTML = nl2br(detail.summary);
+    document.getElementById("detail-traits").innerHTML = listToLines(detail.traits);
+    document.getElementById("detail-actions").innerHTML = listToLines(detail.actions);
+    document.getElementById("detail-comment").innerHTML = nl2br(detail.comment);
   }
 
   function calculateResult() {
@@ -579,8 +762,8 @@
     }
     document.getElementById("result-title").textContent = title;
 
-    const meta = getCurrentMeta();
-    setResultImage(meta.imageUrl);
+    // ✅ 결과 렌더(포스터 + 표)
+    renderResultDetail();
 
     resetShareCache();
   }
