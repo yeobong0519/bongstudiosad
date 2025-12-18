@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>여봉이 더쿠 계급 테스트</title>
 
-<!-- ✅ Kakao/OG 기본 미리보기 (메인 링크용) -->
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="여봉이 성향테스트" />
-<meta property="og:title" content="여봉이 더쿠 계급 테스트" />
-<meta property="og:description" content="여기를 눌러 테스트 하러 가기!" />
-<meta property="og:url" content="https://bongstudiosad.com/" />
-<meta property="og:image" content="https://bongstudiosad.com/img/og_default.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
+  <!-- ✅ Kakao/OG 기본 미리보기 (메인 링크용) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="여봉이 성향테스트" />
+  <meta property="og:title" content="여봉이 더쿠 계급 테스트" />
+  <meta property="og:description" content="여기를 눌러 테스트 하러 가기!" />
+  <meta property="og:url" content="https://bongstudiosad.com/" />
+  <meta property="og:image" content="https://bongstudiosad.com/img/og_default.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
-<!-- (선택) 트위터 미리보기까지 같이 고정 -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="여봉이 더쿠 계급 테스트" />
-<meta name="twitter:description" content="여기를 눌러 테스트 하러 가기!" />
-<meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
+  <!-- (선택) 트위터 미리보기까지 같이 고정 -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="여봉이 더쿠 계급 테스트" />
+  <meta name="twitter:description" content="여기를 눌러 테스트 하러 가기!" />
+  <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
 
   <!-- Google Adsense (유지) -->
   <script async
@@ -305,7 +305,6 @@
     #detail-oneline { font-weight:900; color:#111; }
     #result-title { color:#000000 !important; }
   </style>
-
 </head>
 
 <body>
@@ -812,7 +811,7 @@
     }
   }
 
-  /* ========= ✅ 패치1: 카카오 공유 ========= */
+  /* ========= ✅ 카카오 공유 (요청한 부분만 수정) ========= */
   function shareKakao() {
     if (!window.Kakao || !Kakao.isInitialized()) {
       alert("카카오톡 공유 준비 중이야. 잠시 후 다시 시도해줘!");
@@ -820,16 +819,15 @@
     }
 
     const meta = getCurrentMeta();
-
-    // ✅ 카드 하단 링크(파란 URL) 노출을 위해 메인 URL로 고정
     const mainUrl = "https://bongstudiosad.com/";
 
     Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
         title: `여봉이 더쿠 레벨 테스트 - ${meta.title}`,
-        description: meta.desc,
-        imageUrl: meta.imageUrl, // ✅ 결과 이미지는 그대로
+        /* ✅ 여기만 수정됨: 링크를 텍스트로 강제 노출 */
+        description: `${meta.desc}\n\n👉 테스트 링크: ${mainUrl}`,
+        imageUrl: meta.imageUrl,
         link: { mobileWebUrl: mainUrl, webUrl: mainUrl }
       },
       buttons: [
@@ -1095,7 +1093,7 @@
     }
   }
 
-  /* ========= ✅ 패치2: share 링크로 들어오면 결과페이지로 바로 진입 ========= */
+  /* ========= ✅ share 링크로 들어오면 결과페이지로 바로 진입 ========= */
   (function bootFromShareLink(){
     const r = new URLSearchParams(location.search).get("r"); // kingbanin/pyeongmin/knight/count/kingof
     if (r && resultMeta[r]) {
