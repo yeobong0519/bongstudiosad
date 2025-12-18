@@ -17,7 +17,6 @@
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
           crossorigin="anonymous"></script>
   <script>
-    // ✅ 카카오 SDK가 로드 실패/차단돼도 페이지 버튼이 안 죽게 방어
     try {
       if (window.Kakao && !Kakao.isInitialized()) {
         Kakao.init("e9794a44d4c69a353097f55a960e6cab");
@@ -29,121 +28,182 @@
   </script>
 
   <style>
-    :root{
-      --themeColor:#0f5a2a;    /* 결과 레벨별로 JS에서 변경 */
-      --themeTitleColor:#111;  /* (유지) */
-    }
-
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f6f6f6;
+      background: #f5f5f7;
       color: #222;
     }
-
     .app {
-      max-width: 420px;
+      max-width: 480px;
       margin: 0 auto;
-      padding: 18px 12px 40px;
+      min-height: 100vh;
+      padding: 20px 16px 40px;
+      box-sizing: border-box;
     }
-
     .card {
-      background: white;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      background: #fff;
+      border-radius: 18px;
+      padding: 20px 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      margin-bottom: 18px;
     }
 
-    h1, h2 {
-      margin: 8px 0;
-      text-align: center;
+    h1 { font-size: 24px; margin: 0 0 8px; }
+    h2 { font-size: 20px; margin: 12px 0 8px; }
+    h3 { font-size: 16px; margin: 8px 0 4px; }
+    p  { margin: 4px 0; line-height: 1.45; color:#555; }
+
+    .tag {
+      display:inline-block;
+      background:#ffe1ea;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:#b71c1c;
+      margin-bottom:6px;
     }
 
     .btn {
       width: 100%;
-      padding: 14px;
+      padding: 14px 16px;
       border: none;
-      border-radius: 12px;
+      border-radius: 999px;
       font-size: 15px;
-      font-weight: bold;
-      margin-top: 10px;
+      font-weight: 600;
+      margin-top: 12px;
       cursor: pointer;
-      background: #222;
-      color: white;
+      background: #ff6b81;
+      color: #fff;
     }
-
     .btn.secondary {
-      background: #eee;
-      color: #222;
+      background: #eceef3;
+      color:#333;
     }
-
-    .question-title {
-      font-weight: 800;
-      font-size: 16px;
-      margin-bottom: 14px;
-      line-height: 1.4;
-    }
+    .btn:active { transform: scale(0.98); }
 
     .option-btn {
       width: 100%;
-      padding: 12px;
-      border-radius: 12px;
+      text-align: left;
+      border-radius: 14px;
       border: 1px solid #ddd;
+      padding: 12px 12px;
+      margin-top: 10px;
       background: #fff;
       font-size: 14px;
-      margin-bottom: 10px;
       cursor: pointer;
-      text-align: left;
-      font-weight: 700;
     }
-
     .option-btn:hover {
-      background: #f2f2f2;
+      background: #fff5f7;
+      border-color: #ff6b81;
     }
 
-    .progress-wrap {
-      margin: 10px 0 0;
+    .progress-bar-bg {
+      width:100%;
+      height:7px;
+      background:#ddd;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:6px;
     }
-    .progress-text {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 6px;
-    }
-    .progress {
-      width: 100%;
-      height: 10px;
-      background: #eee;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #222;
-      transition: width .25s ease;
+    .progress-bar-fill {
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#ff6b81,#ffa07a);
+      transition:0.3s;
     }
 
-    /* ✅ 공유 팝업 */
+    .spinner {
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      border:6px solid #ffd1da;
+      border-top-color:#ff6b81;
+      animation: spin 1s linear infinite;
+      margin:20px auto 0;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    footer {
+      text-align:center;
+      font-size:12px;
+      color:#888;
+      margin-top:16px;
+    }
+
     .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+      justify-content:center;
+      align-items:center;
+      z-index:999;
     }
-    .hidden { display:none; }
-
     .popup-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 16px;
-      width: calc(100% - 40px);
-      max-width: 340px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      text-align: center;
+      width:85%;
+      max-width:380px;
+      background:#fff;
+      border-radius:18px;
+      padding:22px;
+      text-align:center;
+      margin:0 auto;
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+    }
+
+    .hidden { display:none !important; }
+
+    /* 에이블리 배너형(CSS) */
+    .ably-banner {
+      display:block;
+      margin-top:14px;
+      padding:16px 14px;
+      border-radius:14px;
+      background: linear-gradient(135deg, #ffeef2, #ffffff);
+      border: 1px solid #ffd1da;
+      text-decoration:none;
+      overflow:hidden;
+      position:relative;
+    }
+    .ably-banner .title {
+      font-weight:900;
+      color:#ff4d6d;
+      font-size:16px;
+      letter-spacing:-0.2px;
+    }
+    .ably-banner .desc {
+      margin-top:6px;
+      color:#666;
+      font-size:13px;
+      line-height:1.3;
+    }
+    .ably-badge {
+      position:absolute;
+      right:12px;
+      top:12px;
+      background:#ff6b81;
+      color:#fff;
+      font-size:11px;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+    }
+
+    .insta-link {
+      display:block;
+      margin-top:12px;
+      text-align:center;
+      padding:12px;
+      background:#ffeef2;
+      color:#ff6b81;
+      font-weight:600;
+      border-radius:12px;
+      text-decoration:none;
     }
 
     /* ✅ 공유 팝업 버튼 시그니처 컬러 */
@@ -154,6 +214,11 @@
     .btn.share-x {
       background-color: #000000 !important;
       color: #FFFFFF !important;
+    }
+
+    :root{
+      --themeColor:#0f5a2a;
+      --themeTitleColor:#111;
     }
 
     /* ✅ 결과 포스터 + 표(설명) 전용 */
@@ -168,7 +233,7 @@
 
     .poster-header {
       background: var(--themeColor);
-      color:#fff; /* ✅ 요청: 배경색 위 흰색 글씨 유지 */
+      color:#fff;
       font-weight:900;
       font-size:20px;
       padding:14px 14px;
@@ -183,7 +248,6 @@
       background:#fff;
     }
 
-    /* ✅ 요청: 이미지 하단 텍스트 제거(한 줄과 내용 동일) */
     .poster-quote { display:none !important; }
 
     .result-detail-card {
@@ -222,27 +286,8 @@
       color: var(--themeColor);
     }
 
-    /* ✅ 요청: 한 줄 텍스트 내용 볼드 */
     #detail-oneline { font-weight:900; color:#111; }
-
-    /* ✅ 요청: 결과페이지 최상단 LV 글씨색은 검정으로 전부 통일 */
     #result-title { color:#000000 !important; }
-
-    footer {
-      text-align: center;
-      font-size: 12px;
-      color: #aaa;
-      margin-top: 20px;
-    }
-
-    /* intro 슬라이드 이미지 */
-    #intro-slider {
-      width: 100%;
-      border-radius: 14px;
-      display: block;
-      background: #eee;
-      overflow: hidden;
-    }
   </style>
 </head>
 
@@ -255,79 +300,110 @@
       <span class="tag">여봉이의 놀이터</span>
       <h1>여봉이의 테스트 연구소 🧪</h1>
 
-      <h3 style="margin-top:16px;">오늘은 어떤 테스트로 놀아볼까?</h3>
-      <button class="btn" onclick="showPage('intro')">여봉이 더쿠 레벨 테스트</button>
-    </div>
+      <h3 style="margin-top:16px;">테스트 목록</h3>
+      <button class="btn" onclick="openIntro()">🧸 여봉이 더쿠 레벨 테스트</button>
+      <button class="btn secondary hidden">💼 여봉이 직업 테스트 (숨김)</button>
+      <button class="btn secondary hidden">❤️ 여봉이 연애 테스트 (숨김)</button>
+      <button class="btn secondary" onclick="alert('다른 테스트는 준비 중이야!')">
+        🎲 다른 테스트 곧 오픈 예정!
+      </button>
 
-    <div class="card">
-      <!-- 쿠팡 파트너스 배너 -->
-      <div style="text-align:center;">
-        <a href="https://link.coupang.com/a/deL5IN" target="_blank" referrerpolicy="unsafe-url">
-          <img src="https://ads-partners.coupang.com/banners/950717?subId=&traceId=V0-301-bae0f72e5e59e45f-I950717&w=320&h=100"
-               alt=""
-               style="max-width:100%; height:auto;">
-        </a>
-      </div>
-    </div>
+      <!-- 에이블리 배너 -->
+      <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank">
+        <span class="ably-badge">SHOP</span>
+        <div class="title">여봉이 굿즈샵 바로가기</div>
+        <div class="desc">테스트 하고 취향저격 굿즈 구경하러 가기 →</div>
+      </a>
 
-    <footer>© YOBOONG TEST</footer>
+      <!-- 인스타 링크 -->
+      <a class="insta-link"
+         href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
+         target="_blank">
+        여봉이 인스타그램 바로가기
+      </a>
+    </div>
   </div>
 
   <!-- INTRO (표지) -->
-  <div id="page-intro" class="page" style="display:none;">
-    <div class="card">
-      <img id="intro-slider" src="https://bongstudiosad.com/img/intro_1.png" alt="intro" />
-      <h2 style="margin-top:12px;">여봉이 더쿠 레벨 테스트</h2>
-      <p style="text-align:center;color:#666;margin:8px 0 0;">결과는 더쿠 레벨로 나와요</p>
+  <div id="page-intro" class="page hidden">
+    <div class="card" style="text-align:center;">
+      <span class="tag">여봉이 더쿠 레벨 테스트</span>
+      <h1>여봉이 더쿠 레벨 테스트</h1>
+      <p>내가 왕이 될 상인가?</p>
 
-      <button class="btn" onclick="startQuiz()">시작하기</button>
-      <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
+      <div style="
+        height:160px;
+        background:#fff4f6;
+        border-radius:16px;
+        border:1px dashed #ff9cae;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin:16px 0;
+      ">
+        <span style="font-size:13px;color:#666;">
+          여기에 테스트 표지용 여봉이 이미지가 들어갈 자리
+        </span>
+      </div>
+
+      <p style="font-size:13px;color:#666;">
+        총 5문항 · 1분 컷 · 결과는 더쿠 레벨로 나와요.
+      </p>
+
+      <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
     </div>
-
-    <footer>© YOBOONG TEST</footer>
+    <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
   </div>
 
   <!-- QUIZ -->
-  <div id="page-quiz" class="page" style="display:none;">
+  <div id="page-quiz" class="page hidden">
     <div class="card">
-      <div class="progress-wrap">
-        <div class="progress-text" id="progress-text">1 / 5</div>
-        <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+      <span class="tag">여봉이 더쿠 레벨 테스트</span>
+      <h3 id="progress-text">1 / 5</h3>
+      <div class="progress-bar-bg">
+        <div id="progress-bar" class="progress-bar-fill"></div>
       </div>
 
-      <div class="question-title" id="question-text"></div>
+      <h2 id="question-text" style="margin-top:16px;">질문</h2>
       <div id="options-wrap"></div>
     </div>
-
-    <footer>© YOBOONG TEST</footer>
+    <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
   </div>
 
   <!-- LOADING -->
-  <div id="page-loading" class="page" style="display:none;">
+  <div id="page-loading" class="page hidden">
     <div class="card" style="text-align:center;">
-      <h2>분석 중...</h2>
-      <p style="color:#666;">여봉이가 더쿠 레벨을 계산하고 있어!</p>
-      <div style="margin-top:16px;">
-        <div style="width:46px;height:46px;border:6px solid #eee;border-top-color:#222;border-radius:50%;margin:0 auto;animation:spin 1s linear infinite;"></div>
-      </div>
+      <h2>🧮 설문 완료! 결과 만드는 중…</h2>
+      <p>여봉이가 너의 레벨을 측정중이야</p>
+      <div class="spinner"></div>
+      <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
     </div>
-
-    <footer>© YOBOONG TEST</footer>
   </div>
 
   <!-- RESULT -->
-  <div id="page-result" class="page" style="display:none;">
-    <div class="card">
-      <h2 id="result-title">LV1. 킹반인</h2>
+  <div id="page-result" class="page hidden">
+    <div class="card" style="text-align:center;">
+      <span class="tag">더쿠 레벨 측정 결과</span>
+      <h1 id="result-title">LV1. 킹반인</h1>
 
-      <div class="result-poster">
-        <div class="poster-header" id="poster-header">LV1. 킹반인</div>
-        <div class="poster-image">
-          <img id="poster-image" src="https://bongstudiosad.com/img/result_kingbanin.png" alt="result">
-        </div>
-        <div class="poster-quote" id="poster-quote"></div>
+      <!-- ✅ Kakao AdFit 320x50 -->
+      <div style="margin:14px 0; display:flex; justify-content:center;">
+        <ins class="kakao_ad_area"
+             data-ad-unit="DAN-C0JDNFlaMCwZqace"
+             data-ad-width="320"
+             data-ad-height="50"></ins>
       </div>
 
+      <!-- ✅ 결과 포스터 -->
+      <div class="result-poster">
+        <div id="poster-header" class="poster-header">LV1. 킹반인</div>
+        <div class="poster-image">
+          <img id="poster-image" alt="결과 포스터 이미지">
+        </div>
+        <div id="poster-quote" class="poster-quote">“테스트용 문구”</div>
+      </div>
+
+      <!-- ✅ 결과 설명(표 형식) -->
       <div class="result-detail-card">
         <table class="result-table">
           <tr>
@@ -347,20 +423,45 @@
             <td id="detail-actions"></td>
           </tr>
           <tr>
-            <th>한마디</th>
-            <td id="detail-comment"></td>
+            <th>코멘트</th>
+            <td id="detail-comment" class="highlight"></td>
           </tr>
         </table>
       </div>
 
-      <button class="btn" style="margin-top:14px;" onclick="openSharePopup()">결과 공유하기</button>
-      <button class="btn secondary" onclick="restartQuiz()">다시하기</button>
-      <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
-    </div>
+      <!-- 에이블리 배너 -->
+      <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank">
+        <span class="ably-badge">SHOP</span>
+        <div class="title">여봉이 굿즈샵 바로가기</div>
+        <div class="desc">결과 보고 마음에 드는 굿즈 바로 담으러 가기 →</div>
+      </a>
 
-    <footer>© YOBOONG TEST</footer>
+      <!-- 인스타 링크 -->
+      <a class="insta-link"
+         href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
+         target="_blank">
+        여봉이 인스타그램 바로가기
+      </a>
+
+      <div style="display:flex; gap:10px; margin-top:18px;">
+        <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
+        <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
+      </div>
+
+      <!-- 쿠팡 파트너스 -->
+      <div style="margin-top:14px; display:flex; justify-content:center;">
+        <a href="https://link.coupang.com/a/deL5IN" target="_blank" referrerpolicy="unsafe-url">
+          <img src="https://ads-partners.coupang.com/banners/950717?subId=&traceId=V0-301-bae0f72e5e59e45f-I950717&w=320&h=100"
+               alt=""
+               style="max-width:100%; height:auto;">
+        </a>
+      </div>
+
+    </div>
+    <button class="btn secondary" onclick="showPage('home')">← 테스트 목록으로</button>
   </div>
 
+  <footer>© YOBOONG TEST</footer>
 </div>
 
 <!-- 공유 팝업 -->
@@ -389,17 +490,11 @@
   </div>
 </div>
 
-<style>
-@keyframes spin { to { transform: rotate(360deg); } }
-</style>
-
 <script>
   /* ========= 공통 설정 ========= */
   const SITE_URL = "https://bongstudiosad.com";
 
-  
-
-  /* ✅ 2페이지 표지: intro_1~intro_5 자동 반복 (GIF 느낌) */
+  /* ✅ 2페이지 표지: intro_1~intro_5 자동 반복 (GIF 느낌) (현재 intro 페이지에 intro-slider가 없어서 자동 무시됨) */
   const INTRO_SLIDES = [
     `${SITE_URL}/img/intro_1.png`,
     `${SITE_URL}/img/intro_2.png`,
@@ -413,7 +508,6 @@
   function preloadIntroSlides() {
     INTRO_SLIDES.forEach(src => { const i = new Image(); i.src = src; });
   }
-
   function startIntroSlider() {
     const el = document.getElementById("intro-slider");
     if (!el) return;
@@ -425,30 +519,18 @@
       el.src = INTRO_SLIDES[introSlideIdx];
     }, 650);
   }
-
   function stopIntroSlider() {
     if (introTimer) clearInterval(introTimer);
     introTimer = null;
   }
 
-  function showPage(key) {
-    document.querySelectorAll(".page").forEach(p => (p.style.display = "none"));
-    const el = document.getElementById("page-" + key);
-    if (el) el.style.display = "block";
-
-    if (key === "intro") startIntroSlider();
-    else stopIntroSlider();
-
-    window.scrollTo(0, 0);
-  }
-
   /* ✅ 결과 레벨별 테마(상단 배경색) */
   const levelTheme = {
-    kingbanin: { bg:"#000000", title:"#000000" },  // LV1 검정
-    pyeongmin: { bg:"#8B5A2B", title:"#8B5A2B" },  // LV2 갈색
-    knight:   { bg:"#808080", title:"#808080" },   // LV3 회색
-    count:    { bg:"#0f5a2a", title:"#0f5a2a" },    // LV4 초록
-    kingof:   { bg:"#E53935", title:"#E53935" },    // LV5 적빨강
+    kingbanin: { bg:"#000000", title:"#000000" },
+    pyeongmin: { bg:"#8B5A2B", title:"#8B5A2B" },
+    knight:   { bg:"#808080", title:"#808080" },
+    count:    { bg:"#0f5a2a", title:"#0f5a2a" },
+    kingof:   { bg:"#E53935", title:"#E53935" },
   };
 
   function applyLevelTheme() {
@@ -469,105 +551,87 @@
     return resultMeta[currentResultKey] || resultMeta.kingbanin;
   }
 
-  function nl2br(s){ return (s || "").replace(/\n/g, "<br>"); }
-  function listToLines(arr){ return (arr || []).map(x => `• ${x}`).join("<br>"); }
-
-  /* ✅ 결과 상세 텍스트 데이터(행님 원문 기반) */
   const resultDetail = {
     kingbanin: {
       header: "LV1. 킹반인",
       quote: "아무것도 모르지만.. 아무것도 모르지 않는다!",
       oneline: "“아무것도 모르지만.. 아무것도 모르지 않는다!”",
-      summary:
-        "일반인과 더쿠의 경계선, 일반인이라 생각하지만,\n알고리즘의 지배를 받아가며 무엇이든 될수있는 단계",
-      traits: [
-        "나 이정도까진 몰라 ㅋㅋ",
-        "어 ? 이거 쇼츠(릴스)로 봤던건데?",
-        "이 가격의 굿즈를 산다고?!!",
-      ],
-      actions: [
-        "좋아하는건 있지만 딥하게 들어가진 않는편",
-        "덕질하는 사람을 보면 신기하면서도 신기함!",
-        "아는게 있으면 신남 “ 오!!! 나 이거 본거같아!!!”",
-      ],
+      summary: "일반인과 더쿠의 경계선, 일반인이라 생각하지만,\n알고리즘의 지배를 받아가며 무엇이든 될수있는 단계",
+      traits: ["나 이정도까진 몰라 ㅋㅋ", "어 ? 이거 쇼츠(릴스)로 봤던건데?", "이 가격의 굿즈를 산다고?!!"],
+      actions: ["좋아하는건 있지만 딥하게 들어가진 않는편", "덕질하는 사람을 보면 신기하면서도 신기함!", "아는게 있으면 신남 “ 오!!! 나 이거 본거같아!!!”"],
       comment: "어느순간 “아!? 이걸왜 이제봤지..? 할 예정”",
     },
     pyeongmin: {
       header: "LV2. 평민 더쿠",
-      quote: "좋아하는 건 맞는데… 막 덕후까진 아니야",
-      oneline: "“좋아하는 건 맞는데… 막 덕후까진 아니야”",
-      summary:
-        "덕질 루틴이 생기기 시작한 단계\n슬슬 부정이 어려워진다",
-      traits: [
-        "굿즈 1~2개쯤은 당연히 있음",
-        "최애 관련 소식은 은근히 다 챙김",
-        "입덕을 인정할지 고민 중",
-      ],
-      actions: [
-        "덕질 계정 팔로우가 늘어남",
-        "행사/팝업 소식 저장해둠",
-        "주변에 영업을 시도해본 적 있음",
-      ],
-      comment: "이제 곧… 더쿠의 길로 들어갈 준비 완료",
+      quote: "이거 아는건데 티내고싶다...티내면안된다..",
+      oneline: "“이거 아는건데 티내고싶다...티내면안된다..”",
+      summary: "이미 두터운 팬층이지만 스스로 “이정도는 아니지” 생각함",
+      traits: ["이미 관련 계정들 팔로우다 되어있음", "고민은 하지만 굿즈를 사야함", "알고리즘이 꾸준하게 콘텐츠를 밀어줌"],
+      actions: ["내 덕질을 기록하기 시작함", "지인에게 은근슬쩍 추천을 하기 시작", "입덕 부정기의 끝을 보는중"],
+      comment: "“넌 이미 입덕했다. 아닐꺼같지? 나도 그랬어”",
     },
     knight: {
       header: "LV3. 기사 더쿠",
-      quote: "최애를 위해 뭐든 할 수 있는 기사 더쿠!",
-      oneline: "“최애를 위해 뭐든 할 수 있는 기사 더쿠!”",
-      summary:
-        "최애 보호/영업/홍보까지 가능한 충성 기사 단계",
-      traits: [
-        "입덕의 정석 가이드 투어",
-        "새로운 형식의 굿즈, 컨텐츠, 밈을 생성하는 위대한 존재",
-        "너 덕분에 방금 다른 더쿠가 탄생했어 !",
-      ],
-      actions: [
-        "최애 소식 알림 ON",
-        "친구에게 자연스럽게 영업",
-        "굿즈/이벤트 정보 수집이 빠름",
-      ],
-      comment: "이쯤 되면 덕질이 아니라 사명이다",
+      quote: "이 세계는 내가 지킨다",
+      oneline: "“이 세계는 내가 지킨다”",
+      summary: "덕질은 취미가 아니야. 일상이야",
+      traits: ["계획하지 않아도 일정에 덕질 포함", "신작, 떡밥? 놓치지 않을꺼에요", "콜라보&이벤트&굿즈 최고야 짜릿해"],
+      actions: ["모든 정보를 소문내주겠어!", "“이걸 안봤어? 이건 봐야돼, 이건 진짜 재밌어”란말을 입에 달고삼", "팝업스토어&행사에 가면 항상 있는편"],
+      comment: "“내가 있어야 덕질 기사단이 산다!”",
     },
     count: {
       header: "LV4. 귀족 더쿠",
-      quote: "굿즈 창고? 그거 그냥 내 방인데",
-      oneline: "“굿즈 창고? 그거 그냥 내 방인데”",
-      summary:
-        "시간/돈/공간을 덕질에 투자하는 상위 귀족 단계",
-      traits: [
-        "한정판/콜라보에 강함",
-        "덕질 예산이 따로 존재",
-        "굿즈 정리/보관도 체계적",
-      ],
-      actions: [
-        "예약/선착순에 강함",
-        "덕질 스케줄 캘린더가 있음",
-        "굿즈 보관 장비(?)가 늘어남",
-      ],
-      comment: "귀족은… 덕질도 품격 있게 한다",
+      quote: "덕질이 곧 권력이야",
+      oneline: "“덕질이 곧 권력이야”",
+      summary: "품격있는 덕질의 귀족",
+      traits: ["취향이 확고하며, 이미 한분야의 마스터", "굿즈취향도 확고함, 기준에 못미치는건 굿즈가 아니야", "왠만한 세계관은 이해하고 바로 설명가능"],
+      actions: ["고퀄 굿즈, 한정판 굿즈에 열광", "덕질에도 나만의 철학이있음", "나만의 콘텐츠도 창작할수 있는 단계"],
+      comment: "여기부터는 덕질도 품위가 있는거야",
     },
     kingof: {
       header: "LV5. 킹 오브 더쿠",
-      quote: "더쿠 중의 더쿠, 킹 오브 더쿠!",
-      oneline: "“더쿠 중의 더쿠, 킹 오브 더쿠!”",
-      summary:
-        "덕질 세계관을 이끄는 최상위 단계\n덕질로 문화를 만드는 사람",
-      traits: [
-        "새 작품 나오면 제일 먼저 알아챔",
-        "굿즈/이벤트/밈 생산까지 리드",
-        "덕질로 사람을 모으는 타입",
-      ],
-      actions: [
-        "덕질 커뮤니티에서 영향력 있음",
-        "신규 더쿠를 양성(?)함",
-        "덕질을 콘텐츠로 확장한다",
-      ],
-      comment: "이제는… 당신 자체가 하나의 장르다",
-    }
+      quote: "덕질 그 자체가 바로 나",
+      oneline: "“덕질 그 자체가 바로 나”",
+      summary: "최강의 경지에 오른 더쿠",
+      traits: ["말이 필요없는 덕질 연차, 99%를 통달한 왕의 영역", "모든 덕질은 “나의” 기준으로 돌아가는중", "거의 모든 세계관, 비하인드 흑역사 까지 머리속에 존재", "LV1 - LV4를 이끄는 존재"],
+      actions: ["입덕의 정석 가이드 투어", "새로운 형식의 굿즈, 컨텐츠, 밈을 생성하는 위대한 존재", "너 덕분에 방금 다른 더쿠가 탄생했어 !"],
+      comment: "“축하해..! 너는 이미 전설이야!!”",
+    },
   };
 
-  /* ========= 퀴즈 데이터 ========= */
+  function nl2br(text) { return (text || "").replace(/\n/g, "<br>"); }
+  function listToLines(arr) {
+    if (!arr || !arr.length) return "• (해당 없음)";
+    return arr.map(v => `• ${v}`).join("<br>");
+  }
+
+  /* ========= 페이지 전환 ========= */
+  const pages = {
+    home: document.getElementById("page-home"),
+    intro: document.getElementById("page-intro"),
+    quiz: document.getElementById("page-quiz"),
+    loading: document.getElementById("page-loading"),
+    result: document.getElementById("page-result"),
+  };
+
+  function showPage(name) {
+    Object.values(pages).forEach(p => p.classList.add("hidden"));
+    pages[name].classList.remove("hidden");
+    window.scrollTo({ top: 0 });
+  }
+
+  function openIntro() { showPage("intro"); startIntroSlider(); }
+
+  /* ========= 퀴즈 로직 ========= */
   const otakuQuestions = [
+    {
+      text: "방에 직접 산 피규어/굿즈의 개수는!?",
+      options: [
+        { label: "A. 0~3개 / 가끔 끌리면 사는 정도?", point: 0 },
+        { label: "B. 4~20개 / 장식장을 적당히 꾸밀 정도!", point: 5 },
+        { label: "C. 21개 이상 / 내 방이 아니라 굿즈님들의 방이다!", point: 10 },
+      ],
+    },
     {
       text: "최근 1년간 본 애니메이션 개수는!?",
       options: [
@@ -598,14 +662,6 @@
         { label: "A. “당연하지 ㅋㅋ” 하면서 자랑스러워함", point: 10 },
         { label: "B. “뭐… 좀 좋아하긴 하지” 하고 슬쩍 인정", point: 5 },
         { label: "C. “아니라고!!” 하면서 강하게 부정함", point: 0 },
-      ],
-    },
-    {
-      text: "코믹월드에서 제일 먼저 하는 행동은?",
-      options: [
-        { label: "A. 일단 동선부터 짠다(계획형)", point: 10 },
-        { label: "B. 인기 부스 줄부터 선다(눈치/속도)", point: 5 },
-        { label: "C. 그냥 돌아다니다가 끌리는 곳으로 간다(감성)", point: 0 },
       ],
     },
   ];
@@ -659,7 +715,6 @@
     }
   }
 
-  /* ✅ 결과 포스터 이미지 세팅 */
   function setResultImage(url) {
     const img = document.getElementById("poster-image");
     if (!img) return;
@@ -671,21 +726,16 @@
     const meta = getCurrentMeta();
     const detail = resultDetail[currentResultKey] || resultDetail.kingbanin;
 
-    // ✅ 테마 적용(상단 배경색)
     applyLevelTheme();
 
-    // 헤더/타이틀
     document.getElementById("poster-header").textContent = detail.header;
     document.getElementById("result-title").textContent = meta.title;
 
-    // ✅ 이미지 하단 텍스트(quote) 제거: 요소는 남기되 내용 비움(구성 유지)
     const pq = document.getElementById("poster-quote");
     if (pq) pq.textContent = "";
 
-    // 포스터 이미지
     setResultImage(meta.imageUrl);
 
-    // 표 텍스트
     document.getElementById("detail-oneline").innerHTML = nl2br(detail.oneline);
     document.getElementById("detail-summary").innerHTML = nl2br(detail.summary);
     document.getElementById("detail-traits").innerHTML = listToLines(detail.traits);
@@ -694,17 +744,11 @@
   }
 
   function calculateResult() {
-    if (totalScore <= 10) {
-      currentResultKey = "kingbanin";
-    } else if (totalScore <= 20) {
-      currentResultKey = "pyeongmin";
-    } else if (totalScore <= 30) {
-      currentResultKey = "knight";
-    } else if (totalScore <= 40) {
-      currentResultKey = "count";
-    } else {
-      currentResultKey = "kingof";
-    }
+    if (totalScore <= 10) currentResultKey = "kingbanin";
+    else if (totalScore <= 20) currentResultKey = "pyeongmin";
+    else if (totalScore <= 30) currentResultKey = "knight";
+    else if (totalScore <= 40) currentResultKey = "count";
+    else currentResultKey = "kingof";
 
     renderResultDetail();
     resetShareCache();
@@ -729,14 +773,10 @@
     setShareStatus("");
   }
 
-  /* ✅ 링크 복사하기 */
   async function copyTestLink() {
     const link = "https://bongstudiosad.com/";
     const ok = await safeClipboardWrite(link);
-    if (ok) {
-      setShareStatus("✅ 링크가 복사됐어!");
-      return;
-    }
+    if (ok) { setShareStatus("✅ 링크가 복사됐어!"); return; }
 
     try {
       const ta = document.createElement("textarea");
@@ -755,7 +795,7 @@
     }
   }
 
-  /* ========= 카카오 공유 ========= */
+  /* ========= ✅ 패치1: 카카오 공유 ========= */
   function shareKakao() {
     if (!window.Kakao || !Kakao.isInitialized()) {
       alert("카카오톡 공유 준비 중이야. 잠시 후 다시 시도해줘!");
@@ -764,7 +804,7 @@
 
     const meta = getCurrentMeta();
 
-    // ✅ 결과별 OG 고정 링크 (카카오 카드에 결과 이미지 + 링크가 같이 뜨게)
+    // ✅ 핵심: 결과별 OG 페이지로 공유 (카톡 카드에 이미지+링크 같이 나오게)
     const shareUrl = `${SITE_URL}/share/${currentResultKey}.html`;
 
     Kakao.Share.sendDefault({
@@ -781,7 +821,7 @@
     });
   }
 
-  /* ========= 인스타/스토리 이미지 생성 ========= */
+  /* ========= 인스타/스토리 이미지 생성 (유지) ========= */
   function loadImage(url) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -850,7 +890,7 @@
     ctx.fillText("여봉이 더쿠 레벨 테스트", W / 2, 160);
 
     ctx.fillStyle = "#222";
-    ctx.font = "bold 78px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.font = "bold 72px system-ui, -apple-system, Segoe UI, sans-serif";
     ctx.fillText(meta.title, W / 2, 290);
 
     ctx.fillStyle = "#555";
@@ -947,19 +987,14 @@
       return { file, blob };
     })();
 
-    try {
-      return await SHARE.buildPromise;
-    } finally {
-      SHARE.buildPromise = null;
-    }
+    try { return await SHARE.buildPromise; }
+    finally { SHARE.buildPromise = null; }
   }
 
   function canWebShareFiles(file) {
     try {
       return !!(navigator.share && navigator.canShare && navigator.canShare({ files: [file] }));
-    } catch (e) {
-      return false;
-    }
+    } catch (e) { return false; }
   }
 
   function downloadBlob(blob, filename) {
@@ -998,9 +1033,7 @@
 
       setShareStatus("공유시트 미지원: 이미지 저장 후 인스타 스토리 열기");
       downloadBlob(blob, "yoboong_result_story.png");
-      setTimeout(() => {
-        window.location.href = "instagram://story-camera";
-      }, 350);
+      setTimeout(() => { window.location.href = "instagram://story-camera"; }, 350);
       setShareStatus("이미지 저장 후 인스타 스토리에 추가해줘. (링크는 클립보드)");
     } catch (e) {
       console.error(e);
@@ -1045,20 +1078,16 @@
     }
   }
 
-  /* ✅ 공유 링크로 들어온 경우: 결과 키로 바로 결과 페이지 열기 */
+  /* ========= ✅ 패치2: share 링크로 들어오면 결과페이지로 바로 진입 ========= */
   (function bootFromShareLink(){
     const r = new URLSearchParams(location.search).get("r"); // kingbanin/pyeongmin/knight/count/kingof
-
     if (r && resultMeta[r]) {
       currentResultKey = r;
-      // ✅ 기존 디자인/구성 그대로 결과만 채움
-      if (typeof renderResultDetail === "function") renderResultDetail();
-      if (typeof resetShareCache === "function") resetShareCache();
+      renderResultDetail();
+      resetShareCache();
       showPage("result");
       return;
     }
-
-    /* 시작은 홈 */
     showPage("home");
   })();
 </script>
