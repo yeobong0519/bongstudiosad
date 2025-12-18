@@ -830,9 +830,24 @@
         imageUrl: meta.imageUrl,
         link: { mobileWebUrl: mainUrl, webUrl: mainUrl }
       },
-      buttons: [
-        { title: "나도 테스트하기", link: { mobileWebUrl: mainUrl, webUrl: mainUrl } }
-      ]
+      
+  buttons: [
+  {
+    title: "🔁 나도 테스트하기",
+    link: {
+      mobileWebUrl: mainUrl,
+      webUrl: mainUrl
+    }
+  },
+  {
+    title: "📋 내 결과 다시보기",
+    link: {
+      mobileWebUrl: `${mainUrl}?r=${currentResultKey}`,
+      webUrl: `${mainUrl}?r=${currentResultKey}`
+    }
+  }
+]
+
     });
   }
 
