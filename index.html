@@ -347,24 +347,24 @@
       <h1>여봉이 더쿠 레벨 테스트</h1>
       <p>내가 왕이 될 상인가?</p>
 
-      <div style="
-        height:160px;
-        background:#fff4f6;
-        border-radius:16px;
-        border:1px dashed #ff9cae;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin:16px 0;
-        overflow:hidden;
-      ">
-        <img
-          id="intro-slider"
-          src=""
-          alt="테스트 표지 이미지"
-          style="width:100%; height:100%; object-fit:cover; display:block;"
-        />
-      </div>
+     <div style="
+  width:100%;
+  aspect-ratio:1 / 1;
+  background:#fff4f6;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:16px 0;
+  overflow:hidden;
+">
+  <img
+    id="intro-slider"
+    src=""
+    alt="테스트 표지 이미지"
+    style="width:100%; height:100%; object-fit:contain; display:block;"
+  />
+</div>
 
       <p style="font-size:13px;color:#666;">
         총 5문항 · 1분 컷 · 결과는 더쿠 레벨로 나와요.
@@ -537,7 +537,7 @@
     introTimer = setInterval(() => {
       introSlideIdx = (introSlideIdx + 1) % INTRO_SLIDES.length;
       el.src = INTRO_SLIDES[introSlideIdx];
-    }, 650);
+    }, 325);
   }
   function stopIntroSlider() {
     if (introTimer) clearInterval(introTimer);
