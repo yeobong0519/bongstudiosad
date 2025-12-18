@@ -821,15 +821,22 @@
     const meta = getCurrentMeta();
     const mainUrl = "https://bongstudiosad.com/";
 
-    Kakao.Share.sendDefault({
-      objectType: "feed",
-      content: {
-        title: `여봉이 더쿠 레벨 테스트 - ${meta.title}`,
-        /* ✅ 여기만 수정됨: 링크를 텍스트로 강제 노출 */
-        description: `${meta.desc}\n\n👉 테스트 링크: ${mainUrl}`,
-        imageUrl: meta.imageUrl,
-        link: { mobileWebUrl: mainUrl, webUrl: mainUrl }
-      },
+   Kakao.Share.sendDefault({
+  objectType: "feed",
+  content: {
+    title: `여봉이 더쿠 레벨 테스트 - ${meta.title}`,
+    description:
+`${meta.desc}
+
+👉 테스트 하러가기
+https://bongstudiosad.com/`,
+    imageUrl: meta.imageUrl,
+    link: {
+      mobileWebUrl: "https://bongstudiosad.com/",
+      webUrl: "https://bongstudiosad.com/"
+    }
+  }
+});,
       
   buttons: [
   {
