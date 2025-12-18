@@ -362,7 +362,7 @@
     id="intro-slider"
     src=""
     alt="테스트 표지 이미지"
-    style="width:100%; height:100%; object-fit:contain; display:block;"
+    style="width:100%; height:100%; object-fit:contain; display:block; opacity:1; transition: opacity 160ms linear;"
   />
 </div>
 
@@ -533,11 +533,38 @@
     if (!el) return;
     preloadIntroSlides();
     if (introTimer) clearInterval(introTimer);
-    el.src = INTRO_SLIDES[introSlideIdx];
-    introTimer = setInterval(() => {
-      introSlideIdx = (introSlideIdx + 1) % INTRO_SLIDES.length;
-      el.src = INTRO_SLIDES[introSlideIdx];
-    }, 325);
+    function setIntroSlide(src){
+  const el = document.getElementById("intro-slider");
+  if (!el) return;
+
+  // 1) 살짝 페이드 아웃
+  el.style.opacity = "0";
+
+  // 2) 이미지 교체는 잠깐 뒤에
+  setTimeout(() => {
+    el.onload = () => {
+      // 3) 로드되면 페이드 인
+      el.style.opacity = "1";
+    };
+    el.src = src;
+  }, 120);
+}
+
+function startIntroSlider() {
+  const el = document.getElementById("intro-slider");
+  if (!el) return;
+
+  preloadIntroSlides();
+  if (introTimer) clearInterval(introTimer);
+
+  // 첫 장
+  setIntroSlide(INTRO_SLIDES[introSlideIdx]);
+
+  introTimer = setInterval(() => {
+    introSlideIdx = (introSlideIdx + 1) % INTRO_SLIDES.length;
+    setIntroSlide(INTRO_SLIDES[introSlideIdx]);
+  }, 320); // 속도는 여기서 조절
+}
   }
   function stopIntroSlider() {
     if (introTimer) clearInterval(introTimer);
