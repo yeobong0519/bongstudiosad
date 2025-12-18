@@ -21,7 +21,6 @@
 <meta name="twitter:description" content="여기를 눌러 테스트 하러 가기!" />
 <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
 
-  
   <!-- Google Adsense (유지) -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
@@ -306,7 +305,7 @@
     #detail-oneline { font-weight:900; color:#111; }
     #result-title { color:#000000 !important; }
   </style>
-  
+
 </head>
 
 <body>
@@ -822,19 +821,19 @@
 
     const meta = getCurrentMeta();
 
-    // ✅ 핵심: 결과별 OG 페이지로 공유 (카톡 카드에 이미지+링크 같이 나오게)
-    const shareUrl = `${SITE_URL}/share/${currentResultKey}.html`;
+    // ✅ 카드 하단 링크(파란 URL) 노출을 위해 메인 URL로 고정
+    const mainUrl = "https://bongstudiosad.com/";
 
     Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
         title: `여봉이 더쿠 레벨 테스트 - ${meta.title}`,
         description: meta.desc,
-        imageUrl: meta.imageUrl,
-        link: { mobileWebUrl: shareUrl, webUrl: shareUrl }
+        imageUrl: meta.imageUrl, // ✅ 결과 이미지는 그대로
+        link: { mobileWebUrl: mainUrl, webUrl: mainUrl }
       },
       buttons: [
-        { title: "나도 테스트하기", link: { mobileWebUrl: shareUrl, webUrl: shareUrl } }
+        { title: "나도 테스트하기", link: { mobileWebUrl: mainUrl, webUrl: mainUrl } }
       ]
     });
   }
