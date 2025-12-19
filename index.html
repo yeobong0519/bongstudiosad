@@ -665,49 +665,50 @@
   function openIntro() { showPage("intro"); startIntroSlider(); }
 
   /* ========= 퀴즈 로직 ========= */
-  const otakuQuestions = [
-    {
-      text: "방에 직접 산 피규어/굿즈의 개수는!?",
-      options: [
-        { label: "A. 0~3개 / 가끔 끌리면 사는 정도?", point: 0 },
-        { label: "B. 4~20개 / 장식장을 적당히 꾸밀 정도!", point: 5 },
-        { label: "C. 21개 이상 / 내 방이 아니라 굿즈님들의 방이다!", point: 10 },
-      ],
-    },
-    {
-      text: "최근 1년간 본 애니메이션 개수는!?",
-      options: [
-        { label: "A. 0~3개 / 가끔 넷플에 핫한 거 있으면 보는?", point: 0 },
-        { label: "B. 4~12개 / 핫한 거 외에도 재밌어 보이면 챙겨보는 편", point: 5 },
-        { label: "C. 13개 이상 / 근데 이걸 몇 편 봤는지 셀 수가 있나?", point: 10 },
-      ],
-    },
-    {
-      text: "최애 캐릭터한테 돈 얼마나 썼어? (누적)",
-      options: [
-        { label: "A. 10만 원 이하 / 진짜 탐나는 게 있으면 한 번쯤..?", point: 0 },
-        { label: "B. 11~50만 원 / 일단 마음에 드는 게 있으면 다 질러보자!", point: 5 },
-        { label: "C. 51만 원 이상 / 내 월급이 텅 빈 탓일까..", point: 10 },
-      ],
-    },
-    {
-      text: "친구한테 애니메이션을 추천해본 적 있다?",
-      options: [
-        { label: "A. \"야! 이거 안 보면 진짜 인생 여전이다 꼭 봐라!!\"", point: 10 },
-        { label: "B. \"이거 조금 재밌다는데… 한번 봐볼래..?\" (은근슬쩍 추천)", point: 5 },
-        { label: "C. 한 번도 없는데..?", point: 0 },
-      ],
-    },
-    {
-      text: "친구들이 너 보고 “너 진짜 오타쿠다”라고 하면 기분이?",
-      options: [
-        { label: "A. “당연하지 ㅋㅋ” 하면서 자랑스러워함", point: 10 },
-        { label: "B. “뭐… 좀 좋아하긴 하지” 하고 슬쩍 인정", point: 5 },
-        { label: "C. “아니라고!!” 하면서 강하게 부정함", point: 0 },
-      ],
-    },
-  ];
-
+ 
+const otakuQuestions = [
+  {
+    text: "라노벨 얼마나봐?",
+    options: [
+      { label: "그게뭔데?", point: 0 },
+      { label: "가끔 심심하면?", point: 5 },
+      { label: "시간날때 무조건 봐야지", point: 10 },
+    ],
+  },
+  {
+    text: "너에게 라프텔은 뭐야?",
+    options: [
+      { label: "라프텔이 뭔데?", point: 0 },
+      { label: "원피스 ?", point: 5 },
+      { label: "내 월급도둑중 하나?", point: 10 },
+    ],
+  },
+  {
+    text: "등장인물의 죽음으로 운적이 있다(에이스 제외!)",
+    options: [
+      { label: "울 필요까지 있을까?", point: 0 },
+      { label: "눈물이 찔끔난거같아", point: 5 },
+      { label: "제작사 망해라 엉엉엉엉", point: 10 },
+    ],
+  },
+  {
+    text: "내가 아는 범위의 애니메이션은?",
+    options: [
+      { label: "원나블, 귀칼", point: 0 },
+      { label: "리제로, 소아온", point: 5 },
+      { label: "제목이 25글자 이상", point: 10 },
+    ],
+  },
+  {
+    text: "코스프레 해봤거나 해보고싶은 코스프레!",
+    options: [
+      { label: "그냥 간단한 할로윈 분장 정도?", point: 0 },
+      { label: "최애 복장 하고 머리 따라하고 이런정도?", point: 5 },
+      { label: "최애 의상 주문제작, 화장&가발 무조건 똑같이 !!", point: 10 },
+    ],
+  },
+];
+  
   let currentIndex = 0;
   let totalScore = 0;
   let currentResultKey = "kingbanin";
@@ -727,21 +728,25 @@
     showPage("quiz");
   }
 
-  function renderQuestion() {
-    const q = otakuQuestions[currentIndex];
-    qText.textContent = q.text;
-    progressText.textContent = `${currentIndex + 1} / ${otakuQuestions.length}`;
-    progressBar.style.width = `${((currentIndex + 1) / otakuQuestions.length) * 100}%`;
+ function renderQuestion() {
+  const q = otakuQuestions[currentIndex];
+  qText.textContent = q.text;
+  progressText.textContent = `${currentIndex + 1} / ${otakuQuestions.length}`;
+  progressBar.style.width = `${((currentIndex + 1) / otakuQuestions.length) * 100}%`;
 
-    optionsWrap.innerHTML = "";
-    q.options.forEach(opt => {
+  optionsWrap.innerHTML = "";
+
+  [...q.options]
+    .sort(() => Math.random() - 0.5)
+    .forEach(opt => {
       const btn = document.createElement("button");
       btn.className = "option-btn";
       btn.textContent = opt.label;
       btn.onclick = () => selectOption(opt.point);
       optionsWrap.appendChild(btn);
     });
-  }
+}
+  
 
   function selectOption(point) {
     totalScore += point;
