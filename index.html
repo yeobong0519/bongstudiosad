@@ -362,7 +362,7 @@
           id="intro-slider"
           src=""
           alt="테스트 표지 이미지"
-          style="width:100%; height:100%; object-fit:contain; display:block; opacity:1; transition: opacity 160ms linear;"
+          style="width:100%; height:100%; object-fit:contain; display:block;"
         />
       </div>
 
@@ -531,20 +531,10 @@
 
   // ✅ 페이드 전환(빠르고 자연스럽게)
   function setIntroSlide(src) {
-    const el = document.getElementById("intro-slider");
-    if (!el) return;
-
-    el.style.opacity = "0";
-
-    setTimeout(() => {
-      el.onload = () => { el.style.opacity = "1"; };
-      el.onerror = () => { el.style.opacity = "1"; }; // 실패해도 잠김 방지
-      el.src = src;
-
-      // 환경에 따라 onload가 꼬이는 케이스 대비(최소 안전장치)
-      setTimeout(() => { el.style.opacity = "1"; }, 250);
-    }, 120);
-  }
+  const el = document.getElementById("intro-slider");
+  if (!el) return;
+  el.src = src;
+}
 
   function startIntroSlider() {
     const el = document.getElementById("intro-slider");
@@ -561,7 +551,7 @@
     introTimer = setInterval(() => {
       introSlideIdx = (introSlideIdx + 1) % INTRO_SLIDES.length;
       setIntroSlide(INTRO_SLIDES[introSlideIdx]);
-    }, 320); // ✅ 네가 원한 “적당히 빠른” 속도
+    }, 128); // ✅ 네가 원한 “적당히 빠른” 속도
   }
 
   function stopIntroSlider() {
