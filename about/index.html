@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>여봉이 소개 | 여봉이의 테스트 연구소</title>
+  <meta name="description" content="여봉이(봉스튜디오) 캐릭터 소개와 테스트 연구소 안내 페이지입니다." />
+  <link rel="canonical" href="https://bongstudiosad.com/about/" />
+
+  <style>
+    body { margin:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:#f5f5f7; color:#222; }
+    .app { max-width:480px; margin:0 auto; min-height:100vh; padding:20px 16px 40px; box-sizing:border-box; }
+    .card { background:#fff; border-radius:18px; padding:20px 18px; box-shadow:0 8px 20px rgba(0,0,0,0.05); margin-bottom:18px; }
+    h1 { font-size:22px; margin: 0 0 8px; }
+    h2 { font-size:16px; margin:16px 0 6px; }
+    p, li { margin:6px 0; line-height:1.6; color:#555; font-size:14px; }
+
+    /* nav */
+    .topnav { position:sticky; top:0; z-index:100; background:#f5f5f7; padding:10px 0 12px; }
+    .topnav-inner { max-width:480px; margin:0 auto; padding:0 16px; display:flex; align-items:center; justify-content:space-between; }
+    .brand { text-decoration:none; font-weight:900; font-size:14px; color:#ff6b81; background:#fff; border:1px solid #eceef3; padding:8px 12px; border-radius:999px; box-shadow:0 6px 14px rgba(0,0,0,0.04); }
+    .menu { display:flex; gap:6px; background:#fff; border:1px solid #eceef3; border-radius:999px; padding:6px; box-shadow:0 6px 14px rgba(0,0,0,0.04); }
+    .menu-item { text-decoration:none; font-size:13px; font-weight:700; color:#444; padding:8px 10px; border-radius:999px; line-height:1; }
+    .menu-item:hover { background:#ffeef2; color:#ff4d6d; }
+    .menu-item.active { background:#ff6b81; color:#fff; }
+
+    .btn { width:100%; padding:14px 16px; border:none; border-radius:999px; font-size:15px; font-weight:600; margin-top:12px; cursor:pointer; background:#ff6b81; color:#fff; }
+    .btn.secondary { background:#eceef3; color:#333; }
+    footer { text-align:center; font-size:12px; color:#888; margin-top:16px; }
+    a { color:#ff6b81; font-weight:700; text-decoration:none; }
+  </style>
+</head>
+
+<body>
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a href="/" class="brand">여봉이의 놀이터</a>
+      <div class="menu">
+        <a href="/about/" class="menu-item active">여봉이 소개</a>
+        <a href="/test1/" class="menu-item">테스트</a>
+        <a href="/contact/" class="menu-item">문의</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="app">
+    <div class="card">
+      <h1>여봉이 소개 🦊</h1>
+      <p>
+        여봉이는 봉스튜디오의 대표 캐릭터로, 지금은 여봉이의 놀이터에서 일상 속 덕질/취향/밈을 귀엽게 연구하는
+        “도시 여우” 친구야. 이 연구소는 그 취향을 연구하고 테스트로 바꿔서 같이 놀아보는 공간!
+      </p>
+
+      <h2>놀이터 여봉이의 특징</h2>
+      <ul>
+        <li>재밌는 킬링타임의 놀이들을 좋아하고, 취향을 실험하듯 탐구함</li>
+        <li>귀엽지만 관찰력은 예리한 편</li>
+        <li>테스트 결과로 “나를 한 문장으로 요약”해주는 걸 잘함</li>
+      </ul>
+
+      <h2>이 사이트에서 하는 것</h2>
+      <ul>
+        <li>짧고 가볍게 즐기는 성향 테스트</li>
+        <li>레벨/타입별 결과 카드 제공</li>
+        <li>봉스튜디오's만의 귀여운 굿즈샵/인스타로 연결</li>
+      </ul>
+
+      <button class="btn" onclick="location.href='/test1/'">🧸 테스트 하러가기</button>
+      <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+    </div>
+
+    <footer>
+      © YOBOONG TEST ·
+      <a href="/privacy/" style="color:#888; text-decoration:none;">개인정보처리방침</a> ·
+      <a href="/terms/" style="color:#888; text-decoration:none;">이용약관</a> ·
+      <a href="/contact/" style="color:#888; text-decoration:none;">문의</a>
+    </footer>
+  </div>
+</body>
+</html>
