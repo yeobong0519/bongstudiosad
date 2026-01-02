@@ -28,43 +28,67 @@
 
   <style>
 
-/* ===== Navbar ===== */
-.navbar {
+/* ===== Top Navigation ===== */
+.topnav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #ffffffcc;
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid #eee;
+  background: #f5f5f7;
+  padding: 10px 0 12px;
 }
 
-.nav-inner {
+.topnav-inner {
   max-width: 480px;
   margin: 0 auto;
-  padding: 10px 16px;
+  padding: 0 16px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
-.logo {
+.brand {
+  text-decoration: none;
   font-weight: 900;
-  font-size: 15px;
-  text-decoration: none;
+  font-size: 14px;
   color: #ff6b81;
+  background: #fff;
+  border: 1px solid #eceef3;
+  padding: 8px 12px;
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.04);
 }
 
-.nav-links a {
-  margin-left: 10px;
+.menu {
+  display: flex;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #eceef3;
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+}
+
+.menu-item {
+  text-decoration: none;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: #444;
-  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 999px;
+  line-height: 1;
 }
 
-.nav-links a:hover {
-  color: #ff6b81;
+.menu-item:hover {
+  background: #ffeef2;
+  color: #ff4d6d;
 }
+
+/* 현재 페이지 강조(원하면 각 페이지에서 active 붙이기) */
+.menu-item.active {
+  background: #ff6b81;
+  color: #fff;
+}
+
 
     
     body {
@@ -174,16 +198,18 @@
 
 <body>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="/" class="logo">여봉이 🧪</a>
-    <div class="nav-links">
-      <a href="/">홈</a>
-      <a href="/test1/">테스트</a>
-      <a href="/contact/">문의</a>
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="/" class="brand">봉 스튜디오's>봉스>
+
+    <div class="menu">
+      <a href="/about/" class="menu-item">여봉이 소개</a>
+      <a href="/test1/" class="menu-item">테스트</a>
+      <a href="/contact/" class="menu-item">문의</a>
     </div>
   </div>
 </nav>
+
 
   
 <div class="app">
