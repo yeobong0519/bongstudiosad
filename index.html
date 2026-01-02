@@ -28,22 +28,24 @@
 
   <style>
 
-/* ===== Top Navigation ===== */
+/* ===== Top Navigation (앱 폭 맞춤) ===== */
 .topnav {
   position: sticky;
   top: 0;
   z-index: 100;
   background: #f5f5f7;
-  padding: 10px 0 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
 }
 
-.topnav-inner {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 0 16px;
+.nav-wrap {
+  max-width: 480px;        /* ✅ .app과 동일 */
+  margin: 0 auto;          /* ✅ 가운데 정렬 */
+  padding: 0 16px;         /* ✅ .app과 동일 */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .brand {
@@ -51,20 +53,21 @@
   font-weight: 900;
   font-size: 14px;
   color: #ff6b81;
-  background: #fff;
-  border: 1px solid #eceef3;
   padding: 8px 12px;
   border-radius: 999px;
+  background: #fff;
+  border: 1px solid #eceef3;
   box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+  white-space: nowrap;
 }
 
 .menu {
   display: flex;
   gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
   background: #fff;
   border: 1px solid #eceef3;
-  border-radius: 999px;
-  padding: 6px;
   box-shadow: 0 6px 14px rgba(0,0,0,0.04);
 }
 
@@ -76,6 +79,7 @@
   padding: 8px 10px;
   border-radius: 999px;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .menu-item:hover {
@@ -83,11 +87,11 @@
   color: #ff4d6d;
 }
 
-/* 현재 페이지 강조(원하면 각 페이지에서 active 붙이기) */
 .menu-item.active {
   background: #ff6b81;
   color: #fff;
 }
+
 
 
     
@@ -199,8 +203,8 @@
 <body>
 
 <nav class="topnav">
-  <div class="topnav-inner">
-    <a href="/" class="brand">봉 스튜디오's>봉스>
+  <div class="nav-wrap">
+    <a href="/" class="brand">봉 스튜디오's</a>
 
     <div class="menu">
       <a href="/about/" class="menu-item">여봉이 소개</a>
@@ -209,6 +213,7 @@
     </div>
   </div>
 </nav>
+
 
 
   
