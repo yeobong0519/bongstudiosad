@@ -15,14 +15,14 @@
     p { margin:6px 0; line-height:1.6; color:#555; font-size:14px; }
     .btn { width:100%; padding:14px 16px; border:none; border-radius:999px; font-size:15px; font-weight:600; margin-top:12px; cursor:pointer; background:#ff6b81; color:#fff; }
     .btn.secondary { background:#eceef3; color:#333; }
-    .box { background:#f8f9fb; border:1px solid #eceef3; border-radius:14px; padding:14px; margin-top:10px; }
-    footer { text-align:center; font-size:12px; color:#888; margin-top:16px; }
-    a { color:#ff6b81; text-decoration:none; font-weight:700; }
+    .box { background:#f8f9fb; border:1px solid #eceef3; border-radius:14px; padding:14px; margin-top:10px; }  
   </style>
+  <link rel="stylesheet" href="/common/common.css?v=2">
 </head>
 
 <body>
-  <div class="app">
+  <div id="nav-mount"></div>
+   <div class="app">
     <div class="card">
       <h1>문의하기</h1>
       <p>문의/제휴/오류 제보는 아래 채널로 보내줘!</p>
@@ -39,8 +39,8 @@
 
       <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
     </div>
-
-    <footer>© YOBOONG TEST</footer>
-  </div>
+     <div id="footer-mount"></div>
+    </div>
+  <script src="/common/common.js"></script>
 </body>
 </html>
