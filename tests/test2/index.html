@@ -1,1 +1,1191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>유령 세상 속 나는?</title>
+
+  <!-- ✅ OG(테스트2 링크용) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="여봉이 성향테스트" />
+  <meta property="og:title" content="유령 세상 속 나는?" />
+  <meta property="og:description" content="여기를 눌러 테스트 하러 가기!" />
+  <meta property="og:url" content="https://bongstudiosad.com/tests/test2/" />
+  <meta property="og:image" content="https://bongstudiosad.com/img/og_default.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="유령 세상 속 나는?" />
+  <meta name="twitter:description" content="여기를 눌러 테스트 하러 가기!" />
+  <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
+
+  <!-- Google Adsense (유지) -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
+    crossorigin="anonymous"></script>
+
+  <!-- ✅ Kakao AdFit Script (한 번만 로드) -->
+  <script async src="https://t1.daumcdn.net/kas/static/ba.min.js"></script>
+
+  <!-- Kakao SDK -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+          crossorigin="anonymous"></script>
+  <script>
+    try {
+      if (window.Kakao && !Kakao.isInitialized()) {
+        Kakao.init("e9794a44d4c69a353097f55a960e6cab");
+      }
+      console.log("Kakao init:", window.Kakao ? Kakao.isInitialized() : "Kakao SDK not loaded");
+    } catch (e) {
+      console.warn("Kakao init error (safe):", e);
+    }
+  </script>
+
+  <link rel="stylesheet" href="/common/common.css?v=2">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f7;
+      color: #222;
+    }
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 20px 16px 40px;
+      box-sizing: border-box;
+    }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 20px 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      margin-bottom: 18px;
+    }
+
+    h1 { font-size: 24px; margin: 0 0 8px; }
+    h2 { font-size: 20px; margin: 12px 0 8px; }
+    h3 { font-size: 16px; margin: 8px 0 4px; }
+    p  { margin: 4px 0; line-height: 1.45; color:#555; }
+
+    .tag {
+      display:inline-block;
+      background:#efe7ff;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:#5a2dce;
+      margin-bottom:6px;
+      font-weight:800;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 16px;
+      border: none;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 12px;
+      cursor: pointer;
+      background: #6d4aff;
+      color: #fff;
+    }
+    .btn.secondary {
+      background: #eceef3;
+      color:#333;
+    }
+    .btn:active { transform: scale(0.98); }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      border-radius: 14px;
+      border: 1px solid #ddd;
+      padding: 12px 12px;
+      margin-top: 10px;
+      background: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .option-btn:hover {
+      background: #f3efff;
+      border-color: #6d4aff;
+    }
+
+    .progress-bar-bg {
+      width:100%;
+      height:7px;
+      background:#ddd;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:6px;
+    }
+    .progress-bar-fill {
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#6d4aff,#b15cff);
+      transition:0.3s;
+    }
+
+    .spinner {
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      border:6px solid #e4dcff;
+      border-top-color:#6d4aff;
+      animation: spin 1s linear infinite;
+      margin:20px auto 0;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .overlay {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+    }
+    .popup-card {
+      width:85%;
+      max-width:380px;
+      background:#fff;
+      border-radius:18px;
+      padding:22px;
+      text-align:center;
+      margin:0 auto;
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+    }
+
+    .hidden { display:none !important; }
+
+    .ably-banner {
+      display:block;
+      margin-top:14px;
+      padding:16px 14px;
+      border-radius:14px;
+      background: linear-gradient(135deg, #f3efff, #ffffff);
+      border: 1px solid #d9ccff;
+      text-decoration:none;
+      overflow:hidden;
+      position:relative;
+    }
+    .ably-banner .title {
+      font-weight:900;
+      color:#6d4aff;
+      font-size:16px;
+      letter-spacing:-0.2px;
+    }
+    .ably-banner .desc {
+      margin-top:6px;
+      color:#666;
+      font-size:13px;
+      line-height:1.3;
+    }
+    .ably-badge {
+      position:absolute;
+      right:12px;
+      top:12px;
+      background:#6d4aff;
+      color:#fff;
+      font-size:11px;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+    }
+
+    .insta-link {
+      display:block;
+      margin-top:12px;
+      text-align:center;
+      padding:12px;
+      background:#f3efff;
+      color:#6d4aff;
+      font-weight:800;
+      border-radius:12px;
+      text-decoration:none;
+    }
+
+    .btn.share-kakao {
+      background-color: #FEE500 !important;
+      color: #000000 !important;
+    }
+    .btn.share-x {
+      background-color: #000000 !important;
+      color: #FFFFFF !important;
+    }
+
+    :root{
+      --themeColor:#2c1b54;
+      --themeTitleColor:#111;
+    }
+
+    .result-poster {
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      margin:14px 0 16px;
+      box-shadow:0 10px 24px rgba(0,0,0,0.08);
+      border:1px solid rgba(0,0,0,0.05);
+    }
+
+    .poster-header {
+      background: var(--themeColor);
+      color:#fff;
+      font-weight:900;
+      font-size:20px;
+      padding:14px 14px;
+      text-align:left;
+      letter-spacing:-0.2px;
+    }
+
+    .poster-image img {
+      width:100%;
+      height:auto;
+      display:block;
+      background:#fff;
+    }
+
+    .poster-quote { display:none !important; }
+
+    .result-detail-card {
+      text-align:left;
+      margin-top:12px;
+    }
+
+    .result-table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+
+    .result-table th {
+      width:92px;
+      text-align:left;
+      vertical-align:top;
+      padding:10px 8px;
+      color:#555;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .result-table td {
+      padding:10px 8px;
+      line-height:1.5;
+      color:#333;
+    }
+
+    .result-table tr:not(:last-child) {
+      border-bottom:1px solid #eee;
+    }
+
+    .result-table .highlight {
+      font-weight:900;
+      color: var(--themeColor);
+    }
+
+    #detail-oneline { font-weight:900; color:#111; }
+    #result-title { color:#000000 !important; }
+
+    /* ✅ 표지 자동재생 영상 */
+    .cover-video {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      display: block;
+      object-fit: cover;
+      background: #100a24;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="nav-mount"></div>
+
+<div class="app">
+
+  <!-- INTRO (표지) -->
+  <div id="page-intro" class="page hidden">
+    <div class="card" style="text-align:center;">
+      <span class="tag">유령 세상 속 나는?</span>
+      <h1>유령 세상 속 나는?</h1>
+      <p>귀신 사회에서 나는 어떤 타입일까?</p>
+
+      <!-- ✅ 자동재생 표지 영상 -->
+      <div style="margin:16px 0;">
+        <video
+          id="intro-video"
+          class="cover-video"
+          src="/media/cover_ghost.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        ></video>
+      </div>
+
+      <p style="font-size:13px;color:#666;">
+        총 6문항 · 1분 컷 · 결과는 9종 유령 타입!
+      </p>
+
+      <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
+    </div>
+
+    <!-- ✅ 메인으로 돌아가기 -->
+    <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="page-quiz" class="page hidden">
+    <div class="card">
+      <span class="tag">유령 세상 속 나는?</span>
+      <h3 id="progress-text">1 / 6</h3>
+      <div class="progress-bar-bg">
+        <div id="progress-bar" class="progress-bar-fill"></div>
+      </div>
+
+      <h2 id="question-text" style="margin-top:16px;">질문</h2>
+      <div id="options-wrap"></div>
+    </div>
+    <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+  </div>
+
+  <!-- LOADING -->
+  <div id="page-loading" class="page hidden">
+    <div class="card" style="text-align:center;">
+      <h2>🧪 유령 타입 분석 중…</h2>
+      <p>귀신 사회 데이터에 대조중이야</p>
+      <div class="spinner"></div>
+      <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="page-result" class="page hidden">
+    <div class="card" style="text-align:center;">
+      <span class="tag">유령 타입 결과</span>
+      <h1 id="result-title">위치봉</h1>
+
+      <!-- ✅ Kakao AdFit 320x50 -->
+      <div style="margin:14px 0; display:flex; justify-content:center;">
+        <ins class="kakao_ad_area"
+             data-ad-unit="DAN-C0JDNFlaMCwZqace"
+             data-ad-width="320"
+             data-ad-height="50"></ins>
+
+        <script>
+          if (window.kakaoAdFit) {
+            kakaoAdFit.load();
+          }
+        </script>
+      </div>
+
+      <!-- ✅ 결과 포스터 -->
+      <div class="result-poster">
+        <div id="poster-header" class="poster-header">위치봉</div>
+        <div class="poster-image">
+          <img id="poster-image" alt="결과 포스터 이미지">
+        </div>
+        <div id="poster-quote" class="poster-quote"></div>
+      </div>
+
+      <!-- ✅ 결과 설명(표 형식) -->
+      <div class="result-detail-card">
+        <table class="result-table">
+          <tr>
+            <th>한 줄</th>
+            <td id="detail-oneline"></td>
+          </tr>
+          <tr>
+            <th>요약</th>
+            <td id="detail-summary"></td>
+          </tr>
+          <tr>
+            <th>성향</th>
+            <td id="detail-traits"></td>
+          </tr>
+          <tr>
+            <th>행동</th>
+            <td id="detail-actions"></td>
+          </tr>
+          <tr>
+            <th>잘맞는 유령</th>
+            <td id="detail-match" class="highlight"></td>
+          </tr>
+          <tr>
+            <th>안맞는 유령</th>
+            <td id="detail-mismatch"></td>
+          </tr>
+          <tr>
+            <th>코멘트</th>
+            <td id="detail-comment" class="highlight"></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 에이블리 배너 -->
+      <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank">
+        <span class="ably-badge">SHOP</span>
+        <div class="title">여봉이 굿즈샵 바로가기</div>
+        <div class="desc">결과 보고 마음에 드는 굿즈 바로 담으러 가기 →</div>
+      </a>
+
+      <!-- 인스타 링크 -->
+      <a class="insta-link"
+         href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
+         target="_blank">
+        여봉이 인스타그램 바로가기
+      </a>
+
+      <div style="display:flex; gap:10px; margin-top:18px;">
+        <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
+        <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
+      </div>
+
+      <!-- 쿠팡 파트너스 -->
+      <div style="margin-top:14px; display:flex; justify-content:center;">
+        <a href="https://link.coupang.com/a/deL5IN" target="_blank" referrerpolicy="unsafe-url">
+          <img src="https://ads-partners.coupang.com/banners/950717?subId=&traceId=V0-301-bae0f72e5e59e45f-I950717&w=320&h=100"
+               alt=""
+               style="max-width:100%; height:auto;">
+        </a>
+      </div>
+
+    </div>
+    <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+  </div>
+
+  <div id="footer-mount"></div>
+
+</div>
+
+<!-- 공유 팝업 -->
+<div id="share-popup" class="overlay hidden">
+  <div class="popup-card" style="max-width:320px;">
+    <h2>결과 공유하기</h2>
+    <p style="font-size:14px;color:#666;">친구들도 유령 타입 한 번 재보자!</p>
+
+    <button class="btn share-kakao" onclick="shareKakao()">카카오톡</button>
+
+    <button class="btn" style="margin-top:10px;background:#bca8ff;color:#1b0b3a;" onclick="shareInstagramStoryOptimal()">
+      인스타 공유하기
+    </button>
+
+    <button class="btn share-x" style="margin-top:10px;" onclick="shareXImageOptimal()">
+      X 공유하기
+    </button>
+
+    <button class="btn secondary" style="margin-top:10px;" onclick="copyTestLink()">
+      링크 복사하기
+    </button>
+
+    <div id="share-status" style="margin-top:12px;font-size:12px;color:#777;min-height:18px;"></div>
+
+    <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
+  </div>
+</div>
+
+<script>
+  /* ========= 공통 설정 ========= */
+  const SITE_URL = "https://bongstudiosad.com";
+  const TEST_URL = `${SITE_URL}/tests/test2/`; // ✅ 테스트2 주소
+
+  /* ========= 결과 이미지(행님 업로드 파일명 기준) ========= */
+  const resultMeta = {
+    witch:   { title:"위치봉",   desc:"모든 걸 알고 있는 척하는 정리 귀신", imageUrl:`${SITE_URL}/img/result_witch.png` },
+    mummy:   { title:"미라봉",   desc:"느려도 끝까지 버티는 집념 귀신",     imageUrl:`${SITE_URL}/img/result_mummy.png` },
+    bat:     { title:"박쥐봉",   desc:"밤에만 나타나는 자유 귀신",           imageUrl:`${SITE_URL}/img/result_bat.png` },
+    ghost:   { title:"유령봉",   desc:"안 보이는데 핵심인 존재 귀신",       imageUrl:`${SITE_URL}/img/result_ghost.png` },
+    reaper:  { title:"저승봉",   desc:"귀신 세계의 질서 담당",               imageUrl:`${SITE_URL}/img/result_reaper.png` },
+    franken: { title:"프랑켄봉", desc:"불평은 많은데 제일 많이 움직임",      imageUrl:`${SITE_URL}/img/result_franken.png` },
+    pumpkin: { title:"펌킨봉",   desc:"분위기 살리는 소란 귀신",             imageUrl:`${SITE_URL}/img/result_pumpkin.png` },
+    fox:     { title:"구미호봉", desc:"말로 판을 뒤집는 교섭 귀신",          imageUrl:`${SITE_URL}/img/result_fox.png` },
+    count:   { title:"백작봉",   desc:"품위 지키는 고귀한 귀신",             imageUrl:`${SITE_URL}/img/result_count_ghost.png` }
+  };
+
+  /* ========= 테마(원하면 나중에 캐릭터별로 변경 가능) ========= */
+  const ghostTheme = {
+    witch:   { bg:"#2c1b54" },
+    mummy:   { bg:"#4a2d1f" },
+    bat:     { bg:"#15151f" },
+    ghost:   { bg:"#3a2a77" },
+    reaper:  { bg:"#101018" },
+    franken: { bg:"#2a5a43" },
+    pumpkin: { bg:"#8c3b00" },
+    fox:     { bg:"#6d0f5a" },
+    count:   { bg:"#3c0f0f" }
+  };
+
+  function applyTheme(key) {
+    const t = ghostTheme[key] || ghostTheme.witch;
+    document.documentElement.style.setProperty("--themeColor", t.bg);
+  }
+
+  /* ========= 결과 상세 + 잘맞/안맞 ========= */
+  const resultDetail = {
+    witch: {
+      oneline: "“흐름은 내가 다 보고 있다.”",
+      summary: "직접 나서진 않지만, 귀신 사회의 판을 읽고 정리하는 타입.",
+      traits: ["전체 상황을 한 번에 파악", "말은 짧고 핵심만", "혼란일수록 침착함"],
+      actions: ["뒤에서 정리 → 방향 제시", "필요할 때만 한 방", "감정 과열되면 자동 제동"],
+      match: ["저승봉", "유령봉"],
+      mismatch: ["펌킨봉", "박쥐봉"],
+      comment: "너 없으면 귀신 사회 회의가 끝나질 않아."
+    },
+    mummy: {
+      oneline: "“느려도 끝까지 남아있다.”",
+      summary: "포기라는 단어가 없는 집념형. 조용히 버티다 마지막에 역전한다.",
+      traits: ["끈기 최상", "한 번 정하면 안 바꿈", "무심한 듯 강함"],
+      actions: ["끝까지 해결 시도", "쉽게 흔들리지 않음", "사라지지 않는 존재감"],
+      match: ["백작봉", "유령봉"],
+      mismatch: ["박쥐봉", "펌킨봉"],
+      comment: "다들 무시하다가 마지막에 너 보고 소름 돋는다."
+    },
+    bat: {
+      oneline: "“낮엔 없고, 밤엔 풀가동.”",
+      summary: "규칙보다 리듬. 소속보다 자유. 야행성으로 판을 흔드는 타입.",
+      traits: ["자유 최우선", "기분/리듬 타는 편", "갑자기 사라졌다가 등장"],
+      actions: ["밤에만 활발", "재밌는 쪽으로 이동", "정해진 틀을 싫어함"],
+      match: ["펌킨봉", "구미호봉"],
+      mismatch: ["저승봉", "백작봉"],
+      comment: "너는 ‘귀신 사회의 변칙 카드’다."
+    },
+    ghost: {
+      oneline: "“안 보이는데… 제일 중요한 애.”",
+      summary: "눈에 띄진 않지만 항상 핵심에 있다. 조용히 존재로 판을 잡는 타입.",
+      traits: ["낮은 존재감, 높은 영향력", "관찰력 좋음", "필요할 때만 등장"],
+      actions: ["사람 많은 곳에서 관찰", "결정적 순간에 등장", "분위기 파악 빠름"],
+      match: ["위치봉", "백작봉"],
+      mismatch: ["펌킨봉", "프랑켄봉"],
+      comment: "너는 ‘있어야 시스템이 돌아가는 유령’이다."
+    },
+    reaper: {
+      oneline: "“선 넘으면 바로 컷.”",
+      summary: "귀신 사회의 질서를 담당. 감정은 적어도 신뢰는 높은 타입.",
+      traits: ["기준 확실", "공정함", "룰을 지키게 만듦"],
+      actions: ["질서 정리", "선 넘는 행동 차단", "분쟁 생기면 판단 담당"],
+      match: ["위치봉", "프랑켄봉"],
+      mismatch: ["박쥐봉", "펌킨봉"],
+      comment: "너 때문에 귀신 사회가 ‘사회’가 된다."
+    },
+    franken: {
+      oneline: "“투덜대도 내가 다 한다.”",
+      summary: "불평은 많은데 해결은 더 많이 한다. 현장 수습 담당.",
+      traits: ["실행력 강함", "현장형", "짜증 내도 책임짐"],
+      actions: ["문제 터지면 일단 움직임", "뒤끝보다 결과", "일 처리 속도 빠름"],
+      match: ["저승봉", "펌킨봉"],
+      mismatch: ["백작봉", "유령봉"],
+      comment: "너 없으면 귀신 사회는 ‘일’이 멈춘다."
+    },
+    pumpkin: {
+      oneline: "“없으면 허전, 있으면 시끄러움.”",
+      summary: "무섭진 않은데 분위기는 네가 만든다. 소란+활력 담당.",
+      traits: ["친화력 높음", "분위기 전환", "심심한 걸 못 참음"],
+      actions: ["장난/이벤트 생성", "침체된 분위기 띄우기", "주목 받으면 더 힘남"],
+      match: ["박쥐봉", "프랑켄봉"],
+      mismatch: ["백작봉", "저승봉"],
+      comment: "너는 귀신 사회의 ‘BGM’이다."
+    },
+    fox: {
+      oneline: "“말 한마디로 판을 뒤집는다.”",
+      summary: "교섭/중재/설득의 귀신. 인간과 귀신 사이도 오간다.",
+      traits: ["말빨/센스", "상대 심리 파악", "협상 능력"],
+      actions: ["대화로 해결", "갈등 중재", "판을 유리하게 재구성"],
+      match: ["박쥐봉", "위치봉"],
+      mismatch: ["저승봉", "미라봉"],
+      comment: "너랑 대화하면 결과가 바뀐다."
+    },
+    count: {
+      oneline: "“아무 데서나 안 나오는 고귀함.”",
+      summary: "기준과 취향이 확실. 품위를 유지하며 거리를 조절한다.",
+      traits: ["퀄리티 집착", "기준 높음", "아무나 안 엮임"],
+      actions: ["필요할 때만 등장", "선 긋기 깔끔", "분위기 무게 중심"],
+      match: ["미라봉", "유령봉"],
+      mismatch: ["펌킨봉", "박쥐봉"],
+      comment: "너는 귀신 사회의 ‘격’이다."
+    }
+  };
+
+  function nl2br(text) { return (text || "").replace(/\n/g, "<br>"); }
+  function listToLines(arr) {
+    if (!arr || !arr.length) return "• (해당 없음)";
+    return arr.map(v => `• ${v}`).join("<br>");
+  }
+
+  /* ========= 페이지 전환 ========= */
+  const pages = {
+    intro: document.getElementById("page-intro"),
+    quiz: document.getElementById("page-quiz"),
+    loading: document.getElementById("page-loading"),
+    result: document.getElementById("page-result"),
+  };
+
+  function showPage(name) {
+    Object.values(pages).forEach(p => p.classList.add("hidden"));
+    pages[name].classList.remove("hidden");
+    window.scrollTo({ top: 0 });
+  }
+
+  /* ========= 퀴즈 로직(행님 최종 질문/캐릭터 배치 유지 + 점수만 균등조정) ========= */
+  const ghostQuestions = [
+    {
+      text: "Q1. 어느 날 유령이 된 나! 나의 주 활동 장소는?",
+      options: [
+        { label: "가장 높은 곳으로가서 내려다본다", scores: { witch:3, count:2, reaper:1 } },
+        { label: "가장 이상적인 자리를 찾아 존버한다", scores: { mummy:3, franken:2 } },
+        { label: "밤에만 나타난다", scores: { bat:3, fox:2 } },
+        { label: "한적한 곳보다는 도심속에서 관찰한다", scores: { ghost:3, pumpkin:2 } },
+      ]
+    },
+    {
+      text: "Q2. 인간과 마주쳤다!! 내가 할 행동은?",
+      options: [
+        { label: "가만히만 있다면 신경 안쓴다.", scores: { reaper:3, franken:2, mummy:2 } },
+        { label: "호기심에 이리저리 말을 걸어본다", scores: { fox:3, witch:2 } },
+        { label: "괜히 겁 한 번 준다", scores: { pumpkin:3, ghost:2 } },
+        { label: "그냥 지나친다", scores: { count:3, bat:2 } },
+      ]
+    },
+    {
+      text: "Q3. 유령세상에서의 나의 역활은 ?",
+      options: [
+        { label: "전체 상황 파악 후 해결한다!", scores: { witch:3, count:2 } },
+        { label: "머리보단 몸이 먼저 움직여야지!", scores: { franken:3, pumpkin:2, bat:2 } },
+        { label: "너때문에 흥이 다 깨져버렸으니 책임지는 담당", scores: { pumpkin:3, fox:2 } },
+        { label: "어지러운건 싫어 정리정돈은 내가 한다!", scores: { reaper:3, ghost:2, mummy:2 } },
+      ]
+    },
+    {
+      text: "Q4. 문제가 생겼을 때의 나의 반응은?",
+      options: [
+        { label: "후 .. 일단 몰라도 끝까지 해결해본다", scores: { mummy:3, franken:3, reaper:2 } },
+        { label: "하기싫은티 팍팍 ! 투덜대면서도 해결한다", scores: { bat:3, pumpkin:2 } },
+        { label: "나는 내 생각과 말빨로 상황을 바꾼다", scores: { fox:3, witch:2 } },
+        { label: "남들이 알아서 하겠지? 굳이 개입하지 않는다", scores: { count:3, ghost:2 } },
+      ]
+    },
+    {
+      text: "Q5. 다른 귀신들과의 거리감은?",
+      options: [
+        { label: "자유롭게 왔다 갔다 한다", scores: { bat:3, franken:2, witch:2 } },
+        { label: "필요할 때만 나타난다", scores: { count:3, fox:2, bat:2 } },
+        { label: "늘 어딘가에 존재한다", scores: { ghost:3, reaper:3 } },
+        { label: "없으면 허전한 존재다", scores: { pumpkin:3, mummy:2 } },
+      ]
+    },
+    {
+      text: "Q6. 사람들이 유령인 나를 보고 하는 말은?",
+      options: [
+        { label: "너무 기준이 완전 확실해서 가끔 무서워!", scores: { reaper:4, witch:3 } },
+        { label: "유령이 어뜨케 이렇게 매력이 넘칠까아?", scores: { fox:4, pumpkin:2 } },
+        { label: "분위기가 괜히 말 걸기 어려운 스타일이야", scores: { count:4, mummy:3 } },
+        { label: "언제부터 인지는 잘모르겠는데 항상 곁에 있는거같아", scores: { ghost:4, franken:3, bat:3 } },
+      ]
+    }
+  ];
+
+  const scoreState = {
+    witch:0, mummy:0, bat:0, ghost:0, reaper:0, franken:0, pumpkin:0, fox:0, count:0
+  };
+
+  let currentIndex = 0;
+  let currentResultKey = "witch";
+
+  const qText = document.getElementById("question-text");
+  const optionsWrap = document.getElementById("options-wrap");
+  const progressText = document.getElementById("progress-text");
+  const progressBar = document.getElementById("progress-bar");
+
+  function resetScores() {
+    Object.keys(scoreState).forEach(k => scoreState[k] = 0);
+  }
+
+  function startQuiz() {
+    // 표지 영상 재생 중이면 멈춰도 되고 그냥 둬도 됨 (모바일 자동재생이라 무해)
+    const v = document.getElementById("intro-video");
+    try { if (v) v.pause(); } catch(e){}
+
+    currentIndex = 0;
+    currentResultKey = "witch";
+    resetScores();
+    resetShareCache();
+    renderQuestion();
+    showPage("quiz");
+  }
+
+  function renderQuestion() {
+    const q = ghostQuestions[currentIndex];
+    qText.textContent = q.text;
+    progressText.textContent = `${currentIndex + 1} / ${ghostQuestions.length}`;
+    progressBar.style.width = `${((currentIndex + 1) / ghostQuestions.length) * 100}%`;
+
+    optionsWrap.innerHTML = "";
+
+    [...q.options]
+      .sort(() => Math.random() - 0.5)
+      .forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt.label;
+        btn.onclick = () => selectOption(opt.scores);
+        optionsWrap.appendChild(btn);
+      });
+  }
+
+  function addScores(scoresObj) {
+    for (const [k, v] of Object.entries(scoresObj || {})) {
+      if (scoreState[k] == null) continue;
+      scoreState[k] += Number(v) || 0;
+    }
+  }
+
+  function selectOption(scoresObj) {
+    addScores(scoresObj);
+    if (currentIndex < ghostQuestions.length - 1) {
+      currentIndex++;
+      renderQuestion();
+    } else {
+      showPage("loading");
+      setTimeout(() => {
+        calculateResult();
+        showPage("result");
+      }, 3000);
+    }
+  }
+
+  function setResultImage(url) {
+    const img = document.getElementById("poster-image");
+    if (!img) return;
+    img.crossOrigin = "anonymous";
+    img.src = url;
+  }
+
+  function getCurrentMeta() {
+    return resultMeta[currentResultKey] || resultMeta.witch;
+  }
+
+  function renderResultDetail() {
+    const meta = getCurrentMeta();
+    const detail = resultDetail[currentResultKey] || resultDetail.witch;
+
+    applyTheme(currentResultKey);
+
+    document.getElementById("poster-header").textContent = meta.title;
+    document.getElementById("result-title").textContent = meta.title;
+
+    setResultImage(meta.imageUrl);
+
+    document.getElementById("detail-oneline").innerHTML = nl2br(detail.oneline);
+    document.getElementById("detail-summary").innerHTML = nl2br(detail.summary);
+    document.getElementById("detail-traits").innerHTML = listToLines(detail.traits);
+    document.getElementById("detail-actions").innerHTML = listToLines(detail.actions);
+    document.getElementById("detail-match").innerHTML = listToLines((detail.match || []).map(v => v));
+    document.getElementById("detail-mismatch").innerHTML = listToLines((detail.mismatch || []).map(v => v));
+    document.getElementById("detail-comment").innerHTML = nl2br(detail.comment);
+  }
+
+  function calculateResult() {
+    // 최고점 찾기
+    let bestKey = "witch";
+    let bestScore = -Infinity;
+    for (const [k, v] of Object.entries(scoreState)) {
+      if (v > bestScore) { bestScore = v; bestKey = k; }
+    }
+
+    // 동점 처리: Q6에서 점수 받은 쪽을 우선(확정용)
+    const q6 = ghostQuestions[ghostQuestions.length - 1];
+    const q6Candidates = new Set();
+    q6.options.forEach(o => Object.keys(o.scores || {}).forEach(k => q6Candidates.add(k)));
+
+    // bestScore와 같은 키들 모으기
+    const tied = Object.entries(scoreState)
+      .filter(([k,v]) => v === bestScore)
+      .map(([k]) => k);
+
+    if (tied.length > 1) {
+      // Q6 후보에 포함된 애들로 우선 필터
+      const inQ6 = tied.filter(k => q6Candidates.has(k));
+      const pool = inQ6.length ? inQ6 : tied;
+      // 그래도 여러개면 랜덤
+      bestKey = pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    currentResultKey = bestKey;
+    renderResultDetail();
+    resetShareCache();
+  }
+
+  function restartQuiz() {
+    closeSharePopup();
+    resetShareCache();
+    startQuiz();
+  }
+
+  /* ========= 공유 팝업 ========= */
+  function openSharePopup() {
+    document.getElementById("share-popup").classList.remove("hidden");
+    setShareStatus("스토리 이미지 준비 중…");
+    prebuildStoryShareAsset()
+      .then(() => setShareStatus("공유 준비 완료!"))
+      .catch(() => setShareStatus("이미지 준비 실패: 결과 이미지 경로/도메인 확인 필요"));
+  }
+  function closeSharePopup() {
+    document.getElementById("share-popup").classList.add("hidden");
+    setShareStatus("");
+  }
+
+  async function copyTestLink() {
+    const link = TEST_URL;
+    const ok = await safeClipboardWrite(link);
+    if (ok) { setShareStatus("✅ 링크가 복사됐어!"); return; }
+
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = link;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.top = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+      setShareStatus("✅ 링크가 복사됐어!");
+    } catch (e) {
+      setShareStatus("복사 실패: 브라우저 권한 확인 필요");
+    }
+  }
+
+  /* ========= ✅ 카카오 공유 (테스트2 링크) ========= */
+  function shareKakao() {
+    if (!window.Kakao || !Kakao.isInitialized()) {
+      alert("카카오톡 공유 준비 중이야. 잠시 후 다시 시도해줘!");
+      return;
+    }
+
+    const meta = getCurrentMeta();
+    const mainUrl = TEST_URL;
+
+    Kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: `유령 세상 속 나는? - ${meta.title}`,
+        description: `${meta.desc}
+
+👉 테스트 하러가기
+${mainUrl}`,
+        imageUrl: meta.imageUrl,
+        link: {
+          mobileWebUrl: mainUrl,
+          webUrl: mainUrl
+        }
+      },
+      buttons: [
+        {
+          title: "🔁 나도 테스트하기",
+          link: {
+            mobileWebUrl: mainUrl,
+            webUrl: mainUrl
+          }
+        },
+        {
+          title: "📋 내 결과 다시보기",
+          link: {
+            mobileWebUrl: `${mainUrl}?r=${currentResultKey}`,
+            webUrl: `${mainUrl}?r=${currentResultKey}`
+          }
+        }
+      ]
+    });
+  }
+
+  /* ========= 인스타/스토리 이미지 생성 (유지) ========= */
+  function loadImage(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = url;
+    });
+  }
+
+  function canvasToBlob(canvas, type = "image/png", quality) {
+    return new Promise((resolve) => canvas.toBlob(resolve, type, quality));
+  }
+
+  function wrapText(ctx, text, centerX, startY, maxWidth, lineHeight) {
+    const words = (text || "").split(" ");
+    let line = "";
+    let y = startY;
+
+    ctx.textAlign = "center";
+    for (let i = 0; i < words.length; i++) {
+      const testLine = line + words[i] + " ";
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && i > 0) {
+        ctx.fillText(line.trim(), centerX, y);
+        line = words[i] + " ";
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    if (line.trim()) ctx.fillText(line.trim(), centerX, y);
+  }
+
+  function roundRect(ctx, x, y, width, height, radius) {
+    const r = Math.min(radius, width / 2, height / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + width, y, x + width, y + height, r);
+    ctx.arcTo(x + width, y + height, x, y + height, r);
+    ctx.arcTo(x, y + height, x, y, r);
+    ctx.arcTo(x, y, x + width, y, r);
+    ctx.closePath();
+  }
+
+  async function buildStoryImageBlob() {
+    const meta = getCurrentMeta();
+
+    const W = 1080;
+    const H = 1920;
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+
+    const ctx = canvas.getContext("2d");
+
+    const grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, "#f3efff");
+    grad.addColorStop(1, "#ffffff");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.fillStyle = "#6d4aff";
+    ctx.font = "bold 56px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("유령 세상 속 나는?", W / 2, 160);
+
+    ctx.fillStyle = "#222";
+    ctx.font = "bold 72px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText(meta.title, W / 2, 290);
+
+    ctx.fillStyle = "#555";
+    ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
+    wrapText(ctx, meta.desc, W / 2, 360, 880, 46);
+
+    try {
+      const img = await loadImage(meta.imageUrl);
+      const maxW = 860;
+      const maxH = 860;
+      const scale = Math.min(maxW / img.width, maxH / img.height);
+      const dw = img.width * scale;
+      const dh = img.height * scale;
+
+      const cardX = (W - 920) / 2;
+      const cardY = 480;
+      roundRect(ctx, cardX, cardY, 920, 960, 48);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(109, 74, 255, 0.55)";
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      ctx.drawImage(img, (W - dw) / 2, cardY + 60, dw, dh);
+    } catch (e) {
+      ctx.fillStyle = "#888";
+      ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
+      ctx.fillText("결과 이미지 로드 실패", W / 2, 980);
+    }
+
+    ctx.fillStyle = "#6d4aff";
+    ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText("👉 나도 테스트 하러가기", W / 2, 1780);
+
+    ctx.fillStyle = "#333";
+    ctx.font = "36px system-ui, -apple-system, Segoe UI, sans-serif";
+    ctx.fillText(TEST_URL, W / 2, 1840);
+
+    return await canvasToBlob(canvas, "image/png");
+  }
+
+  const SHARE = {
+    storyFileCache: null,
+    storyBlobCache: null,
+    buildPromise: null,
+    busy: false
+  };
+
+  function setShareStatus(msg) {
+    const el = document.getElementById("share-status");
+    if (!el) return;
+    el.textContent = msg || "";
+  }
+
+  function setShareBusy(on) {
+    SHARE.busy = on;
+    const popup = document.getElementById("share-popup");
+    if (!popup) return;
+    popup.querySelectorAll("button").forEach(btn => {
+      if (btn.textContent.includes("닫기")) return;
+      btn.disabled = !!on;
+      btn.style.opacity = on ? "0.75" : "1";
+      btn.style.cursor = on ? "not-allowed" : "pointer";
+    });
+  }
+
+  async function safeClipboardWrite(text) {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  function resetShareCache() {
+    SHARE.storyFileCache = null;
+    SHARE.storyBlobCache = null;
+    SHARE.buildPromise = null;
+    SHARE.busy = false;
+    setShareStatus("");
+  }
+
+  async function prebuildStoryShareAsset() {
+    if (SHARE.storyFileCache && SHARE.storyBlobCache) return { file: SHARE.storyFileCache, blob: SHARE.storyBlobCache };
+    if (SHARE.buildPromise) return SHARE.buildPromise;
+
+    SHARE.buildPromise = (async () => {
+      const blob = await buildStoryImageBlob();
+      const file = new File([blob], "yoboong_ghost_result_story.png", { type: "image/png" });
+      SHARE.storyBlobCache = blob;
+      SHARE.storyFileCache = file;
+      return { file, blob };
+    })();
+
+    try { return await SHARE.buildPromise; }
+    finally { SHARE.buildPromise = null; }
+  }
+
+  function canWebShareFiles(file) {
+    try {
+      return !!(navigator.share && navigator.canShare && navigator.canShare({ files: [file] }));
+    } catch (e) { return false; }
+  }
+
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function shareInstagramStoryOptimal() {
+    if (SHARE.busy) return;
+    setShareBusy(true);
+    setShareStatus("인스타 공유 준비 중…");
+
+    const meta = getCurrentMeta();
+    await safeClipboardWrite(TEST_URL);
+
+    try {
+      const { file, blob } = await prebuildStoryShareAsset();
+
+      if (canWebShareFiles(file)) {
+        setShareStatus("공유 시트 여는 중… (인스타그램 선택)");
+        await navigator.share({
+          files: [file],
+          title: `유령 테스트 - ${meta.title}`,
+          text: `${meta.title} 결과!\n${TEST_URL}`,
+          url: TEST_URL
+        });
+        setShareStatus("공유 완료!");
+        return;
+      }
+
+      setShareStatus("공유시트 미지원: 이미지 저장 후 인스타 스토리 열기");
+      downloadBlob(blob, "yoboong_ghost_result_story.png");
+      setTimeout(() => { window.location.href = "instagram://story-camera"; }, 350);
+      setShareStatus("이미지 저장 후 인스타 스토리에 추가해줘. (링크는 클립보드)");
+    } catch (e) {
+      console.error(e);
+      setShareStatus("인스타 공유 실패: 결과 이미지 경로/도메인(CORS) 확인 필요");
+    } finally {
+      setShareBusy(false);
+    }
+  }
+
+  async function shareXImageOptimal() {
+    if (SHARE.busy) return;
+    setShareBusy(true);
+    setShareStatus("X 이미지 공유 준비 중…");
+
+    const meta = getCurrentMeta();
+
+    try {
+      const { file } = await prebuildStoryShareAsset();
+
+      if (canWebShareFiles(file)) {
+        setShareStatus("공유 시트 여는 중… (X 선택)");
+        await navigator.share({
+          files: [file],
+          title: `유령 테스트 - ${meta.title}`,
+          text: `내 유령 타입은 ${meta.title} 👻\n너도 해봐 👉\n${TEST_URL}`,
+          url: TEST_URL
+        });
+        setShareStatus("공유 완료!");
+        return;
+      }
+
+      const text = encodeURIComponent(`내 유령 타입은 ${meta.title} 👻\n너도 해봐 👉`);
+      const url = encodeURIComponent(TEST_URL);
+      const intent = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+      window.open(intent, "_blank", "noopener,noreferrer");
+      setShareStatus("텍스트+링크로 공유창 열었어!");
+    } catch (e) {
+      console.error(e);
+      setShareStatus("X 공유 실패: 브라우저/기기 공유 기능 확인 필요");
+    } finally {
+      setShareBusy(false);
+    }
+  }
+
+  /* ========= ✅ share 링크로 들어오면 결과페이지로 바로 진입 ========= */
+  (function bootFromShareLink(){
+    const r = new URLSearchParams(location.search).get("r");
+    if (r && resultMeta[r]) {
+      currentResultKey = r;
+      renderResultDetail();
+      resetShareCache();
+      showPage("result");
+      return;
+    }
+
+    // ✅ 기본 진입은 표지
+    showPage("intro");
+  })();
+</script>
+
+<script src="/common/common.js"></script>
+
+</body>
+</html>
 
