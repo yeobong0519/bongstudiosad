@@ -1,57 +1,659 @@
-/* ✅ 잘맞/안맞 유령: 좌우 이미지 궁합 카드 */
-.compat-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:12px;
-}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>유령 세상 속 나는?</title>
 
-.compat-item{
-  border:1px solid rgba(0,0,0,0.08);
-  border-radius:14px;
-  padding:10px;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:110px;
-}
+  <!-- ✅ OG(테스트2 링크용) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="여봉이 성향테스트" />
+  <meta property="og:title" content="유령 세상 속 나는?" />
+  <meta property="og:description" content="여기를 눌러 테스트 하러 가기!" />
+  <meta property="og:url" content="https://bongstudiosad.com/tests/test2/" />
+  <meta property="og:image" content="https://bongstudiosad.com/img/og_default.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
-.compat-item.good{
-  outline: 2px solid rgba(109,74,255,0.35);
-}
+  <style>
+    body { margin:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:#f5f5f7; color:#222; }
+    .app { max-width:480px; margin:0 auto; min-height:100vh; padding:20px 16px 40px; box-sizing:border-box; }
+    .card { background:#fff; border-radius:18px; box-shadow:0 6px 24px rgba(0,0,0,.08); padding:18px 16px; margin-bottom:14px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; padding:10px 2px 14px; }
+    .brand { font-weight:900; letter-spacing:-0.02em; font-size:16px; color:#331a66; display:flex; align-items:center; gap:8px; }
+    .brand-badge { font-size:12px; font-weight:900; background:#efe7ff; padding:4px 10px; border-radius:999px; color:#5a2dce; }
+    .nav { display:flex; gap:10px; align-items:center; }
+    .nav a { text-decoration:none; font-size:12px; font-weight:800; color:#5a2dce; background:#efe7ff; padding:8px 12px; border-radius:999px; }
+    .title { font-size:22px; font-weight:900; letter-spacing:-0.03em; margin:0 0 8px; color:#2b164f; }
+    .subtitle { margin:0; font-size:14px; line-height:1.5; color:#444; }
 
-.compat-item.bad{
-  outline: 2px solid rgba(0,0,0,0.18);
-}
+    .btn { width:100%; border:none; border-radius:14px; padding:14px 12px; font-size:15px; font-weight:900; cursor:pointer; transition:transform .08s ease; }
+    .btn:active { transform:scale(0.99); }
+    .btn-primary { background:#6d4aff; color:#fff; }
+    .btn-ghost { background:#f0ecff; color:#5a2dce; }
+    .btn-black { background:#111; color:#fff; }
+    .btn-yellow { background:#ffe500; color:#111; }
+    .btn-row { display:grid; grid-template-columns:1fr; gap:10px; margin-top:14px; }
 
-.compat-thumb{
-  width:96px;
-  height:96px;
-  border-radius:14px;
-  object-fit:cover;
-  display:block;
-  background:#f5f5f7;
-}
+    .page { display:none; }
+    .page.active { display:block; }
 
-.compat-label{
-  position:absolute;
-  transform: translateY(-52px);
-  font-size:11px;
-  font-weight:900;
-  padding:6px 10px;
-  border-radius:999px;
-  background:#f3efff;
-  color:#5a2dce;
-}
+    .q-title { font-size:18px; font-weight:900; margin:0 0 10px; color:#2b164f; letter-spacing:-0.02em; }
+    .options { display:grid; gap:10px; }
+    .opt { border:1px solid rgba(0,0,0,0.10); border-radius:14px; padding:14px 12px; background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:800; line-height:1.35; }
+    .opt:active { transform:scale(0.995); }
+    .opt small { font-weight:800; color:#5a2dce; background:#efe7ff; padding:6px 10px; border-radius:999px; white-space:nowrap; }
 
-.compat-item.bad .compat-label{
-  background:#f1f1f1;
-  color:#111;
-}
+    .progress-wrap { margin-top:14px; }
+    .progress { width:100%; height:10px; border-radius:999px; background:rgba(109,74,255,0.16); overflow:hidden; }
+    .progress > div { height:100%; width:0%; background:#6d4aff; border-radius:999px; transition:width .25s ease; }
+    .progress-label { margin-top:8px; font-size:12px; font-weight:900; color:#5a2dce; display:flex; justify-content:space-between; }
 
-.compat-wrap{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+    .loading-box { display:grid; gap:12px; align-items:center; justify-items:center; padding:26px 0 6px; }
+    .spinner { width:46px; height:46px; border:6px solid rgba(109,74,255,0.18); border-top-color:#6d4aff; border-radius:999px; animation:spin .9s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    .result-head { display:grid; gap:10px; }
+    .poster { border-radius:16px; overflow:hidden; background:#111; color:#fff; padding:14px 14px 12px; display:grid; gap:10px; }
+    .poster-title { font-size:14px; font-weight:900; opacity:.9; }
+    .poster-big { font-size:20px; font-weight:1000; letter-spacing:-0.03em; margin:0; }
+    .poster-img { width:100%; border-radius:14px; display:block; background:#000; object-fit:cover; aspect-ratio:1/1; }
+
+    .result-table { width:100%; border-collapse:collapse; border-radius:14px; overflow:hidden; }
+    .result-table th, .result-table td { border-top:1px solid rgba(0,0,0,0.08); padding:12px 10px; vertical-align:top; font-size:14px; line-height:1.55; }
+    .result-table th { width:92px; font-weight:1000; color:#2b164f; background:rgba(109,74,255,0.06); }
+    .highlight { font-weight:900; color:#5a2dce; }
+
+    .ably-banner, .coupang-banner { display:block; margin:12px 0 0; border-radius:16px; overflow:hidden; box-shadow:0 6px 22px rgba(0,0,0,.10); }
+    .ably-banner img, .coupang-banner img { display:block; width:100%; height:auto; }
+
+    footer { margin-top:18px; font-size:12px; color:#666; text-align:center; }
+    footer a { color:#5a2dce; font-weight:900; text-decoration:none; }
+
+    /* ✅ 단짝/원수 유령: 좌우 이미지 카드 (단짝=연한초록, 원수=연한빨강) */
+    .compat-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .compat-item{
+      border:2px solid rgba(0,0,0,0.10);
+      border-radius:14px;
+      padding:10px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:120px;
+      box-sizing:border-box;
+    }
+    .compat-item.buddy{
+      border-color: rgba(120, 220, 140, 0.60);
+    }
+    .compat-item.enemy{
+      border-color: rgba(255, 120, 120, 0.60);
+    }
+    .compat-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .compat-thumb{
+      width:96px;
+      height:96px;
+      border-radius:14px;
+      object-fit:cover;
+      display:block;
+      background:#f5f5f7;
+    }
+    .compat-label{
+      position:absolute;
+      top:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:11px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(120, 220, 140, 0.18);
+      color:#176a2d;
+      white-space:nowrap;
+    }
+    .compat-item.enemy .compat-label{
+      background: rgba(255, 120, 120, 0.18);
+      color:#7a1a1a;
+    }
+  </style>
+
+  <!-- Kakao SDK -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+    integrity="sha384-8bJ9Et8+GQ2x8xqF3cEZR3H6zQpX4z4W6qJd2m8q6i4yZxQzQd3o+2aN4c5f4F3V"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="brand">
+        봉 스튜디오's
+        <span class="brand-badge">TEST</span>
+      </div>
+      <div class="nav">
+        <a href="https://bongstudiosad.com/">HOME</a>
+        <a href="https://bongstudiosad.com/tests/">TESTS</a>
+      </div>
+    </div>
+
+    <!-- Page 0: 메인 -->
+    <section class="page active" id="page-home">
+      <div class="card">
+        <h1 class="title">유령 세상 속 나는?</h1>
+        <p class="subtitle">귀신 세상 속, 당신은 어떤 타입일까? 6문항으로 확인해보자 👻</p>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" id="btn-start">테스트 시작하기</button>
+          <button class="btn btn-ghost" id="btn-go-tests">다른 테스트 보기</button>
+        </div>
+      </div>
+
+      <!-- 쿠팡 배너 -->
+      <a class="coupang-banner" href="https://link.coupang.com/a/deL5IN" target="_blank" referrerpolicy="unsafe-url">
+        <img src="https://ads-partners.coupang.com/banners/950717?subId=&traceId=V0-301-bae0f72e5e59e45f-I950717&w=320&h=100" alt="">
+      </a>
+
+      <footer>
+        © 봉 스튜디오's · <a href="https://bongstudiosad.com/">bongstudiosad.com</a>
+      </footer>
+    </section>
+
+    <!-- Page 1: 표지 -->
+    <section class="page" id="page-cover">
+      <div class="card">
+        <h2 class="title" style="margin-bottom:6px;">테스트 안내</h2>
+        <p class="subtitle">총 6문항! 끝나면 결과 + 단짝/원수 유령까지 바로 공개 👀</p>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="btn-cover-start">시작!</button>
+          <button class="btn btn-ghost" id="btn-cover-back">뒤로</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page 2~7: 질문 -->
+    <section class="page" id="page-quiz">
+      <div class="card">
+        <h2 class="q-title" id="q-title">질문</h2>
+        <div class="options" id="q-options"></div>
+
+        <div class="progress-wrap">
+          <div class="progress"><div id="progress-bar"></div></div>
+          <div class="progress-label">
+            <span id="progress-text">1 / 6</span>
+            <span>귀신력 상승중…</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page 8: 로딩 -->
+    <section class="page" id="page-loading">
+      <div class="card">
+        <div class="loading-box">
+          <div class="spinner"></div>
+          <div style="font-weight:1000;color:#2b164f;">결과 불러오는 중…</div>
+          <div style="font-size:13px;color:#666;">귀신 사회에서 회의 중이야. 잠깐만!</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page 9: 결과 -->
+    <section class="page" id="page-result">
+      <div class="card result-head">
+        <div class="poster">
+          <div class="poster-title" id="poster-header">결과</div>
+          <h2 class="poster-big" id="result-title">당신의 귀신 타입</h2>
+          <img class="poster-img" id="result-img" src="https://bongstudiosad.com/img/og_default.png" alt="결과 이미지">
+        </div>
+
+        <table class="result-table">
+          <tr>
+            <th>한줄</th>
+            <td id="detail-oneline"></td>
+          </tr>
+          <tr>
+            <th>요약</th>
+            <td id="detail-summary"></td>
+          </tr>
+          <tr>
+            <th>성향</th>
+            <td id="detail-traits"></td>
+          </tr>
+          <tr>
+            <th>행동</th>
+            <td id="detail-actions"></td>
+          </tr>
+
+          <!-- ✅ 단짝/원수: 좌(단짝) 우(원수) 이미지 -->
+          <tr>
+            <th>단짝/원수</th>
+            <td id="detail-compat"></td>
+          </tr>
+
+          <tr>
+            <th>코멘트</th>
+            <td id="detail-comment" class="highlight"></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 에이블리 배너 -->
+      <a class="ably-banner" href="https://ably.onelink.me/R1nE/8b0c6f3f" target="_blank" rel="noopener">
+        <img src="https://bongstudiosad.com/img/ably_banner.png" alt="에이블리 배너">
+      </a>
+
+      <div class="card">
+        <h3 class="title" style="font-size:18px;margin-bottom:6px;">공유하기</h3>
+        <p class="subtitle">친구에게 결과 공유하고 같이 테스트해봐!</p>
+
+        <div class="btn-row">
+          <button class="btn btn-yellow" id="btn-share-kakao">카카오 공유하기</button>
+          <button class="btn btn-black" id="btn-share-x">X 공유하기</button>
+          <button class="btn btn-ghost" id="btn-copy-link">링크 복사하기</button>
+          <button class="btn btn-primary" id="btn-retry">나도 다시 테스트하기</button>
+        </div>
+
+        <div id="copy-status" style="margin-top:10px;font-size:12px;font-weight:900;color:#5a2dce;"></div>
+      </div>
+
+      <footer>
+        © 봉 스튜디오's · <a href="https://bongstudiosad.com/">bongstudiosad.com</a>
+      </footer>
+    </section>
+  </div>
+
+  <script>
+  /**********************
+   * 기본 설정
+   **********************/
+  const SITE_URL = "https://bongstudiosad.com";
+  const TEST_URL = `${SITE_URL}/tests/test2/`;
+
+  // ✅ 카카오 초기화 (행님 키로 교체)
+  const KAKAO_JS_KEY = "YOUR_KAKAO_JAVASCRIPT_KEY";
+  if (window.Kakao && !Kakao.isInitialized()) {
+    Kakao.init(KAKAO_JS_KEY);
+  }
+
+  /**********************
+   * 결과 메타 (타이틀/설명/이미지)
+   **********************/
+  const resultMeta = {
+    witch:   { title:"위치봉",   desc:"모든 걸 꿰뚫어보는 계획형 귀신", imageUrl:`${SITE_URL}/img/result_witch.png` },
+    mummy:   { title:"미라봉",   desc:"끝까지 버티는 집념형 귀신",     imageUrl:`${SITE_URL}/img/result_mummy.png` },
+    bat:     { title:"박쥐봉",   desc:"밤에만 나타나는 자유 귀신",       imageUrl:`${SITE_URL}/img/result_bat.png` },
+    ghost:   { title:"유령봉",   desc:"조용하지만 존재감 있는 귀신",     imageUrl:`${SITE_URL}/img/result_ghost.png` },
+    reaper:  { title:"저승봉",   desc:"룰과 질서를 지키는 저승 담당",     imageUrl:`${SITE_URL}/img/result_reaper.png` },
+    frank:   { title:"프랑켄봉", desc:"힘은 세지만 마음은 순한 귀신",     imageUrl:`${SITE_URL}/img/result_frank.png` },
+    pumpkin: { title:"펌킨봉",   desc:"분위기 메이커 장난꾸러기 귀신",     imageUrl:`${SITE_URL}/img/result_pumpkin.png` },
+    gumiho:  { title:"구미호봉", desc:"센스와 매력으로 판을 흔드는 귀신",  imageUrl:`${SITE_URL}/img/result_gumiho.png` },
+    count:   { title:"백작봉",   desc:"품격 있는 고독한 카리스마 귀신",    imageUrl:`${SITE_URL}/img/result_count.png` }
+  };
+
+  // ✅ 결과 타이틀(예: '저승봉') -> resultMeta key 찾기
+  function findKeyByTitle(title) {
+    if (!title) return null;
+    for (const [k, v] of Object.entries(resultMeta)) {
+      if (v && v.title === title) return k;
+    }
+    return null;
+  }
+
+  // ✅ 결과 타이틀 -> 이미지 URL 가져오기 (없으면 기본 이미지)
+  function getImageUrlByTitle(title) {
+    const key = findKeyByTitle(title);
+    if (key && resultMeta[key] && resultMeta[key].imageUrl) return resultMeta[key].imageUrl;
+    return `${SITE_URL}/img/og_default.png`;
+  }
+
+  /* ========= 테마(원하면 나중에 캐릭터별로 변경 가능) ========= */
+  const themeMap = {
+    witch:   { posterBg:"#2b164f", accent:"#6d4aff" },
+    mummy:   { posterBg:"#1b2b2a", accent:"#2abf9c" },
+    bat:     { posterBg:"#1d1530", accent:"#a36bff" },
+    ghost:   { posterBg:"#121820", accent:"#4aa3ff" },
+    reaper:  { posterBg:"#141414", accent:"#ffd166" },
+    frank:   { posterBg:"#1a2a1a", accent:"#6bd968" },
+    pumpkin: { posterBg:"#2a1a12", accent:"#ff8a3d" },
+    gumiho:  { posterBg:"#2a121a", accent:"#ff4a8d" },
+    count:   { posterBg:"#111827", accent:"#9ca3af" }
+  };
+
+  function applyTheme(key){
+    const t = themeMap[key] || themeMap.witch;
+    document.querySelector(".poster").style.background = t.posterBg;
+    const bar = document.getElementById("progress-bar");
+    if (bar) bar.style.background = t.accent;
+  }
+
+  /**********************
+   * 결과 디테일
+   **********************/
+  const resultDetail = {
+    witch: {
+      oneline: "“흐름은 내가 다 보고 있다.”",
+      summary: "직접 나서진 않지만, 귀신 사회의 판을 읽고 정리하는 타입.",
+      traits: ["전체 상황을 한 번에 파악", "말은 짧고 핵심만", "혼란일수록 침착함"],
+      actions: ["뒤에서 정리 → 방향 제시", "필요할 때만 한 방", "감정 과열되면 자동 제동"],
+      match: ["저승봉", "유령봉"],
+      mismatch: ["펌킨봉", "박쥐봉"],
+      comment: "너 없으면 귀신 사회 회의가 끝나질 않아."
+    },
+    mummy: {
+      oneline: "“느려도 끝까지 남아있다.”",
+      summary: "포기라는 단어가 없는 집념형. 조용히 버티다 마지막에 역전한다.",
+      traits: ["끈기 최상", "한 번 정하면 안 바꿈", "무심한 듯 강함"],
+      actions: ["끝까지 해결 시도", "쉽게 흔들리지 않음", "사라지지 않는 존재감"],
+      match: ["프랑켄봉", "저승봉"],
+      mismatch: ["펌킨봉", "구미호봉"],
+      comment: "너는 ‘끝까지 살아남는 귀신’ 그 자체야."
+    },
+    bat: {
+      oneline: "“분위기? 내가 바꿔줄게.”",
+      summary: "변칙, 반전, 변수 담당. 어디로 튈지 몰라서 재미있는 타입.",
+      traits: ["즉흥력/센스 좋음", "기분 따라 무드 변화", "규칙보다 감각"],
+      actions: ["갑자기 분위기 전환", "상대 반응 보며 플레이", "심심하면 판을 흔듦"],
+      match: ["펌킨봉", "구미호봉"],
+      mismatch: ["저승봉", "백작봉"],
+      comment: "너는 ‘귀신 사회의 변칙 카드’다."
+    },
+    ghost: {
+      oneline: "“안 보이는데… 제일 중요한 애.”",
+      summary: "눈에 띄진 않지만 항상 핵심에 있다. 조용히 존재로 판을 잡는 타입.",
+      traits: ["낮은 존재감, 높은 영향력", "관찰력 좋음", "필요할 때만 등장"],
+      actions: ["사람 많은 곳에서 관찰", "결정적 순간에 등장", "분위기 파악 빠름"],
+      match: ["위치봉", "백작봉"],
+      mismatch: ["펌킨봉", "프랑켄봉"],
+      comment: "너는 ‘있어야 시스템이 돌아가는 유령’이다."
+    },
+    reaper: {
+      oneline: "“선 넘으면 바로 컷.”",
+      summary: "귀신 사회의 질서를 담당. 룰을 지키고 기준이 명확한 타입.",
+      traits: ["기준 확실", "정의감/책임감", "할 말은 함"],
+      actions: ["질서 정리", "불공정 참기 힘듦", "결정은 빠름"],
+      match: ["위치봉", "미라봉"],
+      mismatch: ["박쥐봉", "펌킨봉"],
+      comment: "너는 ‘귀신 사회의 경계선’이야."
+    },
+    frank: {
+      oneline: "“힘은 세지만… 마음은 더 순함.”",
+      summary: "덩치/파워 담당인데 의외로 소심하고 착한 타입. 든든한 탱커.",
+      traits: ["힘 세지만 상처 잘 받음", "정 많음", "혼자 고민"],
+      actions: ["필요할 땐 몸으로 막음", "친구 편 들어줌", "조용히 챙김"],
+      match: ["미라봉", "유령봉"],
+      mismatch: ["펌킨봉", "구미호봉"],
+      comment: "너는 ‘든든한 귀신 탱커’야."
+    },
+    pumpkin: {
+      oneline: "“심심한 건 못 참지!”",
+      summary: "분위기 메이커. 장난, 드립, 텐션으로 귀신 사회를 살리는 타입.",
+      traits: ["유쾌함", "드립력", "가볍게 친해짐"],
+      actions: ["분위기 띄우기", "장난치기", "새로운 이벤트 만들기"],
+      match: ["박쥐봉", "구미호봉"],
+      mismatch: ["저승봉", "위치봉"],
+      comment: "너 없으면 귀신 사회가 너무 조용해져."
+    },
+    gumiho: {
+      oneline: "“내가 판을 흔들어볼까?”",
+      summary: "매력과 센스로 판을 읽고 움직이는 타입. 눈치가 빠르고 영리하다.",
+      traits: ["센스", "표정/말투로 분위기 조절", "영리함"],
+      actions: ["사람 마음 읽기", "필요할 때만 치고 빠짐", "득 될 때 움직임"],
+      match: ["펌킨봉", "박쥐봉"],
+      mismatch: ["미라봉", "프랑켄봉"],
+      comment: "너는 ‘귀신 사회의 외교관’ 같은 존재야."
+    },
+    count: {
+      oneline: "“품격은 지켜야지.”",
+      summary: "고독한 카리스마. 조용히 중심을 잡고 자기 기준이 확실한 타입.",
+      traits: ["말 수 적음", "기준 확실", "혼자 있는 시간 중요"],
+      actions: ["필요한 말만 함", "거리 유지", "가끔 한마디로 정리"],
+      match: ["유령봉", "위치봉"],
+      mismatch: ["펌킨봉", "박쥐봉"],
+      comment: "너는 ‘귀신 사회의 귀족’ 같은 분위기야."
+    }
+  };
+
+  /**********************
+   * 질문 데이터(6문항)
+   **********************/
+  const ghostQuestions = [
+    {
+      q: "귀신 사회에 처음 왔다. 너의 첫 행동은?",
+      options: [
+        { text: "전체 상황을 훑고 규칙부터 파악한다", tag: "(전략형)", scores: { witch: 3, reaper: 2 } },
+        { text: "일단 조용히 구석에서 분위기 관찰", tag: "(관찰형)", scores: { ghost: 3, count: 2 } },
+        { text: "재밌는 거 없나? 사람들한테 말 걸기", tag: "(텐션형)", scores: { pumpkin: 3, bat: 2 } }
+      ]
+    },
+    {
+      q: "누가 갑자기 시비를 걸었다. 너는?",
+      options: [
+        { text: "규칙 위반이면 바로 컷. 선 넘지 마", tag: "(단호형)", scores: { reaper: 3, witch: 1 } },
+        { text: "말로 부드럽게 정리하고 상황을 풀어", tag: "(외교형)", scores: { gumiho: 3, count: 1 } },
+        { text: "그냥 몸으로 막아준다. 내 친구 건들지 마", tag: "(수호형)", scores: { frank: 3, mummy: 1 } }
+      ]
+    },
+    {
+      q: "귀신 사회 회의 중. 회의가 산으로 간다…",
+      options: [
+        { text: "핵심만 정리해서 방향을 딱 잡아준다", tag: "(정리형)", scores: { witch: 3, count: 1 } },
+        { text: "끝까지 남아서 해결될 때까지 버틴다", tag: "(집념형)", scores: { mummy: 3, reaper: 1 } },
+        { text: "분위기 전환으로 흐름을 바꿔버린다", tag: "(변칙형)", scores: { bat: 3, pumpkin: 1 } }
+      ]
+    },
+    {
+      q: "너에게 가장 중요한 건?",
+      options: [
+        { text: "기준과 질서", tag: "(룰중시)", scores: { reaper: 3, count: 2 } },
+        { text: "분위기와 재미", tag: "(무드중시)", scores: { pumpkin: 3, bat: 2 } },
+        { text: "관계와 정", tag: "(정중시)", scores: { frank: 3, gumiho: 2 } }
+      ]
+    },
+    {
+      q: "혼자 있는 시간은 너에게?",
+      options: [
+        { text: "꼭 필요하다. 혼자가 편함", tag: "(고독형)", scores: { count: 3, ghost: 2 } },
+        { text: "가끔 필요하지만 오래는 싫다", tag: "(균형형)", scores: { witch: 2, gumiho: 2 } },
+        { text: "혼자면 심심해. 같이 놀자", tag: "(사교형)", scores: { pumpkin: 2, bat: 2 } }
+      ]
+    },
+    {
+      q: "마지막 질문! 너의 ‘결정 스타일’은?",
+      options: [
+        { text: "빠르게 결정. 애매하면 바로 정리", tag: "(결단형)", scores: { reaper: 3, witch: 2 } },
+        { text: "상대 반응을 보며 유연하게 움직임", tag: "(유연형)", scores: { gumiho: 3, bat: 2 } },
+        { text: "결정은 느려도 끝까지 책임짐", tag: "(책임형)", scores: { mummy: 3, frank: 2 } }
+      ]
+    }
+  ];
+
+  /**********************
+   * 상태
+   **********************/
+  let currentIndex = 0;
+  let scoreState = { witch:0, mummy:0, bat:0, ghost:0, reaper:0, frank:0, pumpkin:0, gumiho:0, count:0 };
+  let currentResultKey = "witch";
+
+  /**********************
+   * 유틸
+   **********************/
+  function $(id){ return document.getElementById(id); }
+  function showPage(id){
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    $(id).classList.add("active");
+  }
+  function nl2br(str){ return String(str || "").replace(/\n/g, "<br>"); }
+  function listToLines(arr){ if (!arr || !arr.length) return "-"; return arr.map(s => `• ${s}`).join("<br>"); }
+  function setResultImage(url){ $("result-img").src = url; }
+  function getCurrentMeta(){ return resultMeta[currentResultKey] || resultMeta.witch; }
+
+  /**********************
+   * 렌더: 질문
+   **********************/
+  function renderQuestion(){
+    const q = ghostQuestions[currentIndex];
+    $("q-title").textContent = q.q;
+
+    const optWrap = $("q-options");
+    optWrap.innerHTML = "";
+
+    q.options.forEach((o) => {
+      const btn = document.createElement("button");
+      btn.className = "opt";
+      btn.type = "button";
+      btn.innerHTML = `<span>${o.text}</span><small>${o.tag}</small>`;
+      btn.addEventListener("click", () => chooseOption(o));
+      optWrap.appendChild(btn);
+    });
+
+    const total = ghostQuestions.length;
+    const now = currentIndex + 1;
+    $("progress-text").textContent = `${now} / ${total}`;
+    $("progress-bar").style.width = `${Math.round((now/total)*100)}%`;
+  }
+
+  function chooseOption(option){
+    const scores = option.scores || {};
+    for (const [k,v] of Object.entries(scores)) {
+      if (scoreState[k] == null) scoreState[k] = 0;
+      scoreState[k] += v;
+    }
+
+    currentIndex += 1;
+    if (currentIndex >= ghostQuestions.length) {
+      showLoadingThenResult();
+      return;
+    }
+    renderQuestion();
+  }
+
+  /**********************
+   * 결과 계산/렌더
+   **********************/
+  function calculateResult(){
+    let bestKey = "witch";
+    let bestScore = -Infinity;
+
+    for (const [k,v] of Object.entries(scoreState)) {
+      if (v > bestScore) { bestScore = v; bestKey = k; }
+    }
+    return bestKey;
+  }
+
+  function renderResultDetail() {
+    const meta = getCurrentMeta();
+    const detail = resultDetail[currentResultKey] || resultDetail.witch;
+
+    applyTheme(currentResultKey);
+
+    document.getElementById("poster-header").textContent = meta.title;
+    document.getElementById("result-title").textContent = meta.title;
+    setResultImage(meta.imageUrl);
+
+    document.getElementById("detail-oneline").innerHTML = nl2br(detail.oneline);
+    document.getElementById("detail-summary").innerHTML = nl2br(detail.summary);
+    document.getElementById("detail-traits").innerHTML = listToLines(detail.traits);
+    document.getElementById("detail-actions").innerHTML = listToLines(detail.actions);
+
+    // ✅ 단짝/원수: 1개씩만 사용(첫번째만) + 이미지로 좌/우 렌더
+    const buddyTitle = (detail.match && detail.match.length) ? detail.match[0] : "";
+    const enemyTitle = (detail.mismatch && detail.mismatch.length) ? detail.mismatch[0] : "";
+
+    const buddyImg = getImageUrlByTitle(buddyTitle);
+    const enemyImg = getImageUrlByTitle(enemyTitle);
+
+    const compatEl = document.getElementById("detail-compat");
+    if (compatEl) {
+      compatEl.innerHTML = `
+        <div class="compat-grid">
+          <div class="compat-item buddy">
+            <div class="compat-wrap">
+              <div class="compat-label">단짝</div>
+              <img class="compat-thumb" src="${buddyImg}" alt="단짝 유령" title="${buddyTitle}">
+            </div>
+          </div>
+          <div class="compat-item enemy">
+            <div class="compat-wrap">
+              <div class="compat-label">원수</div>
+              <img class="compat-thumb" src="${enemyImg}" alt="원수 유령" title="${enemyTitle}">
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    document.getElementById("detail-comment").innerHTML = nl2br(detail.comment);
+  }
+
+  function showLoadingThenResult(){
+    showPage("page-loading");
+    currentResultKey = calculateResult();
+    setTimeout(() => {
+      showPage("page-result");
+      renderResultDetail();
+    }, 900);
+  }
+
+  /**********************
+   * 공유
+   **********************/
+  function shareKakao(){
+    const meta = getCurrentMeta();
+    const desc = `${meta.desc}\n\n👉 테스트 하러가기\n${TEST_URL}`;
+
+    Kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: `유령 세상 속 나는? - ${meta.title}`,
+        description: desc,
+        imageUrl: meta.imageUrl || `${SITE_URL}/img/og_default.png`,
+        link: { mobileWebUrl: TEST_URL, webUrl: TEST_URL }
+      }
+    });
+  }
+
+  function shareX(){
+    const meta = getCurrentMeta();
+    const text = encodeURIComponent(`유령 세상 속 나는? 결과: ${meta.title}\n👉 ${TEST_URL}`);
+    window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+  }
+
+  async function copyLink(){
+    try{
+      await navigator.clipboard.writeText(TEST_URL);
+      $("copy-status").textContent = "링크가 복사됐어! 👻";
+    }catch(e){
+      $("copy-status").textContent = "복사가 막혔어. 주소를 직접 복사해줘: " + TEST_URL;
+    }
+  }
+
+  /**********************
+   * 이벤트 바인딩
+   **********************/
+  $("btn-start").addEventListener("click", () => showPage("page-cover"));
+  $("btn-go-tests").addEventListener("click", () => window.location.href = `${SITE_URL}/tests/`);
+  $("btn-cover-start").addEventListener("click", () => {
+    currentIndex = 0;
+    Object.keys(scoreState).forEach(k => scoreState[k] = 0);
+    showPage("page-quiz");
+    renderQuestion();
+  });
+  $("btn-cover-back").addEventListener("click", () => showPage("page-home"));
+
+  $("btn-retry").addEventListener("click", () => showPage("page-home"));
+  $("btn-share-kakao").addEventListener("click", shareKakao);
+  $("btn-share-x").addEventListener("click", shareX);
+  $("btn-copy-link").addEventListener("click", copyLink);
+  </script>
+</body>
+</html>
