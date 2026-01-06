@@ -25,9 +25,6 @@
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
     crossorigin="anonymous"></script>
 
-  <!-- ✅ Kakao AdFit Script는 "결과 진입 시" 안전하게 1번만 로드할 거라서 여기선 로드 안해도 됨 -->
-  <!-- (원하면 유지해도 되지만, 아래 renderAdFit가 중복로드 방지함) -->
-
   <!-- Kakao SDK -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
           crossorigin="anonymous"></script>
@@ -149,6 +146,7 @@
       position:fixed;
       inset:0;
       background:rgba(0,0,0,0.55);
+      display:flex;              /* ✅ 팝업 중앙정렬 정상화 */
       justify-content:center;
       align-items:center;
       z-index:999;
@@ -161,10 +159,6 @@
       padding:22px;
       text-align:center;
       margin:0 auto;
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform:translate(-50%,-50%);
     }
 
     .hidden { display:none !important; }
@@ -227,7 +221,6 @@
 
     :root{
       --themeColor:#2c1b54;
-      --themeTitleColor:#111;
     }
 
     .result-poster {
@@ -240,6 +233,7 @@
     }
 
     .poster-header { display:none !important; }
+    .poster-quote { display:none !important; }
 
     .poster-image img {
       width:100%;
@@ -247,8 +241,6 @@
       display:block;
       background:#fff;
     }
-
-    .poster-quote { display:none !important; }
 
     .result-detail-card {
       text-align:left;
@@ -513,7 +505,7 @@
   const SITE_URL = "https://bongstudiosad.com";
   const TEST_URL = `${SITE_URL}/tests/test2/`;
 
-  /* ========= ✅ AdFit 안전 렌더러 (핵심) ========= */
+  /* ========= ✅ AdFit 안전 렌더러 ========= */
   const ADFIT_UNIT_TEST2 = "DAN-J34OMc0GSbFbswgK";
 
   function ensureAdFitScriptOnce() {
@@ -529,7 +521,6 @@
     const slot = document.getElementById("adfit-slot");
     if (!slot) return;
 
-    // 슬롯을 매번 새로 만들어야(결과 페이지 hidden -> visible 문제 해결)
     slot.innerHTML = `
       <ins class="kakao_ad_area" style="display:none;"
         data-ad-unit="${unitId}"
@@ -568,16 +559,16 @@
     document.documentElement.style.setProperty("--themeColor", t.bg);
   }
 
-  const resultDetail = { /* ✅ 행님 기존 resultDetail 그대로 붙여넣기 */
-    witch:{ oneline:"“내가 있어야 이 문제를 빠르게 해결할수있어”", summary:"...", traits:["..."], actions:["..."], match:["저승봉"], mismatch:["펌킨봉"], comment:"..." },
-    mummy:{ oneline:"...", summary:"...", traits:["..."], actions:["..."], match:["백작봉"], mismatch:["박쥐봉"], comment:"..." },
-    bat:{ oneline:"...", summary:"...", traits:["..."], actions:["..."], match:["펌킨봉"], mismatch:["저승봉"], comment:"..." },
-    ghost:{ oneline:"...", summary:"...", traits:["..."], actions:["..."], match:["백작봉"], mismatch:["펌킨봉"], comment:"..." },
-    reaper:{ oneline:"...", summary:"...", traits:["..."], actions:["..."], match:["마녀봉"], mismatch:["박쥐봉"], comment:"..." },
-    franken:{ oneline:"...", summary:"...", traits:["..."], actions:["..."], match:["저승봉"], mismatch:["유령봉"], comment:"..." },
-    pumpkin:{ oneline:"...", summary:"...", traits:["..."], actions:["..."], match:["박쥐봉"], mismatch:["마녀봉"], comment:"..." },
-    fox:{ oneline:"...", summary:"...", traits:["..."], actions:["..."], match:["박쥐봉"], mismatch:["저승봉"], comment:"..." },
-    count:{ oneline:"...", summary:"...", traits:["..."], actions:["..."], match:["미라봉"], mismatch:["펌킨봉"], comment:"..." }
+  const resultDetail = {
+    witch:{ oneline:"“내가 있어야 이 문제를 빠르게 해결할 수 있어.”", summary:"머리로 굴려서 판을 짜는 타입. 급할수록 침착해진다.", traits:["계획 세우는 거 좋아함","리스크를 먼저 계산함","말은 짧고 결과로 보여줌"], actions:["단톡방에서 정리 담당","여행 일정표 담당","문제 생기면 해결 루트부터 뽑음"], match:["저승봉"], mismatch:["펌킨봉"], comment:"너 없으면 다들 우왕좌왕한다. 근데 가끔은 ‘대충도 괜찮아’ 모드도 연습해봐." },
+    mummy:{ oneline:"“버티는 게 내 재능이야.”", summary:"꾸준함으로 이기는 타입. 느려도 멈추진 않는다.", traits:["페이스 유지가 강점","감정 흔들려도 할 건 함","장기전 강함"], actions:["루틴 지키기","끝까지 책임지기","조용히 성과 내기"], match:["백작봉"], mismatch:["박쥐봉"], comment:"너는 ‘한 방’보다 ‘꾸준함’으로 씹어먹는 타입." },
+    bat:{ oneline:"“일단 해보자! 하면 되지 뭐.”", summary:"즉흥과 자유로 사는 타입. 기세가 무기다.", traits:["결정 빠름","기분 좋은 방향으로 흐름","재밌으면 몰입"], actions:["번개 약속 주도","새로운 거 먼저 찍먹","분위기 살리기"], match:["펌킨봉"], mismatch:["저승봉"], comment:"너 덕분에 판이 살아난다. 대신 ‘약속/시간’은 한 번만 더 체크!" },
+    ghost:{ oneline:"“나는 조용히… 다 보고 있었지.”", summary:"관찰력으로 상황을 읽는 타입. 존재감은 은근히 크다.", traits:["눈치 빠름","혼자 정리하는 시간 필요","말보다 행동"], actions:["분위기 파악","정리해서 한 마디","티 안 나게 도움"], match:["백작봉"], mismatch:["펌킨봉"], comment:"너는 ‘조용한 해결사’ 포지션이 딱이다." },
+    reaper:{ oneline:"“여기 선 넘으면 바로 컷.”", summary:"기준이 확실한 타입. 애매한 걸 싫어한다.", traits:["원칙 중요","정리/룰 세우기","불필요한 감정소모 컷"], actions:["규칙 만들기","우선순위 정하기","선 긋고 지키기"], match:["마녀봉"], mismatch:["박쥐봉"], comment:"너 덕분에 팀이 안정된다. 대신 가끔은 ‘사람 기분’도 한 번만 봐줘." },
+    franken:{ oneline:"“말보다 실행. 내가 먼저 움직일게.”", summary:"실행력으로 판을 바꾸는 타입. 책임감이 강하다.", traits:["실천형","책임감","결정하면 밀어붙임"], actions:["일 처리 스타터","문제 해결 실무","필요하면 몸으로 막음"], match:["저승봉"], mismatch:["유령봉"], comment:"너는 ‘현장형 리더’ 재질이다." },
+    pumpkin:{ oneline:"“나 없으면 재미가 없잖아?”", summary:"분위기메이커 타입. 존재감 자체가 콘텐츠.", traits:["센스 좋음","드립/연출","사람 모이게 함"], actions:["행사 기획","사진/영상 각 잡기","사람 텐션 올리기"], match:["박쥐봉"], mismatch:["마녀봉"], comment:"너는 등장만 해도 분위기가 바뀐다. 대신 과몰입으로 에너지 방전 조심!" },
+    fox:{ oneline:"“말로 풀자. 다 방법 있어.”", summary:"소통으로 갈등을 줄이는 타입. 조율 능력이 강하다.", traits:["중재","눈치+말센스","협상 잘함"], actions:["싸움 나기 전 진압","서로 납득시키기","부드럽게 끌고 가기"], match:["박쥐봉"], mismatch:["저승봉"], comment:"너는 ‘관계 운영’ 능력치가 높다." },
+    count:{ oneline:"“품위는 지키면서, 선은 확실히.”", summary:"선 긋고 자기 페이스 지키는 타입. 고급스러운 거리감.", traits:["내 기준이 있음","불필요한 소란 싫음","선택과 집중"], actions:["필요할 때만 등장","핵심만 말하기","관계 에너지 관리"], match:["미라봉"], mismatch:["펌킨봉"], comment:"너는 ‘조용한 상위권’ 느낌. 딱 필요한 만큼만 한다." }
   };
 
   function nl2br(text) { return (text || "").replace(/\n/g, "<br>"); }
@@ -616,18 +607,72 @@
       const v = document.getElementById("intro-video");
       if (v) {
         v.loop = true; v.muted = true; v.playsInline = true;
-        setTimeout(() => { try { v.currentTime = 0; } catch(e){} const p = v.play(); if (p && p.catch) p.catch(() => {}); }, 50);
+        setTimeout(() => {
+          try { v.currentTime = 0; } catch(e){}
+          const p = v.play();
+          if (p && p.catch) p.catch(() => {});
+        }, 50);
       }
     }
 
-    // ✅ 결과 페이지 진입할 때 에드핏 렌더 (여기가 핵심!)
+    // ✅ 결과 페이지 진입할 때 에드핏 렌더
     if (name === "result") {
       setTimeout(() => renderAdFit(ADFIT_UNIT_TEST2), 0);
     }
   }
 
-  /* ========= 이하 퀴즈/공유 로직은 행님 기존 그대로 ========= */
-  const monsterQuestions = [ /* 기존 그대로 */ ];
+  /* ========= ✅ 퀴즈 질문(6문항 완전본) ========= */
+  const monsterQuestions = [
+    {
+      text: "단톡방에 공지가 올라왔는데… 너 반응은?",
+      options: [
+        { label: "‘정리해줄게’ 하고 핵심만 딱 뽑아서 공유한다", scores:{ witch:3, reaper:2, franken:1 } },
+        { label: "일단 읽고… 조용히 상황을 본다", scores:{ ghost:3, count:2, mummy:1 } },
+        { label: "밈부터 던지고 분위기 살린다", scores:{ pumpkin:3, bat:2, fox:1 } }
+      ]
+    },
+    {
+      text: "갑자기 일정이 바뀌었다. 너는?",
+      options: [
+        { label: "대체 플랜을 바로 짠다 (플랜B, 플랜C…)", scores:{ witch:3, reaper:2, mummy:1 } },
+        { label: "그냥 바뀐대로 즐긴다. 오히려 좋아!", scores:{ bat:3, pumpkin:2, fox:1 } },
+        { label: "일단 내가 할 수 있는 실무부터 처리한다", scores:{ franken:3, mummy:2, ghost:1 } }
+      ]
+    },
+    {
+      text: "사람 많은 자리에서 너의 포지션은?",
+      options: [
+        { label: "말은 적게, 필요한 순간에만 한 방", scores:{ count:3, ghost:2, reaper:1 } },
+        { label: "분위기 띄우고 사람 모으는 역할", scores:{ pumpkin:3, bat:2, fox:1 } },
+        { label: "누가 뭘 해야할지 자연스럽게 정리함", scores:{ witch:3, franken:2, reaper:1 } }
+      ]
+    },
+    {
+      text: "일이 꼬였을 때 너는 어떤 타입?",
+      options: [
+        { label: "감정은 잠깐 접고, 해결 루트부터 뽑는다", scores:{ witch:3, franken:2, reaper:1 } },
+        { label: "버티면서 하나씩 끝까지 정리한다", scores:{ mummy:3, count:2, ghost:1 } },
+        { label: "사람들 텐션부터 살리고 다시 스타트", scores:{ pumpkin:3, fox:2, bat:1 } }
+      ]
+    },
+    {
+      text: "누가 선 넘는 말을 했다. 너는?",
+      options: [
+        { label: "그 자리에서 선을 딱 긋는다", scores:{ reaper:3, count:2, franken:1 } },
+        { label: "상황을 부드럽게 정리하고 대화로 푼다", scores:{ fox:3, witch:1, ghost:1 } },
+        { label: "일단 참는다… 나중에 조용히 거리를 둔다", scores:{ ghost:3, mummy:2, count:1 } }
+      ]
+    },
+    {
+      text: "너의 ‘휴식’은 어떤 느낌이야?",
+      options: [
+        { label: "혼자 있는 시간이 있어야 회복됨", scores:{ ghost:3, count:2, mummy:1 } },
+        { label: "밖에 나가서 놀아야 풀림", scores:{ bat:3, pumpkin:2, fox:1 } },
+        { label: "정리/계획 세우면 마음이 편해짐", scores:{ witch:3, reaper:2, franken:1 } }
+      ]
+    }
+  ];
+
   const scoreState = { witch:0,mummy:0,bat:0,ghost:0,reaper:0,franken:0,pumpkin:0,fox:0,count:0 };
   let currentIndex = 0;
   let currentResultKey = "witch";
@@ -640,8 +685,15 @@
   function resetScores() { Object.keys(scoreState).forEach(k => scoreState[k] = 0); }
 
   function startQuiz() {
+    // ✅ 질문이 비어있을 때도 버튼이 “죽지 않게” 방어
+    if (!monsterQuestions || monsterQuestions.length === 0) {
+      alert("질문 데이터가 비어있어요. monsterQuestions를 채워주세요!");
+      return;
+    }
+
     const v = document.getElementById("intro-video");
     try { if (v) v.pause(); } catch(e){}
+
     currentIndex = 0;
     currentResultKey = "witch";
     resetScores();
@@ -652,16 +704,19 @@
 
   function renderQuestion() {
     const q = monsterQuestions[currentIndex];
-    qText.textContent = q.text;
+    if (!q) return;
+
+    qText.textContent = q.text || "";
     progressText.textContent = `${currentIndex + 1} / ${monsterQuestions.length}`;
     progressBar.style.width = `${((currentIndex + 1) / monsterQuestions.length) * 100}%`;
 
     optionsWrap.innerHTML = "";
-    [...q.options].sort(() => Math.random() - 0.5).forEach(opt => {
+    [...(q.options || [])].sort(() => Math.random() - 0.5).forEach(opt => {
       const btn = document.createElement("button");
       btn.className = "option-btn";
-      btn.textContent = opt.label;
-      btn.onclick = () => selectOption(opt.scores);
+      btn.type = "button";
+      btn.textContent = opt.label || "";
+      btn.onclick = () => selectOption(opt.scores || {});
       optionsWrap.appendChild(btn);
     });
   }
@@ -701,7 +756,9 @@
     const detail = resultDetail[currentResultKey] || resultDetail.witch;
 
     applyTheme(currentResultKey);
-    document.getElementById("result-title").textContent = meta.title;
+
+    const titleEl = document.getElementById("result-title");
+    if (titleEl) titleEl.textContent = meta.title;
 
     const ph = document.getElementById("poster-header");
     if (ph) ph.textContent = meta.title;
@@ -734,29 +791,117 @@
     resetShareCache();
   }
 
-  function restartQuiz() { closeSharePopup(); resetShareCache(); startQuiz(); }
+  function restartQuiz() {
+    closeSharePopup();
+    resetShareCache();
+    startQuiz();
+  }
 
-  /* 공유 관련 함수들은 행님 기존 코드 그대로 두면 됨 */
-  const SHARE = { storyFileCache:null, storyBlobCache:null, buildPromise:null, busy:false };
+  /* ========= 공유(에러 방지 기본동작) ========= */
+  const SHARE = { busy:false };
   function setShareStatus(msg){ const el=document.getElementById("share-status"); if(el) el.textContent=msg||""; }
-  function resetShareCache(){ SHARE.storyFileCache=null; SHARE.storyBlobCache=null; SHARE.buildPromise=null; SHARE.busy=false; setShareStatus(""); }
-  function openSharePopup(){ document.getElementById("share-popup").classList.remove("hidden"); setShareStatus("스토리 이미지 준비 중…"); /* ...기존 그대로... */ }
-  function closeSharePopup(){ document.getElementById("share-popup").classList.add("hidden"); setShareStatus(""); }
-  async function copyTestLink(){ /* 기존 그대로 */ }
-  function shareKakao(){ /* 기존 그대로 */ }
-  async function shareInstagramStoryOptimal(){ /* 기존 그대로 */ }
-  async function shareXImageOptimal(){ /* 기존 그대로 */ }
+  function resetShareCache(){ SHARE.busy=false; setShareStatus(""); }
 
-  (function bootFromShareLink(){
-    const r = new URLSearchParams(location.search).get("r");
-    if (r && resultMeta[r]) {
-      currentResultKey = r;
-      renderResultDetail();
-      resetShareCache();
-      showPage("result");
-      return;
+  function openSharePopup(){
+    const pop = document.getElementById("share-popup");
+    if (pop) pop.classList.remove("hidden");
+    setShareStatus("원하는 채널을 선택해줘!");
+  }
+  function closeSharePopup(){
+    const pop = document.getElementById("share-popup");
+    if (pop) pop.classList.add("hidden");
+    setShareStatus("");
+  }
+
+  async function copyTestLink(){
+    try{
+      await navigator.clipboard.writeText(TEST_URL);
+      setShareStatus("✅ 링크를 복사했어!");
+    }catch(e){
+      setShareStatus("복사 실패! 아래 링크를 길게 눌러 복사해줘: " + TEST_URL);
     }
-    showPage("intro");
+  }
+
+  function shareKakao(){
+    try{
+      if (!window.Kakao || !Kakao.isInitialized()) {
+        setShareStatus("카카오 SDK가 아직 준비되지 않았어.");
+        return;
+      }
+      const meta = getCurrentMeta();
+      const shareUrl = `${TEST_URL}?r=${encodeURIComponent(currentResultKey)}`;
+
+      Kakao.Share.sendDefault({
+        objectType: "feed",
+        content: {
+          title: `몬스터 세상 속 나는? - ${meta.title}`,
+          description: `${meta.desc}\n\n👉 테스트 하러가기`,
+          imageUrl: meta.imageUrl,
+          link: { mobileWebUrl: shareUrl, webUrl: shareUrl }
+        },
+        buttons: [
+          { title: "테스트 하러가기", link: { mobileWebUrl: shareUrl, webUrl: shareUrl } }
+        ]
+      });
+      setShareStatus("✅ 카카오톡 공유창을 열었어!");
+    }catch(e){
+      console.warn(e);
+      setShareStatus("카카오 공유 중 오류가 발생했어.");
+    }
+  }
+
+  async function shareInstagramStoryOptimal(){
+    // 웹에서 ‘인스타 스토리로 바로 올리기’는 브라우저가 강하게 제한함
+    // 대신: (지원 기기) Web Share로 공유 시트 열기 / (미지원) 링크 안내
+    try{
+      const meta = getCurrentMeta();
+      const shareUrl = `${TEST_URL}?r=${encodeURIComponent(currentResultKey)}`;
+
+      if (navigator.share) {
+        await navigator.share({
+          title: `몬스터 타입: ${meta.title}`,
+          text: `${meta.desc}\n${shareUrl}`,
+          url: shareUrl
+        });
+        setShareStatus("✅ 공유 시트를 열었어! 인스타 선택해줘.");
+        return;
+      }
+      setShareStatus("이 기기에서는 자동 공유가 어려워. 링크 복사 후 인스타에 붙여넣어줘!");
+    }catch(e){
+      console.warn(e);
+      setShareStatus("공유가 취소되었거나 실패했어. 링크 복사로 진행해줘!");
+    }
+  }
+
+  async function shareXImageOptimal(){
+    try{
+      const meta = getCurrentMeta();
+      const shareUrl = `${TEST_URL}?r=${encodeURIComponent(currentResultKey)}`;
+      const text = encodeURIComponent(`내 몬스터 타입은 "${meta.title}" 👾\n${meta.desc}\n\n${shareUrl}`);
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+      setShareStatus("✅ X 공유창을 열었어!");
+    }catch(e){
+      console.warn(e);
+      setShareStatus("X 공유 중 오류가 발생했어.");
+    }
+  }
+
+  /* ========= 첫 진입 처리 ========= */
+  (function bootFromShareLink(){
+    try{
+      const r = new URLSearchParams(location.search).get("r");
+      if (r && resultMeta[r]) {
+        currentResultKey = r;
+        renderResultDetail();
+        resetShareCache();
+        showPage("result");
+        return;
+      }
+      showPage("intro");
+    }catch(e){
+      console.warn(e);
+      showPage("intro");
+    }
   })();
 </script>
 
