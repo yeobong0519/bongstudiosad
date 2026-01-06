@@ -320,9 +320,9 @@
     <div class="card" style="text-align:center;">
       <span class="tag">몬스터 세상 속 나는?</span>
       <h1>몬스터 세상 속 나는?</h1>
-      <p>어느 날 몬스터로 변한 여봉이… 나는 어떤 몬스터로 변했을까?</p>
+      <p>어느 날 몬스터로 변한 여봉이, 나는 어떤 몬스터로 변했을까?</p>
 
-      <!-- ✅ 자동재생 표지 영상 (파일명은 그대로 둬도 됨) -->
+      <!-- ✅ 자동재생 표지 영상 -->
       <div style="margin:16px 0;">
         <video
           id="intro-video"
@@ -366,7 +366,7 @@
   <div id="page-loading" class="page hidden">
     <div class="card" style="text-align:center;">
       <h2>🧪 몬스터 타입 분석 중…</h2>
-      <p>몬스터 도감 데이터에 대조중이야</p>
+      <p>몬스터 사회 데이터에 대조중이야</p>
       <div class="spinner"></div>
       <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
     </div>
@@ -376,7 +376,7 @@
   <div id="page-result" class="page hidden">
     <div class="card" style="text-align:center;">
       <span class="tag">몬스터 타입 결과</span>
-      <h1 id="result-title">위치봉</h1>
+      <h1 id="result-title">마녀봉</h1>
 
       <!-- ✅ Kakao AdFit 320x50 -->
       <div style="margin:14px 0; display:flex; justify-content:center;">
@@ -394,7 +394,7 @@
 
       <!-- ✅ 결과 포스터 -->
       <div class="result-poster">
-        <div id="poster-header" class="poster-header">위치봉</div>
+        <div id="poster-header" class="poster-header">마녀봉</div>
         <div class="poster-image">
           <img id="poster-image" alt="결과 포스터 이미지">
         </div>
@@ -421,11 +421,11 @@
             <td id="detail-actions"></td>
           </tr>
           <tr>
-            <th>잘맞는 몬스터</th>
+            <th>잘맞는 타입</th>
             <td id="detail-match" class="highlight"></td>
           </tr>
           <tr>
-            <th>안맞는 몬스터</th>
+            <th>안맞는 타입</th>
             <td id="detail-mismatch"></td>
           </tr>
           <tr>
@@ -504,19 +504,19 @@
 
   /* ========= 결과 이미지(행님 업로드 파일명 기준) ========= */
   const resultMeta = {
-    witch:   { title:"위치봉",   desc:"모든 걸 알고 있는 척하는 정리 몬스터", imageUrl:`${SITE_URL}/img/result_witch.png` },
-    mummy:   { title:"미라봉",   desc:"느려도 끝까지 버티는 집념 몬스터",     imageUrl:`${SITE_URL}/img/result_mummy.png` },
-    bat:     { title:"박쥐봉",   desc:"밤에만 나타나는 자유 몬스터",           imageUrl:`${SITE_URL}/img/result_bat.png` },
-    ghost:   { title:"유령봉",   desc:"안 보이는데 핵심인 존재 몬스터",       imageUrl:`${SITE_URL}/img/result_ghost.png` },
-    reaper:  { title:"저승봉",   desc:"몬스터 세계의 질서 담당",               imageUrl:`${SITE_URL}/img/result_reaper.png` },
-    franken: { title:"프랑켄봉", desc:"불평은 많은데 제일 많이 움직임",        imageUrl:`${SITE_URL}/img/result_franken.png` },
-    pumpkin: { title:"펌킨봉",   desc:"분위기 살리는 소란 몬스터",             imageUrl:`${SITE_URL}/img/result_pumpkin.png` },
-    fox:     { title:"구미호봉", desc:"말로 판을 뒤집는 교섭 몬스터",          imageUrl:`${SITE_URL}/img/result_fox.png` },
-    count:   { title:"백작봉",   desc:"품위 지키는 고귀한 몬스터",             imageUrl:`${SITE_URL}/img/result_count_ghost.png` }
+    witch:   { title:"마녀봉",   desc:"전략&신중 · 모든 건 전부 내 계산 아래.", imageUrl:`${SITE_URL}/img/result_witch.png` },
+    mummy:   { title:"미라봉",   desc:"인내&지속 · 나는 쉽게 무너지지 않아.", imageUrl:`${SITE_URL}/img/result_mummy.png` },
+    bat:     { title:"박쥐봉",   desc:"자유&즉흥 · 지금 이 순간이 제일 중요해.", imageUrl:`${SITE_URL}/img/result_bat.png` },
+    ghost:   { title:"유령봉",   desc:"관찰&존재감 · 조용하지만, 빠지진 않아.", imageUrl:`${SITE_URL}/img/result_ghost.png` },
+    reaper:  { title:"저승봉",   desc:"기준&판단 · 선은 여기까지야.", imageUrl:`${SITE_URL}/img/result_reaper.png` },
+    franken: { title:"프랑켄봉", desc:"실행&책임 · 말보다 내가 먼저 움직이지.", imageUrl:`${SITE_URL}/img/result_franken.png` },
+    pumpkin: { title:"펌킨봉",   desc:"분위기&존재감 · 나 없으면 조용하지 않아?", imageUrl:`${SITE_URL}/img/result_pumpkin.png` },
+    fox:     { title:"구미호봉", desc:"소통&조율 · 말로 안 되는 일은 거의 없어.", imageUrl:`${SITE_URL}/img/result_fox.png` },
+    count:   { title:"백작봉",   desc:"선긋기&품위 · 아무 데서나 나서진 않아.", imageUrl:`${SITE_URL}/img/result_count_ghost.png` }
   };
 
   /* ========= 테마(원하면 나중에 캐릭터별로 변경 가능) ========= */
-  const ghostTheme = {
+  const monsterTheme = {
     witch:   { bg:"#2c1b54" },
     mummy:   { bg:"#4a2d1f" },
     bat:     { bg:"#15151f" },
@@ -529,92 +529,147 @@
   };
 
   function applyTheme(key) {
-    const t = ghostTheme[key] || ghostTheme.witch;
+    const t = monsterTheme[key] || monsterTheme.witch;
     document.documentElement.style.setProperty("--themeColor", t.bg);
   }
 
-  /* ========= 결과 상세 + 잘맞/안맞 ========= */
+  /* ========= 결과 상세(행님 결과지 기준) ========= */
   const resultDetail = {
     witch: {
-      oneline: "“흐름은 내가 다 보고 있다.”",
-      summary: "직접 나서진 않지만, 몬스터 사회의 판을 읽고 정리하는 타입.",
-      traits: ["전체 상황을 한 번에 파악", "말은 짧고 핵심만", "혼란일수록 침착함"],
-      actions: ["뒤에서 정리 → 방향 제시", "필요할 때만 한 방", "감정 과열되면 자동 제동"],
-      match: ["저승봉", "유령봉"],
-      mismatch: ["펌킨봉", "박쥐봉"],
-      comment: "너 없으면 몬스터 회의가 끝나질 않아."
+      oneline: "“내가 있어야 이 문제를 빠르게 해결할수있어”",
+      summary: "어떤 상황에서도 이성적이고, 매사를 신중하고 넓게 바라보는 전략형.",
+      traits: ["전체를 한 번에 보는 편", "말을 하면 핵심만 짚음", "감정적으로 흔들리지 않음"],
+      actions: ["상황을 정리하고 방향을 만든다", "계획이 어긋나는 걸 싫어한다", "감정은 드러내지 않지만 단호하다"],
+      match: ["저승봉"],
+      mismatch: ["펌킨봉"],
+      comment:
+        "어떤 상황에서도 이성적인 당신\n" +
+        "매사의 일을 신중하고 넓게 바라보는 타입이군요\n" +
+        "어떤 일이든 휘둘리지 않고 자신의 뜻대로 만들어내요\n" +
+        "한치의 오차도 용납할 수 없고 계획에 거슬리는 사람을 보면\n" +
+        "화가 나지만 그렇다고 감정적으로 크게 대하진 않아요\n" +
+        "가끔 사람들에게 융통성이 없다라는 말을 들을 수 있지만\n" +
+        "모든 사람들이 결과적으로 인정할 수밖에 없어요"
     },
     mummy: {
-      oneline: "“느려도 끝까지 남아있다.”",
-      summary: "포기라는 단어가 없는 집념형. 조용히 버티다 마지막에 역전한다.",
-      traits: ["끈기 최상", "한 번 정하면 안 바꿈", "무심한 듯 강함"],
-      actions: ["끝까지 해결 시도", "쉽게 흔들리지 않음", "사라지지 않는 존재감"],
-      match: ["백작봉", "유령봉"],
-      mismatch: ["박쥐봉", "펌킨봉"],
-      comment: "다들 무시하다가 마지막에 너 보고 소름 돋는다."
+      oneline: "“결국 끝까지 남는 건 나야.”",
+      summary: "겉으로 조용해 보여도 한 번 잡은 건 끝까지 버티는 인내형.",
+      traits: ["포기하지 않는 끈기", "한 자리를 지키는 안정감", "시간이 갈수록 강해짐"],
+      actions: ["천천히라도 확실하게 쌓는다", "급하게 움직이기보다 버틴다", "마지막까지 남아 결과를 만든다"],
+      match: ["백작봉"],
+      mismatch: ["박쥐봉"],
+      comment:
+        "겉으로 보기엔 조용하고 변화가 없어 보이지만\n" +
+        "당신은 한 번 자리를 잡으면 끝까지 버티는 타입이에요\n" +
+        "급하게 움직이기보단, 시간을 들여 확실하게 쌓아 올리죠\n" +
+        "사람들은 가끔 답답하다고 말하지만\n" +
+        "정작 마지막까지 남아 있는 건 항상 당신이에요\n" +
+        "눈에 띄진 않아도, 없어지면 바로 티가 나는 존재죠."
     },
     bat: {
-      oneline: "“낮엔 없고, 밤엔 풀가동.”",
-      summary: "규칙보다 리듬. 소속보다 자유. 야행성으로 판을 흔드는 타입.",
-      traits: ["자유 최우선", "기분/리듬 타는 편", "갑자기 사라졌다가 등장"],
-      actions: ["밤에만 활발", "재밌는 쪽으로 이동", "정해진 틀을 싫어함"],
-      match: ["펌킨봉", "구미호봉"],
-      mismatch: ["저승봉", "백작봉"],
-      comment: "너는 ‘몬스터 사회의 변칙 카드’다."
+      oneline: "“난 묶이면 사라져.”",
+      summary: "계획보다 감각, 규칙보다 자유를 중시하는 즉흥형.",
+      traits: ["자유로운 사고", "빠른 판단과 이동", "분위기 전환 능력"],
+      actions: ["하고 싶을 땐 빠르게 움직인다", "아니라 싶으면 미련 없이 떠난다", "틀에 가두려 하면 도망간다"],
+      match: ["펌킨봉"],
+      mismatch: ["저승봉"],
+      comment:
+        "당신은 계획보단 감각, 규칙보단 자유를 중시해요\n" +
+        "하고 싶을 땐 누구보다 빠르게 움직이고\n" +
+        "아니라 싶으면 미련 없이 사라지죠\n" +
+        "사람들은 예측할 수 없다고 말하지만\n" +
+        "그 변칙성 덕분에 판이 뒤집히는 순간이 생겨요\n" +
+        "틀에 가두려 하면 가장 먼저 날아가버리는 타입이에요."
     },
     ghost: {
-      oneline: "“안 보이는데… 제일 중요한 애.”",
-      summary: "눈에 띄진 않지만 항상 핵심에 있다. 조용히 존재로 판을 잡는 타입.",
-      traits: ["낮은 존재감, 높은 영향력", "관찰력 좋음", "필요할 때만 등장"],
-      actions: ["사람 많은 곳에서 관찰", "결정적 순간에 등장", "분위기 파악 빠름"],
-      match: ["위치봉", "백작봉"],
-      mismatch: ["펌킨봉", "프랑켄봉"],
-      comment: "너는 ‘있어야 시스템이 돌아가는 몬스터’다."
+      oneline: "“조용해도, 난 빠지지 않아.”",
+      summary: "눈에 띄지 않지만 핵심을 놓치지 않는 관찰형.",
+      traits: ["뛰어난 관찰력", "상황 파악 능력", "필요할 때 정확한 개입"],
+      actions: ["앞에 나서지 않아도 다 보고 있다", "결정적 순간에 정확히 등장", "빠지면 흐름이 흔들린다"],
+      match: ["백작봉"],
+      mismatch: ["펌킨봉"],
+      comment:
+        "당신은 눈에 띄지 않지만 항상 자리에 있어요\n" +
+        "앞에 나서진 않아도 상황은 전부 보고 있고\n" +
+        "필요한 순간엔 정확하게 등장하죠\n" +
+        "말이 적어서 오해받을 때도 있지만\n" +
+        "당신이 빠지면 흐름이 어딘가 어긋나요\n" +
+        "존재감은 작아도 역할은 분명한 타입이에요."
     },
     reaper: {
-      oneline: "“선 넘으면 바로 컷.”",
-      summary: "몬스터 세계의 질서를 담당. 감정은 적어도 신뢰는 높은 타입.",
-      traits: ["기준 확실", "공정함", "룰을 지키게 만듦"],
-      actions: ["질서 정리", "선 넘는 행동 차단", "분쟁 생기면 판단 담당"],
-      match: ["위치봉", "프랑켄봉"],
-      mismatch: ["박쥐봉", "펌킨봉"],
-      comment: "너 때문에 몬스터 세계가 ‘사회’가 된다."
+      oneline: "“여기서부터는 내가 정리할게.”",
+      summary: "기준이 분명하고 모호한 상황에서도 흔들리지 않는 판단형.",
+      traits: ["명확한 기준", "공정한 판단", "신뢰도 높은 결정"],
+      actions: ["모호함을 싫어한다", "선 넘는 행동을 바로 정리한다", "혼란 속 질서를 만든다"],
+      match: ["마녀봉"],
+      mismatch: ["박쥐봉"],
+      comment:
+        "당신은 기준이 분명한 타입이에요\n" +
+        "모호한 상황에서도 흔들리지 않고\n" +
+        "무엇이 맞고 틀렸는지를 빠르게 판단하죠\n" +
+        "차갑다는 말을 들을 수 있지만\n" +
+        "덕분에 많은 사람들이 당신을 믿어요\n" +
+        "혼란 속에서 질서를 만드는 존재예요."
     },
     franken: {
-      oneline: "“투덜대도 내가 다 한다.”",
-      summary: "불평은 많은데 해결은 더 많이 한다. 현장 수습 담당.",
-      traits: ["실행력 강함", "현장형", "짜증 내도 책임짐"],
-      actions: ["문제 터지면 일단 움직임", "뒤끝보다 결과", "일 처리 속도 빠름"],
-      match: ["저승봉", "펌킨봉"],
-      mismatch: ["백작봉", "유령봉"],
-      comment: "너 없으면 몬스터 세계는 ‘일’이 멈춘다."
+      oneline: "“결국 내가 하고 있더라.”",
+      summary: "투덜대도 결국 제일 먼저 움직여서 해결해버리는 실행형.",
+      traits: ["강한 실행력", "책임감", "빠른 문제 해결"],
+      actions: ["일이 보이면 몸이 먼저 나간다", "현장을 수습하고 끝낸다", "말보다 결과로 증명한다"],
+      match: ["저승봉"],
+      mismatch: ["유령봉"],
+      comment:
+        "당신은 불평을 해도 결국 제일 먼저 움직이는 사람이에요\n" +
+        "누가 시키지 않아도\n" +
+        "일이 보이면 그냥 몸이 나가버리죠\n" +
+        "사람들은 투덜댄다고 하지만\n" +
+        "정작 가장 많이 맡기고, 가장 믿어요\n" +
+        "현장이 돌아가는 이유 그 자체예요."
     },
     pumpkin: {
-      oneline: "“없으면 허전, 있으면 시끄러움.”",
-      summary: "무섭진 않은데 분위기는 네가 만든다. 소란+활력 담당.",
-      traits: ["친화력 높음", "분위기 전환", "심심한 걸 못 참음"],
-      actions: ["장난/이벤트 생성", "침체된 분위기 띄우기", "주목 받으면 더 힘남"],
-      match: ["박쥐봉", "프랑켄봉"],
-      mismatch: ["백작봉", "저승봉"],
-      comment: "너는 몬스터 세계의 ‘BGM’이다."
+      oneline: "“분위기? 내가 책임질게.”",
+      summary: "가만히 있어도 분위기가 달라지는 존재감 확실한 분위기형.",
+      traits: ["높은 친화력", "분위기 메이킹", "존재감 확실"],
+      actions: ["장난치며 공기를 바꾼다", "침체된 분위기를 띄운다", "있으면 시끄럽고 없으면 허전하다"],
+      match: ["박쥐봉"],
+      mismatch: ["마녀봉"],
+      comment:
+        "당신은 가만히 있어도 분위기가 달라지는 타입이에요\n" +
+        "웃고 떠들고 장난치지만\n" +
+        "사람들 사이의 공기를 읽는 데 능해요\n" +
+        "없으면 허전하고, 있으면 시끄럽다는 말\n" +
+        "둘 다 당신에겐 칭찬이에요\n" +
+        "판의 온도를 조절하는 존재죠."
     },
     fox: {
-      oneline: "“말 한마디로 판을 뒤집는다.”",
-      summary: "교섭/중재/설득의 몬스터. 인간과 몬스터 사이도 오간다.",
-      traits: ["말빨/센스", "상대 심리 파악", "협상 능력"],
-      actions: ["대화로 해결", "갈등 중재", "판을 유리하게 재구성"],
-      match: ["박쥐봉", "위치봉"],
-      mismatch: ["저승봉", "미라봉"],
-      comment: "너랑 대화하면 결과가 바뀐다."
+      oneline: "“말해보면 답이 보여.”",
+      summary: "상대 심리를 빠르게 읽고 말로 판을 움직이는 소통형.",
+      traits: ["뛰어난 소통 능력", "협상과 중재", "상황 전환 센스"],
+      actions: ["대화로 갈등을 바꾼다", "원하는 결론으로 이끈다", "사람 사이를 자연스럽게 조율한다"],
+      match: ["박쥐봉"],
+      mismatch: ["저승봉"],
+      comment:
+        "당신은 상황을 말로 풀어내는 타입이에요\n" +
+        "상대가 뭘 원하는지 빠르게 파악하고\n" +
+        "충돌을 대화로 바꿔버리죠\n" +
+        "사람들은 당신과 얘기하면\n" +
+        "결론이 달라진다고 말해요\n" +
+        "판을 부드럽게 움직이는 조율자예요."
     },
     count: {
-      oneline: "“아무 데서나 안 나오는 고귀함.”",
-      summary: "기준과 취향이 확실. 품위를 유지하며 거리를 조절한다.",
-      traits: ["퀄리티 집착", "기준 높음", "아무나 안 엮임"],
-      actions: ["필요할 때만 등장", "선 긋기 깔끔", "분위기 무게 중심"],
-      match: ["미라봉", "유령봉"],
-      mismatch: ["펌킨봉", "박쥐봉"],
-      comment: "너는 몬스터 세계의 ‘격’이다."
+      oneline: "“나는 필요한 순간에만 나타나.”",
+      summary: "관계에 선을 긋고 에너지를 아끼며 중요한 순간만 정확히 치는 선택형.",
+      traits: ["자기 관리", "관계 조절 능력", "기준 있는 선택"],
+      actions: ["필요 없는 곳엔 에너지를 쓰지 않는다", "중요한 순간만 정확히 등장", "조용히 무게를 잡는다"],
+      match: ["미라봉"],
+      mismatch: ["펌킨봉"],
+      comment:
+        "당신은 모든 관계에 선을 그을 줄 아는 타입이에요\n" +
+        "필요 없는 곳엔 에너지를 쓰지 않고\n" +
+        "중요한 순간에만 정확히 등장하죠\n" +
+        "차가워 보일 수 있지만\n" +
+        "그 거리감 덕분에 중심이 잡혀요\n" +
+        "조용히 무게를 잡는 존재예요."
     }
   };
 
@@ -638,60 +693,60 @@
     window.scrollTo({ top: 0 });
   }
 
-  /* ========= 퀴즈 로직(문구는 몬스터 버전) ========= */
-  const ghostQuestions = [
+  /* ========= 퀴즈 로직(질문 워딩 유지 + 2차 미세조정 점수) ========= */
+  const monsterQuestions = [
     {
-      text: "Q1. 어느 날 몬스터로 변한 나! 나의 주 활동 장소는?",
+      text: "Q1. 눈 떠보니까 몬스터 되어 버린 나! 제일 먼저 든 생각은?",
       options: [
-        { label: "가장 높은 곳으로 가서 내려다본다", scores: { witch:3, count:2, reaper:1 } },
-        { label: "가장 이상적인 자리를 찾아 존버한다", scores: { mummy:3, franken:2 } },
-        { label: "밤에만 나타난다", scores: { bat:3, fox:2 } },
-        { label: "한적한 곳보다는 도심 속에서 관찰한다", scores: { ghost:3, pumpkin:2 } },
+        { label: "(생각을 정리하며) “잠깐만… 이게 무슨 상황이야?”", scores: { witch:2, reaper:2, count:1, fox:1 } },
+        { label: "(밖으로 나가며)“아 몰라, 일단 나가보자”", scores: { franken:3, bat:2, reaper:1, pumpkin:1 } },
+        { label: "(숨으며)“일단 안 들키게 조용히 있자…”", scores: { ghost:2, mummy:2, count:1, bat:1 } },
+        { label: "(거울을보며) \"오! 내가 이렇게 생겼구나\"", scores: { fox:3, pumpkin:2, bat:1 } },
       ]
     },
     {
-      text: "Q2. 인간과 마주쳤다!! 내가 할 행동은?",
+      text: "Q2. 몬스터가 된 나를 보고 사람들이 눈치 보기 시작한다",
       options: [
-        { label: "가만히만 있다면 신경 안 쓴다.", scores: { reaper:3, franken:2, mummy:2 } },
-        { label: "호기심에 이리저리 말을 걸어본다", scores: { fox:3, witch:2 } },
-        { label: "괜히 겁 한 번 준다", scores: { pumpkin:3, ghost:2 } },
-        { label: "그냥 지나친다", scores: { count:3, bat:2 } },
+        { label: "일단 분위기 잡음", scores: { reaper:3, witch:1, franken:1 } },
+        { label: "장난스레 무섭게 굴어보고 반응 본다", scores: { pumpkin:3, bat:2, franken:1 } },
+        { label: "“해치지 않아! 너무 무서워하지마” 사람들을 안심시킨다", scores: { fox:3, witch:1, reaper:1 } },
+        { label: "시선이 느껴지니 바로 사라짐", scores: { ghost:2, count:1, franken:2, bat:1 } },
       ]
     },
     {
-      text: "Q3. 몬스터 세계에서의 나의 역할은?",
+      text: "Q3. 몬스터로 지내는 나의 출현 지역은?",
       options: [
-        { label: "전체 상황 파악 후 해결한다!", scores: { witch:3, count:2 } },
-        { label: "머리보단 몸이 먼저 움직여야지!", scores: { franken:3, pumpkin:2, bat:2 } },
-        { label: "너 때문에 흥이 다 깨져버렸으니 책임지는 담당", scores: { pumpkin:3, fox:2 } },
-        { label: "어지러운 건 싫어. 정리정돈은 내가 한다!", scores: { reaper:3, ghost:2, mummy:2 } },
+        { label: "펜트하우스", scores: { witch:2, reaper:2, count:1 } },
+        { label: "도심속 핫플레이스", scores: { pumpkin:3, fox:2, bat:1 } },
+        { label: "집", scores: { mummy:2, ghost:2, count:1, witch:1 } },
+        { label: "으슥한 골목길", scores: { bat:2, franken:2, pumpkin:2 } },
       ]
     },
     {
-      text: "Q4. 문제가 생겼을 때의 나의 반응은?",
+      text: "Q4. 몬스터들의 협동미션 ! 나의 역활은?",
       options: [
-        { label: "후… 일단 몰라도 끝까지 해결해본다", scores: { mummy:3, franken:3, reaper:2 } },
-        { label: "하기 싫은 티 팍팍! 투덜대면서도 해결한다", scores: { bat:3, pumpkin:2 } },
-        { label: "나는 내 생각과 말빨로 상황을 바꾼다", scores: { fox:3, witch:2 } },
-        { label: "남들이 알아서 하겠지? 굳이 개입하지 않는다", scores: { count:3, ghost:2 } },
+        { label: "뭘 할지 정리해서 방향 잡아준다", scores: { witch:2, reaper:2, fox:1, pumpkin:1 } },
+        { label: "일단 이것부터 하자! 생각보단 행동으로!", scores: { franken:3, bat:1, reaper:2 } },
+        { label: "말은 안 하는데 상황은 다 보고 있음", scores: { ghost:2, mummy:2, count:1, witch:1 } },
+        { label: "분위기 메이커", scores: { pumpkin:3, fox:2, bat:1 } },
       ]
     },
     {
-      text: "Q5. 다른 몬스터들과의 거리감은?",
+      text: "Q5. 몬스터가 된 지금, 제일 편한 상태는?",
       options: [
-        { label: "자유롭게 왔다 갔다 한다", scores: { bat:3, franken:2, witch:2 } },
-        { label: "필요할 때만 나타난다", scores: { count:3, fox:2, bat:2 } },
-        { label: "늘 어딘가에 존재한다", scores: { ghost:3, reaper:3 } },
-        { label: "없으면 허전한 존재다", scores: { pumpkin:3, mummy:2 } },
+        { label: "필요할 때만 딱 나타나는 거", scores: { count:3, ghost:1, witch:2 } },
+        { label: "여기저기 돌아다니는 자유로운 상태", scores: { bat:2, fox:2, pumpkin:2 } },
+        { label: "한 자리에 가만히 있는 게 제일 편함", scores: { mummy:2, ghost:1, reaper:2, pumpkin:1 } },
+        { label: "다들 모여 있을 때 중심에 있는 느낌", scores: { franken:3, pumpkin:2, fox:1 } },
       ]
     },
     {
-      text: "Q6. 사람들이 몬스터인 나를 보고 하는 말은?",
+      text: "Q6. 사람들이 나를 보고 뒤에서 할 법한 말은?",
       options: [
-        { label: "너무 기준이 완전 확실해서 가끔 무서워!", scores: { reaper:4, witch:3 } },
-        { label: "몬스터가 어뜨케 이렇게 매력이 넘칠까아?", scores: { fox:4, pumpkin:2 } },
-        { label: "분위기가 괜히 말 걸기 어려운 스타일이야", scores: { count:4, mummy:3 } },
-        { label: "언제부터인지는 잘 모르겠는데 항상 곁에 있는 것 같아", scores: { ghost:4, franken:3, bat:3 } },
+        { label: "“좀 무섭긴 한데… 듬직해”", scores: { reaper:4, witch:2, count:2 } },
+        { label: "“무서운줄 알았는데 분위기 메이커야!”", scores: { pumpkin:4, fox:3, bat:1 } },
+        { label: "“조용한데 없으면 허전하더라”", scores: { ghost:4, mummy:2, count:1, witch:2 } },
+        { label: "“불평없이 앞에서 해주니깐 좋아”", scores: { franken:4, reaper:2, bat:2, pumpkin:1 } },
       ]
     }
   ];
@@ -725,10 +780,10 @@
   }
 
   function renderQuestion() {
-    const q = ghostQuestions[currentIndex];
+    const q = monsterQuestions[currentIndex];
     qText.textContent = q.text;
-    progressText.textContent = `${currentIndex + 1} / ${ghostQuestions.length}`;
-    progressBar.style.width = `${((currentIndex + 1) / ghostQuestions.length) * 100}%`;
+    progressText.textContent = `${currentIndex + 1} / ${monsterQuestions.length}`;
+    progressBar.style.width = `${((currentIndex + 1) / monsterQuestions.length) * 100}%`;
 
     optionsWrap.innerHTML = "";
 
@@ -752,7 +807,7 @@
 
   function selectOption(scoresObj) {
     addScores(scoresObj);
-    if (currentIndex < ghostQuestions.length - 1) {
+    if (currentIndex < monsterQuestions.length - 1) {
       currentIndex++;
       renderQuestion();
     } else {
@@ -796,24 +851,20 @@
   }
 
   function calculateResult() {
+    // 최고점 찾기
     let bestKey = "witch";
     let bestScore = -Infinity;
     for (const [k, v] of Object.entries(scoreState)) {
       if (v > bestScore) { bestScore = v; bestKey = k; }
     }
 
-    const q6 = ghostQuestions[ghostQuestions.length - 1];
-    const q6Candidates = new Set();
-    q6.options.forEach(o => Object.keys(o.scores || {}).forEach(k => q6Candidates.add(k)));
-
+    // 동점 처리: (행님 코드 톤 유지) 동점이면 랜덤
     const tied = Object.entries(scoreState)
       .filter(([k,v]) => v === bestScore)
       .map(([k]) => k);
 
     if (tied.length > 1) {
-      const inQ6 = tied.filter(k => q6Candidates.has(k));
-      const pool = inQ6.length ? inQ6 : tied;
-      bestKey = pool[Math.floor(Math.random() * pool.length)];
+      bestKey = tied[Math.floor(Math.random() * tied.length)];
     }
 
     currentResultKey = bestKey;
