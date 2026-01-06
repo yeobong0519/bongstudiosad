@@ -25,8 +25,8 @@
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
     crossorigin="anonymous"></script>
 
-  <!-- ✅ Kakao AdFit Script (한 번만 로드) -->
-  <script async src="https://t1.daumcdn.net/kas/static/ba.min.js"></script>
+  <!-- ❌ (중요) Kakao AdFit Script: head에서 로드하면 DOM 타이밍 꼬여서 안 뜨는 케이스 많음 -->
+  <!-- <script async src="https://t1.daumcdn.net/kas/static/ba.min.js"></script> -->
 
   <!-- Kakao SDK -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
@@ -423,12 +423,13 @@
       <h1 id="result-title">마녀봉</h1>
 
       <!-- ✅ Kakao AdFit 320x50 -->
+      <!-- (중요) ba.min.js는 body 맨 아래에서 로드하므로, ins는 그대로 두면 됨 -->
       <div style="margin:14px 0; display:flex; justify-content:center;">
-  <ins class="kakao_ad_area" style="display:none;"
-       data-ad-unit="DAN-J34OMc0GSbFbswgK"
-       data-ad-width="320"
-       data-ad-height="50"></ins>
-</div>
+        <ins class="kakao_ad_area" style="display:none;"
+             data-ad-unit="DAN-J34OMc0GSbFbswgK"
+             data-ad-width="320"
+             data-ad-height="50"></ins>
+      </div>
 
       <!-- ✅ 결과 포스터 -->
       <div class="result-poster">
@@ -774,26 +775,66 @@
   };
 
   function showPage(name) {
-  Object.values(pages).forEach(p => p.classList.add("hidden"));
-  pages[name].classList.remove("hidden");
-  window.scrollTo({ top: 0 });
+    Object.values(pages).forEach(p => p.classList.add("hidden"));
+    pages[name].classList.remove("hidden");
+    window.scrollTo({ top: 0 });
 
-  // ✅ 인트로 페이지가 보여질 때, 영상 무한재생 강제
-  if (name === "intro") {
-    const v = document.getElementById("intro-video");
-    if (v) {
-      v.loop = true;
-      v.muted = true;
-      v.playsInline = true;
-      // display:none -> visible 되는 순간 autoplay가 꼬이는 케이스 방지
-      setTimeout(() => {
-        try { v.currentTime = 0; } catch(e){}
-        const p = v.play();
-        if (p && p.catch) p.catch(() => {});
-      }, 50);
+    // ✅ 인트로 페이지가 보여질 때, 영상 무한재생 강제
+    if (name === "intro") {
+      const v = document.getElementById("intro-video");
+      if (v) {
+        v.loop = true;
+        v.muted = true;
+        v.playsInline = true;
+        // display:none -> visible 되는 순간 autoplay가 꼬이는 케이스 방지
+        setTimeout(() => {
+          try { v.currentTime = 0; } catch(e){}
+          const p = v.play();
+          if (p && p.catch) p.catch(() => {});
+        }, 50);
+      }
+    }
+
+    // ✅ (추가) 결과 페이지 진입 시 애드핏 재스캔(SPA처럼 페이지를 숨겼다 보여서 필요)
+    if (name === "result") {
+      requestAdfitRender();
     }
   }
-}
+
+  /* ========= ✅ 애드핏 렌더 보조 (숨김/표시 구조에서 매우 중요) ========= */
+  function requestAdfitRender() {
+    // ba.min.js가 아직 로드 전이면 조금 뒤 재시도
+    if (!window.__daum__) {
+      setTimeout(requestAdfitRender, 200);
+      return;
+    }
+
+    // 화면에 있는 광고 영역 다시 스캔/렌더 트리거
+    // (ba.min.js는 기본적으로 DOM 스캔 후 채우는데, 이 페이지는 "결과"가 처음엔 hidden이라 재호출 필요)
+    try {
+      // daum ads 내부 구현체가 환경마다 달라서, 가능한 케이스를 넓게 커버
+      if (window.__daum__ && typeof window.__daum__.reload === "function") {
+        window.__daum__.reload();
+        return;
+      }
+    } catch(e){}
+
+    // fallback: ins를 다시 꽂아넣는 방식(가장 강력)
+    try {
+      const wrap = document.querySelector('#page-result ins.kakao_ad_area')?.parentElement;
+      const old = document.querySelector('#page-result ins.kakao_ad_area');
+      if (wrap && old) {
+        const clone = old.cloneNode(true);
+        wrap.replaceChild(clone, old);
+        // 교체 후 다시 한번 대기
+        setTimeout(() => {
+          try {
+            if (window.__daum__ && typeof window.__daum__.reload === "function") window.__daum__.reload();
+          } catch(e){}
+        }, 50);
+      }
+    } catch(e){}
+  }
 
   /* ========= 퀴즈 로직 ========= */
   const monsterQuestions = [
@@ -803,7 +844,7 @@
         { label: "(생각을 정리하며) “잠깐만… 이게 무슨 상황이야?”", scores: { witch:2, reaper:2, count:1, fox:1 } },
         { label: "(밖으로 나가며)“아 몰라, 일단 나가보자”", scores: { franken:3, bat:2, reaper:1, pumpkin:1 } },
         { label: "(숨으며)“일단 안 들키게 조용히 있자…”", scores: { ghost:2, mummy:2, count:1, bat:1 } },
-        { label: "(거울을보며) \"오! 내가 이렇게 생겼구나\"", scores: { fox:3, pumpkin:2, bat:1 } },
+        { label: "(거울을보며) "오! 내가 이렇게 생겼구나"", scores: { fox:3, pumpkin:2, bat:1 } },
       ]
     },
     {
@@ -1332,6 +1373,10 @@ ${mainUrl}`,
   })();
 </script>
 
+<!-- ✅ (핵심) Kakao AdFit Script: DOM이 다 만들어진 뒤 1번만 로드 -->
+<script async src="https://t1.daumcdn.net/kas/static/ba.min.js"></script>
+
+<!-- 공통 스크립트 -->
 <script src="/common/common.js"></script>
 
 </body>
