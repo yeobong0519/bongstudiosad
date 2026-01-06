@@ -21,6 +21,9 @@
   <meta name="twitter:description" content="여봉이 테스트 하러 가기!" />
   <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
 
+  <!-- ✅ (추천) 메타 설명 -->
+  <meta name="description" content="여봉이와 친구들의 캐릭터 일러스트로 즐기는 심리·성향 테스트 모음. 1분 컷으로 결과 9종을 확인해보세요." />
+
   <!-- Google Adsense (유지) -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
@@ -51,7 +54,7 @@
     }
     h1 { font-size: 24px; margin: 0 0 8px; }
     h3 { font-size: 16px; margin: 8px 0 4px; }
-    p  { margin: 4px 0; line-height: 1.45; color:#555; }
+    p  { margin: 6px 0; line-height: 1.55; color:#555; }
 
     .tag {
       display:inline-block;
@@ -61,14 +64,16 @@
       font-size:12px;
       color:#b71c1c;
       margin-bottom:6px;
+      font-weight:800;
     }
+
     .btn {
       width: 100%;
       padding: 14px 16px;
       border: none;
       border-radius: 999px;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       margin-top: 12px;
       cursor: pointer;
       background: #ff6b81;
@@ -77,12 +82,74 @@
     .btn.secondary {
       background: #eceef3;
       color:#333;
+      font-weight:700;
     }
     .btn:active { transform: scale(0.98); }
 
+    .insta-link {
+      display:block;
+      margin-top:12px;
+      text-align:center;
+      padding:12px;
+      background:#ffeef2;
+      color:#ff6b81;
+      font-weight:700;
+      border-radius:12px;
+      text-decoration:none;
+    }
+
+    /* ✅ 테스트 카드(이미지 + 버튼) */
+    .test-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      margin-top:12px;
+    }
+
+    .test-card{
+      border:1px solid rgba(0,0,0,0.06);
+      border-radius:16px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+    }
+
+    .test-card .thumb{
+      background:#f5f5f7;
+    }
+    .test-card .thumb img{
+      width:100%;
+      display:block;
+      height:auto;
+    }
+
+    .test-card .body{
+      padding:12px 12px 14px;
+    }
+
+    .test-title{
+      font-size:14px;
+      font-weight:900;
+      color:#111;
+      margin: 2px 0 0;
+      letter-spacing:-0.2px;
+    }
+
+    .test-sub{
+      margin-top:6px;
+      font-size:12px;
+      color:#666;
+      line-height:1.4;
+    }
+
+    .test-card .btn{
+      margin-top:10px;
+    }
+
+    /* ✅ 굿즈 배너(인스타 밑으로 이동) */
     .ably-banner {
       display:block;
-      margin-top:14px;
+      margin-top:12px;
       padding:16px 14px;
       border-radius:14px;
       background: linear-gradient(135deg, #ffeef2, #ffffff);
@@ -113,17 +180,6 @@
       font-weight:800;
       padding:6px 10px;
       border-radius:999px;
-    }
-    .insta-link {
-      display:block;
-      margin-top:12px;
-      text-align:center;
-      padding:12px;
-      background:#ffeef2;
-      color:#ff6b81;
-      font-weight:600;
-      border-radius:12px;
-      text-decoration:none;
     }
 
     /* ✅ 봉 스튜디오 소개 섹션 (고딕/단정 톤) */
@@ -169,10 +225,12 @@
       background:#f5f5f7;
     }
     .studio-media img{
-      width:100%;
-      display:block;
-      height:auto;
-    }
+  width:100%;
+  display:block;
+  height:220px;        /* ✅ 여기 숫자로 높이 조절 (추천: 160~240) */
+  object-fit:cover;    /* ✅ 꽉 채우면서 자연스럽게 잘라냄 */
+  object-position:center; /* ✅ 가운데 기준으로 크롭 */
+}
     .studio-body{
       margin-top:12px;
       font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -244,31 +302,59 @@
       <span class="tag">여봉이의 놀이터</span>
       <h1>여봉이의 테스트 연구소 🧪</h1>
 
+      <p style="font-size:13px;color:#666;margin-top:8px;">
+        캐릭터 일러스트로 즐기는 심리·성향 테스트 모음!<br>
+        가볍게 즐기고, 결과로 내 타입을 확인해봐 🧪
+      </p>
+
       <h3 style="margin-top:16px;">테스트 목록</h3>
 
-      <!-- ✅ 테스트1 페이지로 이동 -->
-      <button class="btn" onclick="location.href='/tests/test1/'">🧸 여봉이 더쿠 레벨 테스트</button>
+      <!-- ✅ 이미지 밑 버튼 구조 -->
+      <div class="test-grid">
+        <!-- test1 -->
+        <div class="test-card">
+          <div class="thumb">
+            <!-- ✅ 여기에 test1 킹 이미지 넣기 -->
+            <img src="/img/result_king.png" alt="여봉이 더쿠 레벨 테스트 이미지" width="800" height="800">
+          </div>
+          <div class="body">
+            <div class="test-title">🧸 여봉이 더쿠 레벨 테스트</div>
+            <div class="test-sub">내가 더쿠 세계에서 어느 레벨인지 1분 컷으로 확인!</div>
+            <button class="btn" onclick="location.href='/tests/test1/'">테스트 하러가기</button>
+          </div>
+        </div>
 
-      <!-- ✅ 테스트2 페이지로 이동 -->
-      <button class="btn" onclick="location.href='/tests/test2/'">👻 몬스터 월드 여봉이 테스트</button>
+        <!-- test2 -->
+        <div class="test-card">
+          <div class="thumb">
+            <!-- ✅ 여기에 test2 백작봉 이미지 넣기 -->
+            <img src="/img/result_count_ghost.png" alt="몬스터 월드 여봉이 테스트 이미지" width="800" height="800">
+          </div>
+          <div class="body">
+            <div class="test-title">👻 몬스터 월드 여봉이 테스트</div>
+            <div class="test-sub">어느 날 몬스터로 변한 여봉이… 나는 어떤 몬스터?</div>
+            <button class="btn" onclick="location.href='/tests/test2/'">테스트 하러가기</button>
+          </div>
+        </div>
+      </div>
 
       <!-- 준비중 -->
       <button class="btn secondary" onclick="alert('다른 테스트는 준비 중이야!')">
         🎲 다른 테스트 곧 오픈 예정!
       </button>
 
-      <!-- 에이블리 배너 -->
-      <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank" rel="noopener noreferrer">
-        <span class="ably-badge">SHOP</span>
-        <div class="title">여봉이 굿즈샵 바로가기</div>
-        <div class="desc">테스트 하고 취향저격 굿즈 구경하러 가기 →</div>
-      </a>
-
       <!-- 인스타 링크 -->
       <a class="insta-link"
         href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
         target="_blank" rel="noopener noreferrer">
         여봉이 인스타그램 바로가기
+      </a>
+
+      <!-- ✅ 굿즈 배너: 인스타 밑으로 이동 -->
+      <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank" rel="noopener noreferrer">
+        <span class="ably-badge">SHOP</span>
+        <div class="title">여봉이 굿즈샵 바로가기</div>
+        <div class="desc">테스트 보고 취향저격 굿즈 구경하러 가기 →</div>
       </a>
     </div>
 
@@ -280,12 +366,12 @@
       </div>
 
       <div class="studio-media">
-        <img src="/img/result_bong_studios.png" alt="봉 스튜디오 소개 이미지">
+        <img src="/img/result_bong_studios.png" alt="봉 스튜디오 소개 이미지" width="800" height="800">
       </div>
 
       <div class="studio-body">
         <div class="line">
-          <strong>@bong_studios</strong> 의 여봉이와 친구들의 <strong>미공개 캐릭터 일러스트</strong>를 테스트화 하여,
+          <strong>@bong_studios</strong> 의 여봉이와 친구들의 <strong> 캐릭터 일러스트</strong>를 테스트화 하여,
           봉스튜디오's가 선보이는 <strong>킬링타임용 콘텐츠</strong> 페이지 입니다.
         </div>
 
