@@ -27,8 +27,8 @@
     }
     .btn.secondary { background:#eceef3; color:#333; }
     .btn:active { transform:scale(0.98); }
-
   </style>
+
   <link rel="stylesheet" href="/common/common.css?v=2">
 </head>
 
@@ -36,22 +36,30 @@
 
   <div id="nav-mount"></div>
 
-
   <div class="app">
     <div class="card">
       <h1>테스트 목록</h1>
       <p>원하는 테스트를 골라서 바로 시작해줘!</p>
 
-      <button class="btn" onclick="location.href='/tests/test1/'">🧸 여봉이 더쿠 레벨 테스트</button>
-      <button class="btn secondary" onclick="alert('다른 테스트는 준비 중이야!')">🎲 다른 테스트 곧 오픈 예정!</button>
+      <!-- test1 -->
+      <button class="btn" onclick="location.href='/tests/test1/'">
+        🧸 여봉이 더쿠 레벨 테스트
+      </button>
+
+      <!-- test2 -->
+      <button class="btn" onclick="location.href='/tests/test2/'">
+        👻 테스트2 (임시 이름)
+      </button>
+
+      <!-- 준비중 -->
+      <button class="btn secondary" onclick="alert('다른 테스트는 준비 중이야!')">
+        🎲 다른 테스트 곧 오픈 예정!
+      </button>
     </div>
 
-<div id="footer-mount"></div>
-    
+    <div id="footer-mount"></div>
   </div>
-  
-<script src="/common/common.js"></script>
 
+  <script src="/common/common.js"></script>
 </body>
-
 </html>
