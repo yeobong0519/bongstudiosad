@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>유령 세상 속 나는?</title>
+  <title>몬스터 세상 속 나는?</title>
 
   <!-- ✅ OG(테스트2 링크용) -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="여봉이 성향테스트" />
-  <meta property="og:title" content="유령 세상 속 나는?" />
+  <meta property="og:title" content="몬스터 세상 속 나는?" />
   <meta property="og:description" content="여기를 눌러 테스트 하러 가기!" />
   <meta property="og:url" content="https://bongstudiosad.com/tests/test2/" />
   <meta property="og:image" content="https://bongstudiosad.com/img/og_default.png" />
@@ -16,7 +16,7 @@
   <meta property="og:image:height" content="630" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="유령 세상 속 나는?" />
+  <meta name="twitter:title" content="몬스터 세상 속 나는?" />
   <meta name="twitter:description" content="여기를 눌러 테스트 하러 가기!" />
   <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
 
@@ -318,11 +318,11 @@
   <!-- INTRO (표지) -->
   <div id="page-intro" class="page hidden">
     <div class="card" style="text-align:center;">
-      <span class="tag">유령 세상 속 나는?</span>
-      <h1>유령 세상 속 나는?</h1>
-      <p>나는 어떤 타입의 유령일까?</p>
+      <span class="tag">몬스터 세상 속 나는?</span>
+      <h1>몬스터 세상 속 나는?</h1>
+      <p>어느 날 몬스터로 변한 여봉이… 나는 어떤 몬스터로 변했을까?</p>
 
-      <!-- ✅ 자동재생 표지 영상 -->
+      <!-- ✅ 자동재생 표지 영상 (파일명은 그대로 둬도 됨) -->
       <div style="margin:16px 0;">
         <video
           id="intro-video"
@@ -337,7 +337,7 @@
       </div>
 
       <p style="font-size:13px;color:#666;">
-        총 6문항 · 1분 컷 · 결과는 9종 유령 타입!
+        총 6문항 · 1분 컷 · 결과는 9종 몬스터 타입!
       </p>
 
       <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
@@ -350,7 +350,7 @@
   <!-- QUIZ -->
   <div id="page-quiz" class="page hidden">
     <div class="card">
-      <span class="tag">유령 세상 속 나는?</span>
+      <span class="tag">몬스터 세상 속 나는?</span>
       <h3 id="progress-text">1 / 6</h3>
       <div class="progress-bar-bg">
         <div id="progress-bar" class="progress-bar-fill"></div>
@@ -365,8 +365,8 @@
   <!-- LOADING -->
   <div id="page-loading" class="page hidden">
     <div class="card" style="text-align:center;">
-      <h2>🧪 유령 타입 분석 중…</h2>
-      <p>귀신 사회 데이터에 대조중이야</p>
+      <h2>🧪 몬스터 타입 분석 중…</h2>
+      <p>몬스터 도감 데이터에 대조중이야</p>
       <div class="spinner"></div>
       <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
     </div>
@@ -375,7 +375,7 @@
   <!-- RESULT -->
   <div id="page-result" class="page hidden">
     <div class="card" style="text-align:center;">
-      <span class="tag">유령 타입 결과</span>
+      <span class="tag">몬스터 타입 결과</span>
       <h1 id="result-title">위치봉</h1>
 
       <!-- ✅ Kakao AdFit 320x50 -->
@@ -421,11 +421,11 @@
             <td id="detail-actions"></td>
           </tr>
           <tr>
-            <th>잘맞는 유령</th>
+            <th>잘맞는 몬스터</th>
             <td id="detail-match" class="highlight"></td>
           </tr>
           <tr>
-            <th>안맞는 유령</th>
+            <th>안맞는 몬스터</th>
             <td id="detail-mismatch"></td>
           </tr>
           <tr>
@@ -475,7 +475,7 @@
 <div id="share-popup" class="overlay hidden">
   <div class="popup-card" style="max-width:320px;">
     <h2>결과 공유하기</h2>
-    <p style="font-size:14px;color:#666;">친구들도 유령 타입 한 번 재보자!</p>
+    <p style="font-size:14px;color:#666;">친구들도 몬스터 타입 한 번 재보자!</p>
 
     <button class="btn share-kakao" onclick="shareKakao()">카카오톡</button>
 
@@ -504,15 +504,15 @@
 
   /* ========= 결과 이미지(행님 업로드 파일명 기준) ========= */
   const resultMeta = {
-    witch:   { title:"위치봉",   desc:"모든 걸 알고 있는 척하는 정리 귀신", imageUrl:`${SITE_URL}/img/result_witch.png` },
-    mummy:   { title:"미라봉",   desc:"느려도 끝까지 버티는 집념 귀신",     imageUrl:`${SITE_URL}/img/result_mummy.png` },
-    bat:     { title:"박쥐봉",   desc:"밤에만 나타나는 자유 귀신",           imageUrl:`${SITE_URL}/img/result_bat.png` },
-    ghost:   { title:"유령봉",   desc:"안 보이는데 핵심인 존재 귀신",       imageUrl:`${SITE_URL}/img/result_ghost.png` },
-    reaper:  { title:"저승봉",   desc:"귀신 세계의 질서 담당",               imageUrl:`${SITE_URL}/img/result_reaper.png` },
-    franken: { title:"프랑켄봉", desc:"불평은 많은데 제일 많이 움직임",      imageUrl:`${SITE_URL}/img/result_franken.png` },
-    pumpkin: { title:"펌킨봉",   desc:"분위기 살리는 소란 귀신",             imageUrl:`${SITE_URL}/img/result_pumpkin.png` },
-    fox:     { title:"구미호봉", desc:"말로 판을 뒤집는 교섭 귀신",          imageUrl:`${SITE_URL}/img/result_fox.png` },
-    count:   { title:"백작봉",   desc:"품위 지키는 고귀한 귀신",             imageUrl:`${SITE_URL}/img/result_count_ghost.png` }
+    witch:   { title:"위치봉",   desc:"모든 걸 알고 있는 척하는 정리 몬스터", imageUrl:`${SITE_URL}/img/result_witch.png` },
+    mummy:   { title:"미라봉",   desc:"느려도 끝까지 버티는 집념 몬스터",     imageUrl:`${SITE_URL}/img/result_mummy.png` },
+    bat:     { title:"박쥐봉",   desc:"밤에만 나타나는 자유 몬스터",           imageUrl:`${SITE_URL}/img/result_bat.png` },
+    ghost:   { title:"유령봉",   desc:"안 보이는데 핵심인 존재 몬스터",       imageUrl:`${SITE_URL}/img/result_ghost.png` },
+    reaper:  { title:"저승봉",   desc:"몬스터 세계의 질서 담당",               imageUrl:`${SITE_URL}/img/result_reaper.png` },
+    franken: { title:"프랑켄봉", desc:"불평은 많은데 제일 많이 움직임",        imageUrl:`${SITE_URL}/img/result_franken.png` },
+    pumpkin: { title:"펌킨봉",   desc:"분위기 살리는 소란 몬스터",             imageUrl:`${SITE_URL}/img/result_pumpkin.png` },
+    fox:     { title:"구미호봉", desc:"말로 판을 뒤집는 교섭 몬스터",          imageUrl:`${SITE_URL}/img/result_fox.png` },
+    count:   { title:"백작봉",   desc:"품위 지키는 고귀한 몬스터",             imageUrl:`${SITE_URL}/img/result_count_ghost.png` }
   };
 
   /* ========= 테마(원하면 나중에 캐릭터별로 변경 가능) ========= */
@@ -537,12 +537,12 @@
   const resultDetail = {
     witch: {
       oneline: "“흐름은 내가 다 보고 있다.”",
-      summary: "직접 나서진 않지만, 귀신 사회의 판을 읽고 정리하는 타입.",
+      summary: "직접 나서진 않지만, 몬스터 사회의 판을 읽고 정리하는 타입.",
       traits: ["전체 상황을 한 번에 파악", "말은 짧고 핵심만", "혼란일수록 침착함"],
       actions: ["뒤에서 정리 → 방향 제시", "필요할 때만 한 방", "감정 과열되면 자동 제동"],
       match: ["저승봉", "유령봉"],
       mismatch: ["펌킨봉", "박쥐봉"],
-      comment: "너 없으면 귀신 사회 회의가 끝나질 않아."
+      comment: "너 없으면 몬스터 회의가 끝나질 않아."
     },
     mummy: {
       oneline: "“느려도 끝까지 남아있다.”",
@@ -560,7 +560,7 @@
       actions: ["밤에만 활발", "재밌는 쪽으로 이동", "정해진 틀을 싫어함"],
       match: ["펌킨봉", "구미호봉"],
       mismatch: ["저승봉", "백작봉"],
-      comment: "너는 ‘귀신 사회의 변칙 카드’다."
+      comment: "너는 ‘몬스터 사회의 변칙 카드’다."
     },
     ghost: {
       oneline: "“안 보이는데… 제일 중요한 애.”",
@@ -569,16 +569,16 @@
       actions: ["사람 많은 곳에서 관찰", "결정적 순간에 등장", "분위기 파악 빠름"],
       match: ["위치봉", "백작봉"],
       mismatch: ["펌킨봉", "프랑켄봉"],
-      comment: "너는 ‘있어야 시스템이 돌아가는 유령’이다."
+      comment: "너는 ‘있어야 시스템이 돌아가는 몬스터’다."
     },
     reaper: {
       oneline: "“선 넘으면 바로 컷.”",
-      summary: "귀신 사회의 질서를 담당. 감정은 적어도 신뢰는 높은 타입.",
+      summary: "몬스터 세계의 질서를 담당. 감정은 적어도 신뢰는 높은 타입.",
       traits: ["기준 확실", "공정함", "룰을 지키게 만듦"],
       actions: ["질서 정리", "선 넘는 행동 차단", "분쟁 생기면 판단 담당"],
       match: ["위치봉", "프랑켄봉"],
       mismatch: ["박쥐봉", "펌킨봉"],
-      comment: "너 때문에 귀신 사회가 ‘사회’가 된다."
+      comment: "너 때문에 몬스터 세계가 ‘사회’가 된다."
     },
     franken: {
       oneline: "“투덜대도 내가 다 한다.”",
@@ -587,7 +587,7 @@
       actions: ["문제 터지면 일단 움직임", "뒤끝보다 결과", "일 처리 속도 빠름"],
       match: ["저승봉", "펌킨봉"],
       mismatch: ["백작봉", "유령봉"],
-      comment: "너 없으면 귀신 사회는 ‘일’이 멈춘다."
+      comment: "너 없으면 몬스터 세계는 ‘일’이 멈춘다."
     },
     pumpkin: {
       oneline: "“없으면 허전, 있으면 시끄러움.”",
@@ -596,11 +596,11 @@
       actions: ["장난/이벤트 생성", "침체된 분위기 띄우기", "주목 받으면 더 힘남"],
       match: ["박쥐봉", "프랑켄봉"],
       mismatch: ["백작봉", "저승봉"],
-      comment: "너는 귀신 사회의 ‘BGM’이다."
+      comment: "너는 몬스터 세계의 ‘BGM’이다."
     },
     fox: {
       oneline: "“말 한마디로 판을 뒤집는다.”",
-      summary: "교섭/중재/설득의 귀신. 인간과 귀신 사이도 오간다.",
+      summary: "교섭/중재/설득의 몬스터. 인간과 몬스터 사이도 오간다.",
       traits: ["말빨/센스", "상대 심리 파악", "협상 능력"],
       actions: ["대화로 해결", "갈등 중재", "판을 유리하게 재구성"],
       match: ["박쥐봉", "위치봉"],
@@ -614,7 +614,7 @@
       actions: ["필요할 때만 등장", "선 긋기 깔끔", "분위기 무게 중심"],
       match: ["미라봉", "유령봉"],
       mismatch: ["펌킨봉", "박쥐봉"],
-      comment: "너는 귀신 사회의 ‘격’이다."
+      comment: "너는 몬스터 세계의 ‘격’이다."
     }
   };
 
@@ -638,46 +638,46 @@
     window.scrollTo({ top: 0 });
   }
 
-  /* ========= 퀴즈 로직(행님 최종 질문/캐릭터 배치 유지 + 점수만 균등조정) ========= */
+  /* ========= 퀴즈 로직(문구는 몬스터 버전) ========= */
   const ghostQuestions = [
     {
-      text: "Q1. 어느 날 유령이 된 나! 나의 주 활동 장소는?",
+      text: "Q1. 어느 날 몬스터로 변한 나! 나의 주 활동 장소는?",
       options: [
-        { label: "가장 높은 곳으로가서 내려다본다", scores: { witch:3, count:2, reaper:1 } },
+        { label: "가장 높은 곳으로 가서 내려다본다", scores: { witch:3, count:2, reaper:1 } },
         { label: "가장 이상적인 자리를 찾아 존버한다", scores: { mummy:3, franken:2 } },
         { label: "밤에만 나타난다", scores: { bat:3, fox:2 } },
-        { label: "한적한 곳보다는 도심속에서 관찰한다", scores: { ghost:3, pumpkin:2 } },
+        { label: "한적한 곳보다는 도심 속에서 관찰한다", scores: { ghost:3, pumpkin:2 } },
       ]
     },
     {
       text: "Q2. 인간과 마주쳤다!! 내가 할 행동은?",
       options: [
-        { label: "가만히만 있다면 신경 안쓴다.", scores: { reaper:3, franken:2, mummy:2 } },
+        { label: "가만히만 있다면 신경 안 쓴다.", scores: { reaper:3, franken:2, mummy:2 } },
         { label: "호기심에 이리저리 말을 걸어본다", scores: { fox:3, witch:2 } },
         { label: "괜히 겁 한 번 준다", scores: { pumpkin:3, ghost:2 } },
         { label: "그냥 지나친다", scores: { count:3, bat:2 } },
       ]
     },
     {
-      text: "Q3. 유령세상에서의 나의 역활은 ?",
+      text: "Q3. 몬스터 세계에서의 나의 역할은?",
       options: [
         { label: "전체 상황 파악 후 해결한다!", scores: { witch:3, count:2 } },
         { label: "머리보단 몸이 먼저 움직여야지!", scores: { franken:3, pumpkin:2, bat:2 } },
-        { label: "너때문에 흥이 다 깨져버렸으니 책임지는 담당", scores: { pumpkin:3, fox:2 } },
-        { label: "어지러운건 싫어 정리정돈은 내가 한다!", scores: { reaper:3, ghost:2, mummy:2 } },
+        { label: "너 때문에 흥이 다 깨져버렸으니 책임지는 담당", scores: { pumpkin:3, fox:2 } },
+        { label: "어지러운 건 싫어. 정리정돈은 내가 한다!", scores: { reaper:3, ghost:2, mummy:2 } },
       ]
     },
     {
       text: "Q4. 문제가 생겼을 때의 나의 반응은?",
       options: [
-        { label: "후 .. 일단 몰라도 끝까지 해결해본다", scores: { mummy:3, franken:3, reaper:2 } },
-        { label: "하기싫은티 팍팍 ! 투덜대면서도 해결한다", scores: { bat:3, pumpkin:2 } },
+        { label: "후… 일단 몰라도 끝까지 해결해본다", scores: { mummy:3, franken:3, reaper:2 } },
+        { label: "하기 싫은 티 팍팍! 투덜대면서도 해결한다", scores: { bat:3, pumpkin:2 } },
         { label: "나는 내 생각과 말빨로 상황을 바꾼다", scores: { fox:3, witch:2 } },
         { label: "남들이 알아서 하겠지? 굳이 개입하지 않는다", scores: { count:3, ghost:2 } },
       ]
     },
     {
-      text: "Q5. 다른 귀신들과의 거리감은?",
+      text: "Q5. 다른 몬스터들과의 거리감은?",
       options: [
         { label: "자유롭게 왔다 갔다 한다", scores: { bat:3, franken:2, witch:2 } },
         { label: "필요할 때만 나타난다", scores: { count:3, fox:2, bat:2 } },
@@ -686,12 +686,12 @@
       ]
     },
     {
-      text: "Q6. 사람들이 유령인 나를 보고 하는 말은?",
+      text: "Q6. 사람들이 몬스터인 나를 보고 하는 말은?",
       options: [
         { label: "너무 기준이 완전 확실해서 가끔 무서워!", scores: { reaper:4, witch:3 } },
-        { label: "유령이 어뜨케 이렇게 매력이 넘칠까아?", scores: { fox:4, pumpkin:2 } },
+        { label: "몬스터가 어뜨케 이렇게 매력이 넘칠까아?", scores: { fox:4, pumpkin:2 } },
         { label: "분위기가 괜히 말 걸기 어려운 스타일이야", scores: { count:4, mummy:3 } },
-        { label: "언제부터 인지는 잘모르겠는데 항상 곁에 있는거같아", scores: { ghost:4, franken:3, bat:3 } },
+        { label: "언제부터인지는 잘 모르겠는데 항상 곁에 있는 것 같아", scores: { ghost:4, franken:3, bat:3 } },
       ]
     }
   ];
@@ -713,7 +713,6 @@
   }
 
   function startQuiz() {
-    // 표지 영상 재생 중이면 멈춰도 되고 그냥 둬도 됨 (모바일 자동재생이라 무해)
     const v = document.getElementById("intro-video");
     try { if (v) v.pause(); } catch(e){}
 
@@ -797,28 +796,23 @@
   }
 
   function calculateResult() {
-    // 최고점 찾기
     let bestKey = "witch";
     let bestScore = -Infinity;
     for (const [k, v] of Object.entries(scoreState)) {
       if (v > bestScore) { bestScore = v; bestKey = k; }
     }
 
-    // 동점 처리: Q6에서 점수 받은 쪽을 우선(확정용)
     const q6 = ghostQuestions[ghostQuestions.length - 1];
     const q6Candidates = new Set();
     q6.options.forEach(o => Object.keys(o.scores || {}).forEach(k => q6Candidates.add(k)));
 
-    // bestScore와 같은 키들 모으기
     const tied = Object.entries(scoreState)
       .filter(([k,v]) => v === bestScore)
       .map(([k]) => k);
 
     if (tied.length > 1) {
-      // Q6 후보에 포함된 애들로 우선 필터
       const inQ6 = tied.filter(k => q6Candidates.has(k));
       const pool = inQ6.length ? inQ6 : tied;
-      // 그래도 여러개면 랜덤
       bestKey = pool[Math.floor(Math.random() * pool.length)];
     }
 
@@ -881,7 +875,7 @@
     Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: `유령 세상 속 나는? - ${meta.title}`,
+        title: `몬스터 세상 속 나는? - ${meta.title}`,
         description: `${meta.desc}
 
 👉 테스트 하러가기
@@ -977,7 +971,7 @@ ${mainUrl}`,
     ctx.fillStyle = "#6d4aff";
     ctx.font = "bold 56px system-ui, -apple-system, Segoe UI, sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText("유령 세상 속 나는?", W / 2, 160);
+    ctx.fillText("몬스터 세상 속 나는?", W / 2, 160);
 
     ctx.fillStyle = "#222";
     ctx.font = "bold 72px system-ui, -apple-system, Segoe UI, sans-serif";
@@ -1071,7 +1065,7 @@ ${mainUrl}`,
 
     SHARE.buildPromise = (async () => {
       const blob = await buildStoryImageBlob();
-      const file = new File([blob], "yoboong_ghost_result_story.png", { type: "image/png" });
+      const file = new File([blob], "yoboong_monster_result_story.png", { type: "image/png" });
       SHARE.storyBlobCache = blob;
       SHARE.storyFileCache = file;
       return { file, blob };
@@ -1113,7 +1107,7 @@ ${mainUrl}`,
         setShareStatus("공유 시트 여는 중… (인스타그램 선택)");
         await navigator.share({
           files: [file],
-          title: `유령 테스트 - ${meta.title}`,
+          title: `몬스터 테스트 - ${meta.title}`,
           text: `${meta.title} 결과!\n${TEST_URL}`,
           url: TEST_URL
         });
@@ -1122,7 +1116,7 @@ ${mainUrl}`,
       }
 
       setShareStatus("공유시트 미지원: 이미지 저장 후 인스타 스토리 열기");
-      downloadBlob(blob, "yoboong_ghost_result_story.png");
+      downloadBlob(blob, "yoboong_monster_result_story.png");
       setTimeout(() => { window.location.href = "instagram://story-camera"; }, 350);
       setShareStatus("이미지 저장 후 인스타 스토리에 추가해줘. (링크는 클립보드)");
     } catch (e) {
@@ -1147,15 +1141,15 @@ ${mainUrl}`,
         setShareStatus("공유 시트 여는 중… (X 선택)");
         await navigator.share({
           files: [file],
-          title: `유령 테스트 - ${meta.title}`,
-          text: `내 유령 타입은 ${meta.title} 👻\n너도 해봐 👉\n${TEST_URL}`,
+          title: `몬스터 테스트 - ${meta.title}`,
+          text: `내 몬스터 타입은 ${meta.title} 👾\n너도 해봐 👉\n${TEST_URL}`,
           url: TEST_URL
         });
         setShareStatus("공유 완료!");
         return;
       }
 
-      const text = encodeURIComponent(`내 유령 타입은 ${meta.title} 👻\n너도 해봐 👉`);
+      const text = encodeURIComponent(`내 몬스터 타입은 ${meta.title} 👾\n너도 해봐 👉`);
       const url = encodeURIComponent(TEST_URL);
       const intent = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
       window.open(intent, "_blank", "noopener,noreferrer");
