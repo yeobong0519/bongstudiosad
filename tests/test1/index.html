@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,9 +25,6 @@
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
     crossorigin="anonymous"></script>
 
-  <!-- ✅ Kakao AdFit Script (한 번만 로드) -->
-  <script async src="https://t1.daumcdn.net/kas/static/ba.min.js"></script>
-
   <!-- Kakao SDK -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
           crossorigin="anonymous"></script>
@@ -44,7 +40,7 @@
   </script>
 
   <link rel="stylesheet" href="/common/common.css?v=2">
-  
+
   <style>
     body {
       margin: 0;
@@ -303,186 +299,177 @@
 
   <div id="nav-mount"></div>
 
-<div class="app">
+  <div class="app">
 
-  <!-- INTRO (표지) -->
-  <div id="page-intro" class="page hidden">
-    <div class="card" style="text-align:center;">
-      <span class="tag">여봉이 더쿠 레벨 테스트</span>
-      <h1>여봉이 더쿠 레벨 테스트</h1>
-      <p>내가 왕이 될 상인가?</p>
+    <!-- INTRO (표지) -->
+    <div id="page-intro" class="page hidden">
+      <div class="card" style="text-align:center;">
+        <span class="tag">여봉이 더쿠 레벨 테스트</span>
+        <h1>여봉이 더쿠 레벨 테스트</h1>
+        <p>내가 왕이 될 상인가?</p>
 
-      <div style="
-        width:100%;
-        aspect-ratio:1 / 1;
-        background:#fff4f6;
-        border-radius:16px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin:16px 0;
-        overflow:hidden;
-      ">
-        <img
-          id="intro-slider"
-          src=""
-          alt="테스트 표지 이미지"
-          style="width:100%; height:100%; object-fit:contain; display:block;"
-        />
-      </div>
-
-      <p style="font-size:13px;color:#666;">
-        총 5문항 · 1분 컷 · 결과는 더쿠 레벨로 나와요.
-      </p>
-
-      <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
-    </div>
-
-    <!-- ✅ 메인으로 돌아가기 -->
-    <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
-  </div>
-
-  <!-- QUIZ -->
-  <div id="page-quiz" class="page hidden">
-    <div class="card">
-      <span class="tag">여봉이 더쿠 레벨 테스트</span>
-      <h3 id="progress-text">1 / 5</h3>
-      <div class="progress-bar-bg">
-        <div id="progress-bar" class="progress-bar-fill"></div>
-      </div>
-
-      <h2 id="question-text" style="margin-top:16px;">질문</h2>
-      <div id="options-wrap"></div>
-    </div>
-    <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
-  </div>
-
-  <!-- LOADING -->
-  <div id="page-loading" class="page hidden">
-    <div class="card" style="text-align:center;">
-      <h2>🧮 설문 완료! 결과 만드는 중…</h2>
-      <p>여봉이가 너의 레벨을 측정중이야</p>
-      <div class="spinner"></div>
-      <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
-    </div>
-  </div>
-
-  <!-- RESULT -->
-  <div id="page-result" class="page hidden">
-    <div class="card" style="text-align:center;">
-      <span class="tag">더쿠 레벨 측정 결과</span>
-      <h1 id="result-title">LV1. 킹반인</h1>
-
-      <!-- ✅ Kakao AdFit 320x50 -->
-      <div style="margin:14px 0; display:flex; justify-content:center;">
-        <ins class="kakao_ad_area"
-             data-ad-unit="DAN-C0JDNFlaMCwZqace"
-             data-ad-width="320"
-             data-ad-height="50"></ins>
-
-        <script>
-          if (window.kakaoAdFit) {
-            kakaoAdFit.load();
-          }
-        </script>
-      </div>
-
-      <!-- ✅ 결과 포스터 -->
-      <div class="result-poster">
-        <div id="poster-header" class="poster-header">LV1. 킹반인</div>
-        <div class="poster-image">
-          <img id="poster-image" alt="결과 포스터 이미지">
+        <div style="
+          width:100%;
+          aspect-ratio:1 / 1;
+          background:#fff4f6;
+          border-radius:16px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          margin:16px 0;
+          overflow:hidden;
+        ">
+          <img
+            id="intro-slider"
+            src=""
+            alt="테스트 표지 이미지"
+            style="width:100%; height:100%; object-fit:contain; display:block;"
+          />
         </div>
-        <div id="poster-quote" class="poster-quote">“테스트용 문구”</div>
+
+        <p style="font-size:13px;color:#666;">
+          총 5문항 · 1분 컷 · 결과는 더쿠 레벨로 나와요.
+        </p>
+
+        <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
       </div>
 
-      <!-- ✅ 결과 설명(표 형식) -->
-      <div class="result-detail-card">
-        <table class="result-table">
-          <tr>
-            <th>한 줄</th>
-            <td id="detail-oneline"></td>
-          </tr>
-          <tr>
-            <th>요약</th>
-            <td id="detail-summary"></td>
-          </tr>
-          <tr>
-            <th>성향</th>
-            <td id="detail-traits"></td>
-          </tr>
-          <tr>
-            <th>행동</th>
-            <td id="detail-actions"></td>
-          </tr>
-          <tr>
-            <th>코멘트</th>
-            <td id="detail-comment" class="highlight"></td>
-          </tr>
-        </table>
-      </div>
-
-      <!-- 에이블리 배너 -->
-      <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank">
-        <span class="ably-badge">SHOP</span>
-        <div class="title">여봉이 굿즈샵 바로가기</div>
-        <div class="desc">결과 보고 마음에 드는 굿즈 바로 담으러 가기 →</div>
-      </a>
-
-      <!-- 인스타 링크 -->
-      <a class="insta-link"
-         href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
-         target="_blank">
-        여봉이 인스타그램 바로가기
-      </a>
-
-      <div style="display:flex; gap:10px; margin-top:18px;">
-        <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
-        <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
-      </div>
-
-      <!-- 쿠팡 파트너스 -->
-      <div style="margin-top:14px; display:flex; justify-content:center;">
-        <a href="https://link.coupang.com/a/deL5IN" target="_blank" referrerpolicy="unsafe-url">
-          <img src="https://ads-partners.coupang.com/banners/950717?subId=&traceId=V0-301-bae0f72e5e59e45f-I950717&w=320&h=100"
-               alt=""
-               style="max-width:100%; height:auto;">
-        </a>
-      </div>
-
+      <!-- ✅ 메인으로 돌아가기 -->
+      <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
     </div>
-    <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+
+    <!-- QUIZ -->
+    <div id="page-quiz" class="page hidden">
+      <div class="card">
+        <span class="tag">여봉이 더쿠 레벨 테스트</span>
+        <h3 id="progress-text">1 / 5</h3>
+        <div class="progress-bar-bg">
+          <div id="progress-bar" class="progress-bar-fill"></div>
+        </div>
+
+        <h2 id="question-text" style="margin-top:16px;">질문</h2>
+        <div id="options-wrap"></div>
+      </div>
+      <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+    </div>
+
+    <!-- LOADING -->
+    <div id="page-loading" class="page hidden">
+      <div class="card" style="text-align:center;">
+        <h2>🧮 설문 완료! 결과 만드는 중…</h2>
+        <p>여봉이가 너의 레벨을 측정중이야</p>
+        <div class="spinner"></div>
+        <p style="font-size:12px;color:#777;margin-top:8px;">약 3초 정도 걸립니다.</p>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div id="page-result" class="page hidden">
+      <div class="card" style="text-align:center;">
+        <span class="tag">더쿠 레벨 측정 결과</span>
+        <h1 id="result-title">LV1. 킹반인</h1>
+
+        <!-- ✅ Kakao AdFit 320x50 (결과 페이지 진입 시 렌더) -->
+        <div id="adfit-wrap" style="margin:14px 0; display:flex; justify-content:center; min-height:50px;">
+          <!-- JS로 ins를 재삽입해서 렌더 안정화 -->
+        </div>
+
+        <!-- ✅ 결과 포스터 -->
+        <div class="result-poster">
+          <div id="poster-header" class="poster-header">LV1. 킹반인</div>
+          <div class="poster-image">
+            <img id="poster-image" alt="결과 포스터 이미지">
+          </div>
+          <div id="poster-quote" class="poster-quote">“테스트용 문구”</div>
+        </div>
+
+        <!-- ✅ 결과 설명(표 형식) -->
+        <div class="result-detail-card">
+          <table class="result-table">
+            <tr>
+              <th>한 줄</th>
+              <td id="detail-oneline"></td>
+            </tr>
+            <tr>
+              <th>요약</th>
+              <td id="detail-summary"></td>
+            </tr>
+            <tr>
+              <th>성향</th>
+              <td id="detail-traits"></td>
+            </tr>
+            <tr>
+              <th>행동</th>
+              <td id="detail-actions"></td>
+            </tr>
+            <tr>
+              <th>코멘트</th>
+              <td id="detail-comment" class="highlight"></td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- 에이블리 배너 -->
+        <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank">
+          <span class="ably-badge">SHOP</span>
+          <div class="title">여봉이 굿즈샵 바로가기</div>
+          <div class="desc">결과 보고 마음에 드는 굿즈 바로 담으러 가기 →</div>
+        </a>
+
+        <!-- 인스타 링크 -->
+        <a class="insta-link"
+           href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
+           target="_blank">
+          여봉이 인스타그램 바로가기
+        </a>
+
+        <div style="display:flex; gap:10px; margin-top:18px;">
+          <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
+          <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
+        </div>
+
+        <!-- 쿠팡 파트너스 -->
+        <div style="margin-top:14px; display:flex; justify-content:center;">
+          <a href="https://link.coupang.com/a/deL5IN" target="_blank" referrerpolicy="unsafe-url">
+            <img src="https://ads-partners.coupang.com/banners/950717?subId=&traceId=V0-301-bae0f72e5e59e45f-I950717&w=320&h=100"
+                 alt=""
+                 style="max-width:100%; height:auto;">
+          </a>
+        </div>
+
+      </div>
+      <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+    </div>
+
+    <div id="footer-mount"></div>
+
   </div>
 
-  <div id="footer-mount"></div>
+  <!-- 공유 팝업 -->
+  <div id="share-popup" class="overlay hidden">
+    <div class="popup-card" style="max-width:320px;">
+      <h2>결과 공유하기</h2>
+      <p style="font-size:14px;color:#666;">친구들도 더쿠 계급 한 번 재보자!</p>
 
-</div>
+      <button class="btn share-kakao" onclick="shareKakao()">카카오톡</button>
 
-<!-- 공유 팝업 -->
-<div id="share-popup" class="overlay hidden">
-  <div class="popup-card" style="max-width:320px;">
-    <h2>결과 공유하기</h2>
-    <p style="font-size:14px;color:#666;">친구들도 더쿠 계급 한 번 재보자!</p>
+      <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagramStoryOptimal()">
+        인스타 공유하기
+      </button>
 
-    <button class="btn share-kakao" onclick="shareKakao()">카카오톡</button>
+      <button class="btn share-x" style="margin-top:10px;" onclick="shareXImageOptimal()">
+        X 공유하기
+      </button>
 
-    <button class="btn" style="margin-top:10px;background:#ffb6c1;" onclick="shareInstagramStoryOptimal()">
-      인스타 공유하기
-    </button>
+      <button class="btn secondary" style="margin-top:10px;" onclick="copyTestLink()">
+        링크 복사하기
+      </button>
 
-    <button class="btn share-x" style="margin-top:10px;" onclick="shareXImageOptimal()">
-      X 공유하기
-    </button>
+      <div id="share-status" style="margin-top:12px;font-size:12px;color:#777;min-height:18px;"></div>
 
-    <button class="btn secondary" style="margin-top:10px;" onclick="copyTestLink()">
-      링크 복사하기
-    </button>
-
-    <div id="share-status" style="margin-top:12px;font-size:12px;color:#777;min-height:18px;"></div>
-
-    <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
+      <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
+    </div>
   </div>
-</div>
 
 <script>
   /* ========= 공통 설정 ========= */
@@ -529,6 +516,80 @@
   function stopIntroSlider() {
     if (introTimer) clearInterval(introTimer);
     introTimer = null;
+  }
+
+  /* ==============================
+     ✅ Kakao AdFit 안정 렌더
+     - 결과 페이지가 보일 때마다 ins를 재삽입
+     - ba.min.js는 1회만 로드
+  ============================== */
+  const ADFIT = {
+    loaded: false,
+    loading: false,
+    scriptId: "kakao-adfit-script"
+  };
+
+  function ensureAdFitScript() {
+    return new Promise((resolve) => {
+      if (ADFIT.loaded) return resolve(true);
+      if (ADFIT.loading) {
+        const t = setInterval(() => {
+          if (ADFIT.loaded) { clearInterval(t); resolve(true); }
+        }, 50);
+        return;
+      }
+
+      ADFIT.loading = true;
+
+      // 이미 있으면 그것을 사용
+      const existing = document.getElementById(ADFIT.scriptId);
+      if (existing) {
+        ADFIT.loaded = true;
+        ADFIT.loading = false;
+        return resolve(true);
+      }
+
+      const s = document.createElement("script");
+      s.id = ADFIT.scriptId;
+      s.async = true;
+      s.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+      s.onload = () => {
+        ADFIT.loaded = true;
+        ADFIT.loading = false;
+        resolve(true);
+      };
+      s.onerror = () => {
+        ADFIT.loaded = false;
+        ADFIT.loading = false;
+        resolve(false);
+      };
+      document.head.appendChild(s);
+    });
+  }
+
+  async function renderAdFit() {
+    const wrap = document.getElementById("adfit-wrap");
+    if (!wrap) return;
+
+    // 결과 페이지가 hidden일 때 렌더하면 실패하는 케이스가 있어서,
+    // "보이는 상태"에서 재삽입
+    wrap.innerHTML = "";
+
+    // ✅ ins 재삽입 (style="display:none;" 필수)
+    const ins = document.createElement("ins");
+    ins.className = "kakao_ad_area";
+    ins.style.display = "none";
+    ins.setAttribute("data-ad-unit", "DAN-C0JDNFlaMCwZqace");
+    ins.setAttribute("data-ad-width", "320");
+    ins.setAttribute("data-ad-height", "50");
+    wrap.appendChild(ins);
+
+    // ✅ 스크립트 로드(1회)
+    const ok = await ensureAdFitScript();
+    if (!ok) return;
+
+    // ba.min.js는 로드 시점에 DOM의 ins를 스캔해서 iframe을 꽂는 방식이라
+    // 결과 페이지 진입마다 ins를 새로 넣어주면 재노출이 안정적임
   }
 
   /* ✅ 결과 레벨별 테마 */
@@ -624,6 +685,11 @@
     Object.values(pages).forEach(p => p.classList.add("hidden"));
     pages[name].classList.remove("hidden");
     window.scrollTo({ top: 0 });
+
+    // ✅ 결과 페이지가 보이는 순간 AdFit 렌더
+    if (name === "result") {
+      setTimeout(() => { renderAdFit(); }, 50);
+    }
   }
 
   /* ========= 퀴즈 로직 ========= */
@@ -749,7 +815,6 @@
   function restartQuiz() {
     closeSharePopup();
     resetShareCache();
-    // 결과에서 다시하기면 표지로 돌아가도 되고, 바로 시작해도 되는데 기존 흐름대로 바로 시작
     startQuiz();
   }
 
@@ -767,7 +832,7 @@
   }
 
   async function copyTestLink() {
-    const link = TEST_URL; // ✅ 테스트1 링크 복사
+    const link = TEST_URL;
     const ok = await safeClipboardWrite(link);
     if (ok) { setShareStatus("✅ 링크가 복사됐어!"); return; }
 
@@ -788,7 +853,7 @@
     }
   }
 
-  /* ========= ✅ 카카오 공유 (테스트1 링크로 수정) ========= */
+  /* ========= ✅ 카카오 공유 (테스트1 링크) ========= */
   function shareKakao() {
     if (!window.Kakao || !Kakao.isInitialized()) {
       alert("카카오톡 공유 준비 중이야. 잠시 후 다시 시도해줘!");
@@ -796,7 +861,7 @@
     }
 
     const meta = getCurrentMeta();
-    const mainUrl = TEST_URL; // ✅ test1 주소로 공유
+    const mainUrl = TEST_URL;
 
     Kakao.Share.sendDefault({
       objectType: "feed",
@@ -1105,7 +1170,7 @@ ${mainUrl}`,
   })();
 </script>
 
-  <script src="/common/common.js"></script>
-  
+<script src="/common/common.js"></script>
+
 </body>
 </html>
