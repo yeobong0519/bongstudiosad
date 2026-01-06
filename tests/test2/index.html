@@ -780,10 +780,26 @@
   };
 
   function showPage(name) {
-    Object.values(pages).forEach(p => p.classList.add("hidden"));
-    pages[name].classList.remove("hidden");
-    window.scrollTo({ top: 0 });
+  Object.values(pages).forEach(p => p.classList.add("hidden"));
+  pages[name].classList.remove("hidden");
+  window.scrollTo({ top: 0 });
+
+  // ✅ 인트로 페이지가 보여질 때, 영상 무한재생 강제
+  if (name === "intro") {
+    const v = document.getElementById("intro-video");
+    if (v) {
+      v.loop = true;
+      v.muted = true;
+      v.playsInline = true;
+      // display:none -> visible 되는 순간 autoplay가 꼬이는 케이스 방지
+      setTimeout(() => {
+        try { v.currentTime = 0; } catch(e){}
+        const p = v.play();
+        if (p && p.catch) p.catch(() => {});
+      }, 50);
+    }
   }
+}
 
   /* ========= 퀴즈 로직 ========= */
   const monsterQuestions = [
