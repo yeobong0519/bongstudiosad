@@ -117,10 +117,14 @@
     .test-card .thumb{
       background:#f5f5f7;
     }
+
+    /* ✅ 이미지 크롭 적용 */
     .test-card .thumb img{
       width:100%;
+      height:220px;          /* ✅ 크롭 높이 (원하면 180~240로 조절) */
+      object-fit:cover;
+      object-position:center;
       display:block;
-      height:auto;
     }
 
     .test-card .body{
@@ -146,7 +150,16 @@
       margin-top:10px;
     }
 
-    /* ✅ 굿즈 배너(인스타 밑으로 이동) */
+    /* ✅ test1- test2 사이 문구 */
+    .test-desc{
+      font-size:13px;
+      color:#666;
+      margin:12px 0 14px;
+      text-align:center;
+      line-height:1.6;
+    }
+
+    /* ✅ 굿즈 배너(인스타 밑) */
     .ably-banner {
       display:block;
       margin-top:12px;
@@ -225,12 +238,12 @@
       background:#f5f5f7;
     }
     .studio-media img{
-  width:100%;
-  display:block;
-  height:320px;        /* ✅ 여기 숫자로 높이 조절 (추천: 160~240) */
-  object-fit:cover;    /* ✅ 꽉 채우면서 자연스럽게 잘라냄 */
-  object-position:center; /* ✅ 가운데 기준으로 크롭 */
-}
+      width:100%;
+      display:block;
+      height:200px;           /* ✅ 소개 이미지 높이 줄임 (원하면 160~240) */
+      object-fit:cover;
+      object-position:center;
+    }
     .studio-body{
       margin-top:12px;
       font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -309,13 +322,11 @@
 
       <h3 style="margin-top:16px;">테스트 목록</h3>
 
-      <!-- ✅ 이미지 밑 버튼 구조 -->
       <div class="test-grid">
         <!-- test1 -->
         <div class="test-card">
           <div class="thumb">
-            <!-- ✅ 여기에 test1 킹 이미지 넣기 -->
-            <img src="/img/result_kingof.png" alt="여봉이 더쿠 레벨 테스트 이미지" width="800" height="800">
+            <img src="/img/king.png" alt="여봉이 더쿠 레벨 테스트 이미지">
           </div>
           <div class="body">
             <div class="test-title">🧸 여봉이 더쿠 레벨 테스트</div>
@@ -324,11 +335,16 @@
           </div>
         </div>
 
+        <!-- ✅ test1 아래 / test2 위 문구 -->
+        <p class="test-desc">
+          아래 테스트들은 캐릭터 세계관과 일상 성향을 결합해<br>
+          재미와 공감을 중심으로 제작된 콘텐츠입니다.
+        </p>
+
         <!-- test2 -->
         <div class="test-card">
           <div class="thumb">
-            <!-- ✅ 여기에 test2 백작봉 이미지 넣기 -->
-            <img src="/img/result_count_ghost.png" alt="몬스터 월드 여봉이 테스트 이미지" width="800" height="800">
+            <img src="/img/count.png" alt="몬스터 월드 여봉이 테스트 이미지">
           </div>
           <div class="body">
             <div class="test-title">👻 몬스터 월드 여봉이 테스트</div>
@@ -350,7 +366,7 @@
         여봉이 인스타그램 바로가기
       </a>
 
-      <!-- ✅ 굿즈 배너: 인스타 밑으로 이동 -->
+      <!-- ✅ 굿즈 배너: 인스타 밑 -->
       <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank" rel="noopener noreferrer">
         <span class="ably-badge">SHOP</span>
         <div class="title">여봉이 굿즈샵 바로가기</div>
@@ -366,12 +382,12 @@
       </div>
 
       <div class="studio-media">
-        <img src="/img/result_bong_studios.png" alt="봉 스튜디오 소개 이미지" width="800" height="800">
+        <img src="/img/result_bong_studios.png" alt="봉 스튜디오 소개 이미지">
       </div>
 
       <div class="studio-body">
         <div class="line">
-          <strong>@bong_studios</strong> 의 여봉이와 친구들의 <strong> 캐릭터 일러스트</strong>를 테스트화 하여,
+          <strong>@bong_studios</strong> 의 여봉이와 친구들의 <strong>미공개 캐릭터 일러스트</strong>를 테스트화 하여,
           봉스튜디오's가 선보이는 <strong>킬링타임용 콘텐츠</strong> 페이지 입니다.
         </div>
 
