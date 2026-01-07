@@ -519,77 +519,33 @@
   }
 
   /* ==============================
-     ✅ Kakao AdFit 안정 렌더
+     ✅ Kakao AdFit (test2 방식으로 안정화)
      - 결과 페이지가 보일 때마다 ins를 재삽입
      - ba.min.js는 1회만 로드
   ============================== */
-  const ADFIT = {
-    loaded: false,
-    loading: false,
-    scriptId: "kakao-adfit-script"
-  };
+  const ADFIT_UNIT_TEST1 = "DAN-C0JDNFlaMCwZqace"; // ✅ 기존 test1 유닛 그대로 사용
 
-  function ensureAdFitScript() {
-    return new Promise((resolve) => {
-      if (ADFIT.loaded) return resolve(true);
-      if (ADFIT.loading) {
-        const t = setInterval(() => {
-          if (ADFIT.loaded) { clearInterval(t); resolve(true); }
-        }, 50);
-        return;
-      }
-
-      ADFIT.loading = true;
-
-      // 이미 있으면 그것을 사용
-      const existing = document.getElementById(ADFIT.scriptId);
-      if (existing) {
-        ADFIT.loaded = true;
-        ADFIT.loading = false;
-        return resolve(true);
-      }
-
-      const s = document.createElement("script");
-      s.id = ADFIT.scriptId;
-      s.async = true;
-      s.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
-      s.onload = () => {
-        ADFIT.loaded = true;
-        ADFIT.loading = false;
-        resolve(true);
-      };
-      s.onerror = () => {
-        ADFIT.loaded = false;
-        ADFIT.loading = false;
-        resolve(false);
-      };
-      document.head.appendChild(s);
-    });
+  function ensureAdFitScriptOnce() {
+    if (document.getElementById("kakao-adfit-script")) return;
+    const s = document.createElement("script");
+    s.id = "kakao-adfit-script";
+    s.async = true;
+    s.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+    document.head.appendChild(s);
   }
 
-  async function renderAdFit() {
+  function renderAdFit() {
     const wrap = document.getElementById("adfit-wrap");
     if (!wrap) return;
 
-    // 결과 페이지가 hidden일 때 렌더하면 실패하는 케이스가 있어서,
-    // "보이는 상태"에서 재삽입
-    wrap.innerHTML = "";
+    wrap.innerHTML = `
+      <ins class="kakao_ad_area" style="display:none;"
+        data-ad-unit="${ADFIT_UNIT_TEST1}"
+        data-ad-width="320"
+        data-ad-height="50"></ins>
+    `;
 
-    // ✅ ins 재삽입 (style="display:none;" 필수)
-    const ins = document.createElement("ins");
-    ins.className = "kakao_ad_area";
-    ins.style.display = "none";
-    ins.setAttribute("data-ad-unit", "DAN-C0JDNFlaMCwZqace");
-    ins.setAttribute("data-ad-width", "320");
-    ins.setAttribute("data-ad-height", "50");
-    wrap.appendChild(ins);
-
-    // ✅ 스크립트 로드(1회)
-    const ok = await ensureAdFitScript();
-    if (!ok) return;
-
-    // ba.min.js는 로드 시점에 DOM의 ins를 스캔해서 iframe을 꽂는 방식이라
-    // 결과 페이지 진입마다 ins를 새로 넣어주면 재노출이 안정적임
+    ensureAdFitScriptOnce();
   }
 
   /* ✅ 결과 레벨별 테마 */
@@ -686,9 +642,9 @@
     pages[name].classList.remove("hidden");
     window.scrollTo({ top: 0 });
 
-    // ✅ 결과 페이지가 보이는 순간 AdFit 렌더
+    // ✅ 결과 페이지가 "보이는 순간" AdFit 렌더 (핵심)
     if (name === "result") {
-      setTimeout(() => { renderAdFit(); }, 50);
+      setTimeout(() => renderAdFit(), 0);
     }
   }
 
