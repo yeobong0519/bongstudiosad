@@ -30,6 +30,25 @@
 <body>
 <div class="app">
 
+<!-- INTRO (처음 진입 시 보이는 화면) -->
+<div id="page-intro" class="page">
+  <div class="card" style="text-align:center;">
+    <span class="tag">더쿠 레벨 테스트</span>
+    <h1>여봉이 더쿠 레벨 테스트</h1>
+
+    <p style="font-size:13px;color:#666;margin-top:8px; line-height:1.6;">
+      1분 컷으로 내 더쿠 레벨 확인하기 🧸<br>
+      아래 버튼을 누르면 테스트가 시작돼!
+    </p>
+
+    <button class="btn" type="button" onclick="startTest1()">
+      테스트 시작하기
+    </button>
+  </div>
+
+  <button class="btn secondary" type="button" onclick="location.href='/'">← 메인으로</button>
+</div>
+  
 <!-- RESULT -->
 <div id="page-result" class="page hidden">
   <div class="card" style="text-align:center;">
@@ -106,6 +125,28 @@ function showResultPage() {
   document.getElementById("page-result").classList.remove("hidden");
   setTimeout(renderAdFit, 0);
 }
+
+/* ✅ test1 시작 버튼 동작: 인트로 숨기고(현재는) 결과 화면만 보여주는 임시 연결
+   - 지금 네 test1 파일엔 퀴즈(질문/선택) UI가 없어서,
+     “빈 화면 방지” 목적의 최소 패치로 먼저 연결해둠.
+   - 나중에 퀴즈 섹션이 있다면 startTest1() 안에서 퀴즈 페이지를 보여주면 됨.
+*/
+function startTest1() {
+  const intro = document.getElementById("page-intro");
+  const result = document.getElementById("page-result");
+  if (intro) intro.classList.add("hidden");
+  if (result) result.classList.remove("hidden");
+  setTimeout(renderAdFit, 0);
+}
+
+/* ✅ 첫 진입 시 기본은 INTRO가 보이게 강제 */
+(function bootTest1(){
+  const intro = document.getElementById("page-intro");
+  const result = document.getElementById("page-result");
+  if (intro) intro.classList.remove("hidden");
+  if (result) result.classList.add("hidden");
+})();
+  
 </script>
 
 </body>
