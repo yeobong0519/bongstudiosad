@@ -15,21 +15,10 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
-  <!-- (선택) 트위터 미리보기 -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="여봉이의 테스트 연구소 🧪" />
   <meta name="twitter:description" content="여봉이 테스트 하러 가기!" />
   <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
-
-  <!-- ✅ (추천) 메타 설명 -->
-  <meta name="description" content="여봉이와 친구들의 캐릭터 일러스트로 즐기는 심리·성향 테스트 모음. 1분 컷으로 결과 9종을 확인해보세요." />
-
-  <!-- Google Adsense (유지) -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
-    crossorigin="anonymous"></script>
-
-  <link rel="stylesheet" href="/common/common.css">
 
   <style>
     body {
@@ -48,282 +37,138 @@
     .card {
       background: #fff;
       border-radius: 18px;
-      padding: 20px 18px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      margin-bottom: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      padding: 18px;
     }
-    h1 { font-size: 24px; margin: 0 0 8px; }
-    h3 { font-size: 16px; margin: 8px 0 4px; }
-    p  { margin: 6px 0; line-height: 1.55; color:#555; }
-
     .tag {
-      display:inline-block;
-      background:#ffe1ea;
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color:#b71c1c;
-      margin-bottom:6px;
-      font-weight:800;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 14px 16px;
-      border: none;
+      display: inline-block;
+      background: rgba(109,74,255,0.10);
+      color: #6d4aff;
+      padding: 6px 10px;
       border-radius: 999px;
-      font-size: 15px;
-      font-weight: 700;
-      margin-top: 12px;
-      cursor: pointer;
-      background: #ff6b81;
-      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
     }
-    .btn.secondary {
-      background: #eceef3;
-      color:#333;
-      font-weight:700;
-    }
-    .btn:active { transform: scale(0.98); }
-
-    .insta-link {
-      display:block;
-      margin-top:12px;
-      text-align:center;
-      padding:12px;
-      background:#ffeef2;
-      color:#ff6b81;
-      font-weight:700;
-      border-radius:12px;
-      text-decoration:none;
-    }
-
-    /* ✅ 테스트 카드(이미지 + 버튼) */
     .test-grid{
-      display:grid;
+      display: grid;
       grid-template-columns: 1fr;
-      gap:14px;
-      margin-top:12px;
+      gap: 12px;
+      margin-top: 12px;
     }
-
     .test-card{
-      border:1px solid rgba(0,0,0,0.06);
-      border-radius:16px;
-      overflow:hidden;
-      background:#fff;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 108px 1fr;
+      min-height: 108px;
     }
-
-    .test-card .thumb{
-      background:#f5f5f7;
-      height:210px;                 /* ✅ 카드 이미지 영역 높이 유지 */
-      display:flex;                 /* ✅ 중앙 정렬 */
-      align-items:center;
-      justify-content:center;
-      padding:10px;                 /* ✅ 여백(답답함 해소) - 0~12px 취향조절 */
-      box-sizing:border-box;
-}
-
-/* ✅ 자동 축소 + 잘림 없음 */
-.test-card .thumb img{
-  max-width:100%;
-  max-height:100%;
-  width:auto;
-  height:auto;
-  object-fit:contain;           /* ✅ 핵심 */
-  object-position:center;
-  display:block;
-}
-
-    .test-card .body{
-      padding:12px 12px 14px;
+    .thumb{
+      background: #f1f1f3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
-
+    .thumb img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .body{
+      padding: 12px 12px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
     .test-title{
-      font-size:14px;
-      font-weight:900;
-      color:#111;
-      margin: 2px 0 0;
-      letter-spacing:-0.2px;
+      font-weight: 900;
+      font-size: 15px;
+      line-height: 1.25;
     }
-
     .test-sub{
-      margin-top:6px;
-      font-size:12px;
-      color:#666;
-      line-height:1.4;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.35;
     }
-
-    .test-card .btn{
-      margin-top:10px;
+    .btn{
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 900;
+      font-size: 13px;
+      background: #6d4aff;
+      color: #fff;
+      width: fit-content;
     }
-
-    /* ✅ test1- test2 사이 문구 */
-    .test-desc{
-      font-size:13px;
-      color:#666;
-      margin:12px 0 14px;
-      text-align:center;
-      line-height:1.6;
+    .btn.secondary{
+      background: rgba(0,0,0,0.06);
+      color: #222;
     }
-
-/* ✅ 테스트 안내 배너 */
-.notice-box{
-  margin:16px 0 12px;
-  padding:12px 14px;
-  background:#f1f1f3;
-  border-radius:12px;
-  font-size:13px;
-  color:#555;
-  line-height:1.6;
-  text-align:center;
-}
-    
-    /* ✅ 굿즈 배너(인스타 밑) */
-    .ably-banner {
-      display:block;
-      margin-top:12px;
-      padding:16px 14px;
-      border-radius:14px;
-      background: linear-gradient(135deg, #ffeef2, #ffffff);
-      border: 1px solid #ffd1da;
-      text-decoration:none;
-      overflow:hidden;
-      position:relative;
-    }
-    .ably-banner .title {
-      font-weight:900;
-      color:#ff4d6d;
-      font-size:16px;
-      letter-spacing:-0.2px;
-    }
-    .ably-banner .desc {
-      margin-top:6px;
-      color:#666;
-      font-size:13px;
-      line-height:1.3;
-    }
-    .ably-badge {
-      position:absolute;
-      right:12px;
-      top:12px;
-      background:#ff6b81;
-      color:#fff;
-      font-size:11px;
-      font-weight:800;
-      padding:6px 10px;
-      border-radius:999px;
-    }
-
-    /* ✅ 봉 스튜디오 소개 섹션 (고딕/단정 톤) */
-    .studio-card{
-      background:#fff;
-      border-radius:18px;
-      padding:18px 16px;
-      margin: 0 0 18px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+    .notice-box{
+      margin-top: 14px;
+      background: rgba(0,0,0,0.04);
       border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 12px;
+      color: #444;
+      line-height: 1.45;
     }
-    .studio-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
+    .insta-link{
+      display: block;
+      margin-top: 14px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 900;
     }
-    .studio-title{
-      font-size:16px;
-      font-weight:900;
-      letter-spacing:-0.4px;
-      margin:0;
-      color:#111;
+    .insta-sub{
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: #666;
+      font-weight: 600;
     }
-    .studio-pill{
-      display:inline-flex;
-      align-items:center;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
-      background:#fff;
-      color:#111;
-      border:1px solid rgba(0,0,0,0.12);
-      white-space:nowrap;
+    .ad-title{
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 1000;
     }
-    .studio-media{
-      margin-top:10px;
-      border-radius:14px;
-      overflow:hidden;
-      border:1px solid rgba(0,0,0,0.06);
-      background:#f5f5f7;
+    .ad-ig{
+      margin-top: 6px;
+      font-size: 12px;
+      color: #666;
+      font-weight: 800;
     }
-    .studio-media img{
-      width:100%;
-      display:block;
-      height:320px;           /* ✅ 소개 이미지 높이 줄임 (원하면 160~240) */
-      object-fit:cover;
-      object-position:center;
-    }
-    .studio-body{
-      margin-top:12px;
-      font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
-      font-size:13.5px;
-      line-height:1.75;
-      letter-spacing:-0.2px;
-      color:#222;
-      word-break:keep-all;
-    }
-    .studio-body strong{
-      color:#111;
-      font-weight:900;
-    }
-    .studio-body .muted{
-      color:#333;
-      opacity:0.88;
-    }
-    .studio-body .line{
-      margin: 10px 0;
-    }
-    .studio-note{
-      margin-top:12px;
-      padding:12px 12px;
-      border-radius:14px;
-      background:#f7f7f8;
-      border:1px solid rgba(0,0,0,0.08);
-    }
-    .studio-note .label{
-      color:#111;
-      font-size:12px;
-      font-weight:900;
-      margin-bottom:6px;
-    }
-    .mail-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-top:10px;
-      padding-top:10px;
-      border-top:1px solid rgba(0,0,0,0.08);
-    }
-    .mail-row a{
-      color:#111;
-      font-weight:900;
-      text-decoration:none;
-      font-size:13.5px;
+    .ad-img{
+      width: 100%;
+      border-radius: 16px;
+      margin-top: 10px;
+      display: block;
+      background: #f1f1f3;
     }
     .mail-copy{
-      border:0;
-      border-radius:999px;
-      padding:9px 12px;
-      font-size:12px;
-      font-weight:900;
-      background:#111;
-      color:#fff;
-      cursor:pointer;
-      flex:0 0 auto;
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 87, 34, 0.10);
+      color: #ff5722;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 900;
+      cursor: pointer;
     }
     .mail-copy:active{ transform: scale(0.98); }
+
+    /* ✅ 추가: 섹션 대제목 */
+    .section-title{ margin:24px 0 12px; font-size:18px; font-weight:900; }
   </style>
 </head>
 
@@ -340,7 +185,8 @@
         가볍게 즐기고, 결과로 내 타입을 확인해봐 🧪
       </p>
 
-      <h3 style="margin-top:16px;">테스트 목록</h3>
+      <!-- ✅ 변경: 테스트 섹션 대제목 -->
+      <h2 class="section-title" style="margin-top:16px;">여봉이의 테스트</h2>
 
       <div class="test-grid">
         <!-- test1 -->
@@ -355,7 +201,7 @@
           </div>
         </div>
 
-       <!-- test2 -->
+        <!-- test2 -->
         <div class="test-card">
           <div class="thumb">
             <img src="/img/test2main.png" alt="몬스터 월드 여봉이 테스트 이미지">
@@ -373,82 +219,76 @@
         🎲 다른 테스트 곧 오픈 예정!
       </button>
 
-<div class="notice-box">
-  위 테스트들은 <strong>재미와 공감</strong>을 중심으로 제작된<br>
-  캐릭터 기반 성향 테스트 콘텐츠입니다 🙂
-</div>
-      
+      <div class="notice-box">
+        위 테스트들은 <strong>재미와 공감</strong>을 중심으로 제작된<br>
+        캐릭터 기반 성향 테스트 콘텐츠입니다 🙂
+      </div>
+
+      <!-- ✅ 추가: 게임 섹션 -->
+      <h2 class="section-title" style="margin-top:18px;">멧봉이의 게임랜드</h2>
+
+      <div class="test-grid">
+        <!-- game: omok -->
+        <div class="test-card">
+          <div class="thumb">
+            <img src="/img/og_default.png" alt="게임 오목 이미지">
+          </div>
+          <div class="body">
+            <div class="test-title">🎮 게임 오목</div>
+            <div class="test-sub">멧봉이와 오목 한 판 두자!</div>
+            <button class="btn" onclick="location.href='/games/omok/'">게임 하러가기</button>
+          </div>
+        </div>
+      </div>
+
       <!-- 인스타 링크 -->
       <a class="insta-link"
-        href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
-        target="_blank" rel="noopener noreferrer">
+        href="https://www.instagram.com/bong_studios"
+        target="_blank" rel="noopener">
         여봉이 인스타그램 바로가기
+        <span class="insta-sub">@bong_studios</span>
       </a>
 
-      <!-- ✅ 굿즈 배너: 인스타 밑 -->
-      <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank" rel="noopener noreferrer">
-        <span class="ably-badge">SHOP</span>
-        <div class="title">여봉이 굿즈샵 바로가기</div>
-        <div class="desc">테스트 보고 취향저격 굿즈 구경하러 가기 →</div>
+      <a class="insta-link"
+        href="https://applink.a-bly.com/app/bongstudios"
+        target="_blank" rel="noopener">
+        SHOP 여봉이 굿즈샵 바로가기
+        <span class="insta-sub">테스트 보고 취향저격 굿즈 구경하러 가기 →</span>
       </a>
+
+      <h2 class="ad-title">봉 스튜디오's 애드</h2>
+      <div class="ad-ig">@bong_studios</div>
+
+      <img class="ad-img" src="/img/about_bong.png" alt="봉 스튜디오 소개 이미지">
+
+      <p style="font-size:13px;color:#555;line-height:1.55;margin-top:10px;">
+        <strong>@bong_studios</strong> 의 여봉이와 친구들의 미공개 캐릭터 일러스트를 테스트화 하여,
+        봉스튜디오's가 선보이는 킬링타임용 콘텐츠 페이지 입니다.<br><br>
+        가볍게 즐길 수 있는 심리 & 성향 컨텐츠를 제작하며,
+        인스타그램에서 볼 수 없는 봉스튜디오's 멤버들의 색다른 일러스트를 제공합니다.
+        공감과 재미를 우선순위로 제작하고 있습니다.
+      </p>
+
+      <h3 style="margin-top:14px;">앞으로의 방향</h3>
+      <p style="font-size:13px;color:#555;line-height:1.55;margin-top:8px;">
+        다양한 우리만의 세계관과 캐릭터들을 중심으로 더 많은 컨텐츠를 제작하며 나아갈 예정입니다.
+      </p>
+
+      <button class="mail-copy" onclick="copyMail()">
+        bong_studios@naver.com 메일 복사
+      </button>
     </div>
-
-    <!-- ✅ 봉 스튜디오 소개 (푸터 위) -->
-    <div class="studio-card">
-      <div class="studio-head">
-        <h2 class="studio-title">봉 스튜디오's 애드</h2>
-        <span class="studio-pill">@bong_studios</span>
-      </div>
-
-      <div class="studio-media">
-        <img src="/img/result_bong_studios.png" alt="봉 스튜디오 소개 이미지">
-      </div>
-
-      <div class="studio-body">
-        <div class="line">
-          <strong>@bong_studios</strong> 의 여봉이와 친구들의 <strong>미공개 캐릭터 일러스트</strong>를 테스트화 하여,
-          봉스튜디오's가 선보이는 <strong>킬링타임용 콘텐츠</strong> 페이지 입니다.
-        </div>
-
-        <div class="line muted">
-          가볍게 즐길 수 있는 <strong>심리 &amp; 성향</strong> 컨텐츠를 제작하며,
-          인스타그램에서 볼 수 없는 봉스튜디오's 멤버들의 <strong>색다른 일러스트</strong>를 제공합니다.
-          공감과 재미를 우선순위로 제작하고 있습니다.
-        </div>
-
-        <div class="studio-note">
-          <div class="label">앞으로의 방향</div>
-          다양한 우리만의 세계관과 캐릭터들을 중심으로 더 많은 컨텐츠를 제작하며 나아갈 예정입니다.
-        </div>
-
-        <div class="mail-row">
-          <a href="mailto:bong_studios@naver.com">bong_studios@naver.com</a>
-          <button class="mail-copy" type="button" onclick="copyStudioMail()">메일 복사</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="footer-mount"></div>
   </div>
 
-  <script src="/common/common.js"></script>
+  <div id="footer-mount"></div>
 
+  <script src="/common/common.js"></script>
   <script>
-    function copyStudioMail(){
-      const email = "bong_studios@naver.com";
-      if(navigator.clipboard && window.isSecureContext){
-        navigator.clipboard.writeText(email).then(()=> {
-          alert("메일이 복사됐어!");
-        });
-      } else {
-        const ta = document.createElement("textarea");
-        ta.value = email;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        alert("메일이 복사됐어!");
-      }
+    function copyMail(){
+      const mail = "bong_studios@naver.com";
+      navigator.clipboard.writeText(mail).then(() => {
+        alert("메일 주소가 복사됐어!");
+      });
     }
   </script>
 </body>
