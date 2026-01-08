@@ -114,18 +114,28 @@
       box-shadow: 0 6px 16px rgba(0,0,0,0.04);
     }
 
-    .test-card .thumb{
-      background:#f5f5f7;
-    }
+   
 
-    /* ✅ 이미지 크롭 적용 */
-    .test-card .thumb img{
-      width:100%;
-      height:420px;          /* ✅ 크롭 높이 (원하면 180~240로 조절) */
-      object-fit:cover;
-      object-position:center;
-      display:block;
-    }
+   /* ✅ 테스트 카드 썸네일: 1200x630 비율 고정 */
+.test-card .thumb{
+  background:#f5f5f7;
+  aspect-ratio: 1200 / 630;   /* 핵심: OG 비율 */
+  width: 100%;
+  overflow: hidden;
+
+ min-height: 140px; /* ✅ 보험: ratio 깨져도 최소 높이 확보 */
+}
+
+}
+
+/* ✅ 이미지가 컨테이너에 딱 맞게 */
+.test-card .thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* 1200x630이면 왜곡 없이 "딱" 맞음 */
+  object-position: center;
+  display: block;
+}
 
     .test-card .body{
       padding:12px 12px 14px;
@@ -339,7 +349,7 @@
         <!-- test1 -->
         <div class="test-card">
           <div class="thumb">
-            <img src="/img/result_kingof.png" alt="여봉이 더쿠 레벨 테스트 이미지">
+            <img src="/img/test1main.png" alt="여봉이 더쿠 레벨 테스트 이미지">
           </div>
           <div class="body">
             <div class="test-title">🧸 여봉이 더쿠 레벨 테스트</div>
@@ -351,7 +361,7 @@
         <!-- test2 -->
         <div class="test-card">
           <div class="thumb">
-            <img src="/img/result_count_ghost.png" alt="몬스터 월드 여봉이 테스트 이미지">
+            <img src="/img/test2main.png" alt="몬스터 월드 여봉이 테스트 이미지">
           </div>
           <div class="body">
             <div class="test-title">👻 몬스터 월드 여봉이 테스트</div>
