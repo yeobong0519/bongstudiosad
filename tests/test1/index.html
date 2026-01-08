@@ -21,9 +21,9 @@
   <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
 
   <!-- Google Adsense (유지) -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
-    crossorigin="anonymous"></script>
+ <script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351595028"
+  crossorigin="anonymous"></script>
 
   <!-- Kakao SDK -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
@@ -162,6 +162,42 @@
       top:50%;
       transform:translate(-50%,-50%);
     }
+
+    .adsense-desc{
+  margin-top:12px;
+  padding:12px 12px;
+  border-radius:14px;
+  background:#fafafa;
+  border:1px solid #eee;
+  text-align:left;
+}
+.all-results-list{
+  max-height:60vh;
+  overflow:auto;
+  padding-right:4px;
+  margin-top:12px;
+}
+.result-mini-card{
+  border:1px solid #eee;
+  background:#fff;
+  border-radius:14px;
+  padding:12px;
+  margin-top:10px;
+}
+.result-mini-card h3{
+  margin:0 0 6px;
+  font-size:15px;
+}
+.result-mini-card .mini-quote{
+  font-weight:800;
+  color:#111;
+  margin:6px 0 8px;
+}
+.result-mini-card .mini-summary{
+  font-size:13px;
+  color:#666;
+  line-height:1.4;
+}
 
     .hidden { display:none !important; }
 
@@ -331,6 +367,13 @@
           총 5문항 · 1분 컷 · 결과는 더쿠 레벨로 나와요.
         </p>
 
+<!-- ✅ (추가) 애드센스 심사용: 테스트 설명 -->
+<div class="adsense-desc">
+  <p><b>이 테스트는</b> ‘여봉이 더쿠 레벨 테스트’로, 5개의 질문 선택으로 나의 덕력(?)을 가볍게 확인하는 심심풀이 콘텐츠야.</p>
+  <p>각 문항은 “나랑 제일 비슷한 보기”를 고르면 되고, 점수 합산으로 <b>LV1~LV5</b> 결과가 나와. 결과 페이지에서 한 줄 요약 + 성향 + 행동 포인트까지 같이 볼 수 있어.</p>
+  <p style="margin-top:10px;"><b>주의!</b> 이 테스트는 재미로 보는 오락용이야. 결과는 절대 평가가 아니라, “요즘 내 상태”를 웃으면서 보는 용도!</p>
+</div>
+        
         <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
       </div>
 
@@ -428,6 +471,18 @@
           <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
         </div>
 
+        <!-- ✅ (추가) 모든 결과 보기 -->
+<button class="btn secondary" style="margin-top:10px;" onclick="openAllResults()">
+  모든 결과 보기
+</button>
+
+<!-- ✅ (추가) 애드센스 심사용: 결과 해석 문단 -->
+<div class="adsense-desc" style="text-align:left; margin-top:14px;">
+  <p><b>결과 읽는 법</b></p>
+  <p>LV는 우열이 아니라 “덕질 스타일”의 방향을 표현한 거야. 오늘은 킹반인처럼 나와도, 어느 순간 킹 오브 더쿠로 급가속할 수도 있음.</p>
+  <p>친구랑 같이 해보고 결과 비교하면 더 웃겨! (서로의 레벨이랑 행동 포인트가 은근 맞아떨어짐)</p>
+</div>
+
         <!-- 쿠팡 파트너스 -->
         <div style="margin-top:14px; display:flex; justify-content:center;">
           <a href="https://link.coupang.com/a/deL5IN" target="_blank" referrerpolicy="unsafe-url">
@@ -470,6 +525,18 @@
       <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
     </div>
   </div>
+
+  <!-- 모든 결과 보기 팝업 -->
+<div id="all-results-popup" class="overlay hidden">
+  <div class="popup-card" style="max-width:380px; text-align:left;">
+    <h2 style="text-align:center; margin-top:0;">모든 결과 보기</h2>
+    <p style="font-size:13px;color:#666; text-align:center;">아래에서 다른 레벨도 미리 볼 수 있어!</p>
+
+    <div id="all-results-list" class="all-results-list"></div>
+
+    <button class="btn secondary" style="margin-top:12px; width:100%;" onclick="closeAllResults()">닫기</button>
+  </div>
+</div>
 
 <script>
   /* ========= 공통 설정 ========= */
@@ -547,6 +614,8 @@
 
     ensureAdFitScriptOnce();
   }
+
+  
 
   /* ✅ 결과 레벨별 테마 */
   const levelTheme = {
@@ -852,6 +921,55 @@ ${mainUrl}`,
     });
   }
 
+function openAllResults() {
+  const wrap = document.getElementById("all-results-list");
+  if (wrap && !wrap.dataset.built) {
+    buildAllResultsList();
+    wrap.dataset.built = "1";
+  }
+  document.getElementById("all-results-popup").classList.remove("hidden");
+  window.scrollTo({ top: 0 });
+}
+
+function closeAllResults() {
+  document.getElementById("all-results-popup").classList.add("hidden");
+}
+
+function buildAllResultsList() {
+  const wrap = document.getElementById("all-results-list");
+  if (!wrap) return;
+
+  const order = ["kingbanin","pyeongmin","knight","count","kingof"];
+
+  wrap.innerHTML = order.map(key => {
+    const meta = resultMeta[key];
+    const detail = resultDetail[key];
+
+    return `
+      <div class="result-mini-card">
+        <h3>${meta.title}</h3>
+        <div class="mini-quote">${detail.oneline}</div>
+        <div class="mini-summary">${nl2br(detail.summary)}</div>
+
+        <div style="margin-top:10px; display:flex; gap:8px;">
+          <button class="btn secondary" style="flex:1; margin-top:0;" onclick="previewResult('${key}')">
+            이 결과 미리보기
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function previewResult(key) {
+  currentResultKey = key;
+  renderResultDetail();     // 기존 결과 렌더 함수 재사용
+  closeAllResults();
+  window.scrollTo({ top: 0 });
+}
+
+
+  
   /* ========= 인스타/스토리 이미지 생성 (유지) ========= */
   function loadImage(url) {
     return new Promise((resolve, reject) => {
