@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>몬스터 결과 타입 안내 | 여봉이 성향테스트</title>
+
+  <!-- ✅ OG(결과 타입 안내 링크용) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="여봉이 성향테스트" />
+  <meta property="og:title" content="몬스터 세상 속 나는? - 결과 타입 안내" />
+  <meta property="og:description" content="9종 몬스터 타입을 한 번에 보기!" />
+  <meta property="og:url" content="https://bongstudiosad.com/tests/test2/result.html" />
+  <meta property="og:image" content="https://bongstudiosad.com/img/og_default.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="몬스터 세상 속 나는? - 결과 타입 안내" />
+  <meta name="twitter:description" content="9종 몬스터 타입을 한 번에 보기!" />
+  <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
+
+  <link rel="stylesheet" href="/common/common.css?v=2" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f7;
+      color: #222;
+    }
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 20px 16px 40px;
+      box-sizing: border-box;
+    }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 20px 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      margin-bottom: 18px;
+    }
+
+    h1 { font-size: 22px; margin: 0 0 8px; letter-spacing:-0.2px; }
+    h2 { font-size: 18px; margin: 14px 0 10px; letter-spacing:-0.2px; }
+    h3 { font-size: 16px; margin: 10px 0 6px; }
+    p  { margin: 6px 0; line-height: 1.5; color:#555; }
+
+    .tag {
+      display:inline-block;
+      background:#efe7ff;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:#5a2dce;
+      margin-bottom:8px;
+      font-weight:900;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 16px;
+      border: none;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 12px;
+      cursor: pointer;
+      background: #6d4aff;
+      color: #fff;
+    }
+    .btn.secondary {
+      background: #eceef3;
+      color:#333;
+    }
+    .btn:active { transform: scale(0.98); }
+
+    .disclosure-box{
+      margin-top:12px;
+      padding:12px 12px;
+      border-radius:14px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,0.08);
+      color:#666;
+      font-size:13px;
+      line-height:1.5;
+    }
+    .disclosure-box b{ color:#222; }
+
+    /* ✅ 타입 카드 */
+    .type-card {
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,0.06);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 8px 18px rgba(0,0,0,0.04);
+      margin-top:14px;
+    }
+
+    .type-head {
+      padding:14px 14px;
+      font-weight:900;
+      color:#fff;
+      letter-spacing:-0.2px;
+      font-size:18px;
+    }
+
+    .type-body {
+      padding:14px;
+    }
+
+    .type-poster {
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,0.06);
+      background:#fff;
+    }
+    .type-poster img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+
+    .mini-table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+      margin-top:12px;
+    }
+    .mini-table th {
+      width:78px;
+      text-align:left;
+      vertical-align:top;
+      padding:10px 8px;
+      color:#555;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .mini-table td {
+      padding:10px 8px;
+      color:#333;
+      line-height:1.5;
+    }
+    .mini-table tr:not(:last-child){
+      border-bottom:1px solid #eee;
+    }
+
+    .pill-row{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:#f3efff;
+      border:1px solid #e3dbff;
+      font-size:12px;
+      font-weight:800;
+      color:#3a2a77;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+    }
+    .top-actions .btn{
+      margin-top:0;
+      flex:1;
+    }
+
+    .hint{
+      font-size:12px;
+      color:#777;
+      margin-top:8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="nav-mount"></div>
+
+  <div class="app">
+
+    <div class="card" style="text-align:center;">
+      <span class="tag">몬스터 결과 타입 안내</span>
+      <h1>9종 몬스터 타입 한 번에 보기</h1>
+      <p>테스트 결과가 어떤 의미인지, 다른 타입들은 어떤지 한 눈에 보는 페이지야.</p>
+
+      <div class="top-actions">
+        <button class="btn" onclick="location.href='/tests/test2/'">테스트 하러가기</button>
+        <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+      </div>
+
+      <div class="disclosure-box" style="text-align:left;">
+        <b>광고/링크 안내</b><br/>
+        이 사이트에는 서비스 운영을 위한 광고가 포함될 수 있어.
+        일부 외부 링크는 제휴(추천) 링크일 수 있으며, 이를 통해 발생한 수익은 사이트 운영에 도움이 될 수 있어.
+      </div>
+
+      <p class="hint" style="text-align:left;">
+        아래 카드에서 <b>테마색(헤더)</b>은 타입별 분위기를 잡기 위한 컬러야. (원하면 언제든 색 바꿔줄 수 있음)
+      </p>
+    </div>
+
+    <!-- ✅ 타입 목록 -->
+    <div id="types-mount"></div>
+
+    <button class="btn secondary" onclick="location.href='/tests/test2/'">← 테스트로 돌아가기</button>
+    <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+
+    <div id="footer-mount"></div>
+  </div>
+
+<script>
+  const SITE_URL = "https://bongstudiosad.com";
+  const TEST_URL = `${SITE_URL}/tests/test2/`;
+
+  // ✅ 타입 정의: 제목/색/이미지 + 설명(기존 test2 resultDetail 기반)
+  const TYPES = [
+    {
+      key:"witch",
+      title:"마녀봉",
+      color:"#2c1b54",
+      img:`${SITE_URL}/img/result_witch.png`,
+      oneline:"“내가 있어야 이 문제를 빠르게 해결할수있어”",
+      summary:"어떤 상황에서도 이성적이고, 매사를 신중하고 넓게 바라보는 전략형.",
+      traits:["전체를 한 번에 보는 편","말을 하면 핵심만 짚음","감정적으로 흔들리지 않음"],
+      actions:["상황을 정리하고 방향을 만든다","계획이 어긋나는 걸 싫어한다","감정은 드러내지 않지만 단호하다"],
+      match:"저승봉",
+      mismatch:"펌킨봉"
+    },
+    {
+      key:"mummy",
+      title:"미라봉",
+      color:"#4a2d1f",
+      img:`${SITE_URL}/img/result_mummy.png`,
+      oneline:"“결국 끝까지 남는 건 나야.”",
+      summary:"겉으로 조용해 보여도 한 번 잡은 건 끝까지 버티는 인내형.",
+      traits:["포기하지 않는 끈기","한 자리를 지키는 안정감","시간이 갈수록 강해짐"],
+      actions:["천천히라도 확실하게 쌓는다","급하게 움직이기보다 버틴다","마지막까지 남아 결과를 만든다"],
+      match:"백작봉",
+      mismatch:"박쥐봉"
+    },
+    {
+      key:"bat",
+      title:"박쥐봉",
+      color:"#15151f",
+      img:`${SITE_URL}/img/result_bat.png`,
+      oneline:"“난 묶이면 사라져.”",
+      summary:"계획보다 감각, 규칙보다 자유를 중시하는 즉흥형.",
+      traits:["자유로운 사고","빠른 판단과 이동","분위기 전환 능력"],
+      actions:["하고 싶을 땐 빠르게 움직인다","아니라 싶으면 미련 없이 떠난다","틀에 가두려 하면 도망간다"],
+      match:"펌킨봉",
+      mismatch:"저승봉"
+    },
+    {
+      key:"ghost",
+      title:"유령봉",
+      color:"#3a2a77",
+      img:`${SITE_URL}/img/result_ghost.png`,
+      oneline:"“조용해도, 난 빠지지 않아.”",
+      summary:"눈에 띄지 않지만 핵심을 놓치지 않는 관찰형.",
+      traits:["뛰어난 관찰력","상황 파악 능력","필요할 때 정확한 개입"],
+      actions:["앞에 나서지 않아도 다 보고 있다","결정적 순간에 정확히 등장","빠지면 흐름이 흔들린다"],
+      match:"백작봉",
+      mismatch:"펌킨봉"
+    },
+    {
+      key:"reaper",
+      title:"저승봉",
+      color:"#101018",
+      img:`${SITE_URL}/img/result_reaper.png`,
+      oneline:"“여기서부터는 내가 정리할게.”",
+      summary:"기준이 분명하고 모호한 상황에서도 흔들리지 않는 판단형.",
+      traits:["명확한 기준","공정한 판단","신뢰도 높은 결정"],
+      actions:["모호함을 싫어한다","선 넘는 행동을 바로 정리한다","혼란 속 질서를 만든다"],
+      match:"마녀봉",
+      mismatch:"박쥐봉"
+    },
+    {
+      key:"franken",
+      title:"프랑켄봉",
+      color:"#2a5a43",
+      img:`${SITE_URL}/img/result_franken.png`,
+      oneline:"“결국 내가 하고 있더라.”",
+      summary:"투덜대도 결국 제일 먼저 움직여서 해결해버리는 실행형.",
+      traits:["강한 실행력","책임감","빠른 문제 해결"],
+      actions:["일이 보이면 몸이 먼저 나간다","현장을 수습하고 끝낸다","말보다 결과로 증명한다"],
+      match:"저승봉",
+      mismatch:"유령봉"
+    },
+    {
+      key:"pumpkin",
+      title:"펌킨봉",
+      color:"#8c3b00",
+      img:`${SITE_URL}/img/result_pumpkin.png`,
+      oneline:"“분위기? 내가 책임질게.”",
+      summary:"가만히 있어도 분위기가 달라지는 존재감 확실한 분위기형.",
+      traits:["높은 친화력","분위기 메이킹","존재감 확실"],
+      actions:["장난치며 공기를 바꾼다","침체된 분위기를 띄운다","있으면 시끄럽고 없으면 허전하다"],
+      match:"박쥐봉",
+      mismatch:"마녀봉"
+    },
+    {
+      key:"fox",
+      title:"구미호봉",
+      color:"#6d0f5a",
+      img:`${SITE_URL}/img/result_fox.png`,
+      oneline:"“말해보면 답이 보여.”",
+      summary:"상대 심리를 빠르게 읽고 말로 판을 움직이는 소통형.",
+      traits:["뛰어난 소통 능력","협상과 중재","상황 전환 센스"],
+      actions:["대화로 갈등을 바꾼다","원하는 결론으로 이끈다","사람 사이를 자연스럽게 조율한다"],
+      match:"박쥐봉",
+      mismatch:"저승봉"
+    },
+    {
+      key:"count",
+      title:"백작봉",
+      color:"#3c0f0f",
+      img:`${SITE_URL}/img/result_count_ghost.png`,
+      oneline:"“나는 필요한 순간에만 나타나.”",
+      summary:"관계에 선을 긋고 에너지를 아끼며 중요한 순간만 정확히 치는 선택형.",
+      traits:["자기 관리","관계 조절 능력","기준 있는 선택"],
+      actions:["필요 없는 곳엔 에너지를 쓰지 않는다","중요한 순간만 정확히 등장","조용히 무게를 잡는다"],
+      match:"미라봉",
+      mismatch:"펌킨봉"
+    }
+  ];
+
+  function esc(s){
+    return String(s || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function bullets(arr){
+    if(!arr || !arr.length) return "";
+    return arr.map(v => `• ${esc(v)}`).join("<br>");
+  }
+
+  function buildCard(t){
+    const shareUrl = `${TEST_URL}?r=${encodeURIComponent(t.key)}`;
+    return `
+      <div class="type-card">
+        <div class="type-head" style="background:${esc(t.color)};">
+          ${esc(t.title)}
+        </div>
+        <div class="type-body">
+          <div class="type-poster">
+            <img src="${esc(t.img)}" alt="${esc(t.title)} 결과 이미지">
+          </div>
+
+          <table class="mini-table">
+            <tr><th>한 줄</th><td>${esc(t.oneline)}</td></tr>
+            <tr><th>요약</th><td>${esc(t.summary)}</td></tr>
+            <tr><th>성향</th><td>${bullets(t.traits)}</td></tr>
+            <tr><th>행동</th><td>${bullets(t.actions)}</td></tr>
+          </table>
+
+          <div class="pill-row">
+            <span class="pill">잘맞는 타입: ${esc(t.match)}</span>
+            <span class="pill">안맞는 타입: ${esc(t.mismatch)}</span>
+          </div>
+
+          <button class="btn secondary" style="margin-top:12px;" onclick="location.href='${shareUrl}'">
+            이 타입으로 결과 미리보기
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  (function mount(){
+    const mount = document.getElementById("types-mount");
+    if(!mount) return;
+    mount.innerHTML = TYPES.map(buildCard).join("");
+  })();
+</script>
+
+<script src="/common/common.js"></script>
+</body>
+</html>
