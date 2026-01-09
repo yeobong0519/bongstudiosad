@@ -400,11 +400,7 @@
         <span class="tag">더쿠 레벨 측정 결과</span>
         <h1 id="result-title">LV1. 킹반인</h1>
 
-        <!-- ✅ Kakao AdFit 320x50 (결과 페이지 진입 시 렌더) -->
-        <div id="adfit-wrap" style="margin:14px 0; display:flex; justify-content:center; min-height:50px;">
-          <!-- JS로 ins를 재삽입해서 렌더 안정화 -->
-        </div>
-
+       
         <!-- ✅ 결과 포스터 -->
         <div class="result-poster">
           <div id="poster-header" class="poster-header">LV1. 킹반인</div>
@@ -490,6 +486,11 @@
 
       </div>
       <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
+
+      <!-- ✅ Kakao AdFit 320x50 (결과 페이지 진입 시 렌더) -->
+<div id="adfit-wrap" style="margin:14px 0; display:flex; justify-content:center; min-height:100px;">
+</div>
+      
     </div>
 
     <div id="footer-mount"></div>
@@ -574,7 +575,7 @@
      - 결과 페이지가 보일 때마다 ins를 재삽입
      - ba.min.js는 1회만 로드
   ============================== */
-  const ADFIT_UNIT_TEST1 = "DAN-C0JDNFlaMCwZqace"; // ✅ 기존 test1 유닛 그대로 사용
+  const ADFIT_UNIT_TEST1 = "DAN-I2vYAuoM4XLlZTIk"; // ✅ 기존 test1 유닛 그대로 사용
 
   function ensureAdFitScriptOnce() {
     if (document.getElementById("kakao-adfit-script")) return;
@@ -585,19 +586,29 @@
     document.head.appendChild(s);
   }
 
-  function renderAdFit() {
-    const wrap = document.getElementById("adfit-wrap");
-    if (!wrap) return;
+ function renderAdFit() {
+  const wrap = document.getElementById("adfit-wrap");
+  if (!wrap) return;
 
-    wrap.innerHTML = `
-      <ins class="kakao_ad_area" style="display:none;"
-        data-ad-unit="${ADFIT_UNIT_TEST1}"
-        data-ad-width="320"
-        data-ad-height="50"></ins>
-    `;
+  // ✅ 1) 먼저 ins를 DOM에 삽입
+  wrap.innerHTML = `
+    <ins class="kakao_ad_area" style="display:none;"
+      data-ad-unit="${ADFIT_UNIT_TEST1}"
+      data-ad-width="${ADFIT_W}"
+      data-ad-height="${ADFIT_H}"></ins>
+  `;
 
-    ensureAdFitScriptOnce();
-  }
+  // ✅ 2) ba.min.js를 "다시" 실행시키기 (SPA에서 필수)
+  // 기존 스크립트가 있으면 지우고 새로 삽입
+  const old = document.getElementById("kakao-adfit-script");
+  if (old) old.remove();
+
+  const s = document.createElement("script");
+  s.id = "kakao-adfit-script";
+  s.async = true;
+  s.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+  document.body.appendChild(s);
+}
 
   
 
