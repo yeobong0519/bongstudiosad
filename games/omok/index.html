@@ -248,6 +248,49 @@
     @keyframes toastPop{
       to{ transform: translateY(0) scale(1); }
     }
+
+      /* ✅ AdSense용: 게임 설명 섹션 (푸터 위) */
+    .game-desc{
+      margin-top: 14px;
+      max-width:560px;
+      margin-left:auto; margin-right:auto;
+      width: calc(100% - 28px);
+    
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      border-radius: 20px;
+      padding: 14px 14px;
+      box-shadow: 0 12px 34px rgba(0,0,0,.22);
+    }
+    .game-desc h2{
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 1000;
+      letter-spacing: -.2px;
+    }
+    .game-desc h3{
+      margin: 14px 0 6px;
+      font-size: 13px;
+      font-weight: 1000;
+      color: rgba(255,255,255,.88);
+    }
+    .game-desc p{
+      margin: 8px 0 0;
+      font-size: 12px;
+      line-height: 1.6;
+      color: rgba(255,255,255,.72);
+      font-weight: 800;
+    }
+    .game-desc ul{
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      line-height: 1.6;
+      font-weight: 800;
+    }
+    .game-desc li{ margin: 4px 0; }
+    
   </style>
 </head>
 
@@ -306,6 +349,29 @@
       </div>
     </div>
   </div>
+
+
+  <!-- ✅ AdSense용: 게임 설명(게임 하단 & 푸터 위) -->
+  <section class="game-desc">
+    <h2>오목왕 멧봉이를 이겨라!</h2>
+    <p>
+      이 페이지는 설치 없이 바로 즐길 수 있는 웹 기반 오목 게임이야.
+      짧게 한 판 하기 좋은 심심풀이 게임으로, 여봉이의 놀이터에서 제공하는 콘텐츠 중 하나야.
+    </p>
+
+    <h3>게임 방법</h3>
+    <ul>
+      <li>여봉이(플레이어)와 멧봉이(AI)가 번갈아 돌을 놓아.</li>
+      <li>가로·세로·대각선으로 5개의 돌을 먼저 만들면 승리!</li>
+      <li>33(더블 쓰리) 금지 규칙이 적용돼서, 해당 수는 “33은 안돼!” 알림이 떠.</li>
+    </ul>
+
+    <p>
+      잠깐 쉬는 시간에 가볍게 즐기기 좋아. 멧봉이 상대로 승리하면 너 진짜 오목왕 인정 😎
+    </p>
+  </section>
+
+ 
 
   <!-- Start modal -->
   <div class="modal-backdrop" id="startBackdrop" role="dialog" aria-modal="true">
