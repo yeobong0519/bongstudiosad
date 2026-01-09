@@ -171,33 +171,7 @@
   border:1px solid #eee;
   text-align:left;
 }
-.all-results-list{
-  max-height:60vh;
-  overflow:auto;
-  padding-right:4px;
-  margin-top:12px;
-}
-.result-mini-card{
-  border:1px solid #eee;
-  background:#fff;
-  border-radius:14px;
-  padding:12px;
-  margin-top:10px;
-}
-.result-mini-card h3{
-  margin:0 0 6px;
-  font-size:15px;
-}
-.result-mini-card .mini-quote{
-  font-weight:800;
-  color:#111;
-  margin:6px 0 8px;
-}
-.result-mini-card .mini-summary{
-  font-size:13px;
-  color:#666;
-  line-height:1.4;
-}
+
 
     .hidden { display:none !important; }
 
@@ -453,7 +427,7 @@
         </div>
 
         <!-- 에이블리 배너 -->
-        <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank">
+       <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank" rel="noopener noreferrer">
           <span class="ably-badge">SHOP</span>
           <div class="title">여봉이 굿즈샵 바로가기</div>
           <div class="desc">결과 보고 마음에 드는 굿즈 바로 담으러 가기 →</div>
@@ -472,9 +446,6 @@
         </div>
 
         <!-- ✅ (추가) 모든 결과 보기 -->
-<button class="btn secondary" style="margin-top:10px;" onclick="openAllResults()">
-  모든 결과 보기
-</button>
 
 <button class="btn secondary" style="margin-top:10px;" onclick="location.href='/tests/test1/result.html'">
   결과 타입 안내 보기
@@ -529,18 +500,6 @@
       <button class="btn secondary" style="margin-top:12px;" onclick="closeSharePopup()">닫기</button>
     </div>
   </div>
-
-  <!-- 모든 결과 보기 팝업 -->
-<div id="all-results-popup" class="overlay hidden">
-  <div class="popup-card" style="max-width:380px; text-align:left;">
-    <h2 style="text-align:center; margin-top:0;">모든 결과 보기</h2>
-    <p style="font-size:13px;color:#666; text-align:center;">아래에서 다른 레벨도 미리 볼 수 있어!</p>
-
-    <div id="all-results-list" class="all-results-list"></div>
-
-    <button class="btn secondary" style="margin-top:12px; width:100%;" onclick="closeAllResults()">닫기</button>
-  </div>
-</div>
 
 <script>
   /* ========= 공통 설정 ========= */
@@ -924,53 +883,6 @@ ${mainUrl}`,
       ]
     });
   }
-
-function openAllResults() {
-  const wrap = document.getElementById("all-results-list");
-  if (wrap && !wrap.dataset.built) {
-    buildAllResultsList();
-    wrap.dataset.built = "1";
-  }
-  document.getElementById("all-results-popup").classList.remove("hidden");
-  window.scrollTo({ top: 0 });
-}
-
-function closeAllResults() {
-  document.getElementById("all-results-popup").classList.add("hidden");
-}
-
-function buildAllResultsList() {
-  const wrap = document.getElementById("all-results-list");
-  if (!wrap) return;
-
-  const order = ["kingbanin","pyeongmin","knight","count","kingof"];
-
-  wrap.innerHTML = order.map(key => {
-    const meta = resultMeta[key];
-    const detail = resultDetail[key];
-
-    return `
-      <div class="result-mini-card">
-        <h3>${meta.title}</h3>
-        <div class="mini-quote">${detail.oneline}</div>
-        <div class="mini-summary">${nl2br(detail.summary)}</div>
-
-        <div style="margin-top:10px; display:flex; gap:8px;">
-          <button class="btn secondary" style="flex:1; margin-top:0;" onclick="previewResult('${key}')">
-            이 결과 미리보기
-          </button>
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-function previewResult(key) {
-  currentResultKey = key;
-  renderResultDetail();     // 기존 결과 렌더 함수 재사용
-  closeAllResults();
-  window.scrollTo({ top: 0 });
-}
 
 
   
