@@ -509,15 +509,18 @@
           여봉이 인스타그램 바로가기
         </a>
 
-        <div style="display:flex; gap:10px; margin-top:18px;">
-          <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
-          <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
+       <div style="display:flex; gap:10px; margin-top:18px;">
+  <button class="btn" style="flex:1;" onclick="openSharePopup()">공유하기</button>
+  <button class="btn secondary" style="flex:1;" onclick="restartQuiz()">다시하기</button>
+</div>
+
+<button class="btn secondary" style="margin-top:10px;"
+  onclick="location.href='/tests/test2/result.html'">
+  몬스터 결과 타입 한눈에 보기
+</button>
+          
         </div>
 
-<!-- ✅ (추가) 모든 결과 보기 -->
-<button class="btn secondary" style="margin-top:10px;" onclick="openAllResults()">
-  모든 결과 보기
-</button>
 
 <!-- ✅ (추가) 애드센스 심사용: 결과 해석 -->
 <div class="adsense-desc" style="text-align:left; margin-top:14px;">
@@ -557,17 +560,6 @@
     </div>
   </div>
 
-<!-- 모든 결과 보기 팝업 -->
-<div id="all-results-popup" class="overlay hidden" onclick="closeAllResults()">
-  <div class="popup-card" style="max-width:380px; text-align:left;" onclick="event.stopPropagation()">
-    <h2 style="text-align:center; margin-top:0;">모든 결과 보기</h2>
-    <p style="font-size:13px;color:#666; text-align:center;">아래에서 다른 타입도 미리 볼 수 있어! (미리보기는 점수에 영향 없음)</p>
-
-    <div id="all-results-list" class="all-results-list"></div>
-
-    <button class="btn secondary" style="margin-top:12px; width:100%;" onclick="closeAllResults()">닫기</button>
-  </div>
-</div>
 
   
 <script>
@@ -899,53 +891,6 @@
     }
   }
 
-function openAllResults() {
-  const wrap = document.getElementById("all-results-list");
-  if (wrap && !wrap.dataset.built) {
-    buildAllResultsList();
-    wrap.dataset.built = "1";
-  }
-  document.getElementById("all-results-popup").classList.remove("hidden");
-  window.scrollTo({ top: 0 });
-}
-
-function closeAllResults() {
-  document.getElementById("all-results-popup").classList.add("hidden");
-}
-
-function buildAllResultsList() {
-  const wrap = document.getElementById("all-results-list");
-  if (!wrap) return;
-
-  // ✅ test2 결과 키(9종) 고정 순서
-  const order = ["witch","mummy","bat","ghost","reaper","franken","pumpkin","fox","count"];
-
-  wrap.innerHTML = order.map(key => {
-    const meta = resultMeta[key];
-    const detail = resultDetail[key] || {};
-    const summary = (detail.summary || "").replace(/\n/g, "<br>");
-
-    return `
-      <div class="result-mini-card">
-        <h3>${meta.title}</h3>
-        <div class="mini-quote">${detail.oneline || ""}</div>
-        <div class="mini-summary">${summary}</div>
-        <div style="margin-top:10px; display:flex; gap:8px;">
-          <button class="btn secondary" style="flex:1; margin-top:0;" onclick="previewResult('${key}')">
-            이 결과 미리보기
-          </button>
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-function previewResult(key) {
-  currentResultKey = key;
-  renderResultDetail(); // ✅ test2에 이미 있는 결과 렌더 함수 재사용
-  closeAllResults();
-  window.scrollTo({ top: 0 });
-}
 
   
   
