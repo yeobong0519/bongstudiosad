@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>멧봉이 피하기</title>
+
+  <!-- ✅ 공통 CSS/JS (네비/푸터 자동 로드용) -->
+  <link rel="stylesheet" href="/common/common.css" />
+  <script defer src="/common/common.js"></script>
+
+  <style>
+    :root{
+      --bg1:#0b0f19;
+      --bg2:#111a33;
+      --card:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.65);
+      --danger:#ff4d6d;
+      --ok:#6ee7ff;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background: radial-gradient(1200px 700px at 30% 20%, #20305f 0%, var(--bg1) 55%, #070a12 100%);
+      color:var(--text);
+      min-height:100vh;
+      padding: 0; /* ✅ nav/footer 포함 시 중앙정렬 깨짐 방지 */
+    }
+
+    /* ✅ nav/footer 아래에 게임이 들어가도록 */
+    .page{
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .wrap{ width:min(520px, 100%); }
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+    }
+    .title{
+      font-weight:900;
+      letter-spacing:-0.02em;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .pill{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .board{
+      position:relative;
+      width:100%;
+      aspect-ratio: 9/16;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid var(--line);
+
+      /* ✅ (선택) 네가 그린 bg.png를 쓰고 싶으면 아래 3줄만 유지 */
+      background-image: url("/games/metbong-dodge/img/bg.png");
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+
+      /* ✅ bg.png가 아직 없으면 위 3줄 지우고 아래 배경 쓰면 됨
+      background:
+        radial-gradient(700px 400px at 50% 10%, rgba(110,231,255,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      */
+
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      touch-action:none;
+    }
+    canvas{ width:100%; height:100%; display:block; }
+
+    .hud{
+      position:absolute;
+      inset:12px 12px auto 12px;
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:flex-start;
+      pointer-events:none;
+    }
+    .hud .box{
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
+      min-width:140px;
+    }
+    .hud .k{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+      letter-spacing:-0.01em;
+    }
+    .hud .v{
+      font-size:18px;
+      font-weight:1000;
+      margin-top:4px;
+    }
+
+    .overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background: rgba(0,0,0,.42);
+      backdrop-filter: blur(6px);
+    }
+    .modal{
+      width:min(420px, 100%);
+      border-radius:22px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      box-shadow: 0 22px 70px rgba(0,0,0,.45);
+      padding:18px;
+      text-align:center;
+    }
+    .modal h2{
+      margin:6px 0 8px;
+      font-size:20px;
+      letter-spacing:-0.02em;
+    }
+    .modal p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.45;
+      font-size:13px;
+    }
+    .btns{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    button{
+      appearance:none;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.10);
+      color:var(--text);
+      padding:11px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      min-width:140px;
+    }
+    button.primary{
+      border-color: rgba(110,231,255,.32);
+      background: rgba(110,231,255,.18);
+    }
+    .hint{
+      margin-top:12px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .footerhint{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ✅ 네비 자동 로드 자리 -->
+  <div id="nav"></div>
+
+  <main class="page">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="title">
+          <span>멧봉이 피하기</span>
+          <span class="pill">← → / 모바일 드래그</span>
+        </div>
+        <div class="pill" id="bestPill">BEST: 0</div>
+      </div>
+
+      <div class="board" id="board">
+        <canvas id="c" width="720" height="1280" aria-label="멧봉이 피하기 게임 캔버스"></canvas>
+
+        <div class="hud">
+          <div class="box">
+            <div class="k">점수</div>
+            <div class="v" id="score">0</div>
+          </div>
+          <div class="box" style="text-align:right;">
+            <div class="k">레벨</div>
+            <div class="v" id="level">1</div>
+          </div>
+        </div>
+
+        <div class="overlay" id="overlay">
+          <div class="modal">
+            <div style="font-size:42px; line-height:1;">🫣</div>
+            <h2 id="modalTitle">멧봉이 피하기</h2>
+            <p id="modalDesc">
+              바닥의 여봉이를 좌우로 움직여<br/>
+              위에서 떨어지는 멧봉이 얼굴을 피하세요!
+            </p>
+            <div class="btns">
+              <button class="primary" id="startBtn">시작하기</button>
+              <button id="howBtn">조작방법</button>
+            </div>
+            <div class="hint" id="hintText">
+              모바일: 캐릭터를 터치한 채 좌우로 드래그<br/>
+              PC: ← → 또는 A/D
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footerhint">
+        PNG 준비되면 자동으로 캐릭터가 이미지로 렌더링돼요 (미준비 시 임시 이모지로 표시)
+      </div>
+    </div>
+  </main>
+
+  <!-- ✅ 푸터 자동 로드 자리 -->
+  <div id="footer"></div>
+
+<script>
+(() => {
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+
+  const board = document.getElementById("board");
+  const overlay = document.getElementById("overlay");
+  const startBtn = document.getElementById("startBtn");
+  const howBtn = document.getElementById("howBtn");
+  const scoreEl = document.getElementById("score");
+  const levelEl = document.getElementById("level");
+  const bestPill = document.getElementById("bestPill");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDesc  = document.getElementById("modalDesc");
+
+  // ✅ 이미지 경로(고정)
+  const IMG_PLAYER = "/games/metbong-dodge/img/yeobong.png";
+  const IMG_ENEMY  = "/games/metbong-dodge/img/metbong.png";
+
+  // ====== 화면 크기(반응형) → 내부 논리 크기 유지 ======
+  const W = canvas.width;
+  const H = canvas.height;
+
+  // ====== 로컬 베스트 점수 ======
+  const BEST_KEY = "metbong_dodge_best";
+  let bestScore = Number(localStorage.getItem(BEST_KEY) || 0);
+  bestPill.textContent = `BEST: ${bestScore}`;
+
+  // ====== 게임 상태 ======
+  let running = false;
+  let gameOver = false;
+  let tPrev = 0;
+
+  // 플레이어 (여봉이)
+  const player = {
+    w: 130,
+    h: 130,
+    x: W/2,
+    y: H - 170,
+    speed: 780,
+    vx: 0
+  };
+
+  // 장애물 (멧봉이 얼굴)
+  const enemies = [];
+  let spawnTimer = 0;
+  let spawnEvery = 0.85;
+  let fallSpeed = 520;
+
+  // 점수/레벨
+  let score = 0;
+  let level = 1;
+
+  // 입력
+  const keys = { left:false, right:false };
+
+  function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+  // ====== 이미지 로드(없으면 자동으로 이모지 모드) ======
+  const imgPlayer = new Image();
+  const imgEnemy  = new Image();
+  let playerImgReady = false;
+  let enemyImgReady = false;
+
+  imgPlayer.onload = () => { playerImgReady = true; };
+  imgEnemy.onload  = () => { enemyImgReady = true; };
+
+  // 에러나도 게임은 돌아가야 함(그냥 이모지로 그리기)
+  imgPlayer.onerror = () => { playerImgReady = false; };
+  imgEnemy.onerror  = () => { enemyImgReady = false; };
+
+  imgPlayer.src = IMG_PLAYER;
+  imgEnemy.src  = IMG_ENEMY;
+
+  function resetGame(){
+    enemies.length = 0;
+    spawnTimer = 0;
+    spawnEvery = 0.85;
+    fallSpeed = 520;
+    score = 0;
+    level = 1;
+    scoreEl.textContent = "0";
+    levelEl.textContent = "1";
+    player.x = W/2;
+    player.vx = 0;
+    gameOver = false;
+  }
+
+  function showOverlay(title, desc, startText="시작하기"){
+    modalTitle.textContent = title;
+    modalDesc.innerHTML = desc;
+    startBtn.textContent = startText;
+    overlay.style.display = "flex";
+  }
+  function hideOverlay(){
+    overlay.style.display = "none";
+  }
+
+  // ====== 스폰/난이도 ======
+  function updateDifficulty(){
+    const newLevel = 1 + Math.floor(score / 200);
+    if (newLevel !== level){
+      level = newLevel;
+      levelEl.textContent = String(level);
+      spawnEvery = Math.max(0.35, 0.85 - (level-1)*0.06);
+      fallSpeed  = Math.min(1200, 520 + (level-1)*55);
+    }
+  }
+
+  function spawnEnemy(){
+    const size = 110 + Math.random()*30;
+    const x = 60 + Math.random()*(W - 120);
+    enemies.push({
+      x, y: -size,
+      w: size, h: size,
+      vy: fallSpeed * (0.92 + Math.random()*0.22),
+      rot: (Math.random()*0.6 - 0.3),
+      t: 0
+    });
+  }
+
+  // ====== 충돌(AABB) ======
+  function hit(a, b){
+    return (
+      a.x - a.w/2 < b.x + b.w/2 &&
+      a.x + a.w/2 > b.x - b.w/2 &&
+      a.y - a.h/2 < b.y + b.h/2 &&
+      a.y + a.h/2 > b.y - b.h/2
+    );
+  }
+
+  // ====== 그리기 ======
+  function drawBackground(){
+    // 캔버스 배경은 투명으로 두고(= board의 bg.png가 보이게)
+    // 게임 오브젝트만 그린다.
+    ctx.clearRect(0,0,W,H);
+  }
+
+  function drawPlayer(){
+    const x = player.x, y = player.y;
+    ctx.save();
+
+    // 그림자
+    ctx.globalAlpha = 0.22;
+    ctx.beginPath();
+    ctx.ellipse(x, y + player.h/2 - 10, 62, 18, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    if (playerImgReady){
+      ctx.drawImage(imgPlayer, x - player.w/2, y - player.h/2, player.w, player.h);
+    } else {
+      // 임시 이모지(이미지 없을 때)
+      roundRect(x-player.w/2, y-player.h/2, player.w, player.h, 28);
+      ctx.fillStyle = "rgba(255,255,255,0.12)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,0.18)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.font = "86px system-ui, Apple Color Emoji, Segoe UI Emoji";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("🙂", x, y+6);
+    }
+
+    ctx.restore();
+  }
+
+  function drawEnemy(e){
+    ctx.save();
+    e.t += 0.016;
+
+    const wobble = Math.sin(e.t*6) * 6;
+    ctx.translate(e.x, e.y);
+    ctx.rotate(e.rot);
+
+    if (enemyImgReady){
+      ctx.drawImage(imgEnemy, -e.w/2, -e.h/2, e.w, e.h);
+    } else {
+      // 임시 이모지(이미지 없을 때)
+      roundRect(-e.w/2, -e.h/2, e.w, e.h, 30);
+      ctx.fillStyle = "rgba(255,77,109,0.18)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,77,109,0.35)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.font = "84px system-ui, Apple Color Emoji, Segoe UI Emoji";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("😈", wobble*0.1, 8);
+    }
+
+    ctx.restore();
+  }
+
+  function roundRect(x,y,w,h,r){
+    const rr = Math.min(r, w/2, h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+rr, y);
+    ctx.arcTo(x+w, y, x+w, y+h, rr);
+    ctx.arcTo(x+w, y+h, x, y+h, rr);
+    ctx.arcTo(x, y+h, x, y, rr);
+    ctx.arcTo(x, y, x+w, y, rr);
+    ctx.closePath();
+  }
+
+  // ====== 루프 ======
+  function loop(ts){
+    if(!running) return;
+    const t = ts/1000;
+    const dt = Math.min(0.033, t - tPrev || 0.016);
+    tPrev = t;
+
+    const dir = (keys.left ? -1 : 0) + (keys.right ? 1 : 0);
+    player.vx = dir * player.speed;
+
+    player.x += player.vx * dt;
+    player.x = clamp(player.x, player.w/2 + 10, W - player.w/2 - 10);
+
+    spawnTimer += dt;
+    if(spawnTimer >= spawnEvery){
+      spawnTimer = 0;
+      spawnEnemy();
+    }
+
+    for(let i=enemies.length-1; i>=0; i--){
+      const e = enemies[i];
+      e.y += e.vy * dt;
+
+      if(e.y - e.h/2 > H + 40){
+        enemies.splice(i,1);
+        score += 10;
+        scoreEl.textContent = String(score);
+        updateDifficulty();
+        continue;
+      }
+
+      const a = { x: player.x, y: player.y, w: player.w*0.78, h: player.h*0.78 };
+      const b = { x: e.x, y: e.y, w: e.w*0.78, h: e.h*0.78 };
+      if(hit(a,b)){
+        endGame();
+        return;
+      }
+    }
+
+    drawBackground();
+    drawPlayer();
+    enemies.forEach(drawEnemy);
+
+    requestAnimationFrame(loop);
+  }
+
+  function endGame(){
+    running = false;
+    gameOver = true;
+
+    if(score > bestScore){
+      bestScore = score;
+      localStorage.setItem(BEST_KEY, String(bestScore));
+      bestPill.textContent = `BEST: ${bestScore}`;
+    }
+
+    showOverlay(
+      "게임 오버!",
+      `점수 <b style="color:var(--ok);">${score}</b> / BEST <b>${bestScore}</b><br/><br/>다시 도전할까요?`,
+      "다시하기"
+    );
+  }
+
+  function startGame(){
+    resetGame();
+    hideOverlay();
+    running = true;
+    tPrev = 0;
+    requestAnimationFrame(loop);
+  }
+
+  // ====== 키보드 입력 ======
+  window.addEventListener("keydown", (e) => {
+    if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a") keys.left = true;
+    if(e.key === "ArrowRight"|| e.key.toLowerCase() === "d") keys.right = true;
+    if(e.key === " " && !running) startGame();
+  });
+  window.addEventListener("keyup", (e) => {
+    if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a") keys.left = false;
+    if(e.key === "ArrowRight"|| e.key.toLowerCase() === "d") keys.right = false;
+  });
+
+  // ====== 모바일/터치 드래그 ======
+  let dragging = false;
+  function getPos(ev){
+    const rect = canvas.getBoundingClientRect();
+    const p = ev;
+    const sx = (p.clientX - rect.left) / rect.width;
+    const sy = (p.clientY - rect.top) / rect.height;
+    return { x: sx*W, y: sy*H };
+  }
+
+  board.addEventListener("pointerdown", (ev) => {
+    if(overlay.style.display !== "none") return;
+    const p = getPos(ev);
+    if(Math.abs(p.x - player.x) < player.w && Math.abs(p.y - player.y) < player.h){
+      dragging = true;
+      board.setPointerCapture(ev.pointerId);
+    }
+  });
+  board.addEventListener("pointermove", (ev) => {
+    if(!dragging || !running) return;
+    const p = getPos(ev);
+    player.x = clamp(p.x, player.w/2 + 10, W - player.w/2 - 10);
+  });
+  board.addEventListener("pointerup", (ev) => {
+    dragging = false;
+    try{ board.releasePointerCapture(ev.pointerId); }catch(_){}
+  });
+
+  // ====== 버튼 ======
+  startBtn.addEventListener("click", () => startGame());
+  howBtn.addEventListener("click", () => {
+    showOverlay(
+      "조작방법",
+      `PC: <b>← →</b> 또는 <b>A / D</b><br/>모바일: 여봉이를 <b>터치한 채 좌우 드래그</b><br/><br/>멧봉이 얼굴에 닿으면 게임 오버!`,
+      gameOver ? "다시하기" : "시작하기"
+    );
+  });
+
+  // 첫 화면
+  showOverlay(
+    "멧봉이 피하기",
+    "바닥의 여봉이를 좌우로 움직여<br/>위에서 떨어지는 멧봉이 얼굴을 피하세요!",
+    "시작하기"
+  );
+
+  // ✅ 여기서 nav/footer 자동 로드 (common.js의 loadHTML 함수 사용)
+  window.addEventListener("DOMContentLoaded", async () => {
+    try{
+      await loadHTML("#nav", "/common/nav.html");
+      await loadHTML("#footer", "/common/footer.html");
+      if (typeof setActiveNav === "function") setActiveNav();
+    }catch(e){
+      // nav/footer 로드 실패해도 게임은 실행되게 둠
+      console.log("nav/footer load failed:", e);
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
