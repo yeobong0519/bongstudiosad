@@ -256,8 +256,8 @@
   const modalDesc  = document.getElementById("modalDesc");
 
   // ✅ 이미지 경로(고정)
-  const IMG_PLAYER = "/games/metbong-dodge/img/yeobong.png";
-const IMG_ENEMY  = "/games/metbong-dodge/img/metbong.png";
+  const IMG_PLAYER = "/img/yeobong.png";
+  const IMG_ENEMY  = "/img/metbong.png";
 
   // ====== 화면 크기(반응형) → 내부 논리 크기 유지 ======
   const W = canvas.width;
@@ -286,8 +286,8 @@ const IMG_ENEMY  = "/games/metbong-dodge/img/metbong.png";
   // 장애물 (멧봉이 얼굴)
   const enemies = [];
   let spawnTimer = 0;
-  let spawnEvery = 0.85;
-  let fallSpeed = 520;
+  let spawnEvery = 0.35;
+  let fallSpeed = 850;
 
   // 점수/레벨
   let score = 0;
@@ -317,8 +317,8 @@ const IMG_ENEMY  = "/games/metbong-dodge/img/metbong.png";
   function resetGame(){
     enemies.length = 0;
     spawnTimer = 0;
-    spawnEvery = 0.85;
-    fallSpeed = 520;
+    spawnEvery = 0.35;
+    fallSpeed = 850;
     score = 0;
     level = 1;
     scoreEl.textContent = "0";
@@ -340,12 +340,12 @@ const IMG_ENEMY  = "/games/metbong-dodge/img/metbong.png";
 
   // ====== 스폰/난이도 ======
   function updateDifficulty(){
-    const newLevel = 1 + Math.floor(score / 200);
+    const newLevel = 1 + Math.floor(score / 120);
     if (newLevel !== level){
       level = newLevel;
       levelEl.textContent = String(level);
-      spawnEvery = Math.max(0.35, 0.85 - (level-1)*0.06);
-      fallSpeed  = Math.min(1200, 520 + (level-1)*55);
+      spawnEvery = Math.max(0.20, 0.38 - (level-1)*0.03); 
+      fallSpeed  = Math.min(1600, 850 + (level-1)*85);    
     }
   }
 
