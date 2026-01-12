@@ -15,26 +15,28 @@
       --bg2:#111a33;
       --card:rgba(255,255,255,.08);
       --line:rgba(255,255,255,.14);
-      --text: rgba(0,0,0,.88);
-      --muted: rgba(0,0,0,.55);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.65);
       --danger:#ff4d6d;
       --ok:#6ee7ff;
     }
     *{ box-sizing:border-box; }
     body{
-      margin:0;
-      background:#fff;
-      color:#111;
-      min-height:100vh;
-      padding: 0; /* ✅ nav/footer 포함 시 중앙정렬 깨짐 방지 */
-    }
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#fff;
+  color:#111;
+  min-height:100vh;
+  padding:0;
+}
 
     /* ✅ nav/footer 아래에 게임이 들어가도록 */
-   .page{
-  padding: 10px 12px 14px;
-  display:flex;
-  justify-content:center;
-}
+    .page{
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
 
     .wrap{ width:min(520px, 100%); }
     .topbar{
@@ -62,25 +64,24 @@
     }
 
     .board{
-  position:relative;
+      position:relative;
+      width:100%;
+      aspect-ratio: 9/16;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid var(--line);
 
-  /* ✅ 세로 기준으로 게임판 크기 결정 */
-  height: min(calc(100svh - 260px), 760px);
+     background:#fff;
 
-  /* ✅ 세로가 정해지면 aspect-ratio로 가로가 자동 계산됨 */
-  aspect-ratio: 9/16;
+      /* ✅ bg.png가 아직 없으면 위 3줄 지우고 아래 배경 쓰면 됨
+      background:
+        radial-gradient(700px 400px at 50% 10%, rgba(110,231,255,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      */
 
-  /* ✅ 가로가 너무 커지면 화면 밖으로 나가지 않게 */
-  max-width: 100%;
-  margin: 0 auto;
-
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid var(--line);
-  background:#fff;
-  box-shadow: 0 18px 55px rgba(0,0,0,.15);
-  touch-action:none;
-}
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      touch-action:none;
+    }
     canvas{ width:100%; height:100%; display:block; }
 
     .hud{
@@ -251,8 +252,8 @@
   const modalDesc  = document.getElementById("modalDesc");
 
   // ✅ 이미지 경로(고정)
-  const IMG_PLAYER = "/img/yeobong.png";
-  const IMG_ENEMY  = "/img/metbong.png";
+const IMG_PLAYER = "img/yeobong.png";
+const IMG_ENEMY  = "img/metbong.png";
 
   // ====== 화면 크기(반응형) → 내부 논리 크기 유지 ======
   const W = canvas.width;
@@ -270,20 +271,19 @@
 
   // 플레이어 (여봉이)
   const player = {
-  w: 130,
-  h: 130,
-  x: W/2,
-  y: 0,
-  speed: 780,
-  vx: 0
-};
-
+    w: 130,
+    h: 130,
+    x: W/2,
+    y: H - 170,
+    speed: 780,
+    vx: 0
+  };
 
   // 장애물 (멧봉이 얼굴)
   const enemies = [];
   let spawnTimer = 0;
-  let spawnEvery = 0.35;
-  let fallSpeed = 850;
+  let spawnEvery = 0.85;
+  let fallSpeed = 520;
 
   // 점수/레벨
   let score = 0;
@@ -313,15 +313,14 @@
   function resetGame(){
     enemies.length = 0;
     spawnTimer = 0;
-    spawnEvery = 0.35;
-    fallSpeed = 850;
+    spawnEvery = 0.85;
+    fallSpeed = 520;
     score = 0;
     level = 1;
     scoreEl.textContent = "0";
     levelEl.textContent = "1";
     player.x = W/2;
     player.vx = 0;
-    player.y = H - (player.h / 2) - 30;
     gameOver = false;
   }
 
@@ -337,17 +336,17 @@
 
   // ====== 스폰/난이도 ======
   function updateDifficulty(){
-    const newLevel = 1 + Math.floor(score / 120);
+    const newLevel = 1 + Math.floor(score / 200);
     if (newLevel !== level){
       level = newLevel;
       levelEl.textContent = String(level);
-      spawnEvery = Math.max(0.20, 0.38 - (level-1)*0.03); 
-      fallSpeed  = Math.min(1600, 850 + (level-1)*85);    
+      spawnEvery = Math.max(0.35, 0.85 - (level-1)*0.06);
+      fallSpeed  = Math.min(1200, 520 + (level-1)*55);
     }
   }
 
   function spawnEnemy(){
-    const size = 80 + Math.random() * 170; // 80 ~ 250
+    const size = 110 + Math.random()*30;
     const x = 60 + Math.random()*(W - 120);
     enemies.push({
       x, y: -size,
