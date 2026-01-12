@@ -558,6 +558,8 @@
 
   const img1 = new Image(); img1.src = IMG_P1;
   const img2 = new Image(); img2.src = IMG_P2;
+  img1.onload = () => { if(gameStarted) draw(); };
+  img2.onload = () => { if(gameStarted) draw(); };
 
   function setTurnUI(){
     const label = (turn === PLAYER) ? "여봉이 차례" : "멧봉이 생각중…";
@@ -637,49 +639,63 @@
     ctx.fill();
   }
 
-     function drawStone(x,y,p,isLast){
-    const img = (p === PLAYER) ? img1 : img2;
-    const cx = margin + x*cell;
-    const cy = margin + y*cell;
-    const canUseImage = img && img.complete && img.naturalWidth > 0;
+  function drawStone(x, y, p, isLast){
+  const img = (p === PLAYER) ? img1 : img2;
+  const cx = margin + x * cell;
+  const cy = margin + y * cell;
 
-    if(canUseImage){
-      // 1) 배경 원 (여봉=흰 / 멧봉=검)
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI*2);
-      ctx.fillStyle = (p === PLAYER) ? "#ffffff" : "#0b0f19";
-      ctx.fill();
+  const canUseImage = img && img.complete && (img.naturalWidth > 0 || img.width > 0);
 
-      // 2) 이미지는 그대로 꽉 채움 (크기 줄이지 않음)
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI*2);
-      ctx.clip();
-      ctx.drawImage(img, cx-r, cy-r, r*2, r*2);
-      ctx.restore();
-
-      // 3) 배경색 링(테두리)로 배경이 항상 보이게
-      const ring = Math.max(4, r * 0.22);
-      ctx.lineWidth = ring;
-      ctx.strokeStyle = (p === PLAYER) ? "#ffffff" : "#0b0f19";
-      ctx.beginPath();
-      ctx.arc(cx, cy, r - ring/2, 0, Math.PI*2);
-      ctx.stroke();
-
-    }else{
-      drawFallbackStone(cx, cy, r, p);
-    }
-
-    // 마지막 수 표시 테두리(대비)
-    ctx.lineWidth = isLast ? 4 : 2;
-    const baseStroke = (p === PLAYER) ? "rgba(0,0,0,.22)" : "rgba(255,255,255,.22)";
-    const lastStroke = (p === PLAYER) ? "rgba(0,0,0,.70)" : "rgba(255,255,255,.70)";
-    ctx.strokeStyle = isLast ? lastStroke : baseStroke;
+  if (canUseImage){
+    // 1) 배경 원
     ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI*2);
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = (p === PLAYER) ? "#ffffff" : "#0b0f19";
+    ctx.fill();
+
+    // 2) 원형 클립 + 이미지(contain)
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.clip();
+
+    const inner = r * 0.90;
+    const iw = img.naturalWidth || img.width;
+    const ih = img.naturalHeight || img.height;
+
+    const box = inner * 2;
+    const scale = Math.min(box / iw, box / ih);
+
+    const dw = iw * scale;
+    const dh = ih * scale;
+
+    // 머리 위 짤림 방지(살짝 아래로)
+    const yOffset = r * 0.06;
+    ctx.drawImage(img, cx - dw/2, cy - dh/2 + yOffset, dw, dh);
+
+    ctx.restore();
+
+    // 3) 링(테두리)
+    const ring = Math.max(3, r * 0.14);
+    ctx.lineWidth = ring;
+    ctx.strokeStyle = (p === PLAYER) ? "#ffffff" : "#0b0f19";
+    ctx.beginPath();
+    ctx.arc(cx, cy, r - ring/2, 0, Math.PI * 2);
     ctx.stroke();
+  } else {
+    drawFallbackStone(cx, cy, r, p);
   }
 
+  // 마지막 수 표시
+  ctx.lineWidth = isLast ? 4 : 2;
+  const baseStroke = (p === PLAYER) ? "rgba(0,0,0,.22)" : "rgba(255,255,255,.22)";
+  const lastStroke = (p === PLAYER) ? "rgba(0,0,0,.70)" : "rgba(255,255,255,.70)";
+  ctx.strokeStyle = isLast ? lastStroke : baseStroke;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.stroke();
+}
+    
   function draw(){
     drawGrid();
     for(let y=0;y<SIZE;y++){
