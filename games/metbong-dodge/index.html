@@ -11,77 +11,52 @@
 
   <style>
     :root{
-      --bg1:#0b0f19;
-      --bg2:#111a33;
-      --card:rgba(255,255,255,.08);
-      --line:rgba(255,255,255,.14);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.65);
-      --danger:#ff4d6d;
-      --ok:#6ee7ff;
+      --line: rgba(0,0,0,.10);
+      --text: rgba(0,0,0,.88);
+      --muted: rgba(0,0,0,.55);
+      --ok: #0ea5e9;
     }
     *{ box-sizing:border-box; }
-    body{
-  margin:0;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#fff;
-  color:#111;
-  min-height:100vh;
-  padding:0;
-}
 
-    /* ✅ nav/footer 아래에 게임이 들어가도록 */
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#fff;          /* ✅ 페이지 배경 흰색 */
+      color:var(--text);
+      min-height:100vh;
+      padding:0;
+      overscroll-behavior: none; /* ✅ 바운스/튕김 완화 */
+    }
+
     .page{
-      padding:18px;
+      padding: 10px 12px 14px;
       display:flex;
-      align-items:center;
       justify-content:center;
     }
 
     .wrap{ width:min(520px, 100%); }
-    .topbar{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:12px;
-    }
-    .title{
-      font-weight:900;
-      letter-spacing:-0.02em;
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-    .pill{
-      font-size:12px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--muted);
-      white-space:nowrap;
-    }
 
     .board{
       position:relative;
       width:100%;
       aspect-ratio: 9/16;
+
+      /* ✅ JS가 height를 넣어줄거라 기본은 auto */
+      height: auto;
+
+      max-width:100%;
+      margin:0 auto;
+
       border-radius:22px;
       overflow:hidden;
       border:1px solid var(--line);
-
-     background:#fff;
-
-      /* ✅ bg.png가 아직 없으면 위 3줄 지우고 아래 배경 쓰면 됨
-      background:
-        radial-gradient(700px 400px at 50% 10%, rgba(110,231,255,.14), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      */
-
-      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      background:#fff;
+      box-shadow: 0 18px 55px rgba(0,0,0,.12);
       touch-action:none;
+      user-select:none;
+      -webkit-user-select:none;
     }
+
     canvas{ width:100%; height:100%; display:block; }
 
     .hud{
@@ -96,10 +71,10 @@
     .hud .box{
       padding:10px 12px;
       border-radius:16px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.72);
       backdrop-filter: blur(6px);
-      min-width:140px;
+      min-width:120px;
     }
     .hud .k{
       font-size:12px;
@@ -111,6 +86,7 @@
       font-size:18px;
       font-weight:1000;
       margin-top:4px;
+      color: var(--text);
     }
 
     .overlay{
@@ -126,11 +102,12 @@
     .modal{
       width:min(420px, 100%);
       border-radius:22px;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
-      box-shadow: 0 22px 70px rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.70);
+      box-shadow: 0 22px 70px rgba(0,0,0,.25);
       padding:18px;
       text-align:center;
+      color: var(--text);
     }
     .modal h2{
       margin:6px 0 8px;
@@ -143,6 +120,7 @@
       line-height:1.45;
       font-size:13px;
     }
+
     .btns{
       display:flex;
       gap:10px;
@@ -152,9 +130,9 @@
     }
     button{
       appearance:none;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.10);
-      color:var(--text);
+      border:1px solid rgba(0,0,0,.12);
+      background: rgba(255,255,255,.85);
+      color: var(--text);
       padding:11px 14px;
       border-radius:14px;
       font-weight:900;
@@ -162,14 +140,10 @@
       min-width:140px;
     }
     button.primary{
-      border-color: rgba(110,231,255,.32);
-      background: rgba(110,231,255,.18);
+      border-color: rgba(14,165,233,.35);
+      background: rgba(14,165,233,.14);
     }
-    .hint{
-      margin-top:12px;
-      font-size:12px;
-      color:var(--muted);
-    }
+
     .footerhint{
       margin-top:10px;
       font-size:12px;
@@ -180,18 +154,12 @@
 </head>
 
 <body>
-  <!-- ✅ 네비 자동 로드 자리 -->
   <div id="nav"></div>
 
   <main class="page">
     <div class="wrap">
-      <div class="topbar">
-        <div class="title">
-          <span>멧봉이 피하기</span>
-          <span class="pill">← → / 모바일 드래그</span>
-        </div>
-        <div class="pill" id="bestPill">BEST: 0</div>
-      </div>
+
+      <!-- ✅ 1) 상단 제목 영역 제거 (topbar 삭제) -->
 
       <div class="board" id="board">
         <canvas id="c" width="720" height="1280" aria-label="멧봉이 피하기 게임 캔버스"></canvas>
@@ -201,6 +169,12 @@
             <div class="k">점수</div>
             <div class="v" id="score">0</div>
           </div>
+
+          <div class="box" style="text-align:center;">
+            <div class="k">BEST</div>
+            <div class="v" id="bestPill">0</div>
+          </div>
+
           <div class="box" style="text-align:right;">
             <div class="k">레벨</div>
             <div class="v" id="level">1</div>
@@ -219,9 +193,9 @@
               <button class="primary" id="startBtn">시작하기</button>
               <button id="howBtn">조작방법</button>
             </div>
-            <div class="hint" id="hintText">
-              모바일: 캐릭터를 터치한 채 좌우로 드래그<br/>
-              PC: ← → 또는 A/D
+            <div style="margin-top:12px;font-size:12px;color:var(--muted);">
+              모바일: 여봉이를 터치한 채 좌우 드래그<br/>
+              PC: ← → 또는 A / D
             </div>
           </div>
         </div>
@@ -233,7 +207,6 @@
     </div>
   </main>
 
-  <!-- ✅ 푸터 자동 로드 자리 -->
   <div id="footer"></div>
 
 <script>
@@ -251,39 +224,72 @@
   const modalTitle = document.getElementById("modalTitle");
   const modalDesc  = document.getElementById("modalDesc");
 
-  // ✅ 이미지 경로(고정)
-const IMG_PLAYER = "img/yeobong.png";
-const IMG_ENEMY  = "img/metbong.png";
+  // ✅ 2) 이미지 경로 문제 해결: "현재 index.html 기준 ./img/" 자동 계산
+  const ASSET_DIR = new URL("./img/", location.href);
+  const IMG_PLAYER = new URL("yeobong.png", ASSET_DIR).href;
+  const IMG_ENEMY  = new URL("metbong.png", ASSET_DIR).href;
 
-  // ====== 화면 크기(반응형) → 내부 논리 크기 유지 ======
   const W = canvas.width;
   const H = canvas.height;
+
+  // ✅ 모바일에서 9:16이 '진짜'로 보이게 높이 자동 계산
+  function resizeBoard(){
+    const nav = document.getElementById("nav");
+    const footer = document.getElementById("footer");
+    const footerHint = document.querySelector(".footerhint");
+
+    const navH = nav ? nav.offsetHeight : 0;
+    const footerH = footer ? footer.offsetHeight : 0;
+    const hintH = footerHint ? footerHint.offsetHeight : 0;
+
+    // 페이지 패딩/여유값 (상하 약간)
+    const safe = 24;
+
+    const available = window.innerHeight - navH - footerH - hintH - safe;
+
+    // 너무 작아지면 최소 높이 보장, 너무 커지면 최대 높이 제한
+    const targetH = Math.max(420, Math.min(available, 820));
+
+    board.style.height = targetH + "px";
+  }
+
+  window.addEventListener("resize", resizeBoard);
+  window.addEventListener("orientationchange", () => setTimeout(resizeBoard, 150));
+
+  // ✅ 스크롤 잠금(드래그 안정화)
+  function lockScroll(lock){
+    document.documentElement.style.overflow = lock ? "hidden" : "";
+    document.body.style.overflow = lock ? "hidden" : "";
+    document.body.style.touchAction = lock ? "none" : "";
+  }
 
   // ====== 로컬 베스트 점수 ======
   const BEST_KEY = "metbong_dodge_best";
   let bestScore = Number(localStorage.getItem(BEST_KEY) || 0);
-  bestPill.textContent = `BEST: ${bestScore}`;
+  bestPill.textContent = String(bestScore);
 
   // ====== 게임 상태 ======
   let running = false;
   let gameOver = false;
   let tPrev = 0;
 
-  // 플레이어 (여봉이)
+  // ✅ 여봉이(플레이어) 크기: 기존 느낌으로 살짝 컴팩트
   const player = {
-    w: 130,
-    h: 130,
+    w: 96,
+    h: 96,
     x: W/2,
-    y: H - 170,
+    y: H - 150,
     speed: 780,
     vx: 0
   };
 
-  // 장애물 (멧봉이 얼굴)
+  // 장애물 (멧봉이)
   const enemies = [];
   let spawnTimer = 0;
+
+  // ✅ 3) 멧봉이 속도 2배 빠르게
   let spawnEvery = 0.85;
-  let fallSpeed = 520;
+  let fallSpeed = 1040;
 
   // 점수/레벨
   let score = 0;
@@ -291,10 +297,9 @@ const IMG_ENEMY  = "img/metbong.png";
 
   // 입력
   const keys = { left:false, right:false };
-
   function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
 
-  // ====== 이미지 로드(없으면 자동으로 이모지 모드) ======
+  // ====== 이미지 로드 ======
   const imgPlayer = new Image();
   const imgEnemy  = new Image();
   let playerImgReady = false;
@@ -302,8 +307,6 @@ const IMG_ENEMY  = "img/metbong.png";
 
   imgPlayer.onload = () => { playerImgReady = true; };
   imgEnemy.onload  = () => { enemyImgReady = true; };
-
-  // 에러나도 게임은 돌아가야 함(그냥 이모지로 그리기)
   imgPlayer.onerror = () => { playerImgReady = false; };
   imgEnemy.onerror  = () => { enemyImgReady = false; };
 
@@ -313,14 +316,19 @@ const IMG_ENEMY  = "img/metbong.png";
   function resetGame(){
     enemies.length = 0;
     spawnTimer = 0;
+
     spawnEvery = 0.85;
-    fallSpeed = 520;
+    fallSpeed  = 1040;
+
     score = 0;
     level = 1;
     scoreEl.textContent = "0";
     levelEl.textContent = "1";
+
     player.x = W/2;
     player.vx = 0;
+    player.y = H - 150;
+
     gameOver = false;
   }
 
@@ -329,25 +337,30 @@ const IMG_ENEMY  = "img/metbong.png";
     modalDesc.innerHTML = desc;
     startBtn.textContent = startText;
     overlay.style.display = "flex";
+    lockScroll(false);
   }
   function hideOverlay(){
     overlay.style.display = "none";
   }
 
-  // ====== 스폰/난이도 ======
   function updateDifficulty(){
     const newLevel = 1 + Math.floor(score / 200);
     if (newLevel !== level){
       level = newLevel;
       levelEl.textContent = String(level);
+
+      // 스폰 약간 빨라지고(너무 과하지 않게), 속도는 계속 빨라짐
       spawnEvery = Math.max(0.35, 0.85 - (level-1)*0.06);
-      fallSpeed  = Math.min(1200, 520 + (level-1)*55);
+      fallSpeed  = Math.min(2400, 1040 + (level-1)*110);
     }
   }
 
   function spawnEnemy(){
-    const size = 110 + Math.random()*30;
-    const x = 60 + Math.random()*(W - 120);
+    // ✅ 3) 멧봉이 크기: 지금보다 2배 작게 + 랜덤 유지
+    // (너무 작아져서 안 보이는 것 방지로 바닥값/천장값만 적당히)
+    const size = 55 + Math.random()*55; // 55 ~ 110
+    const x = 40 + Math.random()*(W - 80);
+
     enemies.push({
       x, y: -size,
       w: size, h: size,
@@ -357,7 +370,6 @@ const IMG_ENEMY  = "img/metbong.png";
     });
   }
 
-  // ====== 충돌(AABB) ======
   function hit(a, b){
     return (
       a.x - a.w/2 < b.x + b.w/2 &&
@@ -367,70 +379,8 @@ const IMG_ENEMY  = "img/metbong.png";
     );
   }
 
-  // ====== 그리기 ======
   function drawBackground(){
-    // 캔버스 배경은 투명으로 두고(= board의 bg.png가 보이게)
-    // 게임 오브젝트만 그린다.
     ctx.clearRect(0,0,W,H);
-  }
-
-  function drawPlayer(){
-    const x = player.x, y = player.y;
-    ctx.save();
-
-    // 그림자
-    ctx.globalAlpha = 0.22;
-    ctx.beginPath();
-    ctx.ellipse(x, y + player.h/2 - 10, 62, 18, 0, 0, Math.PI*2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-
-    if (playerImgReady){
-      ctx.drawImage(imgPlayer, x - player.w/2, y - player.h/2, player.w, player.h);
-    } else {
-      // 임시 이모지(이미지 없을 때)
-      roundRect(x-player.w/2, y-player.h/2, player.w, player.h, 28);
-      ctx.fillStyle = "rgba(255,255,255,0.12)";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(255,255,255,0.18)";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      ctx.font = "86px system-ui, Apple Color Emoji, Segoe UI Emoji";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("🙂", x, y+6);
-    }
-
-    ctx.restore();
-  }
-
-  function drawEnemy(e){
-    ctx.save();
-    e.t += 0.016;
-
-    const wobble = Math.sin(e.t*6) * 6;
-    ctx.translate(e.x, e.y);
-    ctx.rotate(e.rot);
-
-    if (enemyImgReady){
-      ctx.drawImage(imgEnemy, -e.w/2, -e.h/2, e.w, e.h);
-    } else {
-      // 임시 이모지(이미지 없을 때)
-      roundRect(-e.w/2, -e.h/2, e.w, e.h, 30);
-      ctx.fillStyle = "rgba(255,77,109,0.18)";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(255,77,109,0.35)";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      ctx.font = "84px system-ui, Apple Color Emoji, Segoe UI Emoji";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("😈", wobble*0.1, 8);
-    }
-
-    ctx.restore();
   }
 
   function roundRect(x,y,w,h,r){
@@ -444,7 +394,61 @@ const IMG_ENEMY  = "img/metbong.png";
     ctx.closePath();
   }
 
-  // ====== 루프 ======
+  function drawPlayer(){
+    const x = player.x, y = player.y;
+    ctx.save();
+
+    ctx.globalAlpha = 0.18;
+    ctx.beginPath();
+    ctx.ellipse(x, y + player.h/2 - 8, 46, 14, 0, 0, Math.PI*2);
+    ctx.fillStyle = "#000";
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    if (playerImgReady){
+      ctx.drawImage(imgPlayer, x - player.w/2, y - player.h/2, player.w, player.h);
+    } else {
+      roundRect(x-player.w/2, y-player.h/2, player.w, player.h, 22);
+      ctx.fillStyle = "rgba(0,0,0,0.06)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(0,0,0,0.10)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.font = "64px system-ui, Apple Color Emoji, Segoe UI Emoji";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#111";
+      ctx.fillText("🙂", x, y+4);
+    }
+
+    ctx.restore();
+  }
+
+  function drawEnemy(e){
+    ctx.save();
+    e.t += 0.016;
+
+    ctx.translate(e.x, e.y);
+    ctx.rotate(e.rot);
+
+    if (enemyImgReady){
+      ctx.drawImage(imgEnemy, -e.w/2, -e.h/2, e.w, e.h);
+    } else {
+      roundRect(-e.w/2, -e.h/2, e.w, e.h, 22);
+      ctx.fillStyle = "rgba(255,77,109,0.18)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,77,109,0.35)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.font = "60px system-ui, Apple Color Emoji, Segoe UI Emoji";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("😈", 0, 6);
+    }
+
+    ctx.restore();
+  }
+
   function loop(ts){
     if(!running) return;
     const t = ts/1000;
@@ -497,7 +501,7 @@ const IMG_ENEMY  = "img/metbong.png";
     if(score > bestScore){
       bestScore = score;
       localStorage.setItem(BEST_KEY, String(bestScore));
-      bestPill.textContent = `BEST: ${bestScore}`;
+      bestPill.textContent = String(bestScore);
     }
 
     showOverlay(
@@ -510,12 +514,14 @@ const IMG_ENEMY  = "img/metbong.png";
   function startGame(){
     resetGame();
     hideOverlay();
+    resizeBoard();      // 시작할 때 한번 더 맞춤
+    lockScroll(true);   // ✅ 드래그 안정화
     running = true;
     tPrev = 0;
     requestAnimationFrame(loop);
   }
 
-  // ====== 키보드 입력 ======
+  // 키보드
   window.addEventListener("keydown", (e) => {
     if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a") keys.left = true;
     if(e.key === "ArrowRight"|| e.key.toLowerCase() === "d") keys.right = true;
@@ -526,13 +532,12 @@ const IMG_ENEMY  = "img/metbong.png";
     if(e.key === "ArrowRight"|| e.key.toLowerCase() === "d") keys.right = false;
   });
 
-  // ====== 모바일/터치 드래그 ======
+  // 모바일 드래그
   let dragging = false;
   function getPos(ev){
     const rect = canvas.getBoundingClientRect();
-    const p = ev;
-    const sx = (p.clientX - rect.left) / rect.width;
-    const sy = (p.clientY - rect.top) / rect.height;
+    const sx = (ev.clientX - rect.left) / rect.width;
+    const sy = (ev.clientY - rect.top) / rect.height;
     return { x: sx*W, y: sy*H };
   }
 
@@ -554,7 +559,7 @@ const IMG_ENEMY  = "img/metbong.png";
     try{ board.releasePointerCapture(ev.pointerId); }catch(_){}
   });
 
-  // ====== 버튼 ======
+  // 버튼
   startBtn.addEventListener("click", () => startGame());
   howBtn.addEventListener("click", () => {
     showOverlay(
@@ -571,15 +576,16 @@ const IMG_ENEMY  = "img/metbong.png";
     "시작하기"
   );
 
-  // ✅ 여기서 nav/footer 자동 로드 (common.js의 loadHTML 함수 사용)
+  // nav/footer 로드 + 보드 리사이즈
   window.addEventListener("DOMContentLoaded", async () => {
     try{
       await loadHTML("#nav", "/common/nav.html");
       await loadHTML("#footer", "/common/footer.html");
       if (typeof setActiveNav === "function") setActiveNav();
     }catch(e){
-      // nav/footer 로드 실패해도 게임은 실행되게 둠
       console.log("nav/footer load failed:", e);
+    }finally{
+      resizeBoard();
     }
   });
 
