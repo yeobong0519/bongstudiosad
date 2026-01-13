@@ -40,12 +40,18 @@
       touch-action:manipulation;
     }
 
-    .page{
-      padding: 10px 12px 14px;
-      display:flex;
-      justify-content:center;
-    }
-    .wrap{ width:min(520px, 100%); }
+   .page{
+  padding: 10px 12px 14px;
+  display:block;     /* ✅ flex 제거 */
+}
+
+.wrap{
+  width:min(520px, 100%);
+  margin:0 auto;     /* ✅ 가운데 정렬 */
+  display:flex;      /* ✅ wrap 내부는 세로 스택 */
+  flex-direction:column;
+  gap:10px;
+}
 
     .board{
       position:relative;
@@ -258,9 +264,7 @@
       <div class="footerhint">
         PNG 준비되면 자동으로 캐릭터가 이미지로 렌더링돼요 (미준비 시 임시 이모지로 표시)
       </div>
-    </div>
-
-    <!-- ✅ AdSense용: 게임 설명(게임 하단 & 푸터 위) -->
+ <!-- ✅ AdSense용: 게임 설명(게임 하단 & 푸터 위) -->
   <section class="game-desc">
     <h2>멧봉이를 피해라!</h2>
     <p>
@@ -284,6 +288,10 @@
       짧게 한 판 하기 좋은 심심풀이 게임이야. 최고 기록에 도전해봐!
     </p>
   </section>
+      
+    </div>
+
+   
     
   </main>
 
@@ -320,9 +328,12 @@ const IMG_ENEMY  = "/img/metbong.png";
     const navH = nav ? nav.offsetHeight : 0;
     const footerH = footer ? footer.offsetHeight : 0;
     const hintH = footerHint ? footerHint.offsetHeight : 0;
-
     const safe = 24;
+    const gameDesc = document.querySelector(".game-desc");
+    const descH = gameDesc ? gameDesc.offsetHeight : 0;
     const available = window.innerHeight - navH - footerH - hintH - safe;
+
+    
 
     const targetH = Math.max(420, Math.min(available, 820));
     board.style.height = targetH + "px";
@@ -377,7 +388,7 @@ const IMG_ENEMY  = "/img/metbong.png";
   // ✅ “너무 빨라졌다” 조정값 (체감 1.4~1.5배, 더 자주)
   // - 속도: 1500 전후
   // - 스폰: 0.68초 전후
-  const BASE_FALL = 850;     // ✅ 레벨1 기준 낙하속도
+  const BASE_FALL = 425;     // ✅ 레벨1 기준 낙하속도
   let spawnEvery = 0.68;
   let fallSpeed = BASE_FALL;
   // 점수/레벨
