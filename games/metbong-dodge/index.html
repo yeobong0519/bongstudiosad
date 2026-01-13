@@ -224,10 +224,19 @@
   const modalTitle = document.getElementById("modalTitle");
   const modalDesc  = document.getElementById("modalDesc");
 
-  // ✅ 2) 이미지 경로 문제 해결: "현재 index.html 기준 ./img/" 자동 계산
-  const ASSET_DIR = new URL("./img/", location.href);
-  const IMG_PLAYER = new URL("yeobong.png", ASSET_DIR).href;
-  const IMG_ENEMY  = new URL("metbong.png", ASSET_DIR).href;
+  // ✅ 이미지 경로(인앱/모바일에서도 안 꼬이게 "현재 폴더"를 직접 계산)
+const cleanHref = location.href.replace(/[?#].*$/, ""); // ? # 제거
+const baseDir = cleanHref.endsWith("/")
+  ? cleanHref
+  : cleanHref.slice(0, cleanHref.lastIndexOf("/") + 1);
+
+// 결과: https://bongstudiosad.com/games/metbong-dodge/
+const IMG_PLAYER = baseDir + "img/yeobong.png";
+const IMG_ENEMY  = baseDir + "img/metbong.png";
+
+// (디버그용) 콘솔에서 실제 로드 URL 확인 가능
+console.log("IMG_PLAYER:", IMG_PLAYER);
+console.log("IMG_ENEMY :", IMG_ENEMY);
 
   const W = canvas.width;
   const H = canvas.height;
