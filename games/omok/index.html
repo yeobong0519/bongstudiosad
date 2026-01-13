@@ -613,20 +613,17 @@ updateMetrics(); // ✅ 최초 1회 계산
   function pointerToCell(clientX, clientY){
   const rect = canvas.getBoundingClientRect();
 
-  // 화면 좌표 → 캔버스 좌표
-  const scaleX = canvas.width / rect.width;
-  const scaleY = canvas.height / rect.height;
+  // ✅ 우리는 그리기를 "CSS px 좌표계(CANVAS_SIZE)"로 하고 있으니
+  // 입력 좌표도 CSS px 기준으로 맞춘다.
+  const scale = CANVAS_SIZE / rect.width; // rect.width ≈ cssSize
+  const x = (clientX - rect.left) * scale;
+  const y = (clientY - rect.top) * scale;
 
-  const x = (clientX - rect.left) * scaleX;
-  const y = (clientY - rect.top) * scaleY;
-
-  // 보드 영역 밖 터치 방지
+  // 보드 영역 밖 터치 방지 (CSS px 기준)
   const min = margin - cell * 0.4;
   const max = margin + cell * (SIZE - 1) + cell * 0.4;
 
-  if (x < min || x > max || y < min || y > max) {
-    return null; // 👉 바깥 터치 무시
-  }
+  if (x < min || x > max || y < min || y > max) return null;
 
   // 가장 가까운 교차점으로 스냅
   const gx = Math.round((x - margin) / cell);
