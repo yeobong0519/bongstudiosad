@@ -299,9 +299,9 @@ const IMG_ENEMY  = "/img/metbong.png";
   // ✅ “너무 빨라졌다” 조정값 (체감 1.4~1.5배, 더 자주)
   // - 속도: 1500 전후
   // - 스폰: 0.68초 전후
+  const BASE_FALL = 850;     // ✅ 레벨1 기준 낙하속도
   let spawnEvery = 0.68;
-  let fallSpeed = 850;
-
+  let fallSpeed = BASE_FALL;
   // 점수/레벨
   let score = 0;
   let level = 1;
@@ -328,8 +328,8 @@ const IMG_ENEMY  = "/img/metbong.png";
     spawnTimer = 0;
 
     spawnEvery = 0.68;
-    fallSpeed  = 850;
-
+    fallSpeed  = BASE_FALL;
+    
     score = 0;
     level = 1;
     scoreEl.textContent = "0";
@@ -359,7 +359,7 @@ const IMG_ENEMY  = "/img/metbong.png";
 
       // 레벨 오르면 "조금씩"만 더 자주/더 빠르게
       spawnEvery = Math.max(0.35, 0.68 - (level-1)*0.025);
-      fallSpeed  = Math.min(2400, 1500 + (level-1)*45);
+      fallSpeed = Math.min(2400, BASE_FALL * Math.pow(1.3, level - 1));
     }
   }
 
@@ -418,7 +418,20 @@ function drawImageCover(img, dx, dy, dw, dh){
 
   ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
 }
-  
+
+  function drawImageContain(img, dx, dy, dw, dh){
+  const iw = img.naturalWidth || img.width;
+  const ih = img.naturalHeight || img.height;
+  if(!iw || !ih) return;
+
+  const s = Math.min(dw/iw, dh/ih); // contain
+  const rw = iw * s;
+  const rh = ih * s;
+  const rx = dx + (dw - rw) / 2;
+  const ry = dy + (dh - rh) / 2;
+
+  ctx.drawImage(img, rx, ry, rw, rh);
+}
 
   
   function drawPlayer(){
@@ -433,7 +446,7 @@ function drawImageCover(img, dx, dy, dw, dh){
     ctx.globalAlpha = 1;
 
     if(playerImgReady){
-      drawImageCover(imgPlayer, x-player.w/2, y-player.h/2, player.w, player.h);
+      drawImageContain(imgPlayer, x-player.w/2, y-player.h/2, player.w, player.h);
     }else{
       roundRect(x-player.w/2, y-player.h/2, player.w, player.h, 22);
       ctx.fillStyle = "rgba(0,0,0,0.06)";
