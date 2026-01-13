@@ -569,12 +569,18 @@
 
   function resizeCanvas(){
   const rect = canvas.getBoundingClientRect();
-  const size = Math.floor(Math.min(rect.width, rect.height));
+  const cssSize = Math.floor(Math.min(rect.width, rect.height));
+  const dpr = window.devicePixelRatio || 1;
 
-  canvas.width = size;
-  canvas.height = size;
+  // ✅ CSS 크기는 건드리지 말고(= 흐림 원인 제거)
+  // ✅ 내부 비트맵 해상도만 DPR로 올림
+  canvas.width  = Math.floor(cssSize * dpr);
+  canvas.height = Math.floor(cssSize * dpr);
 
-  return size;
+  // ✅ 그리기는 CSS px 좌표계로
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  return cssSize;
 }
 
   let CANVAS_SIZE = 0;
@@ -652,8 +658,8 @@ updateMetrics(); // ✅ 최초 1회 계산
   }
 
   function drawGrid(){
-    const W = canvas.width;
-    const H = canvas.height;
+    const W = CANVAS_SIZE;
+    const H = CANVAS_SIZE;
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle = "rgba(255,255,255,.92)";
     ctx.fillRect(0,0,W,H);
@@ -713,7 +719,7 @@ updateMetrics(); // ✅ 최초 1회 계산
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.clip();
 
-    const inner = r * 0.90;
+    const inner = r * 0.78;
     const iw = img.naturalWidth || img.width;
     const ih = img.naturalHeight || img.height;
 
