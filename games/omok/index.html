@@ -326,6 +326,7 @@
   .controls{ margin-top:8px; gap:6px; }
   .btn{ padding:9px 10px; font-size:12px; } /* 버튼 살짝 컴팩트 */
   .chip{ padding:8px 10px; font-size:11px; }
+  .footer{ padding:10px 12px; }   
 
   /* ✅ 여기! 오목판(캔버스) 모바일 확대 */
   canvas{
@@ -576,12 +577,22 @@
   return size;
 }
 
-let CANVAS_SIZE = resizeCanvas();
+  let CANVAS_SIZE = 0;
+let margin = 0;
+let gridSize = 0;
+let cell = 0;
+let r = 0;
 
-const margin = CANVAS_SIZE * 0.06;
-const gridSize = CANVAS_SIZE - margin * 2;
-const cell = gridSize / (SIZE - 1);
-const r = cell * 0.42;
+function updateMetrics(){
+  CANVAS_SIZE = resizeCanvas();
+  margin = CANVAS_SIZE * 0.06;
+  gridSize = CANVAS_SIZE - margin * 2;
+  cell = gridSize / (SIZE - 1);
+  r = cell * 0.48;
+}
+
+updateMetrics(); // ✅ 최초 1회 계산
+
   const img1 = new Image(); img1.src = IMG_P1;
   const img2 = new Image(); img2.src = IMG_P2;
   img1.onload = () => { if(gameStarted) draw(); };
@@ -594,17 +605,32 @@ const r = cell * 0.42;
   }
 
   function pointerToCell(clientX, clientY){
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width;
-    const sy = canvas.height / rect.height;
-    const x = (clientX - rect.left) * sx;
-    const y = (clientY - rect.top) * sy;
+  const rect = canvas.getBoundingClientRect();
 
-    const gx = (x - margin) / cell;
-    const gy = (y - margin) / cell;
+  // 화면 좌표 → 캔버스 좌표
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
 
-    return { x: clamp(Math.round(gx), 0, SIZE-1), y: clamp(Math.round(gy), 0, SIZE-1) };
+  const x = (clientX - rect.left) * scaleX;
+  const y = (clientY - rect.top) * scaleY;
+
+  // 보드 영역 밖 터치 방지
+  const min = margin - cell * 0.4;
+  const max = margin + cell * (SIZE - 1) + cell * 0.4;
+
+  if (x < min || x > max || y < min || y > max) {
+    return null; // 👉 바깥 터치 무시
   }
+
+  // 가장 가까운 교차점으로 스냅
+  const gx = Math.round((x - margin) / cell);
+  const gy = Math.round((y - margin) / cell);
+
+  return {
+    x: clamp(gx, 0, SIZE - 1),
+    y: clamp(gy, 0, SIZE - 1)
+  };
+}
 
   function inRange(x,y){ return x>=0 && x<SIZE && y>=0 && y<SIZE; }
   function countDir(x,y,dx,dy,p){
@@ -626,6 +652,8 @@ const r = cell * 0.42;
   }
 
   function drawGrid(){
+    const W = canvas.width;
+    const H = canvas.height;
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle = "rgba(255,255,255,.92)";
     ctx.fillRect(0,0,W,H);
@@ -1054,7 +1082,10 @@ if(blockMove && !isDoubleThreeMoveFor(AI, blockMove.x, blockMove.y)) return bloc
     if(gameOver) return;
     if(turn !== PLAYER) return;
 
-    const {x,y} = pointerToCell(e.clientX, e.clientY);
+  const pos = pointerToCell(e.clientX, e.clientY);
+   if (!pos) return;   // ✅ 보드 밖 터치 무시
+
+   const { x, y } = pos;
 
     // ✅ 33이면 막기 + 1.5초 토스트
    if(isDoubleThreeMoveFor(PLAYER, x, y)){
@@ -1109,9 +1140,9 @@ if(blockMove && !isDoubleThreeMoveFor(AI, blockMove.x, blockMove.y)) return bloc
 
    /* ✅ 화면 크기 변경 시 캔버스 재계산 */
   window.addEventListener("resize", () => {
-    CANVAS_SIZE = resizeCanvas();
-    draw();
-  });
+  updateMetrics();
+  draw();
+});
   
 })();
 </script>
