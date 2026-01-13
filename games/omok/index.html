@@ -566,12 +566,22 @@
   loadState();
   turn = firstPlayer;
 
-  const W = canvas.width, H = canvas.height;
-  const margin = 54;
-  const gridSize = Math.min(W, H) - margin * 2;
-  const cell = gridSize / (SIZE - 1);
-  const r = cell * 0.42;
+  function resizeCanvas(){
+  const rect = canvas.getBoundingClientRect();
+  const size = Math.floor(Math.min(rect.width, rect.height));
 
+  canvas.width = size;
+  canvas.height = size;
+
+  return size;
+}
+
+let CANVAS_SIZE = resizeCanvas();
+
+const margin = CANVAS_SIZE * 0.06;
+const gridSize = CANVAS_SIZE - margin * 2;
+const cell = gridSize / (SIZE - 1);
+const r = cell * 0.42;
   const img1 = new Image(); img1.src = IMG_P1;
   const img2 = new Image(); img2.src = IMG_P2;
   img1.onload = () => { if(gameStarted) draw(); };
@@ -1096,6 +1106,13 @@ if(blockMove && !isDoubleThreeMoveFor(AI, blockMove.x, blockMove.y)) return bloc
   drawGrid();
   setMsg("선공을 선택하고 시작하기 눌러줘!");
   openStartModal();
+
+   /* ✅ 화면 크기 변경 시 캔버스 재계산 */
+  window.addEventListener("resize", () => {
+    CANVAS_SIZE = resizeCanvas();
+    draw();
+  });
+  
 })();
 </script>
 </body>
