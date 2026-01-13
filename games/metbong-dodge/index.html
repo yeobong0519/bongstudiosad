@@ -25,8 +25,8 @@
       color:var(--text);
       min-height:100vh;
       padding:0;
-      overscroll-behavior: none; /* 바운스 완화 */
-      touch-action: manipulation; /* 기본은 가볍게 */
+      overscroll-behavior:none;
+      touch-action:manipulation;
     }
 
     .page{
@@ -34,7 +34,6 @@
       display:flex;
       justify-content:center;
     }
-
     .wrap{ width:min(520px, 100%); }
 
     .board{
@@ -43,16 +42,13 @@
       aspect-ratio: 9/16;
       height:auto;
 
-      max-width:100%;
-      margin:0 auto;
-
       border-radius:22px;
       overflow:hidden;
       border:1px solid var(--line);
       background:#fff;
       box-shadow: 0 18px 55px rgba(0,0,0,.12);
 
-      touch-action:none;  /* ✅ 보드 내부 터치가 스크롤로 안 튀게 */
+      touch-action:none;
       user-select:none;
       -webkit-user-select:none;
       -webkit-touch-callout:none;
@@ -62,8 +58,7 @@
       width:100%;
       height:100%;
       display:block;
-
-      touch-action:none;  /* ✅ 캔버스도 확실히 */
+      touch-action:none;
       user-select:none;
       -webkit-user-select:none;
       -webkit-touch-callout:none;
@@ -168,7 +163,6 @@
 
   <main class="page">
     <div class="wrap">
-
       <div class="board" id="board">
         <canvas id="c" width="720" height="1280" aria-label="멧봉이 피하기 게임 캔버스"></canvas>
 
@@ -232,19 +226,13 @@
   const modalTitle = document.getElementById("modalTitle");
   const modalDesc  = document.getElementById("modalDesc");
 
-  // ✅ 이미지 경로(현재 폴더 기준 고정)
-  const cleanHref = location.href.replace(/[?#].*$/, "");
-  const baseDir = cleanHref.endsWith("/")
-    ? cleanHref
-    : cleanHref.slice(0, cleanHref.lastIndexOf("/") + 1);
-
-  const IMG_PLAYER = baseDir + "img/yeobong.png";
-  const IMG_ENEMY  = baseDir + "img/metbong.png";
+  // ✅ 이미지: 절대경로로 고정(인앱/캐시/리다이렉트에도 안 꼬임)
+  const IMG_PLAYER = "/games/metbong-dodge/img/yeobong.png";
+  const IMG_ENEMY  = "/games/metbong-dodge/img/metbong.png";
 
   const W = canvas.width;
   const H = canvas.height;
 
-  // ✅ 모바일에서 9:16이 '진짜'로 보이게 높이 자동 계산
   function resizeBoard(){
     const nav = document.getElementById("nav");
     const footer = document.getElementById("footer");
@@ -263,7 +251,7 @@
   window.addEventListener("resize", resizeBoard);
   window.addEventListener("orientationchange", () => setTimeout(resizeBoard, 150));
 
-  // ✅ 게임 중 스크롤/확대/바운스 완전 잠금
+  // ✅ 게임 중 스크롤/확대/바운스 잠금(과하지 않게 + 확실하게)
   function lockScroll(lock){
     document.documentElement.style.overflow = lock ? "hidden" : "";
     document.body.style.overflow = lock ? "hidden" : "";
@@ -272,19 +260,16 @@
     document.body.style.touchAction = lock ? "none" : "";
   }
 
-  // ✅ 보드 영역에서 발생하는 스크롤/줌 제스처 차단
+  // ✅ 보드에서 스크롤/줌 제스처 차단(게임 중)
   function stopEvent(e){
-    if(!running) return;           // 게임 중일 때만 강하게 막음
+    if(!running) return;
     e.preventDefault();
   }
-  // iOS/인앱: passive:false 필수
   board.addEventListener("touchmove", stopEvent, { passive:false });
   board.addEventListener("wheel", stopEvent, { passive:false });
-
-  // 핀치줌 차단(지원 브라우저)
-  document.addEventListener("gesturestart", (e) => { if(running) e.preventDefault(); }, { passive:false });
-  document.addEventListener("gesturechange",(e) => { if(running) e.preventDefault(); }, { passive:false });
-  document.addEventListener("gestureend",   (e) => { if(running) e.preventDefault(); }, { passive:false });
+  document.addEventListener("gesturestart", (e)=>{ if(running) e.preventDefault(); }, { passive:false });
+  document.addEventListener("gesturechange",(e)=>{ if(running) e.preventDefault(); }, { passive:false });
+  document.addEventListener("gestureend",   (e)=>{ if(running) e.preventDefault(); }, { passive:false });
 
   // ====== 로컬 베스트 ======
   const BEST_KEY = "metbong_dodge_best";
@@ -310,10 +295,11 @@
   const enemies = [];
   let spawnTimer = 0;
 
-  // ✅ 요구사항: 더 자주 + 더 빠르게
-  // 기존(0.85 / 1040)에서 → "더 자주": 0.45, "더 빠르게": 2배 느낌으로 2080
-  let spawnEvery = 0.45;
-  let fallSpeed = 2080;
+  // ✅ “너무 빨라졌다” 조정값 (체감 1.4~1.5배, 더 자주)
+  // - 속도: 1500 전후
+  // - 스폰: 0.68초 전후
+  let spawnEvery = 0.68;
+  let fallSpeed = 1500;
 
   // 점수/레벨
   let score = 0;
@@ -340,9 +326,8 @@
     enemies.length = 0;
     spawnTimer = 0;
 
-    // ✅ 시작 기본값(요구사항)
-    spawnEvery = 0.45;
-    fallSpeed  = 2080;
+    spawnEvery = 0.68;
+    fallSpeed  = 1500;
 
     score = 0;
     level = 1;
@@ -363,9 +348,7 @@
     overlay.style.display = "flex";
     lockScroll(false);
   }
-  function hideOverlay(){
-    overlay.style.display = "none";
-  }
+  function hideOverlay(){ overlay.style.display = "none"; }
 
   function updateDifficulty(){
     const newLevel = 1 + Math.floor(score / 200);
@@ -373,22 +356,21 @@
       level = newLevel;
       levelEl.textContent = String(level);
 
-      // ✅ 점점 더 자주 + 더 빠르게(과속 방지로 상한만)
-      spawnEvery = Math.max(0.18, 0.45 - (level-1)*0.03);
-      fallSpeed  = Math.min(3400, 2080 + (level-1)*140);
+      // 레벨 오르면 "조금씩"만 더 자주/더 빠르게
+      spawnEvery = Math.max(0.35, 0.68 - (level-1)*0.025);
+      fallSpeed  = Math.min(2400, 1500 + (level-1)*90);
     }
   }
 
   function spawnEnemy(){
-    // ✅ "기본 2배 작게" + "크기 랜덤"
-    // 이전 범위(55~110)보다 살짝 더 다양하게: 45~105
-    const size = 45 + Math.random()*60; // 45 ~ 105
+    // ✅ 기본 2배 작게 + 랜덤 (너무 미세해지지 않게 하한 유지)
+    const size = 48 + Math.random()*58; // 48 ~ 106
     const x = 40 + Math.random()*(W - 80);
 
     enemies.push({
       x, y: -size,
       w: size, h: size,
-      vy: fallSpeed * (0.95 + Math.random()*0.25),
+      vy: fallSpeed * (0.95 + Math.random()*0.22),
       rot: (Math.random()*0.6 - 0.3),
       t: 0
     });
@@ -403,9 +385,7 @@
     );
   }
 
-  function drawBackground(){
-    ctx.clearRect(0,0,W,H);
-  }
+  function drawBackground(){ ctx.clearRect(0,0,W,H); }
 
   function roundRect(x,y,w,h,r){
     const rr = Math.min(r, w/2, h/2);
@@ -540,7 +520,7 @@
     resetGame();
     hideOverlay();
     resizeBoard();
-    lockScroll(true);     // ✅ 게임 중 스크롤 잠금
+    lockScroll(true);
     running = true;
     tPrev = 0;
     requestAnimationFrame(loop);
@@ -594,14 +574,12 @@
     );
   });
 
-  // 첫 화면
   showOverlay(
     "멧봉이 피하기",
     "바닥의 여봉이를 좌우로 움직여<br/>위에서 떨어지는 멧봉이 얼굴을 피하세요!",
     "시작하기"
   );
 
-  // nav/footer 로드 + 보드 리사이즈
   window.addEventListener("DOMContentLoaded", async () => {
     try{
       await loadHTML("#nav", "/common/nav.html");
