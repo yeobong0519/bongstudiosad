@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>멧봉이를 피해라!</title>
 
+  <meta name="description" content="설치 없이 바로 즐기는 미니게임! 여봉이를 좌우로 움직여 위에서 떨어지는 멧봉이를 피하고 최고 점수에 도전하세요." />
+  <link rel="canonical" href="https://bongstudiosad.com/games/metbong-dodge/" />
+  
   <!-- ✅ 공통 CSS/JS (네비/푸터 자동 로드용) -->
   <link rel="stylesheet" href="/common/common.css" />
   <script defer src="/common/common.js"></script>
@@ -16,7 +19,7 @@
   
   <style>
 
-    .ad-wrap{ margin:12px 0; border-radius:16px; overflow:hidden; }
+
     
     :root{
       --line: rgba(0,0,0,.10);
@@ -163,6 +166,46 @@
       color:var(--muted);
       text-align:center;
     }
+
+    /* ✅ AdSense용: 게임 설명 섹션 */
+.game-desc{
+  margin: 12px auto 0;
+  width: min(520px, 100%);
+  border: 1px solid rgba(0,0,0,.10);
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 14px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.08);
+}
+.game-desc h2{
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 1000;
+  letter-spacing: -.2px;
+}
+.game-desc h3{
+  margin: 14px 0 6px;
+  font-size: 13px;
+  font-weight: 1000;
+  color: rgba(0,0,0,.82);
+}
+.game-desc p{
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(0,0,0,.70);
+  font-weight: 700;
+}
+.game-desc ul{
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: rgba(0,0,0,.70);
+  font-size: 12px;
+  line-height: 1.6;
+  font-weight: 700;
+}
+.game-desc li{ margin: 4px 0; }
+    
   </style>
 </head>
 
@@ -211,25 +254,37 @@
         </div>
       </div>
 
-  <!-- ✅ AdSense 배너(보드 아래) -->
-      <div class="ad-wrap">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-2371351351595028"
-             data-ad-slot="1234567890"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-      </div>
-
-
       
       <div class="footerhint">
         PNG 준비되면 자동으로 캐릭터가 이미지로 렌더링돼요 (미준비 시 임시 이모지로 표시)
       </div>
     </div>
+
+    <!-- ✅ AdSense용: 게임 설명(게임 하단 & 푸터 위) -->
+  <section class="game-desc">
+    <h2>멧봉이를 피해라!</h2>
+    <p>
+      위에서 떨어지는 멧봉이를 피하면서 최대한 오래 버티는 미니게임이야.
+      설치 없이 바로 실행되는 웹 게임이고, 모바일/PC 모두 플레이 가능해.
+    </p>
+
+    <h3>조작 방법</h3>
+    <ul>
+      <li>모바일: 여봉이를 터치한 채 좌우로 드래그</li>
+      <li>PC: ← → 또는 A / D 로 이동</li>
+    </ul>
+
+    <h3>점수 규칙</h3>
+    <ul>
+      <li>멧봉이를 피할수록 점수가 올라가고 레벨이 상승해</li>
+      <li>BEST 점수는 기기에 저장돼 다음에도 유지돼</li>
+    </ul>
+
+    <p>
+      짧게 한 판 하기 좋은 심심풀이 게임이야. 최고 기록에 도전해봐!
+    </p>
+  </section>
+    
   </main>
 
   <div id="footer"></div>
