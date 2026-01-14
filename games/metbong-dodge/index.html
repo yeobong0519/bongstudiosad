@@ -388,9 +388,15 @@ const IMG_ENEMY  = "/img/metbong.png";
   // ✅ “너무 빨라졌다” 조정값 (체감 1.4~1.5배, 더 자주)
   // - 속도: 1500 전후
   // - 스폰: 0.68초 전후
-  const BASE_FALL = 425;     // ✅ 레벨1 기준 낙하속도
-  let spawnEvery = 0.68;
-  let fallSpeed = BASE_FALL;
+  const BASE_FALL = 425;          // 레벨1 낙하속도(원하면 400~450 사이로)
+const MAX_FALL  = 720;          // ✅ 속도 상한(이 값 이상 빨라지지 않음)
+
+const BASE_SPAWN_EVERY = 0.85;  // ✅ 레벨1 스폰 간격(초반 난이도 낮추려면 0.80~0.95)
+const SPAWN_STEP = 0.05;        // ✅ 레벨당 5% 더 자주(간격 5% 감소)
+const SPAWN_MAX  = 0.40;        // ✅ 최대 40%까지만 증가 후 유지
+
+let spawnEvery = BASE_SPAWN_EVERY;
+let fallSpeed  = BASE_FALL;
   // 점수/레벨
   let score = 0;
   let level = 1;
@@ -416,7 +422,7 @@ const IMG_ENEMY  = "/img/metbong.png";
     enemies.length = 0;
     spawnTimer = 0;
 
-    spawnEvery = 0.68;
+    spawnEvery = BASE_SPAWN_EVERY;
     fallSpeed  = BASE_FALL;
     
     score = 0;
@@ -441,16 +447,20 @@ const IMG_ENEMY  = "/img/metbong.png";
   function hideOverlay(){ overlay.style.display = "none"; }
 
   function updateDifficulty(){
-    const newLevel = 1 + Math.floor(score / 200);
-    if(newLevel !== level){
-      level = newLevel;
-      levelEl.textContent = String(level);
+  const newLevel = 1 + Math.floor(score / 200);
+  if(newLevel !== level){
+    level = newLevel;
+    levelEl.textContent = String(level);
 
-      // 레벨 오르면 "조금씩"만 더 자주/더 빠르게
-      spawnEvery = Math.max(0.35, 0.68 - (level-1)*0.025);
-      fallSpeed = Math.min(2400, BASE_FALL * Math.pow(1.3, level - 1));
-    }
+    // ✅ 1) 속도: 천천히 증가하다가 MAX_FALL에서 증가 끝(유지)
+    const nextFall = BASE_FALL * Math.pow(1.08, level - 1); // 1.06~1.10 사이로 취향 조절
+    fallSpeed = Math.min(MAX_FALL, nextFall);
+
+    // ✅ 2) 출현 빈도: 레벨당 5% 증가, 최대 40%까지만 증가 후 유지
+    const spawnBoost = Math.min(SPAWN_MAX, SPAWN_STEP * (level - 1)); // 0~0.40
+    spawnEvery = BASE_SPAWN_EVERY * (1 - spawnBoost);
   }
+}
 
   function spawnEnemy(){
     // ✅ 기본 2배 작게 + 랜덤 (너무 미세해지지 않게 하한 유지)
@@ -591,11 +601,10 @@ function drawImageCover(img, dx, dy, dw, dh){
 while (spawnTimer >= spawnEvery) {
   spawnTimer -= spawnEvery;
 
-  // ✅ 한 번에 2~3개 생성(확률로 4개도 가끔)
-  const burst = 2 + (Math.random() < 0.55 ? 1 : 0) + (Math.random() < 0.15 ? 1 : 0);
-  for (let i = 0; i < burst; i++) spawnEnemy();
+  // ✅ 레벨별 마릿수 증가: 레벨1=1마리, 이후 레벨당 +1, 최대 +4까지만(=최대 5마리)
+const burst = 1 + Math.min(4, level - 1);
+for (let i = 0; i < burst; i++) spawnEnemy();
 }
-
     for(let i=enemies.length-1; i>=0; i--){
       const e = enemies[i];
       e.y += e.vy * dt;
