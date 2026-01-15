@@ -1,10 +1,17 @@
 function loadHTML(selector, url) {
-  return fetch(url)
-    .then(res => res.text())
+  return fetch(url, { cache: "no-store" })
+    .then(res => {
+      if (!res.ok) throw new Error(url + " " + res.status);
+      return res.text();
+    })
     .then(html => {
       const el = document.querySelector(selector);
       if (el) el.innerHTML = html;
       return el;
+    })
+    .catch(err => {
+      console.log("loadHTML failed:", err);
+      return null;
     });
 }
 
@@ -31,10 +38,16 @@ function setActiveNav() {
     document.querySelectorAll('.menu-item[href="/contact/"]').forEach(a => a.classList.add("active"));
     return;
   }
+
+  // / (메인) = 홈
+if (path === "/" || path === "/index.html") {
+  document.querySelectorAll('.menu-item[href="/"]').forEach(a => a.classList.add("active"));
+  return;
+ }  
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadHTML("#nav-mount", "/common/nav.html");
   await loadHTML("#footer-mount", "/common/footer.html");
-  setActiveNav();
+ try { setActiveNav(); } catch(e) {}
 });
