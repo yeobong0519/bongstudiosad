@@ -3,299 +3,226 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>멧봉이를 피해라!</title>
+  <title>멧봉이를 피해라! | 봉 스튜디오 미니게임</title>
 
-  <meta name="description" content="설치 없이 바로 즐기는 미니게임! 여봉이를 좌우로 움직여 위에서 떨어지는 멧봉이를 피하고 최고 점수에 도전하세요." />
+  <meta name="description" content="설치 없이 바로 즐기는 브라우저 미니게임! 여봉이를 좌우로 움직여 위에서 떨어지는 멧봉이를 피하고 최고 점수에 도전하세요." />
   <link rel="canonical" href="https://bongstudiosad.com/games/metbong-dodge/" />
-  
+
   <!-- ✅ 공통 CSS/JS (네비/푸터 자동 로드용) -->
   <link rel="stylesheet" href="/common/common.css" />
   <script defer src="/common/common.js"></script>
 
- <!-- Google AdSense -->
+  <!-- Google AdSense (client 유지) -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028
 "
     crossorigin="anonymous"></script>
-  
+
+  <!-- ✅ (승인용) 구조화 데이터 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "멧봉이를 피해라! (Metbong Dodge)",
+    "operatingSystem": "Web Browser",
+    "applicationCategory": "GameApplication",
+    "genre": "Action, Avoidance",
+    "description": "봉 스튜디오의 캐릭터 여봉이를 조작하여 떨어지는 멧봉이를 피하는 브라우저 기반 액션 미니게임입니다.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+    "publisher": { "@type": "Organization", "name": "봉 스튜디오" }
+  }
+  </script>
+
   <style>
-
-
-    
     :root{
       --line: rgba(0,0,0,.10);
       --text: rgba(0,0,0,.88);
-      --muted: rgba(0,0,0,.55);
-      --ok: #0ea5e9;
+      --muted: rgba(0,0,0,.60);
+      --card: #ffffff;
+      --bg: #f6f7fb;
+      --accent: #ff6b81;
     }
     *{ box-sizing:border-box; }
-
     body{
       margin:0;
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:#fff;
+      background:var(--bg);
       color:var(--text);
       min-height:100vh;
-      padding:0;
       overscroll-behavior:none;
-      touch-action:manipulation;
     }
-
-   .page{
-  padding: 10px 12px 14px;
-  display:block;     /* ✅ flex 제거 */
-}
-
-.wrap{
-  width:min(520px, 100%);
-  margin:0 auto;     /* ✅ 가운데 정렬 */
-  display:flex;      /* ✅ wrap 내부는 세로 스택 */
-  flex-direction:column;
-  gap:10px;
-}
-
-    .board{
-      position:relative;
-      width:100%;
-      aspect-ratio: 9/16;
-      height:auto;
-
-      border-radius:22px;
-      overflow: visible;
-      border:1px solid var(--line);
-      background:#fff;
-      box-shadow: 0 18px 55px rgba(0,0,0,.12);
-
-      touch-action:none;
-      user-select:none;
-      -webkit-user-select:none;
-      -webkit-touch-callout:none;
-    }
-
-    canvas{
-      width:100%;
-      height:100%;
-      display:block;
-      touch-action:none;
-      user-select:none;
-      -webkit-user-select:none;
-      -webkit-touch-callout:none;
-    }
-
-    .hud{
-      position:absolute;
-      inset:14px 16px auto 16px;
+    main.page{ padding: 10px 12px 22px; }
+    .wrap{
+      width:min(520px, 100%);
+      margin:0 auto;
       display:flex;
-      gap:10px;
-      justify-content:space-between;
-      align-items:flex-start;
-      pointer-events:none;
-    }
-  .hud .box{
-  padding:10px 12px;
-  border-radius:16px;
-  border:1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.72);
-  backdrop-filter: blur(6px);
-
-  /* ✅ 핵심: 3칸이 화면에 맞게 줄어들 수 있게 */
-  min-width:0;         /* ❗120px 제거 */
-  flex:1;              /* 3개 박스 동일 비율 */
-  width:0;             /* 긴 텍스트/숫자에도 줄어들게 */
-}
-    .hud .k{
-      font-size:12px;
-      color:var(--muted);
-      font-weight:800;
-      letter-spacing:-0.01em;
-    }
-    .hud .v{
-      font-size:18px;
-      font-weight:1000;
-      margin-top:4px;
-      color: var(--text);
+      flex-direction:column;
+      gap:12px;
     }
 
-    .overlay{
+    .hero{
+      border:1px solid var(--line);
+      background:var(--card);
+      border-radius:22px;
+      padding:16px 16px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.10);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero::before{
+      content:"";
       position:absolute;
       inset:0;
+      background:
+        radial-gradient(520px 220px at 10% 0%, rgba(255,107,129,.18), transparent 60%),
+        radial-gradient(520px 220px at 90% 10%, rgba(14,165,233,.14), transparent 55%);
+      pointer-events:none;
+    }
+    .hero > *{ position:relative; }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background: rgba(255,107,129,.14);
+      border:1px solid rgba(255,107,129,.22);
+      color:#b91c1c;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:-.2px;
+      width: fit-content;
+    }
+    .hero h1{
+      margin:10px 0 6px;
+      font-size:22px;
+      letter-spacing:-.4px;
+      line-height:1.15;
+    }
+    .hero p{
+      margin:6px 0 0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .poster{
+      margin-top:12px;
+      border-radius:18px;
+      background: #fff;
+      border:1px solid var(--line);
+      overflow:hidden;
+    }
+    .poster .img{
+      width:100%;
+      aspect-ratio: 16/10;
+      background: #fff;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:18px;
-      background: rgba(0,0,0,.42);
-      backdrop-filter: blur(6px);
     }
-    .modal{
-      width:min(420px, 100%);
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.70);
-      box-shadow: 0 22px 70px rgba(0,0,0,.25);
-      padding:18px;
-      text-align:center;
-      color: var(--text);
+    .poster .img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
-    .modal h2{
-      margin:6px 0 8px;
-      font-size:20px;
-      letter-spacing:-0.02em;
+    .poster .meta{
+      padding:12px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
     }
-    .modal p{
-      margin:0 0 14px;
+    .poster .meta .small{
+      font-size:12px;
       color:var(--muted);
-      line-height:1.45;
-      font-size:13px;
+      font-weight:800;
     }
 
-    .btns{
+    .btn{
+      appearance:none;
+      border:none;
+      background:var(--accent);
+      color:#fff;
+      padding:13px 14px;
+      border-radius:999px;
+      font-weight:1000;
+      cursor:pointer;
+      width:100%;
+      letter-spacing:-.2px;
+      box-shadow: 0 10px 26px rgba(255,107,129,.28);
+    }
+    .btn:active{ transform: scale(.99); }
+    .btn.secondary{
+      background:#eceef3;
+      color:#111;
+      box-shadow:none;
+      font-weight:900;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      background:var(--card);
+      border-radius:20px;
+      padding:14px 14px;
+      box-shadow: 0 12px 34px rgba(0,0,0,.08);
+      line-height:1.75;
+      color: rgba(0,0,0,.75);
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:16px;
+      color: rgba(0,0,0,.92);
+      letter-spacing:-.2px;
+      font-weight:1000;
+    }
+    .card h3{
+      margin:14px 0 6px;
+      font-size:13px;
+      color: rgba(0,0,0,.88);
+      font-weight:1000;
+    }
+    .card p{
+      margin:8px 0 0;
+      font-size:13px;
+      color: rgba(0,0,0,.70);
+      font-weight:700;
+    }
+    .card ul{
+      margin:8px 0 0;
+      padding-left:18px;
+      font-size:13px;
+      color: rgba(0,0,0,.70);
+      font-weight:700;
+      line-height:1.7;
+    }
+    .card li{ margin:4px 0; }
+
+    .disclosure{ border-left:5px solid var(--accent); }
+
+    .inline-links{
       display:flex;
       gap:10px;
-      justify-content:center;
       flex-wrap:wrap;
       margin-top:10px;
     }
-    button{
-      appearance:none;
-      border:1px solid rgba(0,0,0,.12);
-      background: rgba(255,255,255,.85);
-      color: var(--text);
-      padding:11px 14px;
-      border-radius:14px;
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#111;
+      text-decoration:none;
       font-weight:900;
-      cursor:pointer;
-      min-width:140px;
-    }
-    button.primary{
-      border-color: rgba(14,165,233,.35);
-      background: rgba(14,165,233,.14);
-    }
-
-    .footerhint{
-      margin-top:10px;
-      font-size:12px;
-      color:var(--muted);
+      font-size:13px;
+      flex:1;
+      min-width: 150px;
       text-align:center;
     }
-
-    /* ✅ AdSense용: 게임 설명 섹션 */
-.game-desc{
-  margin: 12px auto 0;
-  width: min(520px, 100%);
-  border: 1px solid rgba(0,0,0,.10);
-  background: #fff;
-  border-radius: 18px;
-  padding: 14px 14px;
-  box-shadow: 0 12px 34px rgba(0,0,0,.08);
-}
-.game-desc h2{
-  margin: 0 0 8px;
-  font-size: 16px;
-  font-weight: 1000;
-  letter-spacing: -.2px;
-}
-.game-desc h3{
-  margin: 14px 0 6px;
-  font-size: 13px;
-  font-weight: 1000;
-  color: rgba(0,0,0,.82);
-}
-.game-desc p{
-  margin: 8px 0 0;
-  font-size: 12px;
-  line-height: 1.6;
-  color: rgba(0,0,0,.70);
-  font-weight: 700;
-}
-.game-desc ul{
-  margin: 8px 0 0;
-  padding-left: 18px;
-  color: rgba(0,0,0,.70);
-  font-size: 12px;
-  line-height: 1.6;
-  font-weight: 700;
-}
-.game-desc li{ margin: 4px 0; }
-
-/* ✅ 하단 SEO/콘텐츠 아티클 카드 (텍스트는 그대로, 디자인만 개선) */
-.seo-article{
-  margin: 12px auto 0;
-  width: min(520px, 100%);
-  border: 1px solid rgba(0,0,0,.10);
-  background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.96));
-  border-radius: 20px;
-  padding: 16px 16px;
-  box-shadow: 0 14px 38px rgba(0,0,0,.08);
-  color: rgba(0,0,0,.78);
-  line-height: 1.75;
-  text-align: left;
-  position: relative;
-  overflow: hidden;
-}
-
-.seo-article::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: radial-gradient(600px 240px at 10% 0%, rgba(14,165,233,.10), transparent 60%),
-              radial-gradient(520px 220px at 90% 20%, rgba(255,107,129,.10), transparent 55%);
-  pointer-events:none;
-}
-
-.seo-article > *{
-  position: relative; /* 배경 그라데이션 위로 */
-}
-
-.seo-article h2{
-  font-size: 17px;
-  margin: 0 0 12px;
-  color: rgba(0,0,0,.92);
-  letter-spacing: -0.2px;
-  font-weight: 1000;
-}
-
-.seo-article h3{
-  font-size: 14px;
-  margin: 16px 0 8px;
-  color: rgba(0,0,0,.88);
-  font-weight: 1000;
-  letter-spacing: -0.1px;
-}
-
-.seo-article p{
-  margin: 10px 0 0;
-  font-size: 13px;
-  color: rgba(0,0,0,.70);
-  font-weight: 700;
-}
-
-.seo-article strong{
-  color: rgba(0,0,0,.90);
-  font-weight: 1000;
-}
-
-@media (max-width: 480px){
-  .seo-article{
-    border-radius: 18px;
-    padding: 14px 14px;
-  }
-  .seo-article h2{ font-size: 16px; }
-  .seo-article p{ font-size: 12.5px; }
-}    
-
-@media (max-width: 420px){
-  .hud{
-    inset:12px 12px auto 12px; /* 너무 안쪽이면 10px로 */
-    gap:8px;                   /* 간격 살짝 줄임 */
-  }
-  .hud .box{
-    padding:8px 10px;          /* 박스 자체 컴팩트 */
-    border-radius:14px;
-  }
-  .hud .k{ font-size:11px; }
-  .hud .v{ font-size:16px; }
-}
-    
   </style>
 </head>
 
@@ -304,532 +231,73 @@
 
   <main class="page">
     <div class="wrap">
-      <div class="board" id="board">
-        <canvas id="c" width="720" height="1280" aria-label="멧봉이 피하기 게임 캔버스"></canvas>
 
-        <div class="hud">
-          <div class="box">
-            <div class="k">점수</div>
-            <div class="v" id="score">0</div>
+      <section class="hero">
+        <div class="badge">🎮 미니게임 · 브라우저 즉시 플레이</div>
+        <h1>멧봉이를 피해라!</h1>
+        <p>
+          바닥의 여봉이를 좌우로 움직여, 위에서 떨어지는 멧봉이를 피하는 <b>하이퍼 캐주얼 생존 게임</b>이야.
+          설치 없이 바로 실행되고, 모바일·PC 모두 지원해.
+        </p>
+
+        <div class="poster" aria-label="게임 미리보기">
+          <div class="img">
+            <!-- 미리보기 이미지가 없으면 기본 유지 -->
+            <img src="/img/og_default.png" alt="멧봉이를 피해라 미리보기 이미지" />
           </div>
-
-          <div class="box" style="text-align:center;">
-            <div class="k">BEST</div>
-            <div class="v" id="bestPill">0</div>
-          </div>
-
-          <div class="box" style="text-align:right;">
-            <div class="k">레벨</div>
-            <div class="v" id="level">1</div>
-          </div>
-        </div>
-
-        <div class="overlay" id="overlay">
-          <div class="modal">
-            <div style="font-size:42px; line-height:1;">🫣</div>
-            <h2 id="modalTitle">멧봉이 피하기</h2>
-            <p id="modalDesc">
-              바닥의 여봉이를 좌우로 움직여<br/>
-              위에서 떨어지는 멧봉이 얼굴을 피하세요!
-            </p>
-            <div class="btns">
-              <button class="primary" id="startBtn">시작하기</button>
-              <button id="howBtn">조작방법</button>
-            </div>
-            <div style="margin-top:12px;font-size:12px;color:var(--muted);">
-              모바일: 여봉이를 터치한 채 좌우 드래그<br/>
-              PC: ← → 또는 A / D
-            </div>
+          <div class="meta">
+            <div class="small">1분 컷 · 무한 생존 · BEST 기록 저장</div>
+            <button class="btn" onclick="location.href='./play.html'">플레이하기</button>
+            <button class="btn secondary" onclick="location.href='/'" style="margin-top:10px;">← 메인으로</button>
           </div>
         </div>
-      </div>
+      </section>
 
-      
-      <div class="footerhint">
-        달려오는 멧봉이를 피해라!
-      </div>
- <!-- ✅ AdSense용: 게임 설명(게임 하단 & 푸터 위) -->
-  <section class="game-desc">
-    <h2>멧봉이를 피해라!</h2>
-    <p>
-      위에서 떨어지는 멧봉이를 피하면서 최대한 오래 버티는 미니게임이야.
-      설치 없이 바로 실행되는 웹 게임이고, 모바일/PC 모두 플레이 가능해.
-    </p>
+      <section class="card">
+        <h2>게임 규칙 한 장 요약</h2>
+        <p>
+          게임은 간단해. 화면 위에서 멧봉이가 계속 떨어지고, 여봉이가 멧봉이에 닿으면 게임 오버!
+          오래 버틸수록 점수와 레벨이 오르고 낙하 속도·빈도가 점점 빨라져.
+        </p>
 
-    <h3>조작 방법</h3>
-    <ul>
-      <li>모바일: 여봉이를 터치한 채 좌우로 드래그</li>
-      <li>PC: ← → 또는 A / D 로 이동</li>
-    </ul>
+        <h3>조작 방법</h3>
+        <ul>
+          <li><b>모바일</b>: 여봉이를 터치한 채 좌우로 드래그</li>
+          <li><b>PC</b>: 키보드 <b>← →</b> 또는 <b>A / D</b></li>
+        </ul>
 
-    <h3>점수 규칙</h3>
-    <ul>
-      <li>멧봉이를 피할수록 점수가 올라가고 레벨이 상승해</li>
-      <li>BEST 점수는 기기에 저장돼 다음에도 유지돼</li>
-    </ul>
+        <h3>고득점 팁</h3>
+        <ul>
+          <li><b>중앙을 선점</b>해 두면 다음 낙하 지점에 대응하기 쉽다</li>
+          <li>큰 회피보다 <b>짧은 미세 이동</b>이 점수 유지에 유리하다</li>
+          <li>레벨이 올라갈수록 ‘예측 → 선이동’이 핵심</li>
+        </ul>
+      </section>
 
-    <p>
-      짧게 한 판 하기 좋은 심심풀이 게임이야. 최고 기록에 도전해봐!
-    </p>
-  </section>
-      
-  <article class="seo-article">
-  <h2>🎮 멧봉이를 피해라: 캐릭터 기반의 하이퍼 캐주얼 웹 게임</h2>
-  
-  <p>
-    <strong>'멧봉이를 피해라'</strong>는 봉스튜디오의 개성 넘치는 캐릭터 '여봉이'와 '멧봉이'의 세계관을 바탕으로 제작된 하이퍼 캐주얼 웹 미니게임입니다. 도시 여우 여봉이가 쉴 새 없이 떨어지는 멧봉이들을 요리조리 피하며 생존하는 방식으로, 누구나 설치 없이 브라우저에서 즉시 즐길 수 있는 킬링타임용 콘텐츠입니다.
-  </p>
+      <section class="card disclosure">
+        <h2>콘텐츠/광고 안내</h2>
+        <p>
+          이 페이지와 게임 플레이 화면에는 서비스 운영을 위한 광고가 포함될 수 있어.
+          일부 외부 링크는 제휴(추천) 링크일 수 있으며, 발생한 수익은 사이트 운영에 도움이 될 수 있어.
+        </p>
+      </section>
 
-  <h3>💡 게임의 전략적 요소와 공략법</h3>
-  <p>
-    이 게임은 단순한 반응 속도 그 이상의 전략을 요구합니다. 멧봉이들은 각기 다른 속도와 간격으로 낙하하며, 시간이 지날수록 난이도가 상승합니다. 고득점을 위한 핵심은 <strong>'중앙 유지'</strong>와 <strong>'최소 동선 확보'</strong>입니다. 여봉이를 좌우 끝으로 너무 몰아넣으면 다음 낙하 지점을 피하기 어려워지므로, 최대한 중앙 부근에서 미세한 컨트롤로 회피 동선을 짜는 것이 중요합니다. 
-  </p>
+      <section class="card">
+        <h2>기술적 특징</h2>
+        <p>
+          ‘멧봉이를 피해라!’는 별도 게임 엔진 없이 <b>HTML5 Canvas</b>와 <b>JavaScript</b>로 구현했어.
+          requestAnimationFrame 기반의 프레임 루프를 사용하고, 반응형 레이아웃으로 모바일/데스크탑을 모두 지원해.
+        </p>
 
-  <h3>🛠️ 기술적 특징 및 웹 접근성</h3>
-  <p>
-    본 게임은 별도의 엔진 없이 순수 <strong>HTML5 Canvas와 JavaScript</strong>로 구현되어 저사양 기기나 모바일 환경에서도 끊김 없는 60FPS 프레임워크를 제공합니다. 또한, 터치 인터페이스와 키보드 조작을 동시에 지원하여 웹 접근성을 높였습니다. 봉스튜디오는 앞으로도 단순한 재미를 넘어, 캐릭터의 고유한 서사가 녹아든 다양한 미니게임 시리즈를 선보이며 방문자들에게 색다른 디지털 경험을 제공할 예정입니다.
-  </p>
-</article>
-   
-      
+        <div class="inline-links">
+          <a class="pill" href="./play.html">지금 플레이하기 →</a>
+          <a class="pill" href="/tests/">테스트 센터 →</a>
+        </div>
+      </section>
+
     </div>
-
-   
-    
   </main>
 
   <div id="footer-mount"></div>
-
-<script>
-(() => {
-  const canvas = document.getElementById("c");
-  const ctx = canvas.getContext("2d");
-
-  const board = document.getElementById("board");
-  const overlay = document.getElementById("overlay");
-  const startBtn = document.getElementById("startBtn");
-  const howBtn = document.getElementById("howBtn");
-  const scoreEl = document.getElementById("score");
-  const levelEl = document.getElementById("level");
-  const bestPill = document.getElementById("bestPill");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalDesc  = document.getElementById("modalDesc");
-
-// ✅ 깃허브 실제 위치 그대로
-const IMG_PLAYER = "/img/yeobong.png";
-const IMG_ENEMY  = "/img/metbong.png";
-
-  
-  const W = canvas.width;
-  const H = canvas.height;
-
-  function resizeBoard(){
-    const nav = document.getElementById("nav");
-    const footer = document.getElementById("footer");
-    const footerHint = document.querySelector(".footerhint");
-
-    const navH = nav ? nav.offsetHeight : 0;
-    const footerH = footer ? footer.offsetHeight : 0;
-    const hintH = footerHint ? footerHint.offsetHeight : 0;
-    const safe = 24;
-    const gameDesc = document.querySelector(".game-desc");
-    const descH = gameDesc ? gameDesc.offsetHeight : 0;
-    const available = window.innerHeight - navH - footerH - hintH - safe;
-
-    
-
-    const targetH = Math.max(420, Math.min(available, 820));
-    board.style.height = targetH + "px";
-  }
-  window.addEventListener("resize", resizeBoard);
-  window.addEventListener("orientationchange", () => setTimeout(resizeBoard, 150));
-
-  // ✅ 게임 중 스크롤/확대/바운스 잠금(과하지 않게 + 확실하게)
-  function lockScroll(lock){
-    document.documentElement.style.overflow = lock ? "hidden" : "";
-    document.body.style.overflow = lock ? "hidden" : "";
-    document.body.style.position = lock ? "fixed" : "";
-    document.body.style.width = lock ? "100%" : "";
-    document.body.style.touchAction = lock ? "none" : "";
-  }
-
-  // ✅ 보드에서 스크롤/줌 제스처 차단(게임 중)
-  function stopEvent(e){
-    if(!running) return;
-    e.preventDefault();
-  }
-  board.addEventListener("touchmove", stopEvent, { passive:false });
-  board.addEventListener("wheel", stopEvent, { passive:false });
-  document.addEventListener("gesturestart", (e)=>{ if(running) e.preventDefault(); }, { passive:false });
-  document.addEventListener("gesturechange",(e)=>{ if(running) e.preventDefault(); }, { passive:false });
-  document.addEventListener("gestureend",   (e)=>{ if(running) e.preventDefault(); }, { passive:false });
-
-  // ====== 로컬 베스트 ======
-  const BEST_KEY = "metbong_dodge_best";
-  let bestScore = Number(localStorage.getItem(BEST_KEY) || 0);
-  bestPill.textContent = String(bestScore);
-
-  // ====== 상태 ======
-  let running = false;
-  let gameOver = false;
-  let tPrev = 0;
-
-  // 플레이어
-  const player = {
-    w: 96,
-    h: 96,
-    x: W/2,
-    y: H - 150,
-    speed: 780,
-    vx: 0
-  };
-
-  // 적
-  const enemies = [];
-  let spawnTimer = 0;
-
-  // ✅ “너무 빨라졌다” 조정값 (체감 1.4~1.5배, 더 자주)
-  // - 속도: 1500 전후
-  // - 스폰: 0.68초 전후
-  const BASE_FALL = 425;          // 레벨1 낙하속도(원하면 400~450 사이로)
-const MAX_FALL  = 720;          // ✅ 속도 상한(이 값 이상 빨라지지 않음)
-
-const BASE_SPAWN_EVERY = 0.85;  // ✅ 레벨1 스폰 간격(초반 난이도 낮추려면 0.80~0.95)
-const SPAWN_STEP = 0.05;        // ✅ 레벨당 5% 더 자주(간격 5% 감소)
-const SPAWN_MAX  = 0.40;        // ✅ 최대 40%까지만 증가 후 유지
-
-let spawnEvery = BASE_SPAWN_EVERY;
-let fallSpeed  = BASE_FALL;
-  // 점수/레벨
-  let score = 0;
-  let level = 1;
-
-  const keys = { left:false, right:false };
-  const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
-
-  // ====== 이미지 ======
-  const imgPlayer = new Image();
-  const imgEnemy  = new Image();
-  let playerImgReady = false;
-  let enemyImgReady = false;
-
-  imgPlayer.onload = () => { playerImgReady = true; };
-  imgEnemy.onload  = () => { enemyImgReady = true; };
-  imgPlayer.onerror = () => { playerImgReady = false; console.log("❌ player load fail:", IMG_PLAYER); };
-  imgEnemy.onerror  = () => { enemyImgReady = false; console.log("❌ enemy load fail:", IMG_ENEMY); };
-
-  imgPlayer.src = IMG_PLAYER;
-  imgEnemy.src  = IMG_ENEMY;
-
-  function resetGame(){
-    enemies.length = 0;
-    spawnTimer = 0;
-
-    spawnEvery = BASE_SPAWN_EVERY;
-    fallSpeed  = BASE_FALL;
-    
-    score = 0;
-    level = 1;
-    scoreEl.textContent = "0";
-    levelEl.textContent = "1";
-
-    player.x = W/2;
-    player.vx = 0;
-    player.y = H - 150;
-
-    gameOver = false;
-  }
-
-  function showOverlay(title, desc, startText="시작하기"){
-    modalTitle.textContent = title;
-    modalDesc.innerHTML = desc;
-    startBtn.textContent = startText;
-    overlay.style.display = "flex";
-    lockScroll(false);
-  }
-  function hideOverlay(){ overlay.style.display = "none"; }
-
-  function updateDifficulty(){
-  const newLevel = 1 + Math.floor(score / 200);
-  if(newLevel !== level){
-    level = newLevel;
-    levelEl.textContent = String(level);
-
-    // ✅ 1) 속도: 천천히 증가하다가 MAX_FALL에서 증가 끝(유지)
-    const nextFall = BASE_FALL * Math.pow(1.08, level - 1); // 1.06~1.10 사이로 취향 조절
-    fallSpeed = Math.min(MAX_FALL, nextFall);
-
-    // ✅ 2) 출현 빈도: 레벨당 5% 증가, 최대 40%까지만 증가 후 유지
-    const spawnBoost = Math.min(SPAWN_MAX, SPAWN_STEP * (level - 1)); // 0~0.40
-    spawnEvery = BASE_SPAWN_EVERY * (1 - spawnBoost);
-  }
-}
-
-  function spawnEnemy(){
-    // ✅ 기본 2배 작게 + 랜덤 (너무 미세해지지 않게 하한 유지)
-    // ✅ 36 ~ 170 정도까지: 작은놈/큰놈 섞임
-// 작은 게 자주, 큰 건 가끔 나오게(체감 랜덤↑)
-const r = Math.random();
-let size;
-if (r < 0.65) size = 36 + Math.random() * 64;      // 36 ~ 100 (자주)
-else if (r < 0.92) size = 90 + Math.random() * 50; // 90 ~ 140 (가끔)
-else size = 130 + Math.random() * 40;              // 130 ~ 170 (레어)
-    const x = 40 + Math.random()*(W - 80);
-
-    enemies.push({
-      x, y: -size,
-      w: size, h: size,
-      vy: fallSpeed * (0.95 + Math.random()*0.22),
-      rot: (Math.random()*0.6 - 0.3),
-      t: 0
-    });
-  }
-
-function hitCircle(ax, ay, ar, bx, by, br){
-  const dx = ax - bx;
-  const dy = ay - by;
-  return (dx*dx + dy*dy) <= (ar + br) * (ar + br);
-}
-
-  function drawBackground(){ ctx.clearRect(0,0,W,H); }
-
-  function roundRect(x,y,w,h,r){
-    const rr = Math.min(r, w/2, h/2);
-    ctx.beginPath();
-    ctx.moveTo(x+rr, y);
-    ctx.arcTo(x+w, y, x+w, y+h, rr);
-    ctx.arcTo(x+w, y+h, x, y+h, rr);
-    ctx.arcTo(x, y+h, x, y, rr);
-    ctx.arcTo(x, y, x+w, y, rr);
-    ctx.closePath();
-  }
-
-function drawImageCover(img, dx, dy, dw, dh){
-  const iw = img.naturalWidth || img.width;
-  const ih = img.naturalHeight || img.height;
-  if(!iw || !ih) return;
-
-  const s = Math.max(dw/iw, dh/ih); // cover
-  const sw = dw / s;
-  const sh = dh / s;
-  const sx = (iw - sw) / 2;
-  const sy = (ih - sh) / 2;
-
-  ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
-}
-
-  function drawImageContain(img, dx, dy, dw, dh){
-  const iw = img.naturalWidth || img.width;
-  const ih = img.naturalHeight || img.height;
-  if(!iw || !ih) return;
-
-  const s = Math.min(dw/iw, dh/ih); // contain
-  const rw = iw * s;
-  const rh = ih * s;
-  const rx = dx + (dw - rw) / 2;
-  const ry = dy + (dh - rh) / 2;
-
-  ctx.drawImage(img, rx, ry, rw, rh);
-}
-
-  
-  function drawPlayer(){
-    const x = player.x, y = player.y;
-    ctx.save();
-
-    ctx.globalAlpha = 0.18;
-    ctx.beginPath();
-    ctx.ellipse(x, y + player.h/2 - 8, 46, 14, 0, 0, Math.PI*2);
-    ctx.fillStyle = "#000";
-    ctx.fill();
-    ctx.globalAlpha = 1;
-
-    if(playerImgReady){
-      drawImageContain(imgPlayer, x-player.w/2, y-player.h/2, player.w, player.h);
-    }else{
-      roundRect(x-player.w/2, y-player.h/2, player.w, player.h, 22);
-      ctx.fillStyle = "rgba(0,0,0,0.06)";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(0,0,0,0.10)";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      ctx.font = "64px system-ui, Apple Color Emoji, Segoe UI Emoji";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillStyle = "#111";
-      ctx.fillText("🙂", x, y+4);
-    }
-
-    ctx.restore();
-  }
-
-  function drawEnemy(e){
-    ctx.save();
-    e.t += 0.016;
-
-    ctx.translate(e.x, e.y);
-    ctx.rotate(e.rot);
-
-    if(enemyImgReady){
-      ctx.drawImage(imgEnemy, -e.w/2, -e.h/2, e.w, e.h);
-    }else{
-      roundRect(-e.w/2, -e.h/2, e.w, e.h, 22);
-      ctx.fillStyle = "rgba(255,77,109,0.18)";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(255,77,109,0.35)";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      ctx.font = "60px system-ui, Apple Color Emoji, Segoe UI Emoji";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("😈", 0, 6);
-    }
-
-    ctx.restore();
-  }
-
-  function loop(ts){
-    if(!running) return;
-    const t = ts/1000;
-    const dt = Math.min(0.033, t - tPrev || 0.016);
-    tPrev = t;
-
-    const dir = (keys.left ? -1 : 0) + (keys.right ? 1 : 0);
-    player.vx = dir * player.speed;
-
-    player.x += player.vx * dt;
-    player.x = clamp(player.x, player.w/2 + 10, W - player.w/2 - 10);
-
-    spawnTimer += dt;
-while (spawnTimer >= spawnEvery) {
-  spawnTimer -= spawnEvery;
-
-  // ✅ 레벨별 마릿수 증가: 레벨1=1마리, 이후 레벨당 +1, 최대 +4까지만(=최대 5마리)
-const burst = 1 + Math.min(4, level - 1);
-for (let i = 0; i < burst; i++) spawnEnemy();
-}
-    for(let i=enemies.length-1; i>=0; i--){
-      const e = enemies[i];
-      e.y += e.vy * dt;
-
-      if(e.y - e.h/2 > H + 40){
-        enemies.splice(i,1);
-        score += 10;
-        scoreEl.textContent = String(score);
-        updateDifficulty();
-        continue;
-      }
-
-// ✅ 원형 충돌 판정 (센터 보정 버전)
-const pCx = player.x;
-const pCy = player.y + player.h * 0.10;   // 플레이어 원 중심을 살짝 아래로
-
-const eCx = e.x;
-const eCy = e.y;                          // 적은 그대로(원하면 + e.h*0.02 정도 가능)
-
-const pr = Math.min(player.w, player.h) * 0.28; // 플레이어 반지름(관대)
-const er = Math.min(e.w, e.h) * 0.33;           // 적 반지름(관대)
-
-if (hitCircle(pCx, pCy, pr, eCx, eCy, er)) {
-  endGame();
-  return;
-}
-    }
-
-    drawBackground();
-    drawPlayer();
-    enemies.forEach(drawEnemy);
-
-    requestAnimationFrame(loop);
-  }
-
-  function endGame(){
-    running = false;
-    gameOver = true;
-    lockScroll(false);
-
-    if(score > bestScore){
-      bestScore = score;
-      localStorage.setItem(BEST_KEY, String(bestScore));
-      bestPill.textContent = String(bestScore);
-    }
-
-    showOverlay(
-      "게임 오버!",
-      `점수 <b style="color:var(--ok);">${score}</b> / BEST <b>${bestScore}</b><br/><br/>다시 도전할까요?`,
-      "다시하기"
-    );
-  }
-
-  function startGame(){
-    resetGame();
-    hideOverlay();
-    resizeBoard();
-    lockScroll(true);
-    running = true;
-    tPrev = 0;
-    requestAnimationFrame(loop);
-  }
-
-  // 키보드
-  window.addEventListener("keydown", (e) => {
-    if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a") keys.left = true;
-    if(e.key === "ArrowRight"|| e.key.toLowerCase() === "d") keys.right = true;
-    if(e.key === " " && !running) startGame();
-  });
-  window.addEventListener("keyup", (e) => {
-    if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a") keys.left = false;
-    if(e.key === "ArrowRight"|| e.key.toLowerCase() === "d") keys.right = false;
-  });
-
-  // 모바일 드래그
-  let dragging = false;
-  function getPos(ev){
-    const rect = canvas.getBoundingClientRect();
-    const sx = (ev.clientX - rect.left) / rect.width;
-    const sy = (ev.clientY - rect.top) / rect.height;
-    return { x: sx*W, y: sy*H };
-  }
-
-  board.addEventListener("pointerdown", (ev) => {
-    if(overlay.style.display !== "none") return;
-    const p = getPos(ev);
-    if(Math.abs(p.x - player.x) < player.w && Math.abs(p.y - player.y) < player.h){
-      dragging = true;
-      board.setPointerCapture(ev.pointerId);
-    }
-  });
-  board.addEventListener("pointermove", (ev) => {
-    if(!dragging || !running) return;
-    const p = getPos(ev);
-    player.x = clamp(p.x, player.w/2 + 10, W - player.w/2 - 10);
-  });
-  board.addEventListener("pointerup", (ev) => {
-    dragging = false;
-    try{ board.releasePointerCapture(ev.pointerId); }catch(_){}
-  });
-
-  // 버튼
-  startBtn.addEventListener("click", () => startGame());
-  howBtn.addEventListener("click", () => {
-    showOverlay(
-      "조작방법",
-      `PC: <b>← →</b> 또는 <b>A / D</b><br/>모바일: 여봉이를 <b>터치한 채 좌우 드래그</b><br/><br/>멧봉이 얼굴에 닿으면 게임 오버!`,
-      gameOver ? "다시하기" : "시작하기"
-    );
-  });
-
-  showOverlay(
-  "멧봉이 피하기",
-  "바닥의 여봉이를 좌우로 움직여<br/>위에서 떨어지는 멧봉이 얼굴을 피하세요!",
-  "시작하기"
-);
-   document.addEventListener("DOMContentLoaded", () => {
-    resizeBoard();
-  });
-
-  
-})();
-</script>
 </body>
 </html>
