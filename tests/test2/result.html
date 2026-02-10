@@ -184,6 +184,56 @@
     }
   </style>
 
+<!-- =========================================================
+  ✅ (승인용) JSON-LD 구조화 데이터: SoftwareApplication + FAQPage
+========================================================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "몬스터 세상 속 나는?",
+      "operatingSystem": "Web",
+      "applicationCategory": "EntertainmentApplication",
+      "description": "극한 상황(몬스터 세계) 시나리오로 위기 대응 성향과 선택 패턴을 9종 몬스터 타입으로 안내하는 웹 기반 테스트",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+      "publisher": { "@type": "Organization", "name": "봉 스튜디오" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "이 페이지는 무엇을 안내하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "‘몬스터 세상 속 나는?’ 테스트의 9종 결과 타입(요약, 성향, 행동 포인트, 잘 맞는 타입)을 한 페이지에서 정리한 안내 문서입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "결과는 어떻게 계산되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "각 문항의 선택지에 부여된 점수를 합산해 타입을 분류합니다. 계산은 브라우저(자바스크립트)에서 즉시 처리되도록 구성했습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "개인정보나 답변이 저장되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "회원가입 없이 이용할 수 있도록 설계했으며, 결과 계산은 브라우저에서 처리되는 방식입니다. 테스트 입력값을 서버에 저장하지 않는 방향을 목표로 구성했습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+
   <!-- Google AdSense -->
 <script async
   src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028
@@ -220,6 +270,48 @@
 
     <!-- ✅ 타입 목록 -->
     <div id="types-mount"></div>
+<!-- ✅ (추가) 정보성 문서 보강: 심층 분석 칼럼 -->
+<div class="card" style="margin-top: 18px; padding: 18px; background: #fff; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); text-align:left;">
+  <h2 style="font-size: 1.2rem; margin: 0 0 10px; color:#111;">몬스터 유형별 사회적 기질 분석</h2>
+  <p style="line-height: 1.7; color: #555; margin: 0;">
+    우리는 왜 ‘몬스터’ 설정에 끌릴까? 심리학적으로 몬스터는 일상에서 억눌러온 에너지(공격성, 생존 본능, 불안, 욕망)를 상징하는 장치가 될 수 있어.
+    그래서 같은 위기 상황을 제시해도, 어떤 사람은 “돌파”를 선택하고 어떤 사람은 “회피/관찰/협력”을 선택해.
+    이 페이지의 9종 타입은 우열이 아니라 <b>위기에서 드러나는 기본 전략</b>을 이야기하는 분류야.
+  </p>
+
+  <div style="background: #f9f9f9; padding: 14px; border-left: 4px solid #333; margin-top: 14px; border-radius: 12px;">
+    <p style="font-size: 0.95rem; font-weight: 800; margin: 0 0 6px; color:#111;">📍 테스트 결과 활용 팁</p>
+    <p style="font-size: 0.92rem; color: #666; margin: 0; line-height: 1.65;">
+      결과의 ‘단점’보다 ‘강점’에 먼저 주목해봐. 불안한 상황에서 어떤 선택을 했는지가 곧 잠재된 생존 전략이야.
+      친구와 결과를 비교하면, “누가 어떤 상황에서 빛나는지”가 더 선명하게 보이기도 해.
+    </p>
+  </div>
+</div>
+
+<!-- ✅ (추가) FAQ (텍스트 고정 노출) -->
+<div class="card" style="margin-top: 14px; padding: 18px; background: #fff; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); text-align:left;">
+  <h2 style="font-size: 1.2rem; margin: 0 0 10px; color:#111;">자주 묻는 질문</h2>
+
+  <h3 style="margin: 10px 0 6px; font-size: 1rem; color:#111;">Q. 이 페이지는 무엇을 안내하나요?</h3>
+  <p style="margin:0; color:#555; line-height:1.7;">
+    ‘몬스터 세상 속 나는?’ 테스트에서 나올 수 있는 <b>9종 몬스터 결과 타입</b>을 한 페이지에서 정리한 안내 문서야.
+    테스트를 하기 전/후에 결과 의미를 빠르게 확인할 수 있어.
+  </p>
+
+  <h3 style="margin: 12px 0 6px; font-size: 1rem; color:#111;">Q. 결과는 어떻게 계산되나요?</h3>
+  <p style="margin:0; color:#555; line-height:1.7;">
+    각 문항의 선택지에 점수가 부여되어 있고, 합산 점수(또는 매칭 규칙)에 따라 타입이 정해져.
+    계산은 브라우저(자바스크립트)에서 즉시 수행되도록 구성했어.
+  </p>
+
+  <h3 style="margin: 12px 0 6px; font-size: 1rem; color:#111;">Q. 개인정보나 답변이 저장되나요?</h3>
+  <p style="margin:0; color:#555; line-height:1.7;">
+    회원가입 없이 즐길 수 있도록 만들었고, 결과 계산은 브라우저에서 처리되는 방식이야.
+    테스트 답변을 서버에 저장하지 않는 방향을 목표로 구성했어.
+  </p>
+</div>
+
+
 
     <button class="btn secondary" onclick="location.href='/tests/test2/'">← 테스트로 돌아가기</button>
     <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
