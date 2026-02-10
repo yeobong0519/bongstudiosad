@@ -160,25 +160,26 @@
     }
 
     .adsense-desc{
-      margin-top:12px;
-      padding:12px 12px;
-      border-radius:14px;
-      background:#fafafa;
-      border:1px solid #eee;
-      text-align:left;
-    }
+  margin-top:12px;
+  padding:12px 12px;
+  border-radius:14px;
+  background:#fafafa;
+  border:1px solid #eee;
+  text-align:left;
+}
 
-    .disclosure-box{
-      margin-top:12px;
-      padding:12px 12px;
-      border-radius:14px;
-      background:#fff;
-      border:1px solid rgba(0,0,0,0.08);
-      color:#666;
-      font-size:13px;
-      line-height:1.5;
-    }
-    .disclosure-box b{ color:#222; }
+.disclosure-box{
+  margin-top:12px;
+  padding:12px 12px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.08);
+  color:#666;
+  font-size:13px;
+  line-height:1.5;
+}
+.disclosure-box b{ color:#222; }
+    
 
     .hidden { display:none !important; }
 
@@ -311,35 +312,36 @@
     #result-title { color:#000000 !important; }
   </style>
 
-  <!-- =========================================================
-    ✅ [추가] (제미나이 기반) JSON-LD 구조화 데이터: SoftwareApplication
-    - AdSense/카카오/기존 코드에 영향 없음
-  ========================================================== -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "여봉이 더쿠 레벨 테스트",
-    "operatingSystem": "Web",
-    "applicationCategory": "EntertainmentApplication",
-    "description": "애니메이션 소비 성향과 덕후 레벨을 단계별로 분석하는 웹 기반 성향 테스트 서비스",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "KRW"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "봉 스튜디오"
-    }
+<!-- =========================================================
+  ✅ [추가] (승인용) JSON-LD 구조화 데이터: SoftwareApplication
+  - 기존 AdSense/카카오/공통 코드에는 영향 없음
+========================================================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "여봉이 더쿠 레벨 테스트",
+  "operatingSystem": "Web",
+  "applicationCategory": "EntertainmentApplication",
+  "description": "애니메이션 소비 성향과 덕후 레벨을 단계별로 분석하는 웹 기반 성향 테스트 서비스",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "봉 스튜디오"
   }
-  </script>
+}
+</script>
 
   <!-- Google AdSense -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028
 "
-    crossorigin="anonymous"></script>
+  crossorigin="anonymous"></script>
+  
 </head>
 
 <body>
@@ -378,49 +380,61 @@
           총 5문항 · 1분 컷 · 결과는 더쿠 레벨로 나와요.
         </p>
 
-        <!-- ✅ (기존) 애드센스 심사용: 테스트 설명 -->
-        <div class="adsense-desc">
-          <p><b>이 테스트는</b> ‘여봉이 더쿠 레벨 테스트’로, 5개의 질문 선택으로 나의 덕력(?)을 가볍게 확인하는 심심풀이 콘텐츠야.</p>
-          <p>각 문항은 “나랑 제일 비슷한 보기”를 고르면 되고, 점수 합산으로 <b>LV1~LV5</b> 결과가 나와. 결과 페이지에서 한 줄 요약 + 성향 + 행동 포인트까지 같이 볼 수 있어.</p>
-          <p style="margin-top:10px;"><b>주의!</b> 이 테스트는 재미로 보는 오락용이야. 결과는 절대 평가가 아니라, “요즘 내 상태”를 웃으면서 보는 용도!</p>
+<!-- ✅ (추가) 애드센스 심사용: 테스트 설명 -->
+<div class="adsense-desc">
+  <p><b>이 테스트는</b> ‘여봉이 더쿠 레벨 테스트’로, 5개의 질문 선택으로 나의 덕력(?)을 가볍게 확인하는 심심풀이 콘텐츠야.</p>
+  <p>각 문항은 “나랑 제일 비슷한 보기”를 고르면 되고, 점수 합산으로 <b>LV1~LV5</b> 결과가 나와. 결과 페이지에서 한 줄 요약 + 성향 + 행동 포인트까지 같이 볼 수 있어.</p>
+  <p style="margin-top:10px;"><b>주의!</b> 이 테스트는 재미로 보는 오락용이야. 결과는 절대 평가가 아니라, “요즘 내 상태”를 웃으면서 보는 용도!</p>
+</div>
+        
+       <div class="disclosure-box">
+  <b>광고/링크 안내</b><br/>
+  이 페이지에는 서비스 운영을 위한 광고가 포함될 수 있어.
+  일부 외부 링크는 제휴(추천) 링크일 수 있으며, 이를 통해 발생한 수익은 사이트 운영에 도움이 될 수 있어.
+<!-- =========================================================
+  ✅ [추가] (승인용) Googlebot이 읽을 수 있는 정보 섹션
+  - 테스트 UX는 그대로 두고, '문서형 텍스트'를 보강합니다.
+========================================================== -->
+<div class="bot-friendly-content" style="text-align:left; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+  <h3>여봉이의 애니 덕력 진단 서비스 소개</h3>
+  <p>
+    여봉이 더쿠 레벨 테스트는 5개의 질문 선택으로 사용자의 <b>애니메이션 소비 습관</b>과
+    <b>덕질 몰입도</b>를 가볍게 분류하는 웹 기반 성향 테스트입니다.
+    결과는 ‘킹반인 → 평민 → 기사 → 백작 → 킹 오브 더쿠’의 5단계로 제공되며,
+    점수(선택지) 누적 방식으로 자동 계산됩니다.
+  </p>
+
+  <h4>어떤 기준으로 분석하나요?</h4>
+  <p>
+    문항은 <b>콘텐츠 경험량</b>, <b>감정 반응</b>, <b>정보 탐색 습관</b>, <b>커뮤니티/밈 친숙도</b> 같은 요소를
+    가볍게 반영하도록 설계했습니다. 같은 사람이라도 컨디션이나 최근 관심사에 따라 결과가 달라질 수 있어요.
+    즉, 결과는 ‘우열’이 아니라 <b>현재 덕질 스타일의 방향</b>을 보여주는 참고값입니다.
+  </p>
+
+  <h4>개인정보는 저장하나요?</h4>
+  <p>
+    이 테스트는 별도의 회원가입 없이 이용할 수 있도록 구성되어 있으며,
+    결과 계산은 브라우저 안에서 즉시 처리됩니다. 테스트 진행 과정에서 입력한 응답을 서버에 저장하지 않는 방향으로 설계하여
+    부담 없이 즐길 수 있게 했습니다.
+  </p>
+
+  <div style="margin-top:12px;">
+    <a href="/tests/test1/result.html" style="
+      display:block;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,0.10);
+      background:#fff;
+      color:#222;
+      text-decoration:none;
+      font-weight:900;
+      text-align:center;
+    ">📘 전체 레벨 분석 가이드(결과 타입 안내) 보기</a>
+  </div>
+</div>
+
         </div>
-
-        <!-- ✅ (기존) 고지 -->
-        <div class="disclosure-box">
-          <b>광고/링크 안내</b><br/>
-          이 페이지에는 서비스 운영을 위한 광고가 포함될 수 있어.
-          일부 외부 링크는 제휴(추천) 링크일 수 있으며, 이를 통해 발생한 수익은 사이트 운영에 도움이 될 수 있어.
-        </div>
-
-        <!-- =========================================================
-          ✅ [추가] (제미나이 기반) Googlebot용 정보 섹션(검색용 텍스트 강화)
-          - 인트로(page-intro) 안에 들어가며,
-          - 기존 테스트 UX는 그대로 유지
-        ========================================================== -->
-        <div class="bot-friendly-content" style="text-align:left; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
-          <h2>여봉이의 애니 덕력 진단 서비스 소개</h2>
-          <p>
-            여봉이 더쿠 레벨 테스트는 단순한 재미를 넘어,
-            현대 서브컬처 문화의 핵심인 <b>애니메이션 소비 성향</b>을 단계별로 분석하는 웹 기반 성향 테스트입니다.
-          </p>
-          <p>
-            봉 스튜디오의 오리지널 캐릭터 IP인 ‘여봉이’와 ‘멧봉이’의 세계관을 바탕으로,
-            사용자의 시청 패턴, 장르 선호도, 감정 반응, 커뮤니티 참여 성향을 종합적으로 반영하여 결과를 도출합니다.
-          </p>
-
-          <h3>왜 덕후 레벨을 분석하나요?</h3>
-          <p>
-            자신이 콘텐츠를 어떤 방식으로 소비하는지 이해하는 것은
-            취향을 확장하고 새로운 콘텐츠를 발견하는 데 중요한 기준이 됩니다.
-            본 테스트는 ‘킹반인’부터 ‘킹 오브 더쿠’까지 총 5단계의 결과를 제공하며,
-            각 단계는 서로 다른 문화적 소비 성향을 의미합니다.
-          </p>
-          <p>
-            이 테스트는 자바스크립트 기반 로직으로 실시간 결과를 산출하며,
-            별도의 회원가입이나 개인정보 저장 없이 안전하게 이용할 수 있도록 설계되었습니다.
-          </p>
-        </div>
-
+        
         <button class="btn" onclick="startQuiz()">테스트 시작하기</button>
       </div>
 
@@ -459,6 +473,7 @@
         <span class="tag">더쿠 레벨 측정 결과</span>
         <h1 id="result-title">LV1. 킹반인</h1>
 
+       
         <!-- ✅ 결과 포스터 -->
         <div class="result-poster">
           <div id="poster-header" class="poster-header">LV1. 킹반인</div>
@@ -494,14 +509,14 @@
           </table>
         </div>
 
-        <div class="disclosure-box">
-          <b>광고/제휴 안내</b><br/>
-          아래에는 사이트 운영을 위한 광고 및 외부 링크가 포함될 수 있어.
-          일부 링크는 제휴 링크일 수 있으며, 구매/이용 시 운영에 도움이 될 수 있어.
-        </div>
-
+<div class="disclosure-box">
+  <b>광고/제휴 안내</b><br/>
+  아래에는 사이트 운영을 위한 광고 및 외부 링크가 포함될 수 있어.
+  일부 링크는 제휴 링크일 수 있으며, 구매/이용 시 운영에 도움이 될 수 있어.
+</div>
+       
         <!-- 에이블리 배너 -->
-        <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank" rel="noopener noreferrer">
+       <a class="ably-banner" href="https://applink.a-bly.com/bongstudios" target="_blank" rel="noopener noreferrer">
           <span class="ably-badge">SHOP</span>
           <div class="title">여봉이 굿즈샵 바로가기</div>
           <div class="desc">결과 보고 마음에 드는 굿즈 바로 담으러 가기 →</div>
@@ -511,7 +526,7 @@
         <a class="insta-link"
            href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
            target="_blank"
-           rel="noopener noreferrer">
+          rel="noopener noreferrer">
           여봉이 인스타그램 바로가기
         </a>
 
@@ -521,16 +536,17 @@
         </div>
 
         <!-- ✅ (추가) 모든 결과 보기 -->
-        <button class="btn secondary" style="margin-top:10px;" onclick="location.href='/tests/test1/result.html'">
-          결과 타입 안내 보기
-        </button>
 
-        <!-- ✅ (기존) 애드센스 심사용: 결과 해석 문단 -->
-        <div class="adsense-desc" style="text-align:left; margin-top:14px;">
-          <p><b>결과 읽는 법</b></p>
-          <p>LV는 우열이 아니라 “덕질 스타일”의 방향을 표현한 거야. 오늘은 킹반인처럼 나와도, 어느 순간 킹 오브 더쿠로 급가속할 수도 있음.</p>
-          <p>친구랑 같이 해보고 결과 비교하면 더 웃겨! (서로의 레벨이랑 행동 포인트가 은근 맞아떨어짐)</p>
-        </div>
+<button class="btn secondary" style="margin-top:10px;" onclick="location.href='/tests/test1/result.html'">
+  결과 타입 안내 보기
+</button>        
+
+<!-- ✅ (추가) 애드센스 심사용: 결과 해석 문단 -->
+<div class="adsense-desc" style="text-align:left; margin-top:14px;">
+  <p><b>결과 읽는 법</b></p>
+  <p>LV는 우열이 아니라 “덕질 스타일”의 방향을 표현한 거야. 오늘은 킹반인처럼 나와도, 어느 순간 킹 오브 더쿠로 급가속할 수도 있음.</p>
+  <p>친구랑 같이 해보고 결과 비교하면 더 웃겨! (서로의 레벨이랑 행동 포인트가 은근 맞아떨어짐)</p>
+</div>
 
         <!-- 쿠팡 파트너스 -->
         <div style="margin-top:14px; display:flex; justify-content:center;">
@@ -545,8 +561,9 @@
       <button class="btn secondary" onclick="location.href='/'">← 메인으로</button>
 
       <!-- ✅ Kakao AdFit 320x50 (결과 페이지 진입 시 렌더) -->
-      <div id="adfit-wrap" style="margin:14px 0; display:flex; justify-content:center; min-height:100px;">
-      </div>
+<div id="adfit-wrap" style="margin:14px 0; display:flex; justify-content:center; min-height:100px;">
+</div>
+      
     </div>
 
     <div id="footer-mount"></div>
@@ -657,7 +674,7 @@ function renderAdFit() {
   s.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
   document.body.appendChild(s);
 }
-
+  
   /* ✅ 결과 레벨별 테마 */
   const levelTheme = {
     kingbanin: { bg:"#000000", title:"#000000" },
@@ -754,7 +771,7 @@ function renderAdFit() {
 
     // ✅ 결과 페이지가 "보이는 순간" AdFit 렌더 (핵심)
     if (name === "result") {
-      setTimeout(() => renderAdFit(), 100);
+     setTimeout(() => renderAdFit(), 100);
     }
   }
 
@@ -962,6 +979,8 @@ ${mainUrl}`,
     });
   }
 
+
+  
   /* ========= 인스타/스토리 이미지 생성 (유지) ========= */
   function loadImage(url) {
     return new Promise((resolve, reject) => {
