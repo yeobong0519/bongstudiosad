@@ -89,10 +89,9 @@
     .board{
       position:relative;
       width:100%;
-      aspect-ratio: 9/16;
       height:auto;
       border-radius:22px;
-      overflow: visible;
+      overflow:hidden; /* ✅ 밖으로 안 삐져나오게 */
       border:1px solid var(--line);
       background:#fff;
       box-shadow: 0 18px 55px rgba(0,0,0,.12);
@@ -102,6 +101,7 @@
       -webkit-touch-callout:none;
     }
 
+    /* ✅ canvas는 board를 "정확히" 꽉 채움 */
     canvas{
       width:100%;
       height:100%;
@@ -120,6 +120,7 @@
       justify-content:space-between;
       align-items:flex-start;
       pointer-events:none;
+      z-index: 5;
     }
     .hud .box{
       padding:10px 12px;
@@ -153,6 +154,7 @@
       padding:18px;
       background: rgba(0,0,0,.42);
       backdrop-filter: blur(6px);
+      z-index: 10;
     }
     .modal{
       width:min(420px, 100%);
@@ -207,7 +209,6 @@
       font-weight:800;
     }
 
-    /* ✅ overlay 밖에 텍스트(봇이 읽게) */
     .bot-text{
       border:1px solid rgba(0,0,0,.10);
       border-radius:18px;
@@ -222,14 +223,8 @@
     .bot-text a{ color:#111; font-weight:1000; text-decoration:none; }
 
     @media (max-width: 420px){
-      .hud{
-        inset:12px 12px auto 12px;
-        gap:8px;
-      }
-      .hud .box{
-        padding:8px 10px;
-        border-radius:14px;
-      }
+      .hud{ inset:12px 12px auto 12px; gap:8px; }
+      .hud .box{ padding:8px 10px; border-radius:14px; }
       .hud .k{ font-size:11px; }
       .hud .v{ font-size:16px; }
     }
@@ -242,7 +237,6 @@
   <main class="page">
     <div class="wrap">
 
-      <!-- ✅ 광고 자리(게임 위) -->
       <div class="ad-slot" aria-label="광고 영역">
         <div class="title">📌 상단 광고 영역</div>
         <div>
@@ -252,7 +246,7 @@
       </div>
 
       <div class="board" id="board">
-        <canvas id="c" width="720" height="1280" aria-label="멧봉이 피하기 게임 캔버스"></canvas>
+        <canvas id="c" aria-label="멧봉이 피하기 게임 캔버스"></canvas>
 
         <div class="hud">
           <div class="box">
@@ -320,25 +314,13 @@
   const modalTitle = document.getElementById("modalTitle");
   const modalDesc  = document.getElementById("modalDesc");
 
-  // ✅ 이미지 경로 유지
   const IMG_PLAYER = "/img/yeobong.png";
   const IMG_ENEMY  = "/img/metbong.png";
 
-  const W = canvas.width;
-  const H = canvas.height;
-
-  function resizeBoard(){
-    const nav = document.getElementById("nav");
-    const footer = document.getElementById("footer");
-    const navH = nav ? nav.offsetHeight : 0;
-    const footerH = footer ? footer.offsetHeight : 0;
-    const safe = 24;
-    const available = window.innerHeight - navH - footerH - safe;
-    const targetH = Math.max(420, Math.min(available, 820));
-    board.style.height = targetH + "px";
-  }
-  window.addEventListener("resize", resizeBoard);
-  window.addEventListener("orientationchange", () => setTimeout(resizeBoard, 150));
+  // ✅ 화면 크기에 맞춰 매번 바뀌는 "실제 게임 좌표"
+  let W = 0;
+  let H = 0;
+  let DPR = 1;
 
   function lockScroll(lock){
     document.documentElement.style.overflow = lock ? "hidden" : "";
@@ -348,15 +330,57 @@
     document.body.style.touchAction = lock ? "none" : "";
   }
 
+  // ✅ (핵심) board 높이 계산 + canvas 픽셀 해상도 동기화
+  function resizeBoardAndCanvas(){
+    const nav = document.getElementById("nav");
+    const footer = document.getElementById("footer");
+    const navH = nav ? nav.offsetHeight : 0;
+    const footerH = footer ? footer.offsetHeight : 0;
+
+    const safe = 24;
+    const available = window.innerHeight - navH - footerH - safe;
+
+    // HUD/광고가 있어도 플레이 가능한 최소 높이 확보
+    const targetH = Math.max(520, Math.min(available, 860));
+    board.style.height = targetH + "px";
+
+    // 표시 크기( CSS px ) 기준으로 캔버스 실제 픽셀 크기 설정
+    const rect = board.getBoundingClientRect();
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+
+    const cssW = Math.max(320, rect.width);
+    const cssH = Math.max(420, rect.height);
+
+    const pxW = Math.floor(cssW * DPR);
+    const pxH = Math.floor(cssH * DPR);
+
+    if (canvas.width !== pxW || canvas.height !== pxH) {
+      canvas.width = pxW;
+      canvas.height = pxH;
+    }
+
+    // 게임 좌표는 "CSS픽셀" 기반으로 쓰고, 실제 그리기는 DPR 스케일로 맞춤
+    W = cssW;
+    H = cssH;
+
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+    // 플레이어가 바닥에 붙어서 잘리는 문제 방지: 바닥 여백 확보
+    player.w = 64;
+    player.h = 64;
+    player.y = H - (player.h/2 + 18);
+    player.x = clamp(player.x || W/2, player.w/2 + 10, W - player.w/2 - 10);
+  }
+
+  window.addEventListener("resize", resizeBoardAndCanvas);
+  window.addEventListener("orientationchange", () => setTimeout(resizeBoardAndCanvas, 150));
+
   function stopEvent(e){
     if(!running) return;
     e.preventDefault();
   }
   board.addEventListener("touchmove", stopEvent, { passive:false });
   board.addEventListener("wheel", stopEvent, { passive:false });
-  document.addEventListener("gesturestart", (e)=>{ if(running) e.preventDefault(); }, { passive:false });
-  document.addEventListener("gesturechange",(e)=>{ if(running) e.preventDefault(); }, { passive:false });
-  document.addEventListener("gestureend",   (e)=>{ if(running) e.preventDefault(); }, { passive:false });
 
   const BEST_KEY = "metbong_dodge_best";
   let bestScore = Number(localStorage.getItem(BEST_KEY) || 0);
@@ -366,12 +390,12 @@
   let gameOver = false;
   let tPrev = 0;
 
-  const player = { w: 96, h: 96, x: W/2, y: H - 150, speed: 780, vx: 0 };
+  const player = { w: 64, h: 64, x: 0, y: 0, speed: 720, vx: 0 };
   const enemies = [];
   let spawnTimer = 0;
 
-  const BASE_FALL = 425;
-  const MAX_FALL  = 720;
+  const BASE_FALL = 360;
+  const MAX_FALL  = 740;
   const BASE_SPAWN_EVERY = 0.85;
   const SPAWN_STEP = 0.05;
   const SPAWN_MAX  = 0.40;
@@ -406,9 +430,9 @@
     scoreEl.textContent = "0";
     levelEl.textContent = "1";
 
-    player.x = W/2;
     player.vx = 0;
-    player.y = H - 150;
+    player.x = W/2;
+    player.y = H - (player.h/2 + 18);
 
     gameOver = false;
   }
@@ -423,7 +447,7 @@
   function hideOverlay(){ overlay.style.display = "none"; }
 
   function updateDifficulty(){
-    const newLevel = 1 + Math.floor(score / 200);
+    const newLevel = 1 + Math.floor(score / 220);
     if(newLevel !== level){
       level = newLevel;
       levelEl.textContent = String(level);
@@ -439,11 +463,11 @@
   function spawnEnemy(){
     const r = Math.random();
     let size;
-    if (r < 0.65) size = 36 + Math.random() * 64;
-    else if (r < 0.92) size = 90 + Math.random() * 50;
-    else size = 130 + Math.random() * 40;
+    if (r < 0.65) size = 26 + Math.random() * 46;
+    else if (r < 0.92) size = 64 + Math.random() * 44;
+    else size = 108 + Math.random() * 40;
 
-    const x = 40 + Math.random()*(W - 80);
+    const x = (size/2 + 10) + Math.random() * (W - (size + 20));
 
     enemies.push({
       x, y: -size,
@@ -460,7 +484,9 @@
     return (dx*dx + dy*dy) <= (ar + br) * (ar + br);
   }
 
-  function drawBackground(){ ctx.clearRect(0,0,W,H); }
+  function drawBackground(){
+    ctx.clearRect(0,0,W,H);
+  }
 
   function roundRect(x,y,w,h,r){
     const rr = Math.min(r, w/2, h/2);
@@ -489,11 +515,12 @@
 
   function drawPlayer(){
     const x = player.x, y = player.y;
+
     ctx.save();
 
     ctx.globalAlpha = 0.18;
     ctx.beginPath();
-    ctx.ellipse(x, y + player.h/2 - 8, 46, 14, 0, 0, Math.PI*2);
+    ctx.ellipse(x, y + player.h/2 - 6, 34, 10, 0, 0, Math.PI*2);
     ctx.fillStyle = "#000";
     ctx.fill();
     ctx.globalAlpha = 1;
@@ -501,17 +528,17 @@
     if(playerImgReady){
       drawImageContain(imgPlayer, x-player.w/2, y-player.h/2, player.w, player.h);
     }else{
-      roundRect(x-player.w/2, y-player.h/2, player.w, player.h, 22);
+      roundRect(x-player.w/2, y-player.h/2, player.w, player.h, 18);
       ctx.fillStyle = "rgba(0,0,0,0.06)";
       ctx.fill();
       ctx.strokeStyle = "rgba(0,0,0,0.10)";
       ctx.lineWidth = 2;
       ctx.stroke();
-      ctx.font = "64px system-ui";
+      ctx.font = "38px system-ui";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#111";
-      ctx.fillText("🙂", x, y+4);
+      ctx.fillText("🙂", x, y+2);
     }
 
     ctx.restore();
@@ -526,16 +553,16 @@
     if(enemyImgReady){
       ctx.drawImage(imgEnemy, -e.w/2, -e.h/2, e.w, e.h);
     }else{
-      roundRect(-e.w/2, -e.h/2, e.w, e.h, 22);
+      roundRect(-e.w/2, -e.h/2, e.w, e.h, 18);
       ctx.fillStyle = "rgba(255,77,109,0.18)";
       ctx.fill();
       ctx.strokeStyle = "rgba(255,77,109,0.35)";
       ctx.lineWidth = 2;
       ctx.stroke();
-      ctx.font = "60px system-ui";
+      ctx.font = "36px system-ui";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText("😈", 0, 6);
+      ctx.fillText("😈", 0, 4);
     }
 
     ctx.restore();
@@ -543,6 +570,7 @@
 
   function loop(ts){
     if(!running) return;
+
     const t = ts/1000;
     const dt = Math.min(0.033, t - tPrev || 0.016);
     tPrev = t;
@@ -556,7 +584,7 @@
     spawnTimer += dt;
     while (spawnTimer >= spawnEvery) {
       spawnTimer -= spawnEvery;
-      const burst = 1 + Math.min(4, level - 1);
+      const burst = 1 + Math.min(3, level - 1);
       for (let i = 0; i < burst; i++) spawnEnemy();
     }
 
@@ -577,7 +605,7 @@
       const eCx = e.x;
       const eCy = e.y;
 
-      const pr = Math.min(player.w, player.h) * 0.28;
+      const pr = Math.min(player.w, player.h) * 0.30;
       const er = Math.min(e.w, e.h) * 0.33;
 
       if (hitCircle(pCx, pCy, pr, eCx, eCy, er)) {
@@ -612,9 +640,9 @@
   }
 
   function startGame(){
+    resizeBoardAndCanvas();      // ✅ 시작할 때도 반드시 동기화
     resetGame();
     hideOverlay();
-    resizeBoard();
     lockScroll(true);
     running = true;
     tPrev = 0;
@@ -631,7 +659,9 @@
     if(e.key === "ArrowRight"|| e.key.toLowerCase() === "d") keys.right = false;
   });
 
+  // ✅ 포인터 좌표는 이제 "CSS픽셀(W,H)" 기준으로 정확히 변환됨
   let dragging = false;
+
   function getPos(ev){
     const rect = canvas.getBoundingClientRect();
     const sx = (ev.clientX - rect.left) / rect.width;
@@ -642,22 +672,30 @@
   board.addEventListener("pointerdown", (ev) => {
     if(overlay.style.display !== "none") return;
     const p = getPos(ev);
-    if(Math.abs(p.x - player.x) < player.w && Math.abs(p.y - player.y) < player.h){
+
+    // ✅ 모바일에서 더 잘 잡히도록 "잡는 영역"을 살짝 넓힘
+    const grabW = player.w * 1.6;
+    const grabH = player.h * 1.6;
+
+    if(Math.abs(p.x - player.x) < grabW && Math.abs(p.y - player.y) < grabH){
       dragging = true;
       board.setPointerCapture(ev.pointerId);
     }
   });
+
   board.addEventListener("pointermove", (ev) => {
     if(!dragging || !running) return;
     const p = getPos(ev);
     player.x = clamp(p.x, player.w/2 + 10, W - player.w/2 - 10);
   });
+
   board.addEventListener("pointerup", (ev) => {
     dragging = false;
     try{ board.releasePointerCapture(ev.pointerId); }catch(_){}
   });
 
   startBtn.addEventListener("click", () => startGame());
+
   howBtn.addEventListener("click", () => {
     showOverlay(
       "조작방법",
@@ -672,7 +710,9 @@
     "시작하기"
   );
 
-  document.addEventListener("DOMContentLoaded", () => resizeBoard());
+  document.addEventListener("DOMContentLoaded", () => {
+    resizeBoardAndCanvas(); // ✅ 첫 로드에서도 동기화
+  });
 })();
 </script>
 </body>
