@@ -165,6 +165,18 @@
   border:1px solid #eee;
   text-align:left;
 }
+
+.disclosure-box{
+  margin-top:12px;
+  padding:12px 12px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.08);
+  color:#666;
+  font-size:13px;
+  line-height:1.5;
+}
+.disclosure-box b{ color:#222; }
 .all-results-list{
   max-height:60vh;
   overflow:auto;
@@ -377,6 +389,29 @@
   
   </style>
 
+<!-- =========================================================
+  ✅ (승인용) JSON-LD 구조화 데이터: SoftwareApplication
+========================================================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "몬스터 세상 속 나는?",
+  "operatingSystem": "Web",
+  "applicationCategory": "EntertainmentApplication",
+  "description": "극한 상황(몬스터 세계) 시나리오를 통해 위기 대응 성향과 선택 패턴을 분석하는 웹 기반 심리 성향 테스트",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "봉 스튜디오"
+  }
+}
+</script>
+
   <!-- Google AdSense -->
 <script async
   src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028
@@ -423,6 +458,48 @@
   <p>각 질문에서 가장 내 스타일에 가까운 보기를 고르면 되고, 점수 합산으로 <b>총 9종 몬스터 타입</b> 중 하나가 결과로 나와.</p>
   <p style="margin-top:10px;"><b>주의!</b> 재미로 보는 오락용 테스트야. 오늘 기분/상황에 따라 결과가 달라질 수도 있어!</p>
 </div>
+<div class="disclosure-box">
+  <b>광고/링크 안내</b><br/>
+  이 페이지에는 서비스 운영을 위한 광고가 포함될 수 있어.<br/>
+  일부 외부 링크는 제휴(추천) 링크일 수 있으며, 이를 통해 발생한 수익은 사이트 운영에 도움이 될 수 있어.
+</div>
+
+<!-- ✅ (추가) 승인 보강: 전체 결과 타입 안내 + 내부 링크 강화 -->
+<div class="adsense-desc" style="margin-top:14px;">
+  <p><b>전체 결과 타입이 궁금하다면?</b></p>
+  <p>테스트를 하기 전에도 <b>9종 몬스터 타입</b>을 한눈에 볼 수 있어. 각 타입의 특징/행동 포인트/잘 맞는 타입을 정리해둔 안내 페이지야.</p>
+  <button class="btn secondary" style="margin-top:10px;" onclick="location.href='/tests/test2/result.html'">
+    몬스터 결과 타입 한눈에 보기 →
+  </button>
+</div>
+
+<!-- ✅ (추가) Googlebot이 읽을 수 있는 정보 섹션 (정보성 텍스트 보강) -->
+<div class="info-section" style="text-align: left; margin-top: 14px; padding: 16px; border-top: 1px solid #eee; line-height: 1.7; color: #444;">
+  <h3 style="color: #222; margin: 0 0 8px;">몬스터 세상 속 나의 모습: 성향 분석 연구</h3>
+  <p>
+    본 콘텐츠는 가상의 극한 상황(몬스터 세계)을 배경으로 개인의 무의식적 선택과 위기 관리 기질을 탐색하는 인터랙티브 심리 테스트야.
+    봉 스튜디오의 캐릭터 IP(여봉이/멧봉이) 세계관을 바탕으로 설계했어.
+  </p>
+
+  <h4 style="margin-top: 14px; margin-bottom: 6px; color:#222;">테스트의 “분석” 기준은?</h4>
+  <p>
+    사용자가 마주하는 6가지 시나리오는 ‘위협을 어떻게 해석하고, 어떤 선택을 하는지’에 초점을 둬.
+    각 문항은 <b>위험 감수</b>, <b>협력 성향</b>, <b>즉흥/계획</b>, <b>감정 조절</b> 같은 요소를 가볍게 반영하도록 구성했고,
+    선택 점수를 합산해 9종 몬스터 페르소나 중 하나로 매칭해.
+  </p>
+
+  <h4 style="margin-top: 14px; margin-bottom: 6px; color:#222;">알고리즘은 어떻게 계산돼?</h4>
+  <p>
+    결과 계산은 브라우저(자바스크립트)에서 즉시 이뤄지고, 서버에 답변을 저장하지 않는 방향으로 구성했어.
+    즉, <b>회원가입 없이</b> 빠르게 즐길 수 있고, 답변 데이터가 남지 않도록 설계했어.
+  </p>
+
+  <p style="margin-top:12px; color:#666;">
+    ※ 결과는 우열이 아니라 “현재의 대응 스타일”을 보여주는 참고값이야. 오늘 컨디션이나 최근 경험에 따라 결과가 달라질 수 있어!
+  </p>
+</div>
+
+
         
       </div>
 
