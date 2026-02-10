@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>멧봉이를 피해라! | 플레이</title>
 
-  <meta name="description" content="여봉이를 좌우로 움직여 위에서 떨어지는 멧봉이를 피하세요! 기록을 세우고 최고 점수에 도전해보세요." />
+  <meta name="description" content="여봉이를 좌우로 움직여 위에서 떨어지는 멧봉봉이를 피하세요! 기록을 세우고 최고 점수에 도전해보세요." />
   <link rel="canonical" href="https://bongstudiosad.com/games/metbong-dodge/play.html" />
 
-  <!-- ✅ 공통 CSS/JS (네비/푸터 자동 로드용) -->
   <link rel="stylesheet" href="/common/common.css" />
   <script defer src="/common/common.js"></script>
 
@@ -18,7 +17,6 @@
 "
     crossorigin="anonymous"></script>
 
-  <!-- ✅ (승인용) 구조화 데이터 -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -49,15 +47,11 @@
       background:#fff;
       color:var(--text);
       min-height:100vh;
-      padding:0;
       overscroll-behavior:none;
       touch-action:manipulation;
     }
 
-    .page{
-      padding: 10px 12px 14px;
-      display:block;
-    }
+    .page{ padding: 10px 12px 14px; }
     .wrap{
       width:min(520px, 100%);
       margin:0 auto;
@@ -66,7 +60,6 @@
       gap:10px;
     }
 
-    /* ✅ 상단 광고 자리 확보(플레이 화면 위쪽) */
     .ad-slot{
       width:100%;
       border:1px dashed rgba(0,0,0,.20);
@@ -89,9 +82,8 @@
     .board{
       position:relative;
       width:100%;
-      height:auto;
       border-radius:22px;
-      overflow:hidden; /* ✅ 밖으로 안 삐져나오게 */
+      overflow:hidden;
       border:1px solid var(--line);
       background:#fff;
       box-shadow: 0 18px 55px rgba(0,0,0,.12);
@@ -101,7 +93,6 @@
       -webkit-touch-callout:none;
     }
 
-    /* ✅ canvas는 board를 "정확히" 꽉 채움 */
     canvas{
       width:100%;
       height:100%;
@@ -166,17 +157,8 @@
       text-align:center;
       color: var(--text);
     }
-    .modal h2{
-      margin:6px 0 8px;
-      font-size:20px;
-      letter-spacing:-0.02em;
-    }
-    .modal p{
-      margin:0 0 14px;
-      color:var(--muted);
-      line-height:1.45;
-      font-size:13px;
-    }
+    .modal h2{ margin:6px 0 8px; font-size:20px; letter-spacing:-0.02em; }
+    .modal p{ margin:0 0 14px; color:var(--muted); line-height:1.45; font-size:13px; }
 
     .btns{
       display:flex;
@@ -240,8 +222,7 @@
       <div class="ad-slot" aria-label="광고 영역">
         <div class="title">📌 상단 광고 영역</div>
         <div>
-          (여기에 <b>구글 애드센스 디스플레이 광고 유닛 코드</b>를 붙여넣는 자리야)<br/>
-          광고가 게임보다 먼저 보여서 “광고 + 콘텐츠” 구조가 안정적으로 잡혀.
+          (여기에 <b>구글 애드센스 디스플레이 광고 유닛 코드</b>를 붙여넣는 자리야)
         </div>
       </div>
 
@@ -288,8 +269,7 @@
       <div class="footerhint">달려오는 멧봉이를 피해라! (플레이 화면)</div>
 
       <section class="bot-text">
-        <b>게임 요약:</b> ‘멧봉이를 피해라!’는 봉 스튜디오 캐릭터 IP 기반의 브라우저 미니게임이야.
-        여봉이를 좌우로 이동시켜 떨어지는 멧봉이를 피하고, 오래 버틸수록 점수/레벨이 오르는 구조야.<br/>
+        <b>게임 요약:</b> ‘멧봉이를 피해라!’는 봉 스튜디오 캐릭터 IP 기반의 브라우저 미니게임이야.<br/>
         <b>조작:</b> 모바일은 터치 드래그, PC는 ← → 또는 A/D.<br/>
         <b>내부 링크:</b> <a href="./">게임 설명 페이지</a> · <a href="/tests/">테스트 센터</a>
       </section>
@@ -317,20 +297,21 @@
   const IMG_PLAYER = "/img/yeobong.png";
   const IMG_ENEMY  = "/img/metbong.png";
 
-  // ✅ 화면 크기에 맞춰 매번 바뀌는 "실제 게임 좌표"
+  // ✅ "보이는 캔버스" 기준 게임 좌표
   let W = 0;
   let H = 0;
   let DPR = 1;
 
-  function lockScroll(lock){
-    document.documentElement.style.overflow = lock ? "hidden" : "";
-    document.body.style.overflow = lock ? "hidden" : "";
-    document.body.style.position = lock ? "fixed" : "";
-    document.body.style.width = lock ? "100%" : "";
-    document.body.style.touchAction = lock ? "none" : "";
+  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+  // ✅ (핵심) nav/푸터가 늦게 붙어도 계속 맞춰주기 위한 안정화 루틴
+  function stabilizeResize(){
+    resizeBoardAndCanvas();
+    setTimeout(resizeBoardAndCanvas, 80);
+    setTimeout(resizeBoardAndCanvas, 250);
+    setTimeout(resizeBoardAndCanvas, 800);
   }
 
-  // ✅ (핵심) board 높이 계산 + canvas 픽셀 해상도 동기화
   function resizeBoardAndCanvas(){
     const nav = document.getElementById("nav");
     const footer = document.getElementById("footer");
@@ -340,16 +321,16 @@
     const safe = 24;
     const available = window.innerHeight - navH - footerH - safe;
 
-    // HUD/광고가 있어도 플레이 가능한 최소 높이 확보
-    const targetH = Math.max(520, Math.min(available, 860));
+    // ✅ 폰에서도 "진짜 플레이 가능한" 높이 확보
+    const targetH = Math.max(620, Math.min(available, 900));
     board.style.height = targetH + "px";
 
-    // 표시 크기( CSS px ) 기준으로 캔버스 실제 픽셀 크기 설정
+    // ✅ 표시 크기(CSS px) 기준으로 캔버스 픽셀 해상도 동기화
     const rect = board.getBoundingClientRect();
     DPR = Math.min(2, window.devicePixelRatio || 1);
 
     const cssW = Math.max(320, rect.width);
-    const cssH = Math.max(420, rect.height);
+    const cssH = Math.max(520, rect.height);
 
     const pxW = Math.floor(cssW * DPR);
     const pxH = Math.floor(cssH * DPR);
@@ -359,28 +340,24 @@
       canvas.height = pxH;
     }
 
-    // 게임 좌표는 "CSS픽셀" 기반으로 쓰고, 실제 그리기는 DPR 스케일로 맞춤
     W = cssW;
     H = cssH;
 
+    // ✅ 그리기 좌표계를 CSS픽셀로 고정
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-    // 플레이어가 바닥에 붙어서 잘리는 문제 방지: 바닥 여백 확보
-    player.w = 64;
-    player.h = 64;
-    player.y = H - (player.h/2 + 18);
-    player.x = clamp(player.x || W/2, player.w/2 + 10, W - player.w/2 - 10);
+    // ✅ 플레이어 위치도 화면에 맞게 보정(짤림 방지)
+    player.x = clamp(player.x || W/2, player.w/2 + 14, W - player.w/2 - 14);
+    player.y = H - (player.h/2 + 26);
   }
 
-  window.addEventListener("resize", resizeBoardAndCanvas);
-  window.addEventListener("orientationchange", () => setTimeout(resizeBoardAndCanvas, 150));
-
-  function stopEvent(e){
-    if(!running) return;
-    e.preventDefault();
+  function lockScroll(lock){
+    document.documentElement.style.overflow = lock ? "hidden" : "";
+    document.body.style.overflow = lock ? "hidden" : "";
+    document.body.style.position = lock ? "fixed" : "";
+    document.body.style.width = lock ? "100%" : "";
+    document.body.style.touchAction = lock ? "none" : "";
   }
-  board.addEventListener("touchmove", stopEvent, { passive:false });
-  board.addEventListener("wheel", stopEvent, { passive:false });
 
   const BEST_KEY = "metbong_dodge_best";
   let bestScore = Number(localStorage.getItem(BEST_KEY) || 0);
@@ -390,12 +367,12 @@
   let gameOver = false;
   let tPrev = 0;
 
-  const player = { w: 64, h: 64, x: 0, y: 0, speed: 720, vx: 0 };
+  const player = { w: 72, h: 72, x: 0, y: 0, speed: 720, vx: 0 };
   const enemies = [];
   let spawnTimer = 0;
 
   const BASE_FALL = 360;
-  const MAX_FALL  = 740;
+  const MAX_FALL  = 760;
   const BASE_SPAWN_EVERY = 0.85;
   const SPAWN_STEP = 0.05;
   const SPAWN_MAX  = 0.40;
@@ -407,7 +384,6 @@
   let level = 1;
 
   const keys = { left:false, right:false };
-  const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
 
   const imgPlayer = new Image();
   const imgEnemy  = new Image();
@@ -432,7 +408,7 @@
 
     player.vx = 0;
     player.x = W/2;
-    player.y = H - (player.h/2 + 18);
+    player.y = H - (player.h/2 + 26);
 
     gameOver = false;
   }
@@ -467,14 +443,13 @@
     else if (r < 0.92) size = 64 + Math.random() * 44;
     else size = 108 + Math.random() * 40;
 
-    const x = (size/2 + 10) + Math.random() * (W - (size + 20));
+    const x = (size/2 + 12) + Math.random() * (W - (size + 24));
 
     enemies.push({
       x, y: -size,
       w: size, h: size,
       vy: fallSpeed * (0.95 + Math.random()*0.22),
-      rot: (Math.random()*0.6 - 0.3),
-      t: 0
+      rot: (Math.random()*0.6 - 0.3)
     });
   }
 
@@ -509,7 +484,6 @@
     const rh = ih * s;
     const rx = dx + (dw - rw) / 2;
     const ry = dy + (dh - rh) / 2;
-
     ctx.drawImage(img, rx, ry, rw, rh);
   }
 
@@ -517,10 +491,9 @@
     const x = player.x, y = player.y;
 
     ctx.save();
-
     ctx.globalAlpha = 0.18;
     ctx.beginPath();
-    ctx.ellipse(x, y + player.h/2 - 6, 34, 10, 0, 0, Math.PI*2);
+    ctx.ellipse(x, y + player.h/2 - 6, 36, 10, 0, 0, Math.PI*2);
     ctx.fillStyle = "#000";
     ctx.fill();
     ctx.globalAlpha = 1;
@@ -534,19 +507,17 @@
       ctx.strokeStyle = "rgba(0,0,0,0.10)";
       ctx.lineWidth = 2;
       ctx.stroke();
-      ctx.font = "38px system-ui";
+      ctx.font = "40px system-ui";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#111";
       ctx.fillText("🙂", x, y+2);
     }
-
     ctx.restore();
   }
 
   function drawEnemy(e){
     ctx.save();
-    e.t += 0.016;
     ctx.translate(e.x, e.y);
     ctx.rotate(e.rot);
 
@@ -579,7 +550,7 @@
     player.vx = dir * player.speed;
 
     player.x += player.vx * dt;
-    player.x = clamp(player.x, player.w/2 + 10, W - player.w/2 - 10);
+    player.x = clamp(player.x, player.w/2 + 14, W - player.w/2 - 14);
 
     spawnTimer += dt;
     while (spawnTimer >= spawnEvery) {
@@ -592,7 +563,7 @@
       const e = enemies[i];
       e.y += e.vy * dt;
 
-      if(e.y - e.h/2 > H + 40){
+      if(e.y - e.h/2 > H + 60){
         enemies.splice(i,1);
         score += 10;
         scoreEl.textContent = String(score);
@@ -605,8 +576,8 @@
       const eCx = e.x;
       const eCy = e.y;
 
-      const pr = Math.min(player.w, player.h) * 0.30;
-      const er = Math.min(e.w, e.h) * 0.33;
+      const pr = Math.min(player.w, player.h) * 0.32;
+      const er = Math.min(e.w, e.h) * 0.34;
 
       if (hitCircle(pCx, pCy, pr, eCx, eCy, er)) {
         endGame();
@@ -640,7 +611,7 @@
   }
 
   function startGame(){
-    resizeBoardAndCanvas();      // ✅ 시작할 때도 반드시 동기화
+    stabilizeResize();   // ✅ 시작 시 한 번 더 강제 동기화
     resetGame();
     hideOverlay();
     lockScroll(true);
@@ -659,9 +630,8 @@
     if(e.key === "ArrowRight"|| e.key.toLowerCase() === "d") keys.right = false;
   });
 
-  // ✅ 포인터 좌표는 이제 "CSS픽셀(W,H)" 기준으로 정확히 변환됨
+  // ✅ 터치/드래그 판정
   let dragging = false;
-
   function getPos(ev){
     const rect = canvas.getBoundingClientRect();
     const sx = (ev.clientX - rect.left) / rect.width;
@@ -673,9 +643,8 @@
     if(overlay.style.display !== "none") return;
     const p = getPos(ev);
 
-    // ✅ 모바일에서 더 잘 잡히도록 "잡는 영역"을 살짝 넓힘
-    const grabW = player.w * 1.6;
-    const grabH = player.h * 1.6;
+    const grabW = player.w * 1.9;
+    const grabH = player.h * 1.9;
 
     if(Math.abs(p.x - player.x) < grabW && Math.abs(p.y - player.y) < grabH){
       dragging = true;
@@ -686,7 +655,7 @@
   board.addEventListener("pointermove", (ev) => {
     if(!dragging || !running) return;
     const p = getPos(ev);
-    player.x = clamp(p.x, player.w/2 + 10, W - player.w/2 - 10);
+    player.x = clamp(p.x, player.w/2 + 14, W - player.w/2 - 14);
   });
 
   board.addEventListener("pointerup", (ev) => {
@@ -711,8 +680,10 @@
   );
 
   document.addEventListener("DOMContentLoaded", () => {
-    resizeBoardAndCanvas(); // ✅ 첫 로드에서도 동기화
+    stabilizeResize();
   });
+  window.addEventListener("resize", stabilizeResize);
+  window.addEventListener("orientationchange", () => setTimeout(stabilizeResize, 200));
 })();
 </script>
 </body>
