@@ -3,23 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>테스트 목록 | 봉 스튜디오's</title>
-  <meta name="description" content="봉 스튜디오's의 테스트 목록 페이지입니다." />
+  <title>테스트 센터 | 봉 스튜디오</title>
+  <meta name="description" content="봉 스튜디오의 성향 테스트 모음. 여봉이·멧봉이 세계관 기반의 인터랙티브 테스트를 설치 없이 바로 즐겨보세요. 각 테스트는 결과 타입 안내(정적 문서)까지 제공됩니다." />
   <link rel="canonical" href="https://bongstudiosad.com/tests/" />
 
   <style>
     body { margin:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:#f5f5f7; color:#222; }
     .app { max-width:480px; margin:0 auto; min-height:100vh; padding:20px 16px 40px; box-sizing:border-box; }
     .card { background:#fff; border-radius:18px; padding:20px 18px; box-shadow:0 8px 20px rgba(0,0,0,0.05); margin-bottom:18px; }
-    h1 { font-size:22px; margin:0 0 8px; }
-    p  { margin:4px 0; line-height:1.45; color:#555; }
+    h1 { font-size:22px; margin:0 0 8px; letter-spacing:-0.2px; }
+    h2 { font-size:18px; margin:0 0 8px; letter-spacing:-0.2px; }
+    h3 { font-size:16px; margin:0 0 8px; }
+    p  { margin:6px 0; line-height:1.55; color:#555; }
+    .muted { color:#777; font-size:13px; }
+    .pill {
+      display:inline-block;
+      font-size:12px;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#ffeef2;
+      color:#ff4d6d;
+      margin-bottom:10px;
+    }
     .btn {
       width:100%;
       padding:14px 16px;
       border:none;
       border-radius:999px;
       font-size:15px;
-      font-weight:700;
+      font-weight:800;
       margin-top:12px;
       cursor:pointer;
       background:#ff6b81;
@@ -27,41 +40,115 @@
     }
     .btn.secondary { background:#eceef3; color:#333; }
     .btn:active { transform:scale(0.98); }
+
+    .card-accent { border-left:5px solid #ff6b81; }
+    .list {
+      margin:10px 0 0;
+      padding-left:18px;
+      color:#666;
+      font-size:13px;
+      line-height:1.75;
+    }
+    .divider { height:1px; background:#eee; margin:14px 0; }
+    .two-btn { display:flex; gap:10px; }
+    .two-btn .btn { margin-top:10px; }
+    .two-btn .btn { flex:1; }
   </style>
 
   <link rel="stylesheet" href="/common/common.css?v=2">
 
   <!-- Google AdSense -->
-<script async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
-  crossorigin="anonymous"></script>
-  
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
-
   <div id="nav-mount"></div>
 
   <div class="app">
+
+    <!-- ✅ 상단 소개(정보성 텍스트 보강) -->
+    <div class="card card-accent">
+      <span class="pill">테스트 센터</span>
+      <h1>봉 스튜디오의 인터랙티브 연구소</h1>
+      <p>
+        봉 스튜디오 연구소에 오신 것을 환영합니다! 이곳은 자체 제작 캐릭터 <b>여봉이와 멧봉이</b>의 세계관을 바탕으로,
+        일상 속 선택과 취향을 가볍게 탐색할 수 있는 <b>성향 테스트</b>를 제공합니다.
+      </p>
+      <p>
+        각 테스트는 브라우저에서 즉시 실행되는 자바스크립트 로직으로 결과를 계산하며,
+        설치/회원가입 없이 바로 이용할 수 있도록 구성했습니다. 또한 “결과 타입 안내” 페이지(정적 문서)를 함께 제공해
+        사용자가 결과를 이해하고 활용할 수 있도록 돕습니다.
+      </p>
+      <p class="muted">
+        아래에서 원하는 테스트를 선택해 시작하세요. (모든 테스트는 무료)
+      </p>
+    </div>
+
+    <!-- ✅ 이용 가이드(하단 가이드 섹션을 상단에도 배치해서 체류/정보성 강화) -->
+    <div class="card" style="background:#fafafa;">
+      <h3>💡 테스트 이용 가이드</h3>
+      <ul class="list">
+        <li>모든 테스트는 무료로 제공되며, 결과는 SNS를 통해 자유롭게 공유할 수 있습니다.</li>
+        <li>결과 페이지의 “상세 해석/타입 안내”를 통해 성향별 특징과 추천 포인트를 확인할 수 있습니다.</li>
+        <li>테스트 결과는 절대 평가가 아니라, “현재의 소비/선택 스타일”을 재미있게 분류한 참고값입니다.</li>
+      </ul>
+    </div>
+
+    <!-- ✅ 테스트 1 -->
     <div class="card">
-      <h1>테스트 목록</h1>
-      <p>원하는 테스트를 골라서 바로 시작해줘!</p>
+      <span class="pill">TEST 01</span>
+      <h2>🧸 여봉이 더쿠 레벨 테스트</h2>
+      <p>
+        5개의 질문 선택으로 애니메이션/서브컬처 취향과 덕질 몰입도를 가볍게 분류합니다.
+        결과는 LV1~LV5(킹반인~킹 오브 더쿠)로 제공되며, 결과 타입별 특징과 “추천 루트”까지 안내합니다.
+      </p>
 
-      <!-- test1 -->
-      <button class="btn" onclick="location.href='/tests/test1/'">
-        🧸 여봉이 더쿠 레벨 테스트
-      </button>
+      <div class="two-btn">
+        <button class="btn" onclick="location.href='/tests/test1/'">테스트 시작하기</button>
+        <button class="btn secondary" onclick="location.href='/tests/test1/result.html'">결과 타입 안내</button>
+      </div>
 
-      <!-- test2 -->
-      <button class="btn" onclick="location.href='/tests/test2/'">
-        👻 몬스터 월드 여봉이 테스트
+      <div class="divider"></div>
+      <p class="muted">
+        추천: 친구랑 같이 해보고 결과 비교하면 더 재밌어요. (각 타입별 행동 포인트가 은근 정확함)
+      </p>
+    </div>
 
-      </button>
+    <!-- ✅ 테스트 2 -->
+    <div class="card">
+      <span class="pill">TEST 02</span>
+      <h2>👻 몬스터 월드 여봉이 테스트</h2>
+      <p>
+        가상의 “몬스터 세계” 시나리오를 통해 위기 상황에서 드러나는 선택 패턴을 탐색하는 성향 테스트입니다.
+        여러 문항을 기반으로 무의식적 위기 대응 기질을 분류하고, 결과 타입별 강점/주의점/활용 팁을 제공합니다.
+      </p>
 
-      <!-- 준비중 -->
-      <button class="btn secondary" onclick="alert('다른 테스트는 준비 중이야!')">
-        🎲 다른 테스트 곧 오픈 예정!
-      </button>
+      <div class="two-btn">
+        <button class="btn" onclick="location.href='/tests/test2/'">테스트 시작하기</button>
+        <button class="btn secondary" onclick="location.href='/tests/test2/result.html'">결과 타입 안내</button>
+      </div>
+
+      <div class="divider"></div>
+      <p class="muted">
+        팁: 결과의 “약점”보다 “강점”에 집중해보세요. 위기 상황에서의 선택이 곧 나의 생존 전략일 수 있어요.
+      </p>
+    </div>
+
+    <!-- ✅ 하단 신뢰/정책 안내(탐색 페이지 정보성 강화) -->
+    <div class="card" style="background:#fff;">
+      <h3>🔍 이 페이지는 무엇을 하는 곳인가요?</h3>
+      <p>
+        이 페이지는 봉 스튜디오에서 제공하는 테스트를 한눈에 모아둔 <b>콘텐츠 큐레이션 페이지</b>입니다.
+        각 테스트는 “시작 페이지”와 “결과 타입 안내(정적 문서)”로 구성되어, 기능(테스트)과 정보(가이드)를 함께 제공합니다.
+      </p>
+      <p class="muted">
+        더 알아보기: <a href="/about/" style="color:#ff4d6d; font-weight:800; text-decoration:none;">소개</a> ·
+        <a href="/privacy/" style="color:#ff4d6d; font-weight:800; text-decoration:none;">개인정보처리방침</a> ·
+        <a href="/terms/" style="color:#ff4d6d; font-weight:800; text-decoration:none;">이용약관</a> ·
+        <a href="/contact/" style="color:#ff4d6d; font-weight:800; text-decoration:none;">문의</a>
+      </p>
     </div>
 
     <div id="footer-mount"></div>
