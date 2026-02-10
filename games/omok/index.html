@@ -3,12 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>오목왕! 멧봉이를 이겨라!</title>
+  <title>오목왕! 멧봉이를 이겨라! - 안내</title>
 
-  <meta name="description" content="설치 없이 바로 즐기는 15×15 오목 게임! 여봉이 vs 멧봉이, 5목을 먼저 만들면 승리!" />
+  <meta name="description" content="설치 없이 바로 즐기는 15×15 오목! 플레이 전에 규칙/전략/렌주룰(33 금지)과 AI 구현 포인트를 안내합니다." />
   <link rel="canonical" href="https://bongstudiosad.com/games/omok/" />
 
-  
+  <!-- ✅ JSON-LD (승인용) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "오목왕! 멧봉이를 이겨라!",
+    "operatingSystem": "Web",
+    "applicationCategory": "GameApplication",
+    "genre": "Strategy, Board Game",
+    "description": "봉 스튜디오의 고유 캐릭터 여봉이와 멧봉이가 대결하는 15x15 정통 오목 게임입니다. 렌주룰(33 금지) 기반으로 공정성을 강화하고, 브라우저에서 실시간으로 AI가 수를 계산합니다.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+    "publisher": { "@type": "Organization", "name": "봉 스튜디오" }
+  }
+  </script>
+
+  <!-- Google AdSense (기존 client 유지) -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
+    crossorigin="anonymous"></script>
+
   <style>
     :root{
       --bg:#0b0f19;
@@ -17,6 +36,7 @@
       --text:rgba(255,255,255,.92);
       --muted:rgba(255,255,255,.62);
       --btn:rgba(255,255,255,.10);
+      --accent:#ff6b81;
     }
     *{ box-sizing:border-box; }
     body{
@@ -36,14 +56,12 @@
       border-bottom:1px solid rgba(255,255,255,.12);
     }
     .nav-inner{
-      max-width:560px; margin:0 auto;
+      max-width:760px; margin:0 auto;
       padding:12px 14px;
       display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
     }
-    .nav-logo{
-      font-weight:900; font-size:14px;
-      color:#fff; text-decoration:none;
-    }
+    .nav-logo{ font-weight:900; font-size:14px; color:#fff; text-decoration:none; }
     .nav-links a{
       margin-left:14px;
       font-size:13px; font-weight:800;
@@ -52,322 +70,145 @@
     }
     .nav-links a:hover{ color:#fff; }
 
-    .global-footer{
-      margin-top:40px;
-      padding:24px 16px 40px;
-      text-align:center;
-      color:rgba(255,255,255,.55);
-      font-size:12px;
-    }
-    .global-footer .small{
-      margin-top:6px;
-      font-size:11px;
-      color:rgba(255,255,255,.4);
-    }
-    .global-footer .footer-links{
-  margin-top:10px;
-  display:flex;
-  gap:8px;
-  justify-content:center;
-  align-items:center;
-  flex-wrap:wrap;
-  font-size:12px;
-}
-.global-footer .footer-links a{
-  color:rgba(255,255,255,.72);
-  text-decoration:none;
-  font-weight:900;
-}
-.global-footer .footer-links a:hover{
-  color:#fff;
-  text-decoration:underline;
-}
-.global-footer .footer-links .sep{
-  color:rgba(255,255,255,.35);
-  font-weight:900;
-}
-
-    /* APP */
-    .app{
+    .wrap{
       max-width:760px;
       margin:0 auto;
-      padding:16px 14px 22px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-height:calc(100vh - 56px);
+      padding:16px 14px 40px;
     }
-    .header{
-      padding:14px 14px;
+
+    .hero{
       border:1px solid var(--line);
       background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      border-radius:18px;
+      border-radius:20px;
+      padding:16px 14px;
       box-shadow:0 10px 30px rgba(0,0,0,.25);
     }
-    .topRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .title{ margin:0; font-size:18px; font-weight:900; letter-spacing:-.2px; }
-    .sub{ margin:6px 0 0; font-size:12px; color:var(--muted); line-height:1.35; }
-    .faces{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
-    .face{
-      width:28px; height:28px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.10);
-      object-fit:cover;
+    .hero h1{
+      margin:0;
+      font-size:20px;
+      font-weight:1000;
+      letter-spacing:-.2px;
     }
-    .vs{ font-size:11px; color:var(--muted); font-weight:900; }
+    .hero p{
+      margin:8px 0 0;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.55;
+      font-weight:800;
+    }
 
-    .controls{ margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .ad-slot{
+      margin-top:14px;
+      border:1px dashed rgba(255,255,255,.28);
+      border-radius:18px;
+      padding:14px 12px;
+      background:rgba(255,255,255,.06);
+      color:rgba(255,255,255,.75);
+      text-align:center;
+      line-height:1.5;
+      font-weight:900;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:10px;
+      margin-top:14px;
+      flex-wrap:wrap;
+    }
     .btn{
       appearance:none;
       border:1px solid rgba(255,255,255,.18);
       background:var(--btn);
       color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
-      font-weight:900;
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-      backdrop-filter: blur(8px);
-    }
-    .btn:active{ transform:translateY(1px); }
-    .btn.primary{
-      background:rgba(255,255,255,.92);
-      color:#0b0f19;
-      border-color:rgba(255,255,255,.92);
-    }
-    .btn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
-
-    .chip{
-      margin-left:auto;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background:var(--card);
-      font-size:12px;
-      font-weight:900;
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .dot{
-      width:8px;height:8px;border-radius:999px;
-      background:rgba(255,255,255,.85);
-      box-shadow:0 0 0 4px rgba(255,255,255,.10);
-    }
-
-   .boardCard{
-  border:1px solid var(--line);
-  background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
-  border-radius:20px;
-  padding:8px; /* ✅ 14px → 8px (모바일 체감 확 커짐) */
-  box-shadow:0 12px 34px rgba(0,0,0,.28);
-}
-    .boardWrap{display:flex; align-items:center; justify-content:center; padding:0;}
-    canvas{
-  width:100%;
-  height:auto;
-  aspect-ratio:1 / 1;
-
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.92);
-  box-shadow:0 14px 28px rgba(0,0,0,.28);
-  touch-action:none;
-}
-
-    .footer{
-      border:1px solid var(--line);
-      background:var(--card);
-      border-radius:18px;
       padding:12px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .msg{ font-weight:900; font-size:13px; letter-spacing:-.1px; }
-    .hint{ font-size:12px; color:var(--muted); font-weight:800; white-space:nowrap; }
-
-    /* MODAL */
-    .modal-backdrop{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.55);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      z-index:9999;
-    }
-    .modal-backdrop.show{ display:flex; }
-    .modal{
-      width:min(420px, 92vw);
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.20);
-      background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
-      box-shadow:0 22px 60px rgba(0,0,0,.55);
-      padding:16px 16px 14px;
-      backdrop-filter: blur(10px);
-      transform: translateY(8px) scale(.98);
-      opacity:.98;
-      animation: pop .16s ease-out forwards;
-    }
-    @keyframes pop{ to{ transform: translateY(0) scale(1); opacity:1; } }
-    .modalTitle{ margin:0; font-size:18px; font-weight:1000; letter-spacing:-.2px; }
-    .modalDesc{ margin:8px 0 0; font-size:12px; color:var(--muted); font-weight:800; line-height:1.45; }
-    .modalBtns{ display:flex; gap:8px; margin-top:14px; }
-    .modalBtns .btn{ flex:1; justify-content:center; }
-
-    /* Start choice */
-    .choice-row{ display:flex; gap:8px; margin-top:12px; }
-    .choice{
-      flex:1;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.10);
-      color:rgba(255,255,255,.92);
-      padding:12px 12px;
       border-radius:16px;
       font-weight:1000;
       font-size:14px;
       cursor:pointer;
       user-select:none;
-      text-align:center;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      flex:1;
+      min-width:160px;
     }
-    .choice small{
-      display:block;
-      margin-top:6px;
-      font-weight:800;
-      font-size:12px;
-      color:rgba(255,255,255,.65);
-      letter-spacing:-.1px;
-    }
-    .choice.active{
+    .btn.primary{
       background:rgba(255,255,255,.92);
       color:#0b0f19;
       border-color:rgba(255,255,255,.92);
     }
-    .choice.active small{ color:rgba(11,15,25,.65); }
+    .btn:active{ transform:translateY(1px); }
 
-    /* ✅ 33 토스트(1.5초) */
-    .toast33{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:10050; /* 모달보다 위 */
-      pointer-events:none;
+    .card{
+      margin-top:14px;
+      border:1px solid var(--line);
+      background:var(--card);
+      border-radius:20px;
+      padding:14px 14px;
+      box-shadow:0 12px 34px rgba(0,0,0,.22);
     }
-    .toast33.show{ display:flex; }
-    .toast33 .bubble{
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.20);
-      background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
-      box-shadow:0 18px 50px rgba(0,0,0,.55);
-      backdrop-filter: blur(10px);
+    .card h2{
+      margin:0 0 10px;
+      font-size:16px;
       font-weight:1000;
       letter-spacing:-.2px;
-      color:rgba(255,255,255,.95);
-      transform: translateY(8px) scale(.98);
-      animation: toastPop .14s ease-out forwards;
     }
-    @keyframes toastPop{
-      to{ transform: translateY(0) scale(1); }
+    .card h3{
+      margin:16px 0 8px;
+      font-size:13.5px;
+      font-weight:1000;
+      color:rgba(255,255,255,.92);
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,.10);
     }
+    .card p, .card li{
+      font-size:12.8px;
+      color:rgba(255,255,255,.76);
+      line-height:1.75;
+      font-weight:800;
+    }
+    .card ul{ margin:8px 0 0; padding-left:18px; display:grid; gap:8px; }
+    .pill{
+      display:inline-block;
+      margin-top:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      font-weight:1000;
+      color:rgba(255,255,255,.88);
+    }
+    .pill b{ color:#fff; }
 
-    /* ✅ AdSense용: 게임 설명 섹션 (푸터 위) */
-    .game-desc{
-      margin-top: 14px;
-      max-width:560px;
-      margin-left:auto; margin-right:auto;
-      width: calc(100% - 28px);
+    .global-footer{
+      margin-top:22px;
+      padding:24px 16px 40px;
+      text-align:center;
+      color:rgba(255,255,255,.55);
+      font-size:12px;
+    }
+    .global-footer .footer-links{
+      margin-top:10px;
+      display:flex; gap:8px;
+      justify-content:center; align-items:center;
+      flex-wrap:wrap;
+      font-size:12px;
+    }
+    .global-footer .footer-links a{
+      color:rgba(255,255,255,.72);
+      text-decoration:none;
+      font-weight:900;
+    }
+    .global-footer .footer-links a:hover{ color:#fff; text-decoration:underline; }
+    .global-footer .sep{ color:rgba(255,255,255,.35); font-weight:900; }
 
-      border: 1px solid rgba(255,255,255,.14);
-      background:
-        radial-gradient(900px 260px at 10% 0%, rgba(140,180,255,.16), transparent 60%),
-        radial-gradient(760px 260px at 90% 10%, rgba(255,160,120,.12), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
-      border-radius: 20px;
-      padding: 14px 14px;
-      box-shadow: 0 12px 34px rgba(0,0,0,.22);
-      color: rgba(255,255,255,.78);
-      line-height: 1.7;
+    @media (max-width:480px){
+      .btn{ font-size:13px; padding:12px 12px; }
     }
-    .game-desc h2{
-      margin: 0 0 10px;
-      font-size: 16px;
-      font-weight: 1000;
-      letter-spacing: -.2px;
-      color: rgba(255,255,255,.94);
-    }
-    .game-desc h3{
-      margin: 16px 0 8px;
-      font-size: 13px;
-      font-weight: 1000;
-      color: rgba(255,255,255,.90);
-      padding-top: 12px;
-      border-top: 1px solid rgba(255,255,255,.10);
-    }
-    .game-desc p{
-      margin: 0;
-      font-size: 12.5px;
-      color: rgba(255,255,255,.74);
-      font-weight: 800;
-    }
-    .game-desc p + p{ margin-top: 10px; }
-    .game-desc strong{
-      color: rgba(255,255,255,.92);
-      font-weight: 1000;
-    }
-    .game-desc ul{
-      margin: 8px 0 0;
-      padding-left: 18px;
-      color: rgba(255,255,255,.74);
-      font-size: 12.5px;
-      line-height: 1.65;
-      font-weight: 800;
-      display: grid;
-      gap: 8px;
-    }
-    .game-desc li{ margin: 0; }
-
-    @media (max-width: 480px){
-      .game-desc{
-        width: calc(100% - 20px);
-        padding: 13px 12px;
-        border-radius: 18px;
-      }
-      .game-desc h2{ font-size: 15px; }
-      .game-desc p, .game-desc ul{ font-size: 12.3px; }
-    }
-
-   @media (max-width: 480px){
-  .sub{ display:none; }          /* ✅ 한 줄 설명 숨김 */
-  .header{ padding:10px 10px; }  /* ✅ 헤더 낮추기 */
-  .controls{ margin-top:8px; gap:6px; }
-  .btn{ padding:9px 10px; font-size:12px; } /* 버튼 살짝 컴팩트 */
-  .chip{ padding:8px 10px; font-size:11px; }
-  .footer{ padding:10px 12px; }   
-
-  /* ✅ 여기! 오목판(캔버스) 모바일 확대 */
-  canvas{
-    max-height: calc(100svh - 210px);
-    width: min(100%, calc(100svh - 210px));
-  }
-}
-    
   </style>
-
-  <!-- Google AdSense -->
-<script async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028
-"
-  crossorigin="anonymous"></script>
-
-  
 </head>
 
 <body>
@@ -381,842 +222,74 @@
     </div>
   </nav>
 
-  <div class="app">
-    <div class="header">
-      <div class="topRow">
-        <div>
-          <h1 class="title">멧봉이를 이겨라!</h1>
-          <div class="sub">한 번 눌러서 돌 놓기 · 5목 먼저 만들면 승리</div>
-        </div>
-        <div class="faces">
-          <img class="face" id="p1Face" alt="여봉이" />
-          <span class="vs">VS</span>
-          <img class="face" id="p2Face" alt="멧봉이" />
-        </div>
+  <main class="wrap">
+    <section class="hero">
+      <h1>♟️ 오목왕! 멧봉이를 이겨라!</h1>
+      <p>
+        이 페이지는 “게임 실행 화면”이 아니라, <b>오목 규칙/전략/기술 설명</b>을 정리한 안내 페이지야.
+        아래에서 내용을 확인한 뒤 <b>플레이 버튼</b>을 누르면 실제 게임(play.html)로 들어가.
+      </p>
+
+      <!-- ✅ 상단 광고 영역(AdSense 자리) -->
+      <div class="ad-slot" aria-label="상단 광고 영역">
+        📌 상단 광고 영역<br/>
+        (여기에 구글 애드센스 디스플레이 광고 유닛 코드를 붙이는 자리)
       </div>
 
-      <div class="controls">
-        <button class="btn primary" id="resetBtn">다시하기</button>
-        <button class="btn" id="toggleFirstBtn">선공: 여봉이</button>
-        <div class="chip" id="turnChip"><span class="dot"></span><span>여봉이 차례</span></div>
-      </div>
-    </div>
-
-    <div class="boardCard">
-      <div class="boardWrap">
-        <canvas id="board" width="900" height="900" aria-label="오목판"></canvas>
-      </div>
-    </div>
-
-    <div class="footer">
-      <div class="msg" id="msg">선공을 선택하고 시작하기 눌러줘!</div>
-      <div class="hint" id="hint">15×15</div>
-    </div>
-  </div>
-
-  <!-- Result modal -->
-  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
-    <div class="modal">
-      <h2 class="modalTitle" id="modalTitle">승리!</h2>
-      <div class="modalDesc" id="modalDesc">다시 한 판 가자 😎</div>
-      <div class="modalBtns">
-        <button class="btn primary" id="modalRestartBtn">다시하기</button>
-        <button class="btn" id="modalCloseBtn">닫기</button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ✅ AdSense용: 게임 설명(게임 하단 & 푸터 위) -->
-  <section class="game-desc" aria-label="오목 게임 소개">
-    <h2>🕹️ 오목왕: 멧봉이를 이겨라! 게임 소개</h2>
-    <p>
-      이 게임은 가로, 세로, 대각선 중 어느 방향으로든 자신의 바둑알을 5개 먼저 놓는 사람이 승리하는 전통 보드게임 <strong>오목(Gomoku)</strong>을 웹 환경에 맞게 재해석한 게임입니다.
-      봉스튜디오의 빌런 캐릭터 <strong>멧봉이</strong>를 상대로 승리하여 연구소의 평화를 지켜보세요! 15×15 표준 판 규격을 채택하여 실제 대국과 유사한 긴장감을 제공합니다.
-    </p>
-
-    <h3>💡 오목 필승 전략 및 공략법</h3>
-    <ul>
-      <li><strong>4-3 전략:</strong> 오목의 가장 강력한 공격 수단은 ‘사삼(4-3)’입니다. 상대가 한쪽을 막아도 다른 쪽에서 5개를 완성할 수 있는 두 개의 공격로를 동시에 만드는 것이 핵심입니다.</li>
-      <li><strong>수비의 중요성:</strong> 상대방이 연속된 3개의 알(열린 3)을 만들었을 때는 즉시 방어해야 합니다. 공격만큼이나 상대의 길을 차단하는 선제적 수비가 고득점의 비결입니다.</li>
-      <li><strong>중앙 점유:</strong> 초반에는 판의 중앙 부근에 알을 배치하여 사방으로 뻗어나갈 수 있는 가능성을 열어두는 것이 유리합니다.</li>
-    </ul>
-
-    <h3>🛠️ AI 알고리즘 및 기술적 구현</h3>
-    <p>
-      본 게임의 AI는 <strong>미니맥스(Minimax) 알고리즘</strong>과 <strong>휴리스틱 평가 함수</strong>를 기반으로 설계되었습니다.
-      플레이어의 다음 수를 예측하고 최적의 방어 및 공격 위치를 계산합니다. 또한, 순수 <strong>JavaScript와 Canvas API</strong>로 제작되어 별도의 플러그인 없이 모바일과 PC 모든 환경에서 부드러운 렌더링을 제공합니다.
-    </p>
-
-    <h3>🛡️ 렌주룰 및 공식 규칙 안내</h3>
-    <p>
-      웹 게임의 특성상 누구나 즐길 수 있도록 기본적인 오목 규칙을 따르되, 흑(선공)의 지나친 유리함을 방지하기 위해 <strong>3-3 금지</strong> 규칙이 적용되어 있습니다.
-      전략적인 수 싸움을 통해 멧봉이 AI의 빈틈을 찾아보세요! 봉스튜디오는 앞으로도 고도의 전략이 필요한 보드게임 시리즈를 지속적으로 업데이트할 예정입니다.
-    </p>
-  </section>
-
-  <!-- Start modal -->
-  <div class="modal-backdrop" id="startBackdrop" role="dialog" aria-modal="true">
-    <div class="modal">
-      <h2 class="modalTitle">선공 선택</h2>
-      <div class="modalDesc">누가 먼저 둘래? 선택하고 <b>시작하기</b> 누르면 바로 시작!</div>
-
-      <div class="choice-row" id="startChoices">
-        <div class="choice active" data-first="PLAYER">나 (여봉이)<small>먼저 두고 시작</small></div>
-        <div class="choice" data-first="AI">멧봉이<small>상대가 먼저 둠</small></div>
+      <div class="btn-row">
+        <a class="btn primary" href="/games/omok/play.html">▶️ 오목 플레이 시작</a>
+        <a class="btn" href="/tests/">🧪 테스트 센터로 이동</a>
       </div>
 
-      <div class="modalBtns">
-        <button class="btn primary" id="startBtn">시작하기</button>
-      </div>
-    </div>
-  </div>
+      <span class="pill">규칙: <b>15×15</b> · 승리조건: <b>5목</b> · 공정성: <b>33 금지(렌주룰)</b></span>
+    </section>
 
-  <!-- ✅ 33 토스트 -->
-  <div class="toast33" id="toast33" aria-live="polite">
-    <div class="bubble" id="toast33Text">33은 안돼!</div>
-  </div>
+    <!-- ✅ 본문(정보성 텍스트 확장) -->
+    <section class="card" aria-label="오목 게임 소개">
+      <h2>게임 소개</h2>
+      <p>
+        오목(Gomoku)은 가로/세로/대각선 중 어느 방향이든 <b>돌 5개를 연속</b>으로 먼저 놓으면 승리하는 전통 보드게임이야.
+        본 게임은 봉 스튜디오의 캐릭터 <b>여봉이</b>가 플레이어가 되고, <b>멧봉이</b>가 AI 상대가 되어 대결하는 구성으로 만들었어.
+      </p>
 
-  <footer class="global-footer">
-    <p>© 2026 여봉이의 놀이터</p>
-    <p class="small">심심할 때 만드는 웹 장난감</p>
+      <h3>⚖️ 규칙 안내: 왜 33 금지를 쓰나?</h3>
+      <p>
+        오목은 선공(흑)이 유리한 게임이라, 실력과 수읽기로 승부가 나도록 <b>렌주룰</b>의 핵심 규칙 중 하나인 <b>3-3 금지(쌍삼 금지)</b>를 적용했어.
+        즉, 한 번에 “열린 3”이 2개 동시에 만들어지는 수는 금지라서, 플레이어는 더 깔끔한 공격 루트를 설계해야 해.
+      </p>
+
+      <h3>💡 초반 운영 팁</h3>
+      <ul>
+        <li><b>중앙 선점:</b> 초반에는 중앙 근처에 두어 확장 루트를 열어두는 게 좋아.</li>
+        <li><b>수비 우선순위:</b> 상대가 열린 3을 만들려는 징후가 보이면 먼저 끊어야 해.</li>
+        <li><b>사삼(4-3) 준비:</b> 한쪽을 막아도 다른 쪽이 살아있는 공격 형태를 목표로 해.</li>
+      </ul>
+
+      <h3>🛠️ 기술적 구현(구글봇이 좋아하는 설명)</h3>
+      <p>
+        본 게임은 별도의 엔진 없이 <b>HTML5 Canvas</b>에 보드를 렌더링하고, 입력(터치/클릭)을 좌표로 변환해 돌을 놓는 방식으로 동작해.
+        AI는 후보 수를 생성한 뒤 <b>휴리스틱 평가</b>로 우선순위를 매기고, 즉시 승리/즉시 방어 수를 먼저 탐색해.
+        또한 “금지 수(33)”를 미리 판정하여, 공정성 규칙을 시스템이 자동으로 보장하도록 했어.
+      </p>
+
+      <h3>🔗 내부 링크 구조(승인용)</h3>
+      <ul>
+        <li>안내 페이지(index.html) → 실제 플레이(play.html)로 명확히 분리</li>
+        <li>게임을 끝낸 뒤에도 테스트 센터(/tests/)로 이동 가능</li>
+      </ul>
+    </section>
+
+    <footer class="global-footer">
+      <p>© 2026 여봉이의 놀이터</p>
+      <p class="small" style="opacity:.75; margin-top:6px;">심심할 때 만드는 웹 장난감</p>
       <div class="footer-links">
-    <a href="/privacy/">개인정보처리방침</a>
-    <span class="sep">·</span>
-    <a href="/terms/">이용약관</a>
-    <span class="sep">·</span>
-    <a href="/contact/">문의</a>
-  </div>
-
-  </footer>
-
-<script>
-(() => {
-  // =========================
-  // 15x15 + 더 강한 AI
-  // =========================
-  const SIZE = 15;
-  const WIN = 5;
-
-  const PLAYER = 1;
-  const AI = 2;
-
-  const IMG_P1 = "/img/omok_player.png";
-  const IMG_P2 = "/img/omok_ai.png";
-
-  // ✅ 난이도 상향 세팅
-  const TARGET_WIN_RATE = 0.20;
-  const AI_MIN = 0.68;
-  const AI_MAX = 0.99;
-  const ADJUST_K = 0.18;
-  const MAX_SOFT_CHOICE = 6;
-
-  const LS_KEY = "yeobong_omok_flash_15x15_hard_v1";
-  const AI_DELAY = 700;
-
-  const canvas = document.getElementById("board");
-  const ctx = canvas.getContext("2d");
-
-  // =========================
-  // ✅ 모바일: 게임 중 스크롤/줌 고정 (멧봉이 피하기와 동일 컨셉)
-  // - 게임 시작 후(gameStarted) & 게임 종료 전(!gameOver)에는 화면을 '앱'처럼 고정
-  // - 결과 모달/선공 선택 모달이 열릴 때는 스크롤을 다시 풀어 설명을 볼 수 있게 함
-  // =========================
-  function lockScroll(lock){
-    document.documentElement.style.overflow = lock ? "hidden" : "";
-    document.body.style.overflow = lock ? "hidden" : "";
-    document.body.style.position = lock ? "fixed" : "";
-    document.body.style.width = lock ? "100%" : "";
-    document.body.style.touchAction = lock ? "none" : "";
-  }
-  function shouldLockPlay(){
-    return gameStarted && !gameOver;
-  }
-  function stopPlayGestures(e){
-    if(!shouldLockPlay()) return;
-    e.preventDefault();
-  }
-  // 캔버스 위 스크롤/줌 제스처 차단(게임 중)
-  canvas.addEventListener("touchmove", stopPlayGestures, { passive:false });
-  canvas.addEventListener("wheel", stopPlayGestures, { passive:false });
-  document.addEventListener("gesturestart", (e)=>{ if(shouldLockPlay()) e.preventDefault(); }, { passive:false });
-  document.addEventListener("gesturechange",(e)=>{ if(shouldLockPlay()) e.preventDefault(); }, { passive:false });
-  document.addEventListener("gestureend",   (e)=>{ if(shouldLockPlay()) e.preventDefault(); }, { passive:false });
-
-  const resetBtn = document.getElementById("resetBtn");
-  const toggleFirstBtn = document.getElementById("toggleFirstBtn");
-  const turnChip = document.getElementById("turnChip");
-  const msgEl = document.getElementById("msg");
-
-  const modalBackdrop = document.getElementById("modalBackdrop");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalDesc = document.getElementById("modalDesc");
-  const modalRestartBtn = document.getElementById("modalRestartBtn");
-  const modalCloseBtn = document.getElementById("modalCloseBtn");
-
-  const startBackdrop = document.getElementById("startBackdrop");
-  const startChoices = document.getElementById("startChoices");
-  const startBtn = document.getElementById("startBtn");
-
-  // ✅ 33 토스트
-  const toast33 = document.getElementById("toast33");
-  const toast33Text = document.getElementById("toast33Text");
-  let toastTimer = null;
-  function showToast33(text="33은 안돼!", ms=1500){
-    toast33Text.textContent = text;
-    toast33.classList.add("show");
-    if(toastTimer) clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast33.classList.remove("show"), ms);
-  }
-
-  const p1Face = document.getElementById("p1Face");
-  const p2Face = document.getElementById("p2Face");
-  p1Face.src = IMG_P1;
-  p2Face.src = IMG_P2;
-
-  function setMsg(t){ msgEl.textContent = t; }
-  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
-  function nameOf(p){ return p === PLAYER ? "여봉이" : "멧봉이"; }
-
-  function openModal(title, desc){
-    modalTitle.textContent = title;
-    modalDesc.textContent = desc;
-    modalBackdrop.classList.add("show");
-    lockScroll(false);
-  }
-  function closeModal(){
-    modalBackdrop.classList.remove("show");
-    // 게임이 끝난 뒤엔(=gameOver) 스크롤을 그대로 열어둠
-    if(shouldLockPlay()) lockScroll(true);
-  }
-
-  function openStartModal(){
-    startBackdrop.classList.add("show");
-    lockScroll(false);
-  }
-  function closeStartModal(){
-    startBackdrop.classList.remove("show");
-    if(shouldLockPlay()) lockScroll(true);
-  }
-
-  function setControlsEnabled(on){
-    resetBtn.disabled = !on;
-    toggleFirstBtn.disabled = !on;
-  }
-
-  let board = Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
-  let gameStarted = false;
-  let gameOver = false;
-
-  let firstPlayer = PLAYER;
-  let turn = PLAYER;
-  let lastMove = null;
-
-  let results = [];
-  let difficulty = 0.90;
-
-  function loadState(){
-    try{
-      const raw = localStorage.getItem(LS_KEY);
-      if(!raw) return;
-      const s = JSON.parse(raw);
-      if(Array.isArray(s.results)) results = s.results.filter(x => x==="W" || x==="L").slice(-10);
-      if(typeof s.difficulty === "number") difficulty = clamp(s.difficulty, AI_MIN, AI_MAX);
-      if(s.firstPlayer === PLAYER || s.firstPlayer === AI) firstPlayer = s.firstPlayer;
-    }catch(e){}
-  }
-  function saveState(){
-    localStorage.setItem(LS_KEY, JSON.stringify({ results, difficulty, firstPlayer }));
-  }
-
-  loadState();
-  turn = firstPlayer;
-
-  function resizeCanvas(){
-  const rect = canvas.getBoundingClientRect();
-  const cssSize = Math.floor(Math.min(rect.width, rect.height));
-  const dpr = window.devicePixelRatio || 1;
-
-  // ✅ CSS 크기는 건드리지 말고(= 흐림 원인 제거)
-  // ✅ 내부 비트맵 해상도만 DPR로 올림
-  canvas.width  = Math.floor(cssSize * dpr);
-  canvas.height = Math.floor(cssSize * dpr);
-
-  // ✅ 그리기는 CSS px 좌표계로
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-  return cssSize;
-}
-
-  let CANVAS_SIZE = 0;
-let margin = 0;
-let gridSize = 0;
-let cell = 0;
-let r = 0;
-
-function updateMetrics(){
-  CANVAS_SIZE = resizeCanvas();
-  margin = CANVAS_SIZE * 0.06;
-  gridSize = CANVAS_SIZE - margin * 2;
-  cell = gridSize / (SIZE - 1);
-  r = cell * 0.48;
-}
-
-updateMetrics(); // ✅ 최초 1회 계산
-
-  const img1 = new Image(); img1.src = IMG_P1;
-  const img2 = new Image(); img2.src = IMG_P2;
-  img1.onload = () => { if(gameStarted) draw(); };
-  img2.onload = () => { if(gameStarted) draw(); };
-
-  function setTurnUI(){
-    const label = (turn === PLAYER) ? "여봉이 차례" : "멧봉이 생각중…";
-    turnChip.innerHTML = `<span class="dot"></span><span>${label}</span>`;
-    toggleFirstBtn.textContent = `선공: ${nameOf(firstPlayer)}`;
-  }
-
-  function pointerToCell(clientX, clientY){
-  const rect = canvas.getBoundingClientRect();
-
-  // ✅ 우리는 그리기를 "CSS px 좌표계(CANVAS_SIZE)"로 하고 있으니
-  // 입력 좌표도 CSS px 기준으로 맞춘다.
-  const scale = CANVAS_SIZE / rect.width; // rect.width ≈ cssSize
-  const x = (clientX - rect.left) * scale;
-  const y = (clientY - rect.top) * scale;
-
-  // 보드 영역 밖 터치 방지 (CSS px 기준)
-  const min = margin - cell * 0.4;
-  const max = margin + cell * (SIZE - 1) + cell * 0.4;
-
-  if (x < min || x > max || y < min || y > max) return null;
-
-  // 가장 가까운 교차점으로 스냅
-  const gx = Math.round((x - margin) / cell);
-  const gy = Math.round((y - margin) / cell);
-
-  return {
-    x: clamp(gx, 0, SIZE - 1),
-    y: clamp(gy, 0, SIZE - 1)
-  };
-}
-
-  function inRange(x,y){ return x>=0 && x<SIZE && y>=0 && y<SIZE; }
-  function countDir(x,y,dx,dy,p){
-    let c=0, nx=x+dx, ny=y+dy;
-    while(inRange(nx,ny) && board[ny][nx]===p){ c++; nx+=dx; ny+=dy; }
-    return c;
-  }
-  function isWin(x,y,p){
-    const dirs = [[1,0],[0,1],[1,1],[1,-1]];
-    for(const [dx,dy] of dirs){
-      const line = 1 + countDir(x,y,dx,dy,p) + countDir(x,y,-dx,-dy,p);
-      if(line >= WIN) return true;
-    }
-    return false;
-  }
-  function isDraw(){
-    for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++) if(board[y][x]===0) return false;
-    return true;
-  }
-
-  function drawGrid(){
-    const W = CANVAS_SIZE;
-    const H = CANVAS_SIZE;
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle = "rgba(255,255,255,.92)";
-    ctx.fillRect(0,0,W,H);
-
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "rgba(0,0,0,.12)";
-    for(let i=0;i<SIZE;i++){
-      const px = margin + i*cell;
-      const py = margin + i*cell;
-      ctx.beginPath(); ctx.moveTo(px, margin); ctx.lineTo(px, margin+(SIZE-1)*cell); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(margin, py); ctx.lineTo(margin+(SIZE-1)*cell, py); ctx.stroke();
-    }
-
-    const stars = [
-      {x:3,y:3},{x:11,y:3},{x:7,y:7},{x:3,y:11},{x:11,y:11}
-    ];
-    ctx.fillStyle = "rgba(0,0,0,.22)";
-    for(const s of stars){
-      ctx.beginPath();
-      ctx.arc(margin + s.x*cell, margin + s.y*cell, 3.6, 0, Math.PI*2);
-      ctx.fill();
-    }
-  }
-
-  function drawFallbackStone(cx, cy, rr, player){
-    ctx.beginPath();
-    ctx.arc(cx, cy, rr, 0, Math.PI*2);
-    ctx.fillStyle = (player === PLAYER) ? "#ffffff" : "#0b0f19";
-    ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = (player === PLAYER) ? "rgba(0,0,0,.35)" : "rgba(255,255,255,.35)";
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(cx - rr*0.22, cy - rr*0.22, rr*0.28, 0, Math.PI*2);
-    ctx.fillStyle = "rgba(255,255,255,.20)";
-    ctx.fill();
-  }
-
-  function drawStone(x, y, p, isLast){
-  const img = (p === PLAYER) ? img1 : img2;
-  const cx = margin + x * cell;
-  const cy = margin + y * cell;
-
-  const canUseImage = img && img.complete && (img.naturalWidth > 0 || img.width > 0);
-
-  if (canUseImage){
-    // 1) 배경 원
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fillStyle = (p === PLAYER) ? "#ffffff" : "#0b0f19";
-    ctx.fill();
-
-    // 2) 원형 클립 + 이미지(contain)
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.clip();
-
-    const inner = r * 0.78;
-    const iw = img.naturalWidth || img.width;
-    const ih = img.naturalHeight || img.height;
-
-    const box = inner * 2;
-    const scale = Math.min(box / iw, box / ih);
-
-    const dw = iw * scale;
-    const dh = ih * scale;
-
-    // 머리 위 짤림 방지(살짝 아래로)
-    const yOffset = r * 0.06;
-    ctx.drawImage(img, cx - dw/2, cy - dh/2 + yOffset, dw, dh);
-
-    ctx.restore();
-
-    // 3) 링(테두리)
-    const ring = Math.max(3, r * 0.14);
-    ctx.lineWidth = ring;
-    ctx.strokeStyle = (p === PLAYER) ? "#ffffff" : "#0b0f19";
-    ctx.beginPath();
-    ctx.arc(cx, cy, r - ring/2, 0, Math.PI * 2);
-    ctx.stroke();
-  } else {
-    drawFallbackStone(cx, cy, r, p);
-  }
-
-  // 마지막 수 표시
-  ctx.lineWidth = isLast ? 4 : 2;
-  const baseStroke = (p === PLAYER) ? "rgba(0,0,0,.22)" : "rgba(255,255,255,.22)";
-  const lastStroke = (p === PLAYER) ? "rgba(0,0,0,.70)" : "rgba(255,255,255,.70)";
-  ctx.strokeStyle = isLast ? lastStroke : baseStroke;
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.stroke();
-}
-    
-  function draw(){
-    drawGrid();
-    for(let y=0;y<SIZE;y++){
-      for(let x=0;x<SIZE;x++){
-        const v = board[y][x];
-        if(!v) continue;
-        const isLast = lastMove && lastMove.x===x && lastMove.y===y;
-        drawStone(x,y,v,isLast);
-      }
-    }
-  }
-
-  function getWinRate(){
-    const w = results.filter(r => r==="W").length;
-    return results.length ? (w / results.length) : null;
-  }
-  function adjustDifficulty(){
-    const wr = getWinRate();
-    if(wr === null) return;
-    const error = TARGET_WIN_RATE - wr;
-    difficulty -= error * 0.18;
-    difficulty = clamp(difficulty, AI_MIN, AI_MAX);
-  }
-  function getMistakeRate(){
-    const t = 1 - difficulty;
-    return clamp(0.02 + t * 0.22, 0.02, 0.18);
-  }
-
-  function genCandidates(){
-    const cand = [];
-    let hasStone = false;
-    const mark = Array.from({length: SIZE}, () => Array(SIZE).fill(false));
-
-    for(let y=0;y<SIZE;y++){
-      for(let x=0;x<SIZE;x++){
-        if(board[y][x] !== 0){
-          hasStone = true;
-          for(let dy=-2; dy<=2; dy++){
-            for(let dx=-2; dx<=2; dx++){
-              const nx=x+dx, ny=y+dy;
-              if(inRange(nx,ny) && board[ny][nx]===0) mark[ny][nx] = true;
-            }
-          }
-        }
-      }
-    }
-    if(!hasStone){
-      const c = Math.floor(SIZE/2);
-      return [
-        {x:c,y:c},{x:c-1,y:c},{x:c+1,y:c},{x:c,y:c-1},{x:c,y:c+1}
-      ].filter(m => inRange(m.x,m.y));
-    }
-    for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++) if(mark[y][x]) cand.push({x,y});
-    return cand;
-  }
-
-  function maxLineIfPlace(x,y,p){
-    const dirs = [[1,0],[0,1],[1,1],[1,-1]];
-    let best = 1;
-    for(const [dx,dy] of dirs){
-      const line = 1 + countDir(x,y,dx,dy,p) + countDir(x,y,-dx,-dy,p);
-      if(line > best) best = line;
-    }
-    return best;
-  }
-
-  function playerHasImmediateWinAfterAI(){
-    const cand = genCandidates();
-    for(const m of cand){
-      board[m.y][m.x] = PLAYER;
-      const win = isWin(m.x, m.y, PLAYER);
-      board[m.y][m.x] = 0;
-      if(win) return true;
-    }
-    return false;
-  }
-
-  function scoreMove(x,y){
-    const aiLine = maxLineIfPlace(x,y,AI);
-    const plLine = maxLineIfPlace(x,y,PLAYER);
-
-    const c = (SIZE-1)/2;
-    const dist = Math.abs(x-c) + Math.abs(y-c);
-    const centerScore = (SIZE*2 - dist);
-
-    let score = 0;
-
-    if(aiLine >= 5) score += 200000;
-    else if(aiLine === 4) score += 9000;
-    else if(aiLine === 3) score += 1400;
-    else if(aiLine === 2) score += 180;
-
-    if(plLine >= 5) score += 180000;
-    else if(plLine === 4) score += 12000;
-    else if(plLine === 3) score += 1600;
-    else if(plLine === 2) score += 140;
-
-    score += centerScore * 4;
-
-    if(lastMove){
-      const dx = Math.abs(x - lastMove.x);
-      const dy = Math.abs(y - lastMove.y);
-      const near = Math.max(0, 7 - (dx+dy));
-      score += near * 10;
-    }
-
-    return score;
-  }
-
-  function findForcedMove(p){
-    const cand = genCandidates();
-    for(const m of cand){
-      board[m.y][m.x] = p;
-      const win = isWin(m.x, m.y, p);
-      board[m.y][m.x] = 0;
-      if(win) return m;
-    }
-    return null;
-  }
-
-  function rankMoves(){
-    const cand = genCandidates();
-    const ranked = cand.map(m => ({...m, score: scoreMove(m.x,m.y)}));
-    ranked.sort((a,b) => b.score - a.score);
-    return ranked;
-  }
-
-  function chooseAIMove(){
-    const winMove = findForcedMove(AI);
-if(winMove && !isDoubleThreeMoveFor(AI, winMove.x, winMove.y)) return winMove;
-
-const blockMove = findForcedMove(PLAYER);
-if(blockMove && !isDoubleThreeMoveFor(AI, blockMove.x, blockMove.y)) return blockMove;
-
-    const ranked = rankMoves();
-    if(!ranked.length) return null;
-
-    const filtered = [];
-    for(const m of ranked.slice(0, Math.min(18, ranked.length))){
-  // ✅ 33이면 후보 제외 (두기 전에 검사)
-  if(isDoubleThreeMoveFor(AI, m.x, m.y)) continue;
-
-  board[m.y][m.x] = AI;
-  const bad = playerHasImmediateWinAfterAI();
-  board[m.y][m.x] = 0;
-
-  filtered.push({x:m.x, y:m.y, score: m.score - (bad ? 50000 : 0)});
-}
-    filtered.sort((a,b) => b.score - a.score);
-
-   if(!filtered.length){
-  const safe = ranked.find(m => !isDoubleThreeMoveFor(AI, m.x, m.y));
-  return safe || ranked[0];
-}
-
-   const doMistake = Math.random() < getMistakeRate();
-   if(!doMistake) return { x: filtered[0].x, y: filtered[0].y };
-
-    const widen = Math.floor((1 - difficulty) * MAX_SOFT_CHOICE);
-    const maxIdx = clamp(1 + widen, 1, Math.min(MAX_SOFT_CHOICE, filtered.length)) - 1;
-    const pick = Math.floor(Math.random() * (maxIdx + 1));
-    return { x: filtered[pick].x, y: filtered[pick].y };
-  }
-
-    // =========================
-  // ✅ 33(더블 쓰리) 판정 (여봉/멧봉 공용)
-  // who(PLAYER 또는 AI)가 (x,y)에 두면 33이면 true
-  // =========================
-  function cellToCharFor(who, x, y){
-    if(!inRange(x,y)) return "2"; // 바깥=막힘
-    const v = board[y][x];
-    if(v === 0) return "0";       // 빈칸
-    if(v === who) return "1";     // 내 돌
-    return "2";                   // 상대 돌=막힘
-  }
-
-  function hasOpenThreeInDirFor(who, cx, cy, dx, dy){
-    const line = [];
-    for(let k=-4;k<=4;k++){
-      line.push(cellToCharFor(who, cx + k*dx, cy + k*dy));
-    }
-    const center = 4;
-
-    const p5 = [["0","1","1","1","0"]];
-    const p6 = [
-      ["0","1","1","0","1","0"],
-      ["0","1","0","1","1","0"]
-    ];
-
-    function matchAt(arr, pat, start){
-      for(let i=0;i<pat.length;i++){
-        if(arr[start+i] !== pat[i]) return false;
-      }
-      return true;
-    }
-
-    // 5칸 창: 0 111 0
-    for(let s=0; s<=line.length-5; s++){
-      if(center < s || center > s+4) continue;
-      if(matchAt(line, p5[0], s)){
-        const left = (s-1>=0) ? line[s-1] : "2";
-        const right = (s+5<line.length) ? line[s+5] : "2";
-        if(!(left==="1" || right==="1")) return true; // 4연속 착시 배제
-      }
-    }
-
-    // 6칸 창: 점프3
-    for(let s=0; s<=line.length-6; s++){
-      if(center < s || center > s+5) continue;
-      for(const pat of p6){
-        if(matchAt(line, pat, s)) return true;
-      }
-    }
-    return false;
-  }
-
-  function isDoubleThreeMoveFor(who, x, y){
-    if(board[y][x] !== 0) return false;
-
-    board[y][x] = who; // 임시 착수
-    const dirs = [[1,0],[0,1],[1,1],[1,-1]];
-    let cnt = 0;
-    for(const [dx,dy] of dirs){
-      if(hasOpenThreeInDirFor(who, x, y, dx, dy)) cnt++;
-    }
-    board[y][x] = 0; // 원복
-    return cnt >= 2;
-  }
-  // =========================
-  // 게임 종료 처리
-  // =========================
-  function endGame(type){
-    gameOver = true;
-
-    if(type === "win") results.push("W");
-    else if(type === "lose") results.push("L");
-    results = results.slice(-10);
-    adjustDifficulty();
-    saveState();
-
-    if(type === "win") openModal("승리! 🎉", "멧봉이 울고 감… 다시 한 판?");
-    else if(type === "lose") openModal("패배! 😵", "이번 멧봉이 좀 빡셌지… 다시 가자!");
-    else openModal("무승부! 🤝", "팽팽했다… 다시 가자!");
-  }
-
-  function place(x,y,who){
-    if(gameOver) return false;
-    if(board[y][x] !== 0) return false;
-
-    board[y][x] = who;
-    lastMove = { x, y, player: who };
-    draw();
-
-    if(isWin(x,y,who)){
-      setMsg(`${nameOf(who)} 승리!`);
-      endGame(who === PLAYER ? "win" : "lose");
-      return true;
-    }
-    if(isDraw()){
-      setMsg("무승부!");
-      endGame("draw");
-      return true;
-    }
-    return true;
-  }
-
-  function nextTurn(){
-    turn = (turn === PLAYER) ? AI : PLAYER;
-    setTurnUI();
-
-    if(gameOver) return;
-
-    if(turn === AI){
-      setMsg("멧봉이…");
-      setTimeout(() => {
-        if(gameOver) return;
-        const m = chooseAIMove();
-        if(!m){
-          openModal("오류!", "AI가 둘 곳을 못 찾았어. 다시하기 눌러줘!");
-          gameOver = true;
-          return;
-        }
-        place(m.x, m.y, AI);
-        if(!gameOver){
-          turn = PLAYER;
-          setTurnUI();
-          setMsg("여봉이 차례!");
-        }
-      }, AI_DELAY);
-    }else{
-      setMsg("여봉이 차례!");
-    }
-  }
-
-  function resetBoard(){
-    closeModal();
-
-    // ✅ 새 판 시작(플레이 상태)에서는 스크롤 고정
-    lockScroll(true);
-
-    board = Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
-    gameOver = false;
-    lastMove = null;
-    turn = firstPlayer;
-    setTurnUI();
-    saveState();
-    draw();
-
-    if(turn === AI){
-      setMsg("멧봉이 선공!");
-      setTimeout(() => {
-        const m = chooseAIMove();
-        if(m){
-          place(m.x, m.y, AI);
-          if(!gameOver){
-            turn = PLAYER;
-            setTurnUI();
-            setMsg("여봉이 차례!");
-          }
-        }
-      }, AI_DELAY);
-    }else{
-      setMsg("원하는 곳을 눌러 돌을 둬!");
-    }
-  }
-
-  // =========================
-  // 입력
-  // =========================
-  canvas.addEventListener("pointerdown", (e) => {
-    e.preventDefault();
-    if(!gameStarted) return;
-    if(gameOver) return;
-    if(turn !== PLAYER) return;
-
-  const pos = pointerToCell(e.clientX, e.clientY);
-   if (!pos) return;   // ✅ 보드 밖 터치 무시
-
-   const { x, y } = pos;
-
-    // ✅ 33이면 막기 + 1.5초 토스트
-   if(isDoubleThreeMoveFor(PLAYER, x, y)){
-      showToast33("33은 안돼!", 1500);
-      setMsg("33은 금지야!");
-      return;
-    }
-
-    const ok = place(x,y,PLAYER);
-    if(!ok) return;
-    if(!gameOver) nextTurn();
-  }, { passive:false });
-
-  canvas.addEventListener("contextmenu", (e) => e.preventDefault());
-
-  resetBtn.addEventListener("click", () => resetBoard());
-  toggleFirstBtn.addEventListener("click", () => {
-    firstPlayer = (firstPlayer === PLAYER) ? AI : PLAYER;
-    saveState();
-    resetBoard();
-  });
-
-  modalRestartBtn.addEventListener("click", () => resetBoard());
-  modalCloseBtn.addEventListener("click", () => closeModal());
-
-  // start modal selection
-  let startFirst = "PLAYER";
-  startChoices.addEventListener("click", (e) => {
-    const item = e.target.closest(".choice");
-    if(!item) return;
-    startFirst = item.dataset.first === "AI" ? "AI" : "PLAYER";
-    startChoices.querySelectorAll(".choice").forEach(el => el.classList.remove("active"));
-    item.classList.add("active");
-  });
-
-  startBtn.addEventListener("click", () => {
-    firstPlayer = (startFirst === "AI") ? AI : PLAYER;
-    saveState();
-    gameStarted = true;
-    setControlsEnabled(true);
-    closeStartModal();
-    resetBoard();
-  });
-
-  // init
-  gameStarted = false;
-  setControlsEnabled(false);
-  setTurnUI();
-  drawGrid();
-  setMsg("선공을 선택하고 시작하기 눌러줘!");
-  lockScroll(false);
-  openStartModal();
-
-   /* ✅ 화면 크기 변경 시 캔버스 재계산 */
-  window.addEventListener("resize", () => {
-  updateMetrics();
-  draw();
-});
-  
-})();
-</script>
+        <a href="/privacy/">개인정보처리방침</a>
+        <span class="sep">·</span>
+        <a href="/terms/">이용약관</a>
+        <span class="sep">·</span>
+        <a href="/contact/">문의</a>
+      </div>
+    </footer>
+  </main>
 </body>
 </html>
