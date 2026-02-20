@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>여봉이 뽑기</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #f3f6fb;
+      color: #1f2937;
+    }
+    .hidden { display: none !important; }
+    .panel {
+      background: #ffffff;
+      border: 1px solid #dbe3ee;
+      border-radius: 10px;
+      padding: 14px;
+      box-shadow: 0 4px 14px rgba(30, 41, 59, 0.05);
+    }
+    .setup-screen {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .setup-head {
+      margin-bottom: 10px;
+    }
+    .setup-head h1 {
+      margin: 0 0 4px 0;
+      font-size: 28px;
+    }
+    .setup-head p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .setup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .field {
+      margin-bottom: 10px;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: #374151;
+      font-weight: 600;
+    }
+    .field input,
+    .field select {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 14px;
+      background: #fff;
+    }
+    .switch-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 28px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .rank-box {
+      margin-top: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .rank-row {
+      display: grid;
+      grid-template-columns: 120px 100px 120px 1fr 82px;
+      gap: 8px;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid #eef0f2;
+      background: #fbfcff;
+    }
+    .rank-row:last-child { border-bottom: none; }
+    .rank-row input,
+    .rank-row select {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+      padding: 8px;
+      font-size: 13px;
+    }
+    .rank-row button {
+      border: none;
+      border-radius: 7px;
+      padding: 8px;
+      background: #e5e7eb;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .setup-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .setup-actions button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    #addRankBtn { background: #e8edf5; color: #1f2937; }
+    #startGameBtn { background: #2563eb; color: #fff; }
+    .setup-note {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 16px;
+    }
+    .page.left-hidden {
+      grid-template-columns: 1fr;
+    }
+    .app-head {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-gate-btn {
+      grid-column: 1;
+      justify-self: start;
+      border: 1px solid #cdd7e5;
+      background: #f8fbff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+    }
+    .admin-gate-btn:hover {
+      background: #edf3fb;
+    }
+    .app-head h1 {
+      margin: 0;
+      font-family: "Black Han Sans", "Malgun Gothic", sans-serif;
+      font-size: 38px;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      color: #111827;
+      grid-column: 2;
+      justify-self: center;
+    }
+    .title-with-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .title-side-icon {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #e5e7eb;
+      flex-shrink: 0;
+    }
+    .head-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      grid-column: 3;
+      justify-self: end;
+    }
+    .head-actions button {
+      border: 1px solid #cdd7e5;
+      background: #f8fbff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .head-actions button:hover {
+      background: #edf3fb;
+    }
+    .draw-entry-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 30;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #0f172a !important;
+      color: #f8fafc;
+      border-color: #0b1220 !important;
+      box-shadow:
+        0 12px 24px rgba(15, 23, 42, 0.35),
+        0 0 0 3px rgba(255, 255, 255, 0.72);
+      height: 58px;
+      padding: 0 18px 0 0 !important;
+      font-size: 18px !important;
+      font-weight: 800 !important;
+      border-radius: 999px !important;
+      overflow: hidden;
+    }
+    .draw-entry-btn:hover {
+      background: #020617 !important;
+      transform: translateY(-1px);
+    }
+    .draw-entry-btn img {
+      width: 58px;
+      height: 100%;
+      border-radius: 999px 0 0 999px;
+      object-fit: cover;
+      background: transparent;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    h2 {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+    }
+    .remain-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 13px;
+    }
+    .remain-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 10px;
+      border-bottom: 1px solid #eef0f2;
+      background: #f5f8fd;
+    }
+    .remain-list li:last-child {
+      border-bottom: none;
+    }
+    .remain-list .label {
+      color: #374151;
+    }
+    .remain-list .value {
+      font-weight: 700;
+      color: #1f2937;
+    }
+    .result {
+      margin-top: 12px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 10px;
+      display: flex;
+      align-items: center;
+      min-height: 70px;
+    }
+    .admin-toggle-wrap {
+      margin-top: 10px;
+      border-top: 1px dashed #d7dee8;
+      padding-top: 10px;
+    }
+    .admin-fold-btn,
+    .admin-toggle-btn,
+    .admin-action-btn {
+      border: 1px dashed #9fb1c9;
+      background: #f5f8fc;
+      color: #3f4f66;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .admin-controls {
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    .admin-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .admin-row select {
+      flex: 1;
+      min-width: 110px;
+      border: 1px solid #c8d4e4;
+      border-radius: 7px;
+      padding: 7px 8px;
+      font-size: 12px;
+      background: #fff;
+    }
+    .result .rank {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .result .name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .grid-wrap {
+      display: flex;
+      flex-direction: column;
+      min-height: 400px;
+      height: calc(100vh - 90px);
+    }
+    .grid {
+      flex: 1;
+      border: 1px solid #b9c9b0;
+      border-radius: 10px;
+      background: #cdddbf;
+      padding: 8px;
+      display: grid;
+      gap: 4px;
+      overflow: auto;
+    }
+    .cell {
+      position: relative;
+      border-radius: 6px;
+      border: 1px solid #9eac95;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #5b6571;
+      user-select: none;
+      cursor: pointer;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.55) inset,
+        0 1px 2px rgba(51, 65, 45, 0.2);
+      text-shadow: 0 1px 0 #fff;
+      overflow: hidden;
+    }
+    .cell-char {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center center;
+      border-radius: inherit;
+      opacity: 1;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .cell-rank-label {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+      font-weight: 800;
+      font-size: 11px;
+      color: #1f2937;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.55);
+    }
+    .cell[data-rank="1등"] .cell-rank-label {
+      background: rgba(249, 115, 22, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="2등"] .cell-rank-label {
+      background: rgba(239, 68, 68, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="3등"] .cell-rank-label {
+      background: rgba(245, 158, 11, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="4등"] .cell-rank-label {
+      background: rgba(34, 197, 94, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="5등"] .cell-rank-label {
+      background: rgba(59, 130, 246, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="꽝"] .cell-rank-label {
+      background: rgba(107, 114, 128, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 7px;
+      height: 7px;
+      background: linear-gradient(135deg, transparent 49%, #dce7d5 50%);
+      border-top-right-radius: 5px;
+    }
+    .cell.opened {
+      border: 1px solid #9ea8b4;
+      background:
+        linear-gradient(160deg, rgba(210,216,224,0.98) 0%, rgba(188,196,206,1) 70%),
+        repeating-linear-gradient(0deg, rgba(142,152,166,0.2) 0 1px, transparent 1px 4px);
+      color: #394150;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+    .cell.opened .cell-char,
+    .cell.opened .cell-rank-label {
+      display: none;
+    }
+    .cell.opened::after { display: none; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 20;
+    }
+    .modal.hidden { display: none; }
+    .modal-card {
+      width: 100%;
+      max-width: 640px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.28);
+      padding: 24px;
+      text-align: center;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .modal-card > * {
+      position: relative;
+      z-index: 2;
+    }
+    .modal-title {
+      margin: 0 0 14px 0;
+      font-size: 30px;
+      font-family: "Black Han Sans", "Malgun Gothic", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      color: #111827;
+    }
+    .draw-paper {
+      margin: 0 auto 16px auto;
+      width: 320px;
+      height: 210px;
+      border-radius: 14px;
+      border: 2px solid #93a8c5;
+      position: relative;
+      overflow: hidden;
+      touch-action: none;
+      background: #eef2f7;
+      box-shadow:
+        0 0 0 3px rgba(255,255,255,0.72),
+        0 10px 20px rgba(15, 23, 42, 0.2);
+    }
+    .draw-reveal-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: inherit;
+      z-index: 1;
+      pointer-events: none;
+      background: #ffffff;
+    }
+    .draw-scratch-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      cursor: crosshair;
+      border-radius: inherit;
+    }
+    .modal-info {
+      margin: 0 0 16px 0;
+      color: #6b7280;
+      font-size: 18px;
+    }
+    .scratch-debug {
+      margin: -8px 0 12px 0;
+      font-size: 12px;
+      color: #9ca3af;
+      min-height: 14px;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+    }
+    #drawCancelBtn,
+    #resultCloseBtn {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    #drawCancelBtn { background: #2563eb; color: #fff; }
+    #resultCloseBtn { background: #2563eb; color: #fff; }
+    .result-modal-card {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.28);
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .result-modal-card > * {
+      position: relative;
+      z-index: 2;
+    }
+    .modal-bg-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      opacity: 0.28;
+      pointer-events: none;
+      z-index: 1;
+      filter: saturate(0.95);
+    }
+    .result-modal-title {
+      margin: 0 0 14px 0;
+      font-size: 34px;
+      font-weight: 800;
+      color: #111827;
+    }
+    .result-modal-image-wrap {
+      width: 240px;
+      height: 240px;
+      margin: 0 auto 14px auto;
+      border-radius: 12px;
+      border: 2px solid #93a8c5;
+      background: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 3px rgba(255,255,255,0.72),
+        0 8px 18px rgba(15, 23, 42, 0.16);
+    }
+    .result-modal-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .result-modal-note {
+      margin: 0 0 14px 0;
+      color: #6b7280;
+      font-size: 16px;
+    }
+    .result-modal-autoclose {
+      margin: -4px 0 12px 0;
+      color: #9ca3af;
+      font-size: 12px;
+    }
+    @media (max-width: 920px) {
+      .setup-grid { grid-template-columns: 1fr; }
+      .rank-row { grid-template-columns: 1fr; }
+      .page { grid-template-columns: 1fr; }
+      .grid-wrap { height: auto; }
+      .app-head {
+        grid-template-columns: 1fr;
+      }
+      .app-head h1 {
+        grid-column: 1;
+        justify-self: center;
+      }
+      .admin-gate-btn {
+        grid-column: 1;
+        justify-self: center;
+      }
+      .head-actions {
+        grid-column: 1;
+        justify-self: center;
+      }
+      .draw-entry-btn {
+        right: 14px;
+        bottom: 14px;
+        justify-content: center;
+        min-width: 170px;
+        height: 64px;
+        padding: 0 18px 0 0 !important;
+        font-size: 20px !important;
+      }
+      .draw-entry-btn img {
+        width: 64px;
+        height: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="setup-screen panel" id="setupScreen">
+    <div class="setup-head">
+      <h1>여봉이 뽑기 설정</h1>
+      <p>처음 실행 시 설정을 완료하면 뽑기 화면으로 이동합니다.</p>
+    </div>
+
+    <div class="setup-grid">
+      <div class="field">
+        <label for="setupCols">가로 칸 수</label>
+        <input id="setupCols" type="number" min="1" max="15" value="15" />
+      </div>
+      <div class="field">
+        <label for="setupRows">세로 칸 수</label>
+        <input id="setupRows" type="number" min="1" value="30" />
+      </div>
+    </div>
+    <div class="field">
+      <label for="setupAdminPassword">관리자 비밀번호 (기본 0000)</label>
+      <input id="setupAdminPassword" type="text" inputmode="numeric" pattern="[0-9]*" value="0000" />
+    </div>
+
+    <label class="switch-field">
+      <input id="includeMiss" type="checkbox" />
+      꽝 포함하기
+    </label>
+
+    <div class="rank-box" id="rankRows"></div>
+    <div class="setup-actions">
+      <button id="addRankBtn" type="button">등수 추가</button>
+      <button id="startGameBtn" type="button">설정 저장 후 시작</button>
+    </div>
+    <p class="setup-note">
+      각 등수는 수량(개수) 또는 퍼센트(%)로 설정할 수 있습니다. 꽝 포함 시 남는 수량은 꽝에 자동 추가됩니다.
+    </p>
+  </section>
+
+  <div class="page hidden" id="gameScreen">
+    <div class="app-head">
+      <button id="toggleStatusBtn" class="admin-gate-btn" type="button">관리자 외 출입금지</button>
+      <h1 class="title-with-icons">
+        <img class="title-side-icon" src="assets/title-left.png" alt="왼쪽 캐릭터" />
+        <span>멧봉이의 랜덤뽑기</span>
+        <img class="title-side-icon" src="assets/title-right.png" alt="오른쪽 캐릭터" />
+      </h1>
+      <div class="head-actions">
+        <button id="openDrawBtn" class="draw-entry-btn" type="button">
+          <img id="openDrawBtnImage" src="assets/draw-button.png" alt="캐릭터" />
+          랜덤 뽑기
+        </button>
+      </div>
+    </div>
+
+    <section class="panel" id="statusPanel">
+      <h2>관리자 메뉴</h2>
+      <ul class="remain-list" id="remainingList"></ul>
+      <div class="admin-toggle-wrap">
+        <div id="adminControls" class="admin-controls">
+          <button id="adminToggleBtn" class="admin-toggle-btn" type="button">결과 표시 버튼 OFF</button>
+          <button id="adminShuffleBtn" class="admin-action-btn" type="button">섞기</button>
+          <div class="admin-row">
+            <select id="adminAddRankSelect"></select>
+            <button id="adminAddRankBtn" class="admin-action-btn" type="button">결과 추가하기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel grid-wrap">
+      <div id="grid" class="grid"></div>
+    </section>
+  </div>
+
+  <div class="modal hidden" id="drawModal">
+    <div class="modal-card">
+      <!-- <img class="modal-bg-image" id="drawModalBgImage" src="assets/draw-modal-bg.png" alt="" /> -->
+      <h3 class="modal-title">여봉이의 스피또</h3>
+      <div class="draw-paper" id="drawPaper">
+        <img class="draw-reveal-image" id="drawRevealImage" src="" alt="뽑기 결과 미리보기" />
+        <canvas class="draw-scratch-canvas" id="drawScratchCanvas"></canvas>
+      </div>
+      <p class="modal-info" id="modalInfo">동전으로 긁듯이 문질러 결과를 확인하세요.</p>
+      <p class="scratch-debug" id="scratchDebugText">긁어서 확인해주세요.</p>
+      <div class="modal-actions">
+        <button id="drawCancelBtn" type="button">취소</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="resultModal">
+    <div class="result-modal-card">
+      <!-- <img class="modal-bg-image" id="resultModalBgImage" src="assets/result-modal-bg.png" alt="" /> -->
+      <h3 class="result-modal-title" id="resultModalTitle">결과</h3>
+      <div class="result-modal-image-wrap">
+        <img class="result-modal-image" id="resultModalImage" alt="결과 이미지" />
+      </div>
+      <p class="result-modal-note" id="resultModalNote">결과를 확인하세요.</p>
+      <p class="result-modal-autoclose" id="resultAutoCloseText">1분 후 자동으로 닫힙니다.</p>
+      <button id="resultCloseBtn" type="button">닫기</button>
+    </div>
+  </div>
+
+  <script>
+    const setupScreenEl = document.getElementById("setupScreen");
+    const gameScreenEl = document.getElementById("gameScreen");
+    const setupColsEl = document.getElementById("setupCols");
+    const setupRowsEl = document.getElementById("setupRows");
+    const setupAdminPasswordEl = document.getElementById("setupAdminPassword");
+    const includeMissEl = document.getElementById("includeMiss");
+    const rankRowsEl = document.getElementById("rankRows");
+    const addRankBtnEl = document.getElementById("addRankBtn");
+    const startGameBtnEl = document.getElementById("startGameBtn");
+    const openDrawBtnEl = document.getElementById("openDrawBtn");
+    const toggleStatusBtnEl = document.getElementById("toggleStatusBtn");
+    const adminControlsEl = document.getElementById("adminControls");
+    const adminToggleBtnEl = document.getElementById("adminToggleBtn");
+    const adminShuffleBtnEl = document.getElementById("adminShuffleBtn");
+    const adminAddRankSelectEl = document.getElementById("adminAddRankSelect");
+    const adminAddRankBtnEl = document.getElementById("adminAddRankBtn");
+    const statusPanelEl = document.getElementById("statusPanel");
+    const pageRootEl = document.getElementById("gameScreen");
+    const remainingListEl = document.getElementById("remainingList");
+    const gridEl = document.getElementById("grid");
+
+    const drawModalEl = document.getElementById("drawModal");
+    const drawPaperEl = document.getElementById("drawPaper");
+    const drawRevealImageEl = document.getElementById("drawRevealImage");
+    const drawScratchCanvasEl = document.getElementById("drawScratchCanvas");
+    const modalInfoEl = document.getElementById("modalInfo");
+    const scratchDebugTextEl = document.getElementById("scratchDebugText");
+    const drawCancelBtnEl = document.getElementById("drawCancelBtn");
+
+    const resultModalEl = document.getElementById("resultModal");
+    const resultModalTitleEl = document.getElementById("resultModalTitle");
+    const resultModalImageEl = document.getElementById("resultModalImage");
+    const resultModalNoteEl = document.getElementById("resultModalNote");
+    const resultAutoCloseTextEl = document.getElementById("resultAutoCloseText");
+    const resultCloseBtnEl = document.getElementById("resultCloseBtn");
+
+    let drawPool = [];
+    let remaining = {};
+    let rankOrder = [];
+    let rankImageByName = {};
+    let cols = 15;
+    let rows = 30;
+    let totalTickets = 450;
+    let selectedCell = null;
+    let selectedCellIndex = 0;
+    let isDrawing = false;
+    let scratchContext = null;
+    let scratchActive = false;
+    let currentDrawRank = null;
+    let drawCommitted = false;
+    let scratchMoveCount = 0;
+    let scratchCoverage = null;
+    let scratchCoverageCount = 0;
+    let lastScratchX = null;
+    let lastScratchY = null;
+    let lastScratchCheckAt = 0;
+    let resultAutoCloseTimer = null;
+    let resultAutoCloseInterval = null;
+    let isAdminMode = false;
+    let adminPassword = "0000";
+    const ADMIN_MASTER_PASSWORD = "0626";
+    const PAPER_CELL_IMAGE = "assets/paper-button.png";
+    const DRAW_MODAL_PAPER_IMAGE = "assets/draw-modal.png";
+    const SCRATCH_REVEAL_THRESHOLD = 60;
+    const SCRATCH_BRUSH_RADIUS = 28;
+    const SCRATCH_COVERAGE_COLS = 72;
+    const SCRATCH_COVERAGE_ROWS = 48;
+    const scratchCoverImage = new Image();
+    scratchCoverImage.src = DRAW_MODAL_PAPER_IMAGE;
+
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+      }
+    }
+
+    function createRankRow(data, lockName) {
+      const row = document.createElement("div");
+      row.className = "rank-row";
+      row.innerHTML =
+        '<input type="text" class="rank-name" placeholder="등수명 (예: 1등)" />' +
+        '<select class="rank-mode"><option value="count">개수</option><option value="percent">퍼센트(%)</option></select>' +
+        '<input type="number" class="rank-value" min="0" step="0.1" placeholder="값" />' +
+        '<input type="text" class="rank-image" placeholder="결과 모달 이미지 경로" />' +
+        '<button type="button" class="rank-remove">삭제</button>';
+
+      row.querySelector(".rank-name").value = data.name || "";
+      row.querySelector(".rank-mode").value = data.mode || "count";
+      row.querySelector(".rank-value").value = String(data.value || 0);
+      row.querySelector(".rank-image").value = data.image || "";
+
+      if (lockName) {
+        row.querySelector(".rank-name").readOnly = true;
+        row.querySelector(".rank-name").style.background = "#f3f4f6";
+      }
+      if (lockName && data.name === "꽝") {
+        row.dataset.miss = "true";
+      }
+      row.querySelector(".rank-remove").addEventListener("click", () => {
+        if (row.dataset.miss === "true") {
+          includeMissEl.checked = false;
+        }
+        row.remove();
+      });
+      rankRowsEl.appendChild(row);
+      return row;
+    }
+
+    function ensureMissRow() {
+      const existing = rankRowsEl.querySelector('[data-miss="true"]');
+      if (includeMissEl.checked && !existing) {
+        createRankRow({ name: "꽝", mode: "count", value: 0, image: "ranks/miss.png" }, true);
+      }
+      if (!includeMissEl.checked && existing) {
+        existing.remove();
+      }
+    }
+
+    function loadDefaultRows() {
+      rankRowsEl.innerHTML = "";
+      createRankRow({ name: "1등", mode: "count", value: 1, image: "ranks/rank1.png" }, false);
+      createRankRow({ name: "2등", mode: "count", value: 3, image: "ranks/rank2.png" }, false);
+      createRankRow({ name: "3등", mode: "percent", value: 5, image: "ranks/rank3.png" }, false);
+      createRankRow({ name: "4등", mode: "percent", value: 10, image: "ranks/rank4.png" }, false);
+      createRankRow({ name: "5등", mode: "percent", value: 20, image: "ranks/rank5.png" }, false);
+      ensureMissRow();
+    }
+
+    function parseRankSettings() {
+      const rankRows = Array.from(rankRowsEl.querySelectorAll(".rank-row"));
+      const parsed = [];
+      rankRows.forEach((row) => {
+        const name = row.querySelector(".rank-name").value.trim();
+        const mode = row.querySelector(".rank-mode").value;
+        const value = parseFloat(row.querySelector(".rank-value").value || "0");
+        const image = row.querySelector(".rank-image").value.trim();
+        if (!name) return;
+        parsed.push({ name, mode, value: Number.isFinite(value) ? value : 0, image, isMiss: row.dataset.miss === "true" });
+      });
+      return parsed;
+    }
+
+    function buildGameConfigFromSetting() {
+      cols = Math.min(15, Math.max(1, parseInt(setupColsEl.value || "0", 10) || 1));
+      rows = Math.max(1, parseInt(setupRowsEl.value || "0", 10) || 1);
+      setupColsEl.value = String(cols);
+      setupRowsEl.value = String(rows);
+      totalTickets = cols * rows;
+
+      const ranks = parseRankSettings();
+      if (ranks.length === 0) {
+        alert("최소 1개 이상의 등수를 추가해 주세요.");
+        return null;
+      }
+
+      const counts = [];
+      let sum = 0;
+      ranks.forEach((r) => {
+        const amount = r.mode === "percent"
+          ? Math.floor(totalTickets * (Math.max(0, r.value) / 100))
+          : Math.floor(Math.max(0, r.value));
+        counts.push({ name: r.name, count: amount, image: r.image, isMiss: r.isMiss });
+        sum += amount;
+      });
+
+      if (sum > totalTickets) {
+        alert("설정된 수량/확률 합계가 전체 칸 수보다 큽니다.");
+        return null;
+      }
+
+      const missRow = counts.find((c) => c.isMiss || c.name === "꽝");
+      const remains = totalTickets - sum;
+      if (includeMissEl.checked) {
+        if (missRow) {
+          missRow.count += remains;
+        } else {
+          counts.push({ name: "꽝", count: remains, image: "ranks/miss.png", isMiss: true });
+        }
+      } else if (remains > 0) {
+        // 꽝 미포함이면 마지막 등수가 남은 수량을 모두 가져가도록 처리
+        const lastIndex = counts.length - 1;
+        if (lastIndex < 0) {
+          alert("최소 1개 이상의 등수를 추가해 주세요.");
+          return null;
+        }
+        counts[lastIndex].count += remains;
+      }
+
+      if (!counts.some((c) => c.count > 0)) {
+        alert("최소 1개 이상의 당첨/꽝 수량이 필요합니다.");
+        return null;
+      }
+
+      return counts.filter((c) => c.count > 0);
+    }
+
+    function buildPoolAndRemaining(configs) {
+      drawPool = [];
+      remaining = {};
+      rankOrder = [];
+      rankImageByName = {};
+
+      configs.forEach((cfg) => {
+        rankOrder.push(cfg.name);
+        remaining[cfg.name] = cfg.count;
+        rankImageByName[cfg.name] = cfg.image || "";
+        for (let i = 0; i < cfg.count; i++) {
+          drawPool.push(cfg.name);
+        }
+      });
+      shuffleArray(drawPool);
+    }
+
+    function getRemainingTotal() {
+      return Object.values(remaining).reduce((sum, n) => sum + (n || 0), 0);
+    }
+
+    function renderRemainingPanel() {
+      remainingListEl.innerHTML = "";
+      const totalLi = document.createElement("li");
+      totalLi.innerHTML = '<span class="label">뽑기 남은 개수</span><span class="value">' + getRemainingTotal() + "</span>";
+      remainingListEl.appendChild(totalLi);
+
+      rankOrder.forEach((rank) => {
+        const li = document.createElement("li");
+        li.innerHTML = '<span class="label">' + rank + ' 남은 횟수</span><span class="value">' + (remaining[rank] || 0) + "</span>";
+        remainingListEl.appendChild(li);
+      });
+    }
+
+    function createGrid() {
+      gridEl.innerHTML = "";
+      gridEl.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
+      if (rows <= 30) {
+        // 30줄 미만일 때는 버튼 높이를 늘려 빈 공간 없이 채움
+        gridEl.style.gridTemplateRows = "repeat(" + rows + ", minmax(0, 1fr))";
+        gridEl.style.gridAutoRows = "";
+        gridEl.style.overflowY = "hidden";
+      } else {
+        // 30줄 초과 시에는 스크롤 가능하도록 고정 높이 행 사용
+        gridEl.style.gridTemplateRows = "";
+        gridEl.style.gridAutoRows = "22px";
+        gridEl.style.overflowY = "auto";
+      }
+      const total = cols * rows;
+      for (let i = 1; i <= total; i++) {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.dataset.rank = drawPool[i - 1] || "";
+
+        const charImg = document.createElement("img");
+        charImg.className = "cell-char";
+        charImg.src = PAPER_CELL_IMAGE;
+        charImg.alt = "";
+
+        const rankLabel = document.createElement("span");
+        rankLabel.className = "cell-rank-label";
+        rankLabel.textContent = cell.dataset.rank;
+
+        cell.appendChild(charImg);
+        cell.appendChild(rankLabel);
+        cell.dataset.opened = "false";
+        cell.title = i + "번 칸";
+        cell.addEventListener("click", () => {
+          if (cell.dataset.opened === "true") return;
+          openDrawModal(cell, i);
+        });
+        gridEl.appendChild(cell);
+      }
+      applyAdminModeToGrid();
+    }
+
+    function applyAdminModeToGrid() {
+      Array.from(gridEl.children).forEach((cell) => {
+        if (cell.dataset.opened === "true") return;
+        const img = cell.querySelector(".cell-char");
+        const label = cell.querySelector(".cell-rank-label");
+        if (!img || !label) return;
+        label.textContent = cell.dataset.rank || "-";
+        img.style.display = isAdminMode ? "none" : "block";
+        label.style.display = isAdminMode ? "flex" : "none";
+      });
+      adminToggleBtnEl.textContent = isAdminMode ? "결과 표시 버튼 ON" : "결과 표시 버튼 OFF";
+    }
+
+    function closeAdminPanel() {
+      statusPanelEl.style.display = "none";
+      pageRootEl.classList.add("left-hidden");
+      toggleStatusBtnEl.textContent = "관리자 외 출입금지";
+      if (isAdminMode) {
+        isAdminMode = false;
+        applyAdminModeToGrid();
+      }
+    }
+
+    function openAdminPanel() {
+      statusPanelEl.style.display = "";
+      pageRootEl.classList.remove("left-hidden");
+      toggleStatusBtnEl.textContent = "관리자 메뉴 닫기";
+    }
+
+    function getAdminSourceRankForReplacement() {
+      if (rankOrder.includes("꽝")) return "꽝";
+      if (rankOrder.length === 0) return null;
+      return rankOrder[rankOrder.length - 1];
+    }
+
+    function updateAdminAddRankOptions() {
+      const sourceRank = getAdminSourceRankForReplacement();
+      adminAddRankSelectEl.innerHTML = "";
+      const candidates = rankOrder.filter((rank) => rank !== sourceRank);
+      candidates.forEach((rank) => {
+        const option = document.createElement("option");
+        option.value = rank;
+        option.textContent = rank;
+        adminAddRankSelectEl.appendChild(option);
+      });
+      if (candidates.length === 0) {
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "추가 가능한 등수 없음";
+        adminAddRankSelectEl.appendChild(option);
+      }
+    }
+
+    function shuffleUnopenedResults() {
+      const unopenedCells = Array.from(gridEl.children).filter((cell) => cell.dataset.opened !== "true");
+      if (unopenedCells.length <= 1) return;
+      const ranks = unopenedCells.map((cell) => cell.dataset.rank || "");
+      shuffleArray(ranks);
+      unopenedCells.forEach((cell, idx) => {
+        cell.dataset.rank = ranks[idx] || "";
+      });
+      applyAdminModeToGrid();
+    }
+
+    function addResultByAdmin() {
+      const targetRank = adminAddRankSelectEl.value;
+      if (!targetRank) return;
+      const sourceRank = getAdminSourceRankForReplacement();
+      if (!sourceRank || sourceRank === targetRank) return;
+      const candidates = Array.from(gridEl.children).filter(
+        (cell) => cell.dataset.opened !== "true" && cell.dataset.rank === sourceRank
+      );
+      if (candidates.length === 0) {
+        alert("변경 가능한 대상 결과가 없습니다.");
+        return;
+      }
+      const picked = candidates[Math.floor(Math.random() * candidates.length)];
+      picked.dataset.rank = targetRank;
+      if (remaining[sourceRank] > 0) remaining[sourceRank] -= 1;
+      if (!remaining[targetRank]) remaining[targetRank] = 0;
+      remaining[targetRank] += 1;
+      renderRemainingPanel();
+      applyAdminModeToGrid();
+    }
+
+    function openDrawModalFromButton() {
+      const unopenedCells = Array.from(gridEl.children).filter((cell) => cell.dataset.opened !== "true");
+      if (unopenedCells.length === 0) {
+        alert("더 이상 뽑을 종이가 없습니다.");
+        return;
+      }
+      const pickedIndex = Math.floor(Math.random() * unopenedCells.length);
+      const cell = unopenedCells[pickedIndex];
+      const allCells = Array.from(gridEl.children);
+      const index = allCells.indexOf(cell) + 1;
+      openDrawModal(cell, index);
+    }
+
+    function applyResultToCell(cell, index, rank) {
+      if (!cell) return;
+      cell.dataset.opened = "true";
+      cell.classList.add("opened");
+      cell.textContent = "";
+      cell.title = index + "번 칸 (" + (rank || "종료") + ")";
+    }
+
+    function openDrawModal(cell, index) {
+      selectedCell = cell;
+      selectedCellIndex = index;
+      drawCommitted = false;
+      currentDrawRank = cell.dataset.rank || null;
+      modalInfoEl.textContent = "동전으로 긁듯이 문질러 결과를 확인하세요.";
+      drawModalEl.classList.remove("hidden");
+      window.requestAnimationFrame(() => {
+        prepareScratchCard(currentDrawRank);
+      });
+    }
+
+    function closeDrawModal(forceClose) {
+      if (isDrawing && !forceClose) return;
+      drawModalEl.classList.add("hidden");
+      scratchActive = false;
+      currentDrawRank = null;
+      selectedCell = null;
+      selectedCellIndex = 0;
+    }
+
+    function prepareScratchCard(rank) {
+      const revealImage = rankImageByName[rank || ""] || "";
+      drawRevealImageEl.src = revealImage;
+      drawRevealImageEl.style.display = revealImage ? "block" : "none";
+
+      const rect = drawPaperEl.getBoundingClientRect();
+      const width = rect.width > 0 ? rect.width : 320;
+      const height = rect.height > 0 ? rect.height : 210;
+      const dpr = window.devicePixelRatio || 1;
+      drawScratchCanvasEl.width = Math.floor(width * dpr);
+      drawScratchCanvasEl.height = Math.floor(height * dpr);
+      drawScratchCanvasEl.style.width = width + "px";
+      drawScratchCanvasEl.style.height = height + "px";
+
+      scratchContext = drawScratchCanvasEl.getContext("2d");
+      if (!scratchContext) return;
+      scratchContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+      scratchContext.globalCompositeOperation = "source-over";
+
+      const w = width;
+      const h = height;
+      const pattern = scratchContext.createLinearGradient(0, 0, w, h);
+      pattern.addColorStop(0, "#b8c0cc");
+      pattern.addColorStop(0.5, "#8f98a8");
+      pattern.addColorStop(1, "#c4cbd6");
+      scratchContext.fillStyle = pattern;
+      scratchContext.fillRect(0, 0, w, h);
+
+      if (scratchCoverImage.complete && scratchCoverImage.naturalWidth > 0) {
+        scratchContext.globalAlpha = 0.92;
+        scratchContext.drawImage(scratchCoverImage, 0, 0, w, h);
+        scratchContext.globalAlpha = 1;
+      }
+
+      scratchContext.strokeStyle = "rgba(255,255,255,0.25)";
+      scratchContext.lineWidth = 2;
+      for (let y = 6; y < h; y += 8) {
+        scratchContext.beginPath();
+        scratchContext.moveTo(0, y);
+        scratchContext.lineTo(w, y);
+        scratchContext.stroke();
+      }
+      scratchContext.fillStyle = "rgba(255,255,255,0.75)";
+      scratchContext.font = "700 20px Segoe UI";
+      scratchContext.textAlign = "center";
+      scratchContext.fillText("긁어보세요", w / 2, h / 2 + 8);
+
+      scratchContext.globalCompositeOperation = "destination-out";
+      scratchMoveCount = 0;
+      scratchCoverage = new Uint8Array(SCRATCH_COVERAGE_COLS * SCRATCH_COVERAGE_ROWS);
+      scratchCoverageCount = 0;
+      lastScratchX = null;
+      lastScratchY = null;
+      lastScratchCheckAt = 0;
+      scratchDebugTextEl.textContent = "긁어서 확인해주세요.";
+      drawCancelBtnEl.textContent = "취소";
+    }
+
+    function hasScratchProgress() {
+      return scratchMoveCount > 0 || scratchCoverageCount > 0;
+    }
+
+    function updateDrawActionState() {
+      drawCancelBtnEl.textContent = hasScratchProgress() ? "결과" : "취소";
+    }
+
+    function openResultModal(rank, revealedImageSrc) {
+      const resultRank = rank || "결과";
+      resultModalTitleEl.textContent = resultRank;
+      resultModalImageEl.src = revealedImageSrc || rankImageByName[resultRank] || "";
+      resultModalImageEl.alt = resultRank + " 이미지";
+      resultModalImageEl.style.display = resultModalImageEl.src ? "block" : "none";
+      resultModalNoteEl.textContent = "축하합니다.";
+      resultModalEl.classList.remove("hidden");
+
+      if (resultAutoCloseTimer) {
+        clearTimeout(resultAutoCloseTimer);
+      }
+      if (resultAutoCloseInterval) {
+        clearInterval(resultAutoCloseInterval);
+      }
+      let remainingSeconds = 60;
+      resultAutoCloseTextEl.textContent = "자동 닫힘 " + remainingSeconds + "초";
+      resultAutoCloseInterval = window.setInterval(() => {
+        remainingSeconds -= 1;
+        if (remainingSeconds < 0) return;
+        resultAutoCloseTextEl.textContent = "자동 닫힘 " + remainingSeconds + "초";
+      }, 1000);
+      resultAutoCloseTimer = window.setTimeout(() => {
+        closeResultModal();
+      }, 60000);
+    }
+
+    function closeResultModal() {
+      resultModalEl.classList.add("hidden");
+      if (resultAutoCloseTimer) {
+        clearTimeout(resultAutoCloseTimer);
+        resultAutoCloseTimer = null;
+      }
+      if (resultAutoCloseInterval) {
+        clearInterval(resultAutoCloseInterval);
+        resultAutoCloseInterval = null;
+      }
+    }
+
+    function commitSwipeDraw() {
+      if (!selectedCell || isDrawing) return;
+      isDrawing = true;
+      drawCommitted = true;
+      const resolvedRank = currentDrawRank;
+      const revealedImageSrc = drawRevealImageEl.src;
+      if (resolvedRank && remaining[resolvedRank] > 0) {
+        remaining[resolvedRank] -= 1;
+      }
+      renderRemainingPanel();
+      applyResultToCell(selectedCell, selectedCellIndex, resolvedRank);
+      window.setTimeout(() => {
+        isDrawing = false;
+        closeDrawModal(true);
+        openResultModal(resolvedRank, revealedImageSrc);
+      }, 250);
+    }
+
+    function getScratchGuideText(percent) {
+      const shown = Math.max(0, Math.min(100, Math.round(percent)));
+      if (percent < 30) return "긁어서 확인해주세요. (" + shown + "%)";
+      if (percent < 60) return "조금만 더 긁어주세요 (" + shown + "%)";
+      return "결과를 확인중입니다. (" + shown + "%)";
+    }
+
+    function applyScratchStamp(x, y, rectWidth, rectHeight) {
+      scratchContext.beginPath();
+      scratchContext.arc(x, y, SCRATCH_BRUSH_RADIUS, 0, Math.PI * 2);
+      scratchContext.fill();
+      scratchMoveCount += 1;
+      if (!scratchCoverage) return;
+
+      const cx = (x / rectWidth) * SCRATCH_COVERAGE_COLS;
+      const cy = (y / rectHeight) * SCRATCH_COVERAGE_ROWS;
+      const rx = Math.max(1, (SCRATCH_BRUSH_RADIUS / rectWidth) * SCRATCH_COVERAGE_COLS);
+      const ry = Math.max(1, (SCRATCH_BRUSH_RADIUS / rectHeight) * SCRATCH_COVERAGE_ROWS);
+      const minX = Math.max(0, Math.floor(cx - rx));
+      const maxX = Math.min(SCRATCH_COVERAGE_COLS - 1, Math.ceil(cx + rx));
+      const minY = Math.max(0, Math.floor(cy - ry));
+      const maxY = Math.min(SCRATCH_COVERAGE_ROWS - 1, Math.ceil(cy + ry));
+
+      for (let gy = minY; gy <= maxY; gy++) {
+        for (let gx = minX; gx <= maxX; gx++) {
+          const nx = (gx + 0.5 - cx) / rx;
+          const ny = (gy + 0.5 - cy) / ry;
+          if ((nx * nx) + (ny * ny) > 1) continue;
+          const idx = gy * SCRATCH_COVERAGE_COLS + gx;
+          if (scratchCoverage[idx] === 0) {
+            scratchCoverage[idx] = 1;
+            scratchCoverageCount += 1;
+          }
+        }
+      }
+    }
+
+    function scratchAt(clientX, clientY) {
+      if (!scratchContext || isDrawing || drawCommitted) return;
+      const rect = drawScratchCanvasEl.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+
+      if (lastScratchX !== null && lastScratchY !== null) {
+        const dx = x - lastScratchX;
+        const dy = y - lastScratchY;
+        const dist = Math.sqrt((dx * dx) + (dy * dy));
+        const step = Math.max(2, SCRATCH_BRUSH_RADIUS * 0.45);
+        const points = Math.max(1, Math.ceil(dist / step));
+        for (let i = 1; i <= points; i++) {
+          const t = i / points;
+          const ix = lastScratchX + (dx * t);
+          const iy = lastScratchY + (dy * t);
+          applyScratchStamp(ix, iy, rect.width, rect.height);
+        }
+      } else {
+        applyScratchStamp(x, y, rect.width, rect.height);
+      }
+      lastScratchX = x;
+      lastScratchY = y;
+      updateDrawActionState();
+      const now = performance.now();
+      if (now - lastScratchCheckAt >= 70) {
+        lastScratchCheckAt = now;
+        const percent = getScratchRevealPercent();
+        scratchDebugTextEl.textContent = getScratchGuideText(percent);
+        if (percent >= SCRATCH_REVEAL_THRESHOLD) {
+          commitSwipeDraw();
+        }
+      }
+    }
+
+    function getScratchRevealPercent() {
+      if (!scratchCoverage || scratchCoverage.length === 0) return 0;
+      return (scratchCoverageCount / scratchCoverage.length) * 100;
+    }
+
+    function startScratch(event) {
+      if (isDrawing || drawCommitted) return;
+      scratchActive = true;
+      if (event.pointerId !== undefined && drawScratchCanvasEl.setPointerCapture) {
+        try {
+          drawScratchCanvasEl.setPointerCapture(event.pointerId);
+        } catch (error) {
+          // Ignore capture failure; window-level fallback handlers are also attached.
+        }
+      }
+      scratchAt(event.clientX, event.clientY);
+    }
+
+    function moveScratch(event) {
+      if (!scratchActive || isDrawing || drawCommitted) return;
+      scratchAt(event.clientX, event.clientY);
+    }
+
+    function endScratch() {
+      scratchActive = false;
+      const percent = getScratchRevealPercent();
+      updateDrawActionState();
+      scratchDebugTextEl.textContent = getScratchGuideText(percent);
+      if (!isDrawing && !drawCommitted && percent >= SCRATCH_REVEAL_THRESHOLD) {
+        commitSwipeDraw();
+      }
+    }
+
+    function startGameFromSetting() {
+      const config = buildGameConfigFromSetting();
+      if (!config) return;
+      adminPassword = (setupAdminPasswordEl.value || "").trim() || "0000";
+      buildPoolAndRemaining(config);
+      createGrid();
+      renderRemainingPanel();
+      updateAdminAddRankOptions();
+      setupScreenEl.classList.add("hidden");
+      gameScreenEl.classList.remove("hidden");
+      closeAdminPanel();
+    }
+
+    includeMissEl.addEventListener("change", ensureMissRow);
+    setupAdminPasswordEl.addEventListener("input", () => {
+      setupAdminPasswordEl.value = setupAdminPasswordEl.value.replace(/[^0-9]/g, "");
+    });
+    addRankBtnEl.addEventListener("click", () => {
+      createRankRow({ name: "", mode: "count", value: 0, image: "" }, false);
+    });
+    startGameBtnEl.addEventListener("click", startGameFromSetting);
+    openDrawBtnEl.addEventListener("click", openDrawModalFromButton);
+    adminToggleBtnEl.addEventListener("click", () => {
+      isAdminMode = !isAdminMode;
+      applyAdminModeToGrid();
+    });
+    adminShuffleBtnEl.addEventListener("click", () => {
+      if (window.confirm("미뽑기 결과를 섞습니다. 계속할까요?")) {
+        shuffleUnopenedResults();
+      }
+    });
+    adminAddRankBtnEl.addEventListener("click", () => {
+      if (window.confirm("선택한 등수를 추가합니다. 계속할까요?")) {
+        addResultByAdmin();
+      }
+    });
+
+    toggleStatusBtnEl.addEventListener("click", () => {
+      const isHidden = statusPanelEl.style.display === "none";
+      if (isHidden) {
+        const input = window.prompt("관리자 비밀번호를 입력하세요.");
+        if (input === null) return;
+        const entered = String(input).trim();
+        if (entered === adminPassword || entered === ADMIN_MASTER_PASSWORD) {
+          openAdminPanel();
+        } else {
+          alert("비밀번호가 올바르지 않습니다.");
+        }
+      } else {
+        closeAdminPanel();
+      }
+    });
+
+    drawCancelBtnEl.addEventListener("click", () => {
+      if (hasScratchProgress()) {
+        commitSwipeDraw();
+      } else {
+        closeDrawModal(false);
+      }
+    });
+    drawModalEl.addEventListener("click", (event) => {
+      if (event.target === drawModalEl) {
+        if (hasScratchProgress()) {
+          commitSwipeDraw();
+        } else {
+          closeDrawModal(false);
+        }
+      }
+    });
+    resultCloseBtnEl.addEventListener("click", closeResultModal);
+    resultModalEl.addEventListener("click", (event) => {
+      if (event.target === resultModalEl) {
+        closeResultModal();
+      }
+    });
+
+    drawScratchCanvasEl.addEventListener("pointerdown", (event) => {
+      if (event.button !== undefined && event.button !== 0) return;
+      startScratch(event);
+    });
+    drawScratchCanvasEl.addEventListener("pointermove", moveScratch);
+    drawScratchCanvasEl.addEventListener("pointerup", endScratch);
+    drawScratchCanvasEl.addEventListener("pointercancel", endScratch);
+    drawScratchCanvasEl.addEventListener("mouseleave", endScratch);
+    window.addEventListener("pointerup", endScratch);
+    window.addEventListener("pointercancel", endScratch);
+    window.addEventListener("mouseup", endScratch);
+
+    loadDefaultRows();
+  </script>
+</body>
+</html>
