@@ -258,101 +258,182 @@
       border-bottom: none;
     }
     .remain-list .label {
-      font-weight: 700;
+      color: #374151;
     }
-    .remain-list .count {
+    .remain-list .value {
       font-weight: 700;
-      color: #1d4ed8;
+      color: #1f2937;
+    }
+    .result {
+      margin-top: 12px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 10px;
+      display: flex;
+      align-items: center;
+      min-height: 70px;
+    }
+    .admin-toggle-wrap {
+      margin-top: 10px;
+      border-top: 1px dashed #d7dee8;
+      padding-top: 10px;
+    }
+    .admin-fold-btn,
+    .admin-toggle-btn,
+    .admin-action-btn {
+      border: 1px dashed #9fb1c9;
+      background: #f5f8fc;
+      color: #3f4f66;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .admin-controls {
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    .admin-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .admin-row select {
+      flex: 1;
+      min-width: 110px;
+      border: 1px solid #c8d4e4;
+      border-radius: 7px;
+      padding: 7px 8px;
+      font-size: 12px;
+      background: #fff;
+    }
+    .result .rank {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .result .name {
+      font-weight: 600;
+      font-size: 14px;
     }
     .grid-wrap {
-      border: 1px solid #cdd7e5;
-      border-radius: 10px;
-      background: #f8fbff;
-      padding: 14px;
-      min-height: 560px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-    }
-    .grid-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .grid-top p {
-      margin: 0;
-      font-size: 13px;
-      color: #475569;
-      font-weight: 600;
-    }
-    .grid-top .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid #cdd7e5;
-      background: #ffffff;
-      font-size: 13px;
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .grid-top .status span {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #22c55e;
+      min-height: 400px;
+      height: calc(100vh - 90px);
     }
     .grid {
-      display: grid;
-      grid-template-columns: repeat(15, 1fr);
-      gap: 10px;
       flex: 1;
-      align-content: start;
+      border: 1px solid #b9c9b0;
+      border-radius: 10px;
+      background: #cdddbf;
+      padding: 8px;
+      display: grid;
+      gap: 4px;
+      overflow: auto;
     }
     .cell {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 12px;
-      border: 2px solid rgba(148, 163, 184, 0.55);
-      background: #ffffff;
       position: relative;
-      overflow: hidden;
-      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #9eac95;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #5b6571;
       user-select: none;
-      box-shadow: 0 8px 12px rgba(15, 23, 42, 0.12);
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      cursor: pointer;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.55) inset,
+        0 1px 2px rgba(51, 65, 45, 0.2);
+      text-shadow: 0 1px 0 #fff;
+      overflow: hidden;
     }
-    .cell:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 16px rgba(15, 23, 42, 0.18);
-    }
-    .cell.used {
-      opacity: 0.4;
-      cursor: not-allowed;
-      box-shadow: none;
-      transform: none;
-    }
-    .cell img {
+    .cell-char {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      display: block;
+      object-fit: contain;
+      object-position: center center;
+      border-radius: inherit;
+      opacity: 1;
+      pointer-events: none;
+      z-index: 2;
     }
-    .cell .number {
+    .cell-rank-label {
       position: absolute;
       inset: 0;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      z-index: 2;
+      pointer-events: none;
       font-weight: 800;
-      color: #0f172a;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+      font-size: 11px;
+      color: #1f2937;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.55);
     }
-
+    .cell[data-rank="1등"] .cell-rank-label {
+      background: rgba(249, 115, 22, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="2등"] .cell-rank-label {
+      background: rgba(239, 68, 68, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="3등"] .cell-rank-label {
+      background: rgba(245, 158, 11, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="4등"] .cell-rank-label {
+      background: rgba(34, 197, 94, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="5등"] .cell-rank-label {
+      background: rgba(59, 130, 246, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell[data-rank="꽝"] .cell-rank-label {
+      background: rgba(107, 114, 128, 0.82);
+      color: #fff;
+      text-shadow: none;
+    }
+    .cell::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 7px;
+      height: 7px;
+      background: linear-gradient(135deg, transparent 49%, #dce7d5 50%);
+      border-top-right-radius: 5px;
+    }
+    .cell.opened {
+      border: 1px solid #9ea8b4;
+      background:
+        linear-gradient(160deg, rgba(210,216,224,0.98) 0%, rgba(188,196,206,1) 70%),
+        repeating-linear-gradient(0deg, rgba(142,152,166,0.2) 0 1px, transparent 1px 4px);
+      color: #394150;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+    .cell.opened .cell-char,
+    .cell.opened .cell-rank-label {
+      display: none;
+    }
+    .cell.opened::after { display: none; }
     .modal {
       position: fixed;
       inset: 0;
@@ -447,7 +528,6 @@
     }
     #drawCancelBtn { background: #2563eb; color: #fff; }
     #resultCloseBtn { background: #2563eb; color: #fff; }
-
     .result-modal-card {
       width: 100%;
       max-width: 520px;
@@ -589,93 +669,96 @@
     <div class="app-head">
       <button id="toggleStatusBtn" class="admin-gate-btn" type="button">관리자 외 출입금지</button>
       <h1 class="title-with-icons">
-        <img class="title-side-icon" src="/img/title-left.png" alt="왼쪽 캐릭터" />
+        <img class="title-side-icon" src="assets/title-left.png" alt="왼쪽 캐릭터" />
         <span>멧봉이의 랜덤뽑기</span>
-        <img class="title-side-icon" src="/img/title-right.png" alt="오른쪽 캐릭터" />
+        <img class="title-side-icon" src="assets/title-right.png" alt="오른쪽 캐릭터" />
       </h1>
       <div class="head-actions">
         <button id="openDrawBtn" class="draw-entry-btn" type="button">
-          <img id="openDrawBtnImage" src="/img/draw-button.png" alt="캐릭터" />
+          <img id="openDrawBtnImage" src="assets/draw-button.png" alt="캐릭터" />
           랜덤 뽑기
         </button>
       </div>
     </div>
 
-    <div class="panel" id="remainPanel">
-      <h2>남은 상품</h2>
-      <ul class="remain-list" id="remainList"></ul>
-    </div>
-
-    <div class="grid-wrap">
-      <div class="grid-top">
-        <p>각 칸을 눌러서 뽑아봐! (중복 방지)</p>
-        <div class="status" id="statusPill"><span></span><b id="statusText">READY</b></div>
+    <section class="panel" id="statusPanel">
+      <h2>관리자 메뉴</h2>
+      <ul class="remain-list" id="remainingList"></ul>
+      <div class="admin-toggle-wrap">
+        <div id="adminControls" class="admin-controls">
+          <button id="adminToggleBtn" class="admin-toggle-btn" type="button">결과 표시 버튼 OFF</button>
+          <button id="adminShuffleBtn" class="admin-action-btn" type="button">섞기</button>
+          <div class="admin-row">
+            <select id="adminAddRankSelect"></select>
+            <button id="adminAddRankBtn" class="admin-action-btn" type="button">결과 추가하기</button>
+          </div>
+        </div>
       </div>
-      <div class="grid" id="grid"></div>
-    </div>
+    </section>
+
+    <section class="panel grid-wrap">
+      <div id="grid" class="grid"></div>
+    </section>
   </div>
 
-  <!-- Draw Modal -->
   <div class="modal hidden" id="drawModal">
     <div class="modal-card">
-      <!-- <img class="modal-bg-image" id="drawModalBgImage" src="/img/draw-modal-bg.png" alt="" /> -->
-      <h3 class="modal-title">긁어서 확인!</h3>
-
-      <div class="draw-paper">
-        <img class="draw-reveal-image" id="drawRevealImage" alt="뽑힌 결과 이미지" />
-        <canvas class="draw-scratch-canvas" id="drawScratchCanvas" width="640" height="420"></canvas>
+      <!-- <img class="modal-bg-image" id="drawModalBgImage" src="assets/draw-modal-bg.png" alt="" /> -->
+      <h3 class="modal-title">여봉이의 스피또</h3>
+      <div class="draw-paper" id="drawPaper">
+        <img class="draw-reveal-image" id="drawRevealImage" src="" alt="뽑기 결과 미리보기" />
+        <canvas class="draw-scratch-canvas" id="drawScratchCanvas"></canvas>
       </div>
-
-      <p class="modal-info" id="drawModalInfo">손가락(마우스)으로 박박 긁어봐!</p>
-      <p class="scratch-debug" id="scratchDebugText"></p>
-
+      <p class="modal-info" id="modalInfo">동전으로 긁듯이 문질러 결과를 확인하세요.</p>
+      <p class="scratch-debug" id="scratchDebugText">긁어서 확인해주세요.</p>
       <div class="modal-actions">
-        <button id="drawCancelBtn" type="button">닫기</button>
+        <button id="drawCancelBtn" type="button">취소</button>
       </div>
     </div>
   </div>
 
-  <!-- Result Modal -->
   <div class="modal hidden" id="resultModal">
     <div class="result-modal-card">
-      <!-- <img class="modal-bg-image" id="resultModalBgImage" src="/img/result-modal-bg.png" alt="" /> -->
+      <!-- <img class="modal-bg-image" id="resultModalBgImage" src="assets/result-modal-bg.png" alt="" /> -->
       <h3 class="result-modal-title" id="resultModalTitle">결과</h3>
       <div class="result-modal-image-wrap">
         <img class="result-modal-image" id="resultModalImage" alt="결과 이미지" />
       </div>
       <p class="result-modal-note" id="resultModalNote">결과를 확인하세요.</p>
       <p class="result-modal-autoclose" id="resultAutoCloseText">1분 후 자동으로 닫힙니다.</p>
-
-      <div class="modal-actions">
-        <button id="resultCloseBtn" type="button">확인</button>
-      </div>
+      <button id="resultCloseBtn" type="button">닫기</button>
     </div>
   </div>
 
   <script>
-    const setupScreen = document.getElementById("setupScreen");
-    const gameScreen = document.getElementById("gameScreen");
-    const rankRowsEl = document.getElementById("rankRows");
+    const setupScreenEl = document.getElementById("setupScreen");
+    const gameScreenEl = document.getElementById("gameScreen");
     const setupColsEl = document.getElementById("setupCols");
     const setupRowsEl = document.getElementById("setupRows");
-    const includeMissEl = document.getElementById("includeMiss");
     const setupAdminPasswordEl = document.getElementById("setupAdminPassword");
-    const startGameBtn = document.getElementById("startGameBtn");
-    const addRankBtn = document.getElementById("addRankBtn");
-
-    const remainListEl = document.getElementById("remainList");
-    const gridEl = document.getElementById("grid");
-    const statusTextEl = document.getElementById("statusText");
-    const statusPillEl = document.getElementById("statusPill");
-
+    const includeMissEl = document.getElementById("includeMiss");
+    const rankRowsEl = document.getElementById("rankRows");
+    const addRankBtnEl = document.getElementById("addRankBtn");
+    const startGameBtnEl = document.getElementById("startGameBtn");
+    const openDrawBtnEl = document.getElementById("openDrawBtn");
     const toggleStatusBtnEl = document.getElementById("toggleStatusBtn");
+    const adminControlsEl = document.getElementById("adminControls");
+    const adminToggleBtnEl = document.getElementById("adminToggleBtn");
+    const adminShuffleBtnEl = document.getElementById("adminShuffleBtn");
+    const adminAddRankSelectEl = document.getElementById("adminAddRankSelect");
+    const adminAddRankBtnEl = document.getElementById("adminAddRankBtn");
+    const statusPanelEl = document.getElementById("statusPanel");
+    const pageRootEl = document.getElementById("gameScreen");
+    const remainingListEl = document.getElementById("remainingList");
+    const gridEl = document.getElementById("grid");
 
     const drawModalEl = document.getElementById("drawModal");
+    const drawPaperEl = document.getElementById("drawPaper");
     const drawRevealImageEl = document.getElementById("drawRevealImage");
     const drawScratchCanvasEl = document.getElementById("drawScratchCanvas");
-    const drawModalInfoEl = document.getElementById("drawModalInfo");
-    const drawCancelBtnEl = document.getElementById("drawCancelBtn");
+    const modalInfoEl = document.getElementById("modalInfo");
     const scratchDebugTextEl = document.getElementById("scratchDebugText");
+    const drawCancelBtnEl = document.getElementById("drawCancelBtn");
 
     const resultModalEl = document.getElementById("resultModal");
     const resultModalTitleEl = document.getElementById("resultModalTitle");
@@ -684,575 +767,652 @@
     const resultAutoCloseTextEl = document.getElementById("resultAutoCloseText");
     const resultCloseBtnEl = document.getElementById("resultCloseBtn");
 
-    const openDrawBtnEl = document.getElementById("openDrawBtn");
-    const openDrawBtnImageEl = document.getElementById("openDrawBtnImage");
-
-    const STORAGE_KEY = "yeobong_draw_settings_v4";
-    const ADMIN_TOKEN_KEY = "yeobong_draw_admin_token_v1";
-    const STATUS_LOCK_KEY = "yeobong_draw_status_locked_v1";
-    const USED_CELLS_KEY = "yeobong_draw_used_cells_v1";
-
-    const PAPER_CELL_IMAGE = "/img/paper-button.png";
-    const DRAW_MODAL_PAPER_IMAGE = "/img/draw-modal.png";
-
-    const AUTO_CLOSE_MS = 60 * 1000;
-
-    let drawSettings = null;
-    let rankRows = [];
+    let drawPool = [];
+    let remaining = {};
+    let rankOrder = [];
+    let rankImageByName = {};
     let cols = 15;
     let rows = 30;
-    let includeMiss = false;
+    let totalTickets = 450;
+    let selectedCell = null;
+    let selectedCellIndex = 0;
+    let isDrawing = false;
+    let scratchContext = null;
+    let scratchActive = false;
+    let currentDrawRank = null;
+    let drawCommitted = false;
+    let scratchMoveCount = 0;
+    let scratchCoverage = null;
+    let scratchCoverageCount = 0;
+    let lastScratchX = null;
+    let lastScratchY = null;
+    let lastScratchCheckAt = 0;
+    let resultAutoCloseTimer = null;
+    let resultAutoCloseInterval = null;
+    let isAdminMode = false;
+    let adminPassword = "0000";
+    const ADMIN_MASTER_PASSWORD = "0626";
+    const PAPER_CELL_IMAGE = "assets/paper-button.png";
+    const DRAW_MODAL_PAPER_IMAGE = "assets/draw-modal.png";
+    const SCRATCH_REVEAL_THRESHOLD = 60;
+    const SCRATCH_BRUSH_RADIUS = 28;
+    const SCRATCH_COVERAGE_COLS = 72;
+    const SCRATCH_COVERAGE_ROWS = 48;
+    const scratchCoverImage = new Image();
+    scratchCoverImage.src = DRAW_MODAL_PAPER_IMAGE;
 
-    let totalCells = 0;
-    let usedSet = new Set();
-
-    let pool = [];
-    let poolLoaded = false;
-
-    let adminUnlocked = false;
-    let statusLocked = false;
-
-    let currentDraw = null;
-    let scratchCtx = null;
-    let scratchIsDown = false;
-    let scratchDrawnPoints = 0;
-    let scratchLastPos = null;
-    let autoCloseTimer = null;
-    let autoCloseStartAt = 0;
-
-    function loadSavedSettings() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return null;
-        const parsed = JSON.parse(raw);
-        return parsed && typeof parsed === "object" ? parsed : null;
-      } catch (e) {
-        return null;
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
       }
     }
 
-    function saveSettings(settings) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    }
-
-    function getAdminToken() {
-      return localStorage.getItem(ADMIN_TOKEN_KEY) || "";
-    }
-
-    function setAdminToken(token) {
-      localStorage.setItem(ADMIN_TOKEN_KEY, token);
-    }
-
-    function getStatusLocked() {
-      return localStorage.getItem(STATUS_LOCK_KEY) === "1";
-    }
-
-    function setStatusLocked(lock) {
-      localStorage.setItem(STATUS_LOCK_KEY, lock ? "1" : "0");
-    }
-
-    function loadUsedCells() {
-      try {
-        const raw = localStorage.getItem(USED_CELLS_KEY);
-        if (!raw) return new Set();
-        const arr = JSON.parse(raw);
-        if (!Array.isArray(arr)) return new Set();
-        return new Set(arr.map(String));
-      } catch (e) {
-        return new Set();
-      }
-    }
-
-    function saveUsedCells() {
-      localStorage.setItem(USED_CELLS_KEY, JSON.stringify([...usedSet]));
-    }
-
-    function setStatusPill(text, ok = true) {
-      statusTextEl.textContent = text;
-      const dot = statusPillEl.querySelector("span");
-      dot.style.background = ok ? "#22c55e" : "#ef4444";
-    }
-
-    function setAdminUI() {
-      toggleStatusBtnEl.textContent = adminUnlocked ? "관리자 모드: ON" : "관리자 외 출입금지";
-      toggleStatusBtnEl.style.background = adminUnlocked ? "#fee2e2" : "";
-      toggleStatusBtnEl.style.borderColor = adminUnlocked ? "#fecaca" : "";
-      toggleStatusBtnEl.style.color = adminUnlocked ? "#7f1d1d" : "";
-    }
-
-    function lockStatusUI(lock) {
-      statusLocked = lock;
-      setStatusLocked(lock);
-      if (lock) {
-        setStatusPill("LOCKED", false);
-      } else {
-        setStatusPill("READY", true);
-      }
-    }
-
-    function createRankRow(data = {}, isFixed = false) {
+    function createRankRow(data, lockName) {
       const row = document.createElement("div");
       row.className = "rank-row";
+      row.innerHTML =
+        '<input type="text" class="rank-name" placeholder="등수명 (예: 1등)" />' +
+        '<select class="rank-mode"><option value="count">개수</option><option value="percent">퍼센트(%)</option></select>' +
+        '<input type="number" class="rank-value" min="0" step="0.1" placeholder="값" />' +
+        '<input type="text" class="rank-image" placeholder="결과 모달 이미지 경로" />' +
+        '<button type="button" class="rank-remove">삭제</button>';
 
-      const nameInput = document.createElement("input");
-      nameInput.placeholder = "등수명";
-      nameInput.value = data.name || "";
-      nameInput.disabled = isFixed;
+      row.querySelector(".rank-name").value = data.name || "";
+      row.querySelector(".rank-mode").value = data.mode || "count";
+      row.querySelector(".rank-value").value = String(data.value || 0);
+      row.querySelector(".rank-image").value = data.image || "";
 
-      const modeSelect = document.createElement("select");
-      modeSelect.innerHTML = `
-        <option value="count">수량</option>
-        <option value="percent">퍼센트</option>
-      `;
-      modeSelect.value = data.mode || "count";
-      modeSelect.disabled = isFixed;
-
-      const valueInput = document.createElement("input");
-      valueInput.type = "number";
-      valueInput.min = "0";
-      valueInput.value = data.value != null ? data.value : 0;
-
-      const imgInput = document.createElement("input");
-      imgInput.placeholder = "이미지 경로";
-      imgInput.value = data.image || "";
-
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.textContent = "삭제";
-      removeBtn.disabled = isFixed;
-
-      removeBtn.addEventListener("click", () => {
+      if (lockName) {
+        row.querySelector(".rank-name").readOnly = true;
+        row.querySelector(".rank-name").style.background = "#f3f4f6";
+      }
+      if (lockName && data.name === "꽝") {
+        row.dataset.miss = "true";
+      }
+      row.querySelector(".rank-remove").addEventListener("click", () => {
+        if (row.dataset.miss === "true") {
+          includeMissEl.checked = false;
+        }
         row.remove();
-        renderRemainList();
       });
-
-      row.appendChild(nameInput);
-      row.appendChild(modeSelect);
-      row.appendChild(valueInput);
-      row.appendChild(imgInput);
-      row.appendChild(removeBtn);
-
-      nameInput.addEventListener("input", renderRemainList);
-      modeSelect.addEventListener("change", renderRemainList);
-      valueInput.addEventListener("input", renderRemainList);
-      imgInput.addEventListener("input", renderRemainList);
-
       rankRowsEl.appendChild(row);
+      return row;
+    }
+
+    function ensureMissRow() {
+      const existing = rankRowsEl.querySelector('[data-miss="true"]');
+      if (includeMissEl.checked && !existing) {
+        createRankRow({ name: "꽝", mode: "count", value: 0, image: "ranks/miss.png" }, true);
+      }
+      if (!includeMissEl.checked && existing) {
+        existing.remove();
+      }
     }
 
     function loadDefaultRows() {
       rankRowsEl.innerHTML = "";
-      if (includeMissEl.checked) {
-        createRankRow({ name: "꽝", mode: "count", value: 0, image: "/img/miss.png" }, true);
+      createRankRow({ name: "1등", mode: "count", value: 1, image: "ranks/rank1.png" }, false);
+      createRankRow({ name: "2등", mode: "count", value: 3, image: "ranks/rank2.png" }, false);
+      createRankRow({ name: "3등", mode: "percent", value: 5, image: "ranks/rank3.png" }, false);
+      createRankRow({ name: "4등", mode: "percent", value: 10, image: "ranks/rank4.png" }, false);
+      createRankRow({ name: "5등", mode: "percent", value: 20, image: "ranks/rank5.png" }, false);
+      ensureMissRow();
+    }
+
+    function parseRankSettings() {
+      const rankRows = Array.from(rankRowsEl.querySelectorAll(".rank-row"));
+      const parsed = [];
+      rankRows.forEach((row) => {
+        const name = row.querySelector(".rank-name").value.trim();
+        const mode = row.querySelector(".rank-mode").value;
+        const value = parseFloat(row.querySelector(".rank-value").value || "0");
+        const image = row.querySelector(".rank-image").value.trim();
+        if (!name) return;
+        parsed.push({ name, mode, value: Number.isFinite(value) ? value : 0, image, isMiss: row.dataset.miss === "true" });
+      });
+      return parsed;
+    }
+
+    function buildGameConfigFromSetting() {
+      cols = Math.min(15, Math.max(1, parseInt(setupColsEl.value || "0", 10) || 1));
+      rows = Math.max(1, parseInt(setupRowsEl.value || "0", 10) || 1);
+      setupColsEl.value = String(cols);
+      setupRowsEl.value = String(rows);
+      totalTickets = cols * rows;
+
+      const ranks = parseRankSettings();
+      if (ranks.length === 0) {
+        alert("최소 1개 이상의 등수를 추가해 주세요.");
+        return null;
       }
-      createRankRow({ name: "1등", mode: "count", value: 1, image: "/img/rank1.png" }, false);
-      createRankRow({ name: "2등", mode: "count", value: 3, image: "/img/rank2.png" }, false);
-      createRankRow({ name: "3등", mode: "percent", value: 5, image: "/img/rank3.png" }, false);
-      createRankRow({ name: "4등", mode: "percent", value: 10, image: "/img/rank4.png" }, false);
-      createRankRow({ name: "5등", mode: "percent", value: 20, image: "/img/rank5.png" }, false);
 
-      renderRemainList();
-    }
-
-    function readRankRows() {
-      const rows = [...rankRowsEl.querySelectorAll(".rank-row")];
-      return rows.map(row => {
-        const [nameInput, modeSelect, valueInput, imgInput] = row.querySelectorAll("input, select");
-        return {
-          name: nameInput.value.trim(),
-          mode: modeSelect.value,
-          value: Number(valueInput.value || 0),
-          image: imgInput.value.trim()
-        };
-      }).filter(r => r.name);
-    }
-
-    function calcCounts() {
-      const currentRows = readRankRows();
       const counts = [];
-      let fixedCountSum = 0;
-      let percentSum = 0;
-
-      currentRows.forEach(r => {
-        if (r.mode === "count") fixedCountSum += r.value;
-        if (r.mode === "percent") percentSum += r.value;
+      let sum = 0;
+      ranks.forEach((r) => {
+        const amount = r.mode === "percent"
+          ? Math.floor(totalTickets * (Math.max(0, r.value) / 100))
+          : Math.floor(Math.max(0, r.value));
+        counts.push({ name: r.name, count: amount, image: r.image, isMiss: r.isMiss });
+        sum += amount;
       });
 
-      const total = cols * rows;
-      let remaining = total - fixedCountSum;
-      if (remaining < 0) remaining = 0;
-
-      currentRows.forEach(r => {
-        if (r.mode === "count") {
-          counts.push({ name: r.name, count: r.value, image: r.image, isMiss: r.name === "꽝" });
-        }
-      });
-
-      currentRows.forEach(r => {
-        if (r.mode === "percent") {
-          const c = Math.floor((remaining * r.value) / 100);
-          counts.push({ name: r.name, count: c, image: r.image, isMiss: r.name === "꽝" });
-        }
-      });
-
-      const used = counts.reduce((acc, x) => acc + x.count, 0);
-      let remains = total - used;
-      if (remains < 0) remains = 0;
-
-      if (includeMiss && remains > 0) {
-        const missIdx = counts.findIndex(x => x.isMiss);
-        if (missIdx >= 0) counts[missIdx].count += remains;
-        else counts.push({ name: "꽝", count: remains, image: "/img/miss.png", isMiss: true });
+      if (sum > totalTickets) {
+        alert("설정된 수량/확률 합계가 전체 칸 수보다 큽니다.");
+        return null;
       }
 
-      return counts;
+      const missRow = counts.find((c) => c.isMiss || c.name === "꽝");
+      const remains = totalTickets - sum;
+      if (includeMissEl.checked) {
+        if (missRow) {
+          missRow.count += remains;
+        } else {
+          counts.push({ name: "꽝", count: remains, image: "ranks/miss.png", isMiss: true });
+        }
+      } else if (remains > 0) {
+        // 꽝 미포함이면 마지막 등수가 남은 수량을 모두 가져가도록 처리
+        const lastIndex = counts.length - 1;
+        if (lastIndex < 0) {
+          alert("최소 1개 이상의 등수를 추가해 주세요.");
+          return null;
+        }
+        counts[lastIndex].count += remains;
+      }
+
+      if (!counts.some((c) => c.count > 0)) {
+        alert("최소 1개 이상의 당첨/꽝 수량이 필요합니다.");
+        return null;
+      }
+
+      return counts.filter((c) => c.count > 0);
     }
 
-    function renderRemainList() {
-      const counts = calcCounts();
-      remainListEl.innerHTML = "";
-      counts.forEach(item => {
+    function buildPoolAndRemaining(configs) {
+      drawPool = [];
+      remaining = {};
+      rankOrder = [];
+      rankImageByName = {};
+
+      configs.forEach((cfg) => {
+        rankOrder.push(cfg.name);
+        remaining[cfg.name] = cfg.count;
+        rankImageByName[cfg.name] = cfg.image || "";
+        for (let i = 0; i < cfg.count; i++) {
+          drawPool.push(cfg.name);
+        }
+      });
+      shuffleArray(drawPool);
+    }
+
+    function getRemainingTotal() {
+      return Object.values(remaining).reduce((sum, n) => sum + (n || 0), 0);
+    }
+
+    function renderRemainingPanel() {
+      remainingListEl.innerHTML = "";
+      const totalLi = document.createElement("li");
+      totalLi.innerHTML = '<span class="label">뽑기 남은 개수</span><span class="value">' + getRemainingTotal() + "</span>";
+      remainingListEl.appendChild(totalLi);
+
+      rankOrder.forEach((rank) => {
         const li = document.createElement("li");
-        const label = document.createElement("span");
-        label.className = "label";
-        label.textContent = item.name;
-
-        const count = document.createElement("span");
-        count.className = "count";
-        count.textContent = item.count;
-
-        li.appendChild(label);
-        li.appendChild(count);
-        remainListEl.appendChild(li);
+        li.innerHTML = '<span class="label">' + rank + ' 남은 횟수</span><span class="value">' + (remaining[rank] || 0) + "</span>";
+        remainingListEl.appendChild(li);
       });
     }
 
-    function buildPool() {
-      const counts = calcCounts();
-      const arr = [];
-      counts.forEach(item => {
-        for (let i = 0; i < item.count; i++) arr.push(item);
-      });
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
-    function showScreen(screen) {
-      if (screen === "setup") {
-        setupScreen.classList.remove("hidden");
-        gameScreen.classList.add("hidden");
-        document.body.style.background = "#f3f6fb";
-      } else {
-        setupScreen.classList.add("hidden");
-        gameScreen.classList.remove("hidden");
-        document.body.style.background = "#f3f6fb";
-      }
-    }
-
-    function renderGrid() {
+    function createGrid() {
       gridEl.innerHTML = "";
-      totalCells = cols * rows;
-      usedSet = loadUsedCells();
-
-      gridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-
-      for (let idx = 0; idx < totalCells; idx++) {
-        const id = String(idx);
+      gridEl.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
+      if (rows <= 30) {
+        // 30줄 미만일 때는 버튼 높이를 늘려 빈 공간 없이 채움
+        gridEl.style.gridTemplateRows = "repeat(" + rows + ", minmax(0, 1fr))";
+        gridEl.style.gridAutoRows = "";
+        gridEl.style.overflowY = "hidden";
+      } else {
+        // 30줄 초과 시에는 스크롤 가능하도록 고정 높이 행 사용
+        gridEl.style.gridTemplateRows = "";
+        gridEl.style.gridAutoRows = "22px";
+        gridEl.style.overflowY = "auto";
+      }
+      const total = cols * rows;
+      for (let i = 1; i <= total; i++) {
         const cell = document.createElement("div");
         cell.className = "cell";
-        if (usedSet.has(id)) cell.classList.add("used");
+        cell.dataset.rank = drawPool[i - 1] || "";
 
-        const img = document.createElement("img");
-        img.src = PAPER_CELL_IMAGE;
-        img.alt = "뽑기 칸";
-        cell.appendChild(img);
+        const charImg = document.createElement("img");
+        charImg.className = "cell-char";
+        charImg.src = PAPER_CELL_IMAGE;
+        charImg.alt = "";
 
-        const number = document.createElement("div");
-        number.className = "number";
-        number.textContent = idx + 1;
-        cell.appendChild(number);
+        const rankLabel = document.createElement("span");
+        rankLabel.className = "cell-rank-label";
+        rankLabel.textContent = cell.dataset.rank;
 
-        cell.addEventListener("click", () => handleCellClick(idx, cell));
+        cell.appendChild(charImg);
+        cell.appendChild(rankLabel);
+        cell.dataset.opened = "false";
+        cell.title = i + "번 칸";
+        cell.addEventListener("click", () => {
+          if (cell.dataset.opened === "true") return;
+          openDrawModal(cell, i);
+        });
         gridEl.appendChild(cell);
       }
+      applyAdminModeToGrid();
     }
 
-    function ensurePool() {
-      if (!poolLoaded) {
-        pool = buildPool();
-        poolLoaded = true;
+    function applyAdminModeToGrid() {
+      Array.from(gridEl.children).forEach((cell) => {
+        if (cell.dataset.opened === "true") return;
+        const img = cell.querySelector(".cell-char");
+        const label = cell.querySelector(".cell-rank-label");
+        if (!img || !label) return;
+        label.textContent = cell.dataset.rank || "-";
+        img.style.display = isAdminMode ? "none" : "block";
+        label.style.display = isAdminMode ? "flex" : "none";
+      });
+      adminToggleBtnEl.textContent = isAdminMode ? "결과 표시 버튼 ON" : "결과 표시 버튼 OFF";
+    }
+
+    function closeAdminPanel() {
+      statusPanelEl.style.display = "none";
+      pageRootEl.classList.add("left-hidden");
+      toggleStatusBtnEl.textContent = "관리자 외 출입금지";
+      if (isAdminMode) {
+        isAdminMode = false;
+        applyAdminModeToGrid();
       }
     }
 
-    function handleCellClick(idx, cellEl) {
-      if (cellEl.classList.contains("used")) return;
+    function openAdminPanel() {
+      statusPanelEl.style.display = "";
+      pageRootEl.classList.remove("left-hidden");
+      toggleStatusBtnEl.textContent = "관리자 메뉴 닫기";
+    }
 
-      if (statusLocked && !adminUnlocked) {
-        setStatusPill("LOCKED", false);
+    function getAdminSourceRankForReplacement() {
+      if (rankOrder.includes("꽝")) return "꽝";
+      if (rankOrder.length === 0) return null;
+      return rankOrder[rankOrder.length - 1];
+    }
+
+    function updateAdminAddRankOptions() {
+      const sourceRank = getAdminSourceRankForReplacement();
+      adminAddRankSelectEl.innerHTML = "";
+      const candidates = rankOrder.filter((rank) => rank !== sourceRank);
+      candidates.forEach((rank) => {
+        const option = document.createElement("option");
+        option.value = rank;
+        option.textContent = rank;
+        adminAddRankSelectEl.appendChild(option);
+      });
+      if (candidates.length === 0) {
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "추가 가능한 등수 없음";
+        adminAddRankSelectEl.appendChild(option);
+      }
+    }
+
+    function shuffleUnopenedResults() {
+      const unopenedCells = Array.from(gridEl.children).filter((cell) => cell.dataset.opened !== "true");
+      if (unopenedCells.length <= 1) return;
+      const ranks = unopenedCells.map((cell) => cell.dataset.rank || "");
+      shuffleArray(ranks);
+      unopenedCells.forEach((cell, idx) => {
+        cell.dataset.rank = ranks[idx] || "";
+      });
+      applyAdminModeToGrid();
+    }
+
+    function addResultByAdmin() {
+      const targetRank = adminAddRankSelectEl.value;
+      if (!targetRank) return;
+      const sourceRank = getAdminSourceRankForReplacement();
+      if (!sourceRank || sourceRank === targetRank) return;
+      const candidates = Array.from(gridEl.children).filter(
+        (cell) => cell.dataset.opened !== "true" && cell.dataset.rank === sourceRank
+      );
+      if (candidates.length === 0) {
+        alert("변경 가능한 대상 결과가 없습니다.");
         return;
       }
-
-      ensurePool();
-      if (!pool.length) {
-        setStatusPill("SOLD OUT", false);
-        return;
-      }
-
-      const draw = pool.pop();
-      currentDraw = draw;
-
-      usedSet.add(String(idx));
-      saveUsedCells();
-      cellEl.classList.add("used");
-
-      openDrawModal(draw);
+      const picked = candidates[Math.floor(Math.random() * candidates.length)];
+      picked.dataset.rank = targetRank;
+      if (remaining[sourceRank] > 0) remaining[sourceRank] -= 1;
+      if (!remaining[targetRank]) remaining[targetRank] = 0;
+      remaining[targetRank] += 1;
+      renderRemainingPanel();
+      applyAdminModeToGrid();
     }
 
-    function openDrawModal(draw) {
+    function openDrawModalFromButton() {
+      const unopenedCells = Array.from(gridEl.children).filter((cell) => cell.dataset.opened !== "true");
+      if (unopenedCells.length === 0) {
+        alert("더 이상 뽑을 종이가 없습니다.");
+        return;
+      }
+      const pickedIndex = Math.floor(Math.random() * unopenedCells.length);
+      const cell = unopenedCells[pickedIndex];
+      const allCells = Array.from(gridEl.children);
+      const index = allCells.indexOf(cell) + 1;
+      openDrawModal(cell, index);
+    }
+
+    function applyResultToCell(cell, index, rank) {
+      if (!cell) return;
+      cell.dataset.opened = "true";
+      cell.classList.add("opened");
+      cell.textContent = "";
+      cell.title = index + "번 칸 (" + (rank || "종료") + ")";
+    }
+
+    function openDrawModal(cell, index) {
+      selectedCell = cell;
+      selectedCellIndex = index;
+      drawCommitted = false;
+      currentDrawRank = cell.dataset.rank || null;
+      modalInfoEl.textContent = "동전으로 긁듯이 문질러 결과를 확인하세요.";
       drawModalEl.classList.remove("hidden");
-      drawModalInfoEl.textContent = "손가락(마우스)으로 박박 긁어봐!";
-      scratchDebugTextEl.textContent = "";
-      scratchDrawnPoints = 0;
-      scratchLastPos = null;
-
-      drawRevealImageEl.src = draw.image || DRAW_MODAL_PAPER_IMAGE;
-
-      prepareScratchCanvas();
+      window.requestAnimationFrame(() => {
+        prepareScratchCard(currentDrawRank);
+      });
     }
 
-    function closeDrawModal(force = false) {
-      if (!force && hasScratchProgress()) {
-        return;
-      }
+    function closeDrawModal(forceClose) {
+      if (isDrawing && !forceClose) return;
       drawModalEl.classList.add("hidden");
-      clearScratchCanvas();
+      scratchActive = false;
+      currentDrawRank = null;
+      selectedCell = null;
+      selectedCellIndex = 0;
     }
 
-    function openResultModal(draw) {
+    function prepareScratchCard(rank) {
+      const revealImage = rankImageByName[rank || ""] || "";
+      drawRevealImageEl.src = revealImage;
+      drawRevealImageEl.style.display = revealImage ? "block" : "none";
+
+      const rect = drawPaperEl.getBoundingClientRect();
+      const width = rect.width > 0 ? rect.width : 320;
+      const height = rect.height > 0 ? rect.height : 210;
+      const dpr = window.devicePixelRatio || 1;
+      drawScratchCanvasEl.width = Math.floor(width * dpr);
+      drawScratchCanvasEl.height = Math.floor(height * dpr);
+      drawScratchCanvasEl.style.width = width + "px";
+      drawScratchCanvasEl.style.height = height + "px";
+
+      scratchContext = drawScratchCanvasEl.getContext("2d");
+      if (!scratchContext) return;
+      scratchContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+      scratchContext.globalCompositeOperation = "source-over";
+
+      const w = width;
+      const h = height;
+      const pattern = scratchContext.createLinearGradient(0, 0, w, h);
+      pattern.addColorStop(0, "#b8c0cc");
+      pattern.addColorStop(0.5, "#8f98a8");
+      pattern.addColorStop(1, "#c4cbd6");
+      scratchContext.fillStyle = pattern;
+      scratchContext.fillRect(0, 0, w, h);
+
+      if (scratchCoverImage.complete && scratchCoverImage.naturalWidth > 0) {
+        scratchContext.globalAlpha = 0.92;
+        scratchContext.drawImage(scratchCoverImage, 0, 0, w, h);
+        scratchContext.globalAlpha = 1;
+      }
+
+      scratchContext.strokeStyle = "rgba(255,255,255,0.25)";
+      scratchContext.lineWidth = 2;
+      for (let y = 6; y < h; y += 8) {
+        scratchContext.beginPath();
+        scratchContext.moveTo(0, y);
+        scratchContext.lineTo(w, y);
+        scratchContext.stroke();
+      }
+      scratchContext.fillStyle = "rgba(255,255,255,0.75)";
+      scratchContext.font = "700 20px Segoe UI";
+      scratchContext.textAlign = "center";
+      scratchContext.fillText("긁어보세요", w / 2, h / 2 + 8);
+
+      scratchContext.globalCompositeOperation = "destination-out";
+      scratchMoveCount = 0;
+      scratchCoverage = new Uint8Array(SCRATCH_COVERAGE_COLS * SCRATCH_COVERAGE_ROWS);
+      scratchCoverageCount = 0;
+      lastScratchX = null;
+      lastScratchY = null;
+      lastScratchCheckAt = 0;
+      scratchDebugTextEl.textContent = "긁어서 확인해주세요.";
+      drawCancelBtnEl.textContent = "취소";
+    }
+
+    function hasScratchProgress() {
+      return scratchMoveCount > 0 || scratchCoverageCount > 0;
+    }
+
+    function updateDrawActionState() {
+      drawCancelBtnEl.textContent = hasScratchProgress() ? "결과" : "취소";
+    }
+
+    function openResultModal(rank, revealedImageSrc) {
+      const resultRank = rank || "결과";
+      resultModalTitleEl.textContent = resultRank;
+      resultModalImageEl.src = revealedImageSrc || rankImageByName[resultRank] || "";
+      resultModalImageEl.alt = resultRank + " 이미지";
+      resultModalImageEl.style.display = resultModalImageEl.src ? "block" : "none";
+      resultModalNoteEl.textContent = "축하합니다.";
       resultModalEl.classList.remove("hidden");
-      resultModalTitleEl.textContent = draw.name;
-      resultModalImageEl.src = draw.image || "";
-      resultModalNoteEl.textContent = draw.isMiss ? "다음 기회에...!" : "축하해!";
-      startAutoCloseTimer();
+
+      if (resultAutoCloseTimer) {
+        clearTimeout(resultAutoCloseTimer);
+      }
+      if (resultAutoCloseInterval) {
+        clearInterval(resultAutoCloseInterval);
+      }
+      let remainingSeconds = 60;
+      resultAutoCloseTextEl.textContent = "자동 닫힘 " + remainingSeconds + "초";
+      resultAutoCloseInterval = window.setInterval(() => {
+        remainingSeconds -= 1;
+        if (remainingSeconds < 0) return;
+        resultAutoCloseTextEl.textContent = "자동 닫힘 " + remainingSeconds + "초";
+      }, 1000);
+      resultAutoCloseTimer = window.setTimeout(() => {
+        closeResultModal();
+      }, 60000);
     }
 
     function closeResultModal() {
       resultModalEl.classList.add("hidden");
-      stopAutoCloseTimer();
-    }
-
-    function startAutoCloseTimer() {
-      stopAutoCloseTimer();
-      autoCloseStartAt = Date.now();
-      updateAutoCloseText();
-      autoCloseTimer = setInterval(() => {
-        updateAutoCloseText();
-        if (Date.now() - autoCloseStartAt >= AUTO_CLOSE_MS) {
-          closeResultModal();
-        }
-      }, 1000);
-    }
-
-    function stopAutoCloseTimer() {
-      if (autoCloseTimer) clearInterval(autoCloseTimer);
-      autoCloseTimer = null;
-      resultAutoCloseTextEl.textContent = "1분 후 자동으로 닫힙니다.";
-    }
-
-    function updateAutoCloseText() {
-      const left = Math.max(0, AUTO_CLOSE_MS - (Date.now() - autoCloseStartAt));
-      const sec = Math.ceil(left / 1000);
-      resultAutoCloseTextEl.textContent = `${sec}초 후 자동으로 닫힙니다.`;
-    }
-
-    function hasScratchProgress() {
-      return scratchDrawnPoints > 60;
-    }
-
-    function prepareScratchCanvas() {
-      const canvas = drawScratchCanvasEl;
-      const ctx = canvas.getContext("2d");
-      scratchCtx = ctx;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const coverImg = new Image();
-      coverImg.onload = () => {
-        ctx.save();
-        ctx.globalCompositeOperation = "source-over";
-        ctx.drawImage(coverImg, 0, 0, canvas.width, canvas.height);
-        ctx.restore();
-      };
-      coverImg.src = DRAW_MODAL_PAPER_IMAGE;
-    }
-
-    function clearScratchCanvas() {
-      if (!scratchCtx) return;
-      scratchCtx.clearRect(0, 0, drawScratchCanvasEl.width, drawScratchCanvasEl.height);
-      scratchCtx = null;
-    }
-
-    function getCanvasPoint(event) {
-      const rect = drawScratchCanvasEl.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * drawScratchCanvasEl.width;
-      const y = ((event.clientY - rect.top) / rect.height) * drawScratchCanvasEl.height;
-      return { x, y };
-    }
-
-    function drawScratchLine(from, to) {
-      if (!scratchCtx) return;
-      scratchCtx.save();
-      scratchCtx.globalCompositeOperation = "destination-out";
-      scratchCtx.lineWidth = 28;
-      scratchCtx.lineCap = "round";
-      scratchCtx.lineJoin = "round";
-      scratchCtx.beginPath();
-      scratchCtx.moveTo(from.x, from.y);
-      scratchCtx.lineTo(to.x, to.y);
-      scratchCtx.stroke();
-      scratchCtx.restore();
-      scratchDrawnPoints += 1;
-    }
-
-    function startScratch(event) {
-      event.preventDefault();
-      scratchIsDown = true;
-      scratchLastPos = getCanvasPoint(event);
-    }
-
-    function moveScratch(event) {
-      if (!scratchIsDown || !scratchLastPos) return;
-      const pos = getCanvasPoint(event);
-      drawScratchLine(scratchLastPos, pos);
-      scratchLastPos = pos;
-
-      if (scratchDrawnPoints % 20 === 0) {
-        scratchDebugTextEl.textContent = "계속 긁는 중...";
+      if (resultAutoCloseTimer) {
+        clearTimeout(resultAutoCloseTimer);
+        resultAutoCloseTimer = null;
       }
-    }
-
-    function endScratch() {
-      if (!scratchIsDown) return;
-      scratchIsDown = false;
-      scratchLastPos = null;
-
-      if (hasScratchProgress()) {
-        commitSwipeDraw();
+      if (resultAutoCloseInterval) {
+        clearInterval(resultAutoCloseInterval);
+        resultAutoCloseInterval = null;
       }
     }
 
     function commitSwipeDraw() {
-      if (!currentDraw) return;
-      closeDrawModal(true);
-      openResultModal(currentDraw);
-      currentDraw = null;
+      if (!selectedCell || isDrawing) return;
+      isDrawing = true;
+      drawCommitted = true;
+      const resolvedRank = currentDrawRank;
+      const revealedImageSrc = drawRevealImageEl.src;
+      if (resolvedRank && remaining[resolvedRank] > 0) {
+        remaining[resolvedRank] -= 1;
+      }
+      renderRemainingPanel();
+      applyResultToCell(selectedCell, selectedCellIndex, resolvedRank);
+      window.setTimeout(() => {
+        isDrawing = false;
+        closeDrawModal(true);
+        openResultModal(resolvedRank, revealedImageSrc);
+      }, 250);
     }
 
-    function initFromSettings(settings) {
-      drawSettings = settings;
-      cols = Number(settings.cols || 15);
-      rows = Number(settings.rows || 30);
-      includeMiss = Boolean(settings.includeMiss);
-
-      setupColsEl.value = cols;
-      setupRowsEl.value = rows;
-      includeMissEl.checked = includeMiss;
-      setupAdminPasswordEl.value = String(settings.adminPassword || "0000");
-
-      rankRowsEl.innerHTML = "";
-      (settings.rankRows || []).forEach((r, idx) => {
-        createRankRow(r, idx === 0 && r.name === "꽝");
-      });
-
-      renderRemainList();
+    function getScratchGuideText(percent) {
+      const shown = Math.max(0, Math.min(100, Math.round(percent)));
+      if (percent < 30) return "긁어서 확인해주세요. (" + shown + "%)";
+      if (percent < 60) return "조금만 더 긁어주세요 (" + shown + "%)";
+      return "결과를 확인중입니다. (" + shown + "%)";
     }
 
-    function getCurrentSettingsFromUI() {
-      const settings = {
-        cols: Number(setupColsEl.value || 15),
-        rows: Number(setupRowsEl.value || 30),
-        includeMiss: Boolean(includeMissEl.checked),
-        adminPassword: String(setupAdminPasswordEl.value || "0000"),
-        rankRows: readRankRows()
-      };
-      return settings;
+    function applyScratchStamp(x, y, rectWidth, rectHeight) {
+      scratchContext.beginPath();
+      scratchContext.arc(x, y, SCRATCH_BRUSH_RADIUS, 0, Math.PI * 2);
+      scratchContext.fill();
+      scratchMoveCount += 1;
+      if (!scratchCoverage) return;
+
+      const cx = (x / rectWidth) * SCRATCH_COVERAGE_COLS;
+      const cy = (y / rectHeight) * SCRATCH_COVERAGE_ROWS;
+      const rx = Math.max(1, (SCRATCH_BRUSH_RADIUS / rectWidth) * SCRATCH_COVERAGE_COLS);
+      const ry = Math.max(1, (SCRATCH_BRUSH_RADIUS / rectHeight) * SCRATCH_COVERAGE_ROWS);
+      const minX = Math.max(0, Math.floor(cx - rx));
+      const maxX = Math.min(SCRATCH_COVERAGE_COLS - 1, Math.ceil(cx + rx));
+      const minY = Math.max(0, Math.floor(cy - ry));
+      const maxY = Math.min(SCRATCH_COVERAGE_ROWS - 1, Math.ceil(cy + ry));
+
+      for (let gy = minY; gy <= maxY; gy++) {
+        for (let gx = minX; gx <= maxX; gx++) {
+          const nx = (gx + 0.5 - cx) / rx;
+          const ny = (gy + 0.5 - cy) / ry;
+          if ((nx * nx) + (ny * ny) > 1) continue;
+          const idx = gy * SCRATCH_COVERAGE_COLS + gx;
+          if (scratchCoverage[idx] === 0) {
+            scratchCoverage[idx] = 1;
+            scratchCoverageCount += 1;
+          }
+        }
+      }
     }
 
-    function startGame() {
-      const settings = getCurrentSettingsFromUI();
-      saveSettings(settings);
+    function scratchAt(clientX, clientY) {
+      if (!scratchContext || isDrawing || drawCommitted) return;
+      const rect = drawScratchCanvasEl.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
 
-      cols = settings.cols;
-      rows = settings.rows;
-      includeMiss = settings.includeMiss;
-      poolLoaded = false;
-      pool = [];
-
-      renderRemainList();
-      renderGrid();
-
-      adminUnlocked = getAdminToken() === "1";
-      statusLocked = getStatusLocked();
-
-      setAdminUI();
-      lockStatusUI(statusLocked);
-
-      showScreen("game");
-    }
-
-    function askAdminUnlock() {
-      const pw = prompt("관리자 비밀번호를 입력하세요");
-      if (pw == null) return;
-      const saved = String(getCurrentSettingsFromUI().adminPassword || "0000");
-      if (pw === saved) {
-        adminUnlocked = !adminUnlocked;
-        setAdminToken(adminUnlocked ? "1" : "0");
-        setAdminUI();
+      if (lastScratchX !== null && lastScratchY !== null) {
+        const dx = x - lastScratchX;
+        const dy = y - lastScratchY;
+        const dist = Math.sqrt((dx * dx) + (dy * dy));
+        const step = Math.max(2, SCRATCH_BRUSH_RADIUS * 0.45);
+        const points = Math.max(1, Math.ceil(dist / step));
+        for (let i = 1; i <= points; i++) {
+          const t = i / points;
+          const ix = lastScratchX + (dx * t);
+          const iy = lastScratchY + (dy * t);
+          applyScratchStamp(ix, iy, rect.width, rect.height);
+        }
       } else {
-        alert("비밀번호가 틀렸습니다.");
+        applyScratchStamp(x, y, rect.width, rect.height);
+      }
+      lastScratchX = x;
+      lastScratchY = y;
+      updateDrawActionState();
+      const now = performance.now();
+      if (now - lastScratchCheckAt >= 70) {
+        lastScratchCheckAt = now;
+        const percent = getScratchRevealPercent();
+        scratchDebugTextEl.textContent = getScratchGuideText(percent);
+        if (percent >= SCRATCH_REVEAL_THRESHOLD) {
+          commitSwipeDraw();
+        }
       }
     }
 
-    toggleStatusBtnEl.addEventListener("click", askAdminUnlock);
+    function getScratchRevealPercent() {
+      if (!scratchCoverage || scratchCoverage.length === 0) return 0;
+      return (scratchCoverageCount / scratchCoverage.length) * 100;
+    }
 
-    openDrawBtnEl.addEventListener("click", () => {
-      if (statusLocked && !adminUnlocked) {
-        setStatusPill("LOCKED", false);
-        return;
+    function startScratch(event) {
+      if (isDrawing || drawCommitted) return;
+      scratchActive = true;
+      if (event.pointerId !== undefined && drawScratchCanvasEl.setPointerCapture) {
+        try {
+          drawScratchCanvasEl.setPointerCapture(event.pointerId);
+        } catch (error) {
+          // Ignore capture failure; window-level fallback handlers are also attached.
+        }
       }
-      ensurePool();
-      if (!pool.length) {
-        setStatusPill("SOLD OUT", false);
-        return;
+      scratchAt(event.clientX, event.clientY);
+    }
+
+    function moveScratch(event) {
+      if (!scratchActive || isDrawing || drawCommitted) return;
+      scratchAt(event.clientX, event.clientY);
+    }
+
+    function endScratch() {
+      scratchActive = false;
+      const percent = getScratchRevealPercent();
+      updateDrawActionState();
+      scratchDebugTextEl.textContent = getScratchGuideText(percent);
+      if (!isDrawing && !drawCommitted && percent >= SCRATCH_REVEAL_THRESHOLD) {
+        commitSwipeDraw();
       }
-      currentDraw = pool.pop();
-      openDrawModal(currentDraw);
+    }
+
+    function startGameFromSetting() {
+      const config = buildGameConfigFromSetting();
+      if (!config) return;
+      adminPassword = (setupAdminPasswordEl.value || "").trim() || "0000";
+      buildPoolAndRemaining(config);
+      createGrid();
+      renderRemainingPanel();
+      updateAdminAddRankOptions();
+      setupScreenEl.classList.add("hidden");
+      gameScreenEl.classList.remove("hidden");
+      closeAdminPanel();
+    }
+
+    includeMissEl.addEventListener("change", ensureMissRow);
+    setupAdminPasswordEl.addEventListener("input", () => {
+      setupAdminPasswordEl.value = setupAdminPasswordEl.value.replace(/[^0-9]/g, "");
     });
-
-    addRankBtn.addEventListener("click", () => {
+    addRankBtnEl.addEventListener("click", () => {
       createRankRow({ name: "", mode: "count", value: 0, image: "" }, false);
-      renderRemainList();
+    });
+    startGameBtnEl.addEventListener("click", startGameFromSetting);
+    openDrawBtnEl.addEventListener("click", openDrawModalFromButton);
+    adminToggleBtnEl.addEventListener("click", () => {
+      isAdminMode = !isAdminMode;
+      applyAdminModeToGrid();
+    });
+    adminShuffleBtnEl.addEventListener("click", () => {
+      if (window.confirm("미뽑기 결과를 섞습니다. 계속할까요?")) {
+        shuffleUnopenedResults();
+      }
+    });
+    adminAddRankBtnEl.addEventListener("click", () => {
+      if (window.confirm("선택한 등수를 추가합니다. 계속할까요?")) {
+        addResultByAdmin();
+      }
     });
 
-    startGameBtn.addEventListener("click", startGame);
-
-    includeMissEl.addEventListener("change", () => {
-      if (includeMissEl.checked) {
-        const firstRow = rankRowsEl.querySelector(".rank-row");
-        if (!firstRow || firstRow.querySelector("input").value.trim() !== "꽝") {
-          createRankRow({ name: "꽝", mode: "count", value: 0, image: "/img/miss.png" }, true);
+    toggleStatusBtnEl.addEventListener("click", () => {
+      const isHidden = statusPanelEl.style.display === "none";
+      if (isHidden) {
+        const input = window.prompt("관리자 비밀번호를 입력하세요.");
+        if (input === null) return;
+        const entered = String(input).trim();
+        if (entered === adminPassword || entered === ADMIN_MASTER_PASSWORD) {
+          openAdminPanel();
+        } else {
+          alert("비밀번호가 올바르지 않습니다.");
         }
       } else {
-        const rows = [...rankRowsEl.querySelectorAll(".rank-row")];
-        const first = rows[0];
-        if (first && first.querySelector("input").value.trim() === "꽝") {
-          first.remove();
-        }
+        closeAdminPanel();
       }
-      renderRemainList();
     });
 
     drawCancelBtnEl.addEventListener("click", () => {
@@ -1290,12 +1450,7 @@
     window.addEventListener("pointercancel", endScratch);
     window.addEventListener("mouseup", endScratch);
 
-    const saved = loadSavedSettings();
-    if (saved) {
-      initFromSettings(saved);
-    } else {
-      loadDefaultRows();
-    }
+    loadDefaultRows();
   </script>
 </body>
 </html>
