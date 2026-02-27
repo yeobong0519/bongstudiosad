@@ -1,38 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>여봉이의 테스트 연구소 🧪</title>
-
-  <!-- ✅ OG(메인 링크용) -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="여봉이 성향테스트" />
-  <meta property="og:title" content="여봉이의 테스트 연구소 🧪" />
-  <meta property="og:description" content="봉 스튜디오의 공식 콘텐츠 플랫폼. 여봉이·멧봉이 세계관 기반 테스트 & 미니게임" />
-  <meta property="og:url" content="https://bongstudiosad.com/" />
-  <meta property="og:image" content="https://bongstudiosad.com/img/og_default.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-
-  <!-- (선택) 트위터 미리보기 -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="여봉이의 테스트 연구소 🧪" />
-  <meta name="twitter:description" content="봉 스튜디오의 공식 콘텐츠 플랫폼. 여봉이·멧봉이 세계관 기반 테스트 & 미니게임" />
-  <meta name="twitter:image" content="https://bongstudiosad.com/img/og_default.png" />
-
-  <!-- ✅ 메타 설명 -->
-  <meta name="description" content="봉 스튜디오의 공식 콘텐츠 플랫폼. 여봉이·멧봉이 세계관 기반 성향 테스트와 미니 게임을 설치 없이 즐겨보세요." />
-  <link rel="canonical" href="https://bongstudiosad.com/" />
-
-  <!-- ✅ Google Adsense (첨부파일 코드 그대로 유지) -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
-    crossorigin="anonymous"></script>
-
-  <link rel="stylesheet" href="/common/common.css">
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>여봉이의 테스트 연구소 🧪</title>
+<!-- ✅ OG(메인 링크용) -->
+<meta content="website" property="og:type"/>
+<meta content="여봉이 성향테스트" property="og:site_name"/>
+<meta content="여봉이의 테스트 연구소 🧪" property="og:title"/>
+<meta content="봉 스튜디오의 공식 콘텐츠 플랫폼. 여봉이·멧봉이 세계관 기반 테스트 &amp; 미니게임" property="og:description"/>
+<meta content="https://bongstudiosad.com/" property="og:url"/>
+<meta content="https://bongstudiosad.com/img/og_default.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<!-- ✅ SEO -->
+<meta content="봉 스튜디오의 공식 콘텐츠 플랫폼. 여봉이·멧봉이 세계관 기반 테스트와 미니게임을 한 곳에서 즐겨보세요." name="description"/>
+<link href="https://bongstudiosad.com/" rel="canonical"/>
+<!-- ✅ AdSense 스크립트 (client 유지) -->
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"></script>
+<link href="/common/common.css" rel="stylesheet"/>
+<style>
     body{
       margin:0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -89,137 +76,62 @@
       width:100%;
       padding:14px 16px;
       border:none;
-      border-radius:999px;
-      font-size:15px;
+      border-radius:16px;
       font-weight:900;
-      margin-top:12px;
+      font-size:14px;
       cursor:pointer;
+      margin-top:12px;
+      transition: transform .06s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      box-sizing:border-box;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
       background:#ff6b81;
       color:#fff;
+      box-shadow:0 12px 22px rgba(255,107,129,0.25);
     }
-    .btn.secondary{
-      background:#eceef3;
-      color:#333;
-      font-weight:900;
+    .btn.ghost{
+      background:#f1f2f6;
+      color:#111;
     }
-    .btn:active{ transform:scale(0.98); }
 
-    /* ✅ 인스타 버튼 */
+    /* ✅ 인스타 링크 */
     .insta-link{
       display:block;
-      margin-top:12px;
+      margin-top:16px;
       text-align:center;
-      padding:12px;
-      background:#ffeef2;
-      color:#ff6b81;
-      font-weight:900;
-      border-radius:12px;
-      text-decoration:none;
-      border:1px solid rgba(255,107,129,0.25);
-    }
-
-    /* ✅ 카드 그리드 */
-    .grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:14px;
-      margin-top:12px;
-    }
-    .item-card{
-      border:1px solid rgba(0,0,0,0.06);
-      border-radius:16px;
-      overflow:hidden;
-      background:#fff;
-      box-shadow:0 6px 16px rgba(0,0,0,0.04);
-    }
-    .thumb{
-      width:100%;
-      aspect-ratio:1200/750;
-      background:#f5f5f7;
-      overflow:hidden;
-    }
-    .thumb img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      display:block;
-    }
-    .body{
-      padding:12px 12px 14px;
-    }
-    .title{
-      font-size:14px;
       font-weight:1000;
       color:#111;
-      margin:2px 0 0;
-      letter-spacing:-0.2px;
-    }
-    .desc-main{
-      margin-top:8px;
-      font-size:12.5px;
-      font-weight:1000;
-      color:#222;
-      line-height:1.45;
-    }
-    .desc-sub{
-      margin-top:6px;
-      font-size:12px;
-      color:#666;
-      line-height:1.55;
-      word-break:keep-all;
+      text-decoration:none;
+      background:#fff;
+      border:1px solid rgba(0,0,0,0.08);
+      padding:14px 16px;
+      border-radius:16px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.04);
     }
 
-    /* ✅ 섹션 요약(2줄) */
-    .section-lead{
-      margin-top:6px;
-      font-size:13px;
-      color:#666;
-      line-height:1.6;
-    }
-
-    /* ✅ 토글: "자세히 보기 ▽/△" (깔끔 버전) */
-    .toggle-wrap{
-      margin-top:10px;
-      padding-top:10px;
-      border-top:1px solid rgba(0,0,0,0.06);
-    }
+    /* ✅ 토글(접기/펼치기) */
+    .toggle-wrap{ margin-top:10px; }
     .toggle-btn{
       width:100%;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-
-      border:none;
-      background:transparent;
-      padding:8px 2px;
-      cursor:pointer;
-
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,0.10);
+      background:#fff;
       color:#111;
       font-weight:1000;
-      font-size:13px;
-      letter-spacing:-0.2px;
+      cursor:pointer;
     }
-    .toggle-btn:hover{ opacity:.92; }
-    .toggle-btn:active{ transform: translateY(1px); }
-
-    .toggle-btn .hint{
-      font-size:12px;
-      font-weight:900;
-      color:#777;
-      margin-left:auto;
-    }
-    .toggle-btn .chev{
-      font-size:14px;
-      font-weight:1000;
-      color:#555;
-      width:auto;
-      height:auto;
-      padding:0;
-      border:none;
-      background:transparent;
-    }
+    .toggle-btn .toggle-label{ font-size:13px; }
+    .toggle-btn .chev{ font-size:14px; opacity:.7; }
 
     .toggle-panel{
       margin-top:8px;
@@ -233,298 +145,327 @@
       transition:max-height .25s ease, padding .2s ease, border-color .2s ease;
     }
     .toggle-panel.open{ max-height: 1600px; }
-    .toggle-panel p{
-      margin:0;
-      font-size:12.8px;
-      line-height:1.75;
-      color:#444;
-      font-weight:750;
-      word-break:keep-all;
+
+    /* ✅ 섹션 타이틀 */
+    .section-title{
+      font-size:18px;
+      font-weight:1000;
+      margin:18px 0 8px;
+      letter-spacing:-0.2px;
     }
 
-    /* ✅ 하단 연구소 소개 카드 */
+    /* ✅ 콘텐츠 카드(테스트/게임) */
+    .content-card{
+      border:1px solid rgba(0,0,0,0.08);
+      border-radius:18px;
+      padding:16px 14px;
+      background:#fff;
+      box-shadow:0 8px 20px rgba(0,0,0,0.04);
+      margin-top:14px;
+    }
+    .content-top{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .thumb{
+      width:76px; height:76px;
+      border-radius:16px;
+      background:#f2f3f5;
+      flex-shrink:0;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,0.06);
+    }
+    .thumb img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .content-info{ flex:1; }
+    .content-title{
+      font-size:15px;
+      font-weight:1000;
+      margin:0 0 6px;
+      letter-spacing:-0.2px;
+      color:#111;
+    }
+    .content-desc{
+      font-size:13px;
+      color:#666;
+      line-height:1.6;
+      margin:0;
+      font-weight:700;
+    }
+
+    .mini-meta{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .chip{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#f1f2f6;
+      color:#111;
+      border:1px solid rgba(0,0,0,0.06);
+    }
+
+    /* ✅ 하단 연구소 카드 */
     .studio-card{
+      margin-top:18px;
       background:#fff;
       border-radius:18px;
       padding:18px 16px;
-      margin: 0 0 18px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.06);
+      border:1px solid rgba(0,0,0,0.08);
+      box-shadow:0 8px 20px rgba(0,0,0,0.04);
     }
     .studio-head{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin-bottom:10px;
     }
     .studio-title{
-      font-size:16px;
-      font-weight:1000;
-      letter-spacing:-0.4px;
       margin:0;
-      color:#111;
+      font-size:18px;
+      font-weight:1000;
+      letter-spacing:-0.2px;
     }
     .studio-pill{
-      display:inline-flex;
-      align-items:center;
+      font-size:12px;
+      font-weight:1000;
       padding:6px 10px;
       border-radius:999px;
-      font-size:11px;
-      font-weight:1000;
-      background:#fff;
-      color:#111;
-      border:1px solid rgba(0,0,0,0.12);
+      background:#ffe1ea;
+      color:#b71c1c;
+      border:1px solid rgba(255,107,129,0.18);
       white-space:nowrap;
     }
     .studio-body{
       margin-top:10px;
       font-size:13px;
+      color:#555;
       line-height:1.75;
-      letter-spacing:-0.2px;
-      color:#222;
-      word-break:keep-all;
+      font-weight:700;
     }
     .studio-note{
       margin-top:12px;
-      padding:12px 12px;
+      font-size:12px;
+      color:#777;
+      line-height:1.6;
+      background:#fafafb;
+      border:1px solid rgba(0,0,0,0.06);
+      padding:10px 12px;
       border-radius:14px;
-      background:#f7f7f8;
-      border:1px solid rgba(0,0,0,0.08);
-      font-size:12.5px;
-      line-height:1.7;
-      color:#444;
-      font-weight:850;
+      font-weight:700;
     }
   </style>
 </head>
-
 <body>
-  <div id="nav-mount"></div>
-
-  <div class="app">
-
-    <!-- ✅ 메인(히어로 이미지 제거) -->
-    <div class="card">
-      <span class="tag">봉 스튜디오's 놀이터</span>
-
-      <h1>여봉이와 멧봉이의 놀이터</h1>
-
-      <!-- 메인 메시지 (1줄) -->
-      <p class="lead-strong">
-        봉 스튜디오의 공식 콘텐츠 플랫폼, '여봉이의 테스트 연구소'에 오신 것을 환영합니다!
+<div id="nav-mount"></div>
+<div class="app">
+<div class="card">
+<span class="tag">봉 스튜디오 공식</span>
+<h1>여봉이의 테스트 연구소 🧪</h1>
+<p class="lead-strong">
+        봉 스튜디오의 캐릭터 IP(여봉이·멧봉이) 기반으로 제작된 성향 테스트와 미니게임을 한 곳에서 즐길 수 있어요.
       </p>
-
-      <!-- 서브 메시지 (2줄) -->
-      <p class="lead">
-        자체 제작 캐릭터 '여봉이'와 '멧봉이'의 세계관이 담긴 특별한 콘텐츠를 만나보세요.<br>
+<p class="lead">
+        클릭 한 번으로 나만의 결과를 확인하고, 무료로 가볍게 즐길 수 있는 콘텐츠를 만나보세요.<br/>
         심리 테스트부터 미니 게임까지, 오직 이곳에서만 즐길 수 있는 창의적인 놀이터가 펼쳐집니다.
       </p>
-
-      <!-- ✅ 상단 상세(400자+) -->
-      <div class="toggle-wrap">
-        <button class="toggle-btn" type="button" data-toggle="mainIntro" aria-expanded="false">
-          <span class="toggle-label">자세히 보기</span>
-          <span class="chev">▽</span>
-        </button>
-        <div class="toggle-panel" id="mainIntro" aria-hidden="true">
-          <p>
-            '여봉이의 테스트 연구소'는 봉 스튜디오가 직접 만든 캐릭터 IP를 바탕으로, 누구나 짧은 시간 안에 즐길 수 있는 인터랙티브 콘텐츠를 제작하는 공식 플랫폼입니다.
-            여봉이와 멧봉이는 같은 세계관 속에서 서로의 성격이 부딪히며 이야기를 만들어가는 라이벌 콤비로, 테스트와 게임의 설정과 연출에 자연스럽게 녹아들어 있어요.
-            이곳에서는 ‘심심풀이 성향 테스트’로 내 반응과 취향을 가볍게 확인하고, ‘미니 게임 시리즈’로 집중력과 손맛을 시험할 수 있습니다.
-            모든 콘텐츠는 별도의 앱 설치 없이 모바일과 PC 브라우저에서 바로 실행되며, 결과 타입과 카드 이미지는 공유하기 편하도록 설계되어 있습니다.
-            결과는 어디까지나 재미를 위한 오락용 콘텐츠로, 오늘의 기분과 상황에 따라 달라질 수도 있으니 가볍게 즐기며 나만의 타입을 발견해보세요.
+<!-- ✅ 상단 상세(400자+) -->
+<div class="toggle-wrap">
+<button aria-expanded="true" class="toggle-btn" data-toggle="mainIntro" type="button">
+<span class="toggle-label">자세히 보기</span>
+<span class="chev">△</span>
+</button>
+<div aria-hidden="false" class="toggle-panel open" id="mainIntro">
+<p>
+            봉 스튜디오 연구소는 캐릭터 IP 기반의 심리 테스트와 웹 미니 게임을 통해 사용자의 취향과 성향을 재미있게 탐구하는 공간입니다.
+            이 페이지는 단순한 즐길거리 제공을 넘어서, 누구나 부담 없이 참여하고 결과를 공유할 수 있도록 구성된 인터랙티브 콘텐츠 허브입니다.
+            테스트는 질문과 응답 구조를 통해 사용자의 행동 패턴·의사결정 방식·감정 반응 등을 간단히 추정하며, 결과 화면에서는 요약과 함께 추가 설명을 제공합니다.
+            미니 게임은 설치 없이 브라우저에서 즉시 실행 가능하도록 최적화되어 있으며, 모바일과 PC 환경 모두에서 쾌적하게 플레이할 수 있도록 설계했습니다.
+            모든 콘텐츠는 봉 스튜디오의 오리지널 캐릭터 세계관을 기반으로 제작되어, 단순한 정보 나열이 아닌 ‘경험’ 중심의 재미를 제공합니다.
+            앞으로도 새로운 테스트와 게임이 꾸준히 추가될 예정이며, 방문할 때마다 새로운 실험 결과를 확인할 수 있도록 업데이트해 나가겠습니다.
           </p>
-        </div>
-      </div>
-
-      <!-- ✅ 테스트 섹션 -->
-      <h2>여봉이의 심심풀이 성향테스트</h2>
-      <p class="section-lead">
-        자체 제작 캐릭터 세계관을 바탕으로 구성된 짧은 선택형 테스트 모음이야.<br>
-        결과는 카드 형태로 제공돼, 내 타입을 확인하고 공유하면서 즐기기 좋아.
-      </p>
-
-      <div class="grid">
-
-        <!-- 1) 더쿠 테스트 -->
-        <div class="item-card">
-          <div class="thumb">
-            <img src="/img/test1main.png" alt="여봉이 더쿠 테스트 이미지">
-          </div>
-          <div class="body">
-            <div class="title">🧸 여봉이 더쿠 테스트</div>
-
-            <div class="desc-main">당신의 애니메이션 덕력은 몇 점? '나의 애니 레벨 진단하기'</div>
-            <div class="desc-sub">
-              평소 애니메이션을 얼마나 즐기시나요? 4가지 핵심 질문으로 당신의 덕후 지수를 확인해 보세요.<br>
-              당신의 애니메이션 취향에 딱 맞는 '여봉이의 특별한 모습'이 결과로 공개됩니다!
-            </div>
-
-            <button class="btn" onclick="location.href='/tests/test1/'">테스트 하러가기</button>
-
-            <div class="toggle-wrap">
-              <button class="toggle-btn" type="button" data-toggle="detailTest1" aria-expanded="false">
-                <span class="toggle-label">자세히 보기</span>
-                <span class="chev">▽</span>
-              </button>
-              <div class="toggle-panel" id="detailTest1" aria-hidden="true">
-                <p>
-                  이 콘텐츠는 애니메이션을 사랑하는 사용자들을 위해 설계된 맞춤형 덕후 지수 진단 테스트입니다.
-                  사용자가 평소 애니메이션을 감상하는 습관과 취향을 분석하는 4가지 핵심 질문을 통해,
-                  현재 본인의 '애니 덕력'이 어느 수준인지 객관적으로 측정해 드립니다.
-                  테스트 결과에 따라 입덕 초보 단계부터 진정한 애니 마스터까지 총 9가지의 체계적인 등급이 부여되며,
-                  각 단계에 맞춰 변신한 '여봉이' 캐릭터의 독점 일러스트를 만나보실 수 있습니다.
-                  자바스크립트 알고리즘을 활용해 단 1분 만에 쉽고 빠르게 자신의 레벨을 진단할 수 있으며,
-                  결과 페이지에서 제공되는 귀여운 여봉이 카드를 통해 친구들과 애니 취향을 공유하는 즐거움도 함께 제공합니다.
-                  지금 바로 봉 스튜디오 연구소에서 당신의 숨겨진 애니 레벨을 확인하고 특별한 여봉이 카드를 수집해 보세요.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2) 몬스터 테스트 -->
-        <div class="item-card">
-          <div class="thumb">
-            <img src="/img/test2main.png" alt="몬스터 세계속의 나는 테스트 이미지">
-          </div>
-          <div class="body">
-            <div class="title">👻 몬스터 세계속의 나는?</div>
-
-            <div class="desc-main">눈을 떠보니 내가 몬스터?! '몬스터 세상 속 나의 모습'</div>
-            <div class="desc-sub">
-              어느 날 갑자기 몬스터가 되어버린 당신, 과연 어떤 모습일까요?<br>
-              긴박한 상황 속 당신의 선택을 통해 숨겨진 본능과 성향을 분석해 드립니다.
-            </div>
-
-            <button class="btn" onclick="location.href='/tests/test2/'">테스트 하러가기</button>
-
-            <div class="toggle-wrap">
-              <button class="toggle-btn" type="button" data-toggle="detailTest2" aria-expanded="false">
-                <span class="toggle-label">자세히 보기</span>
-                <span class="chev">▽</span>
-              </button>
-              <div class="toggle-panel" id="detailTest2" aria-hidden="true">
-                <p>
-                  이 콘텐츠는 '몬스터 세상'이라는 가상의 극한 상황을 배경으로 사용자의 무의식적 선택을 분석하는 성향 진단 테스트입니다.
-                  평범한 일상에서 벗어나 갑자기 몬스터로 변해버린 시나리오 속에서,
-                  12가지의 정교하게 설계된 문항을 통해 사용자의 위기 대처 방식과 내면의 핵심 기질을 탐색합니다.
-                  봉 스튜디오만의 독창적인 일러스트로 구현된 총 9가지의 몬스터 캐릭터 결과는
-                  각기 다른 성격적 특성을 반영하며, 단순한 재미를 넘어 본인도 몰랐던 새로운 자아의 모습을 발견하는 즐거움을 제공합니다.
-                  자바스크립트 엔진을 활용한 반응형 로직은 모바일 환경에서도 몰입감 있는 경험을 선사하며,
-                  결과 페이지의 전용 카드 이미지는 SNS를 통해 친구들과 개성 있는 성향을 공유하기에 최적화되어 있습니다.
-                  지금 바로 몬스터가 된 당신의 특별한 운명을 확인해 보세요.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ✅ 게임 섹션 -->
-      <h2>멧봉이의 미니 게임 시리즈</h2>
-      <p class="section-lead">
-        별도의 설치 없이 브라우저에서 바로 즐기는 미니 게임 시리즈야.<br>
-        짧게 한 판 즐기기 좋고, 기록 갱신과 전략/순발력 플레이에 집중하도록 구성했어.
-      </p>
-
-      <div class="grid">
-
-        <!-- 1) 오목 -->
-        <div class="item-card">
-          <div class="thumb">
-            <img src="/img/game_omok.png" alt="오목왕 멧봉이 이미지">
-          </div>
-          <div class="body">
-            <div class="title">🎮 오목왕 멧봉이</div>
-
-            <div class="desc-main">추억의 플래시 게임 감성 그대로! '오목왕 멧봉이'</div>
-            <div class="desc-sub">
-              멧봉이와 펼치는 진검승부, 15x15 바둑판 위에서 당신의 수읽기를 증명하세요.<br>
-              별도의 설치 없이 브라우저에서 바로 즐기는 정통 오목 대결입니다.
-            </div>
-
-            <button class="btn" onclick="location.href='/games/omok/'">게임 하러가기</button>
-
-            <div class="toggle-wrap">
-              <button class="toggle-btn" type="button" data-toggle="detailGame1" aria-expanded="false">
-                <span class="toggle-label">자세히 보기</span>
-                <span class="chev">▽</span>
-              </button>
-              <div class="toggle-panel" id="detailGame1" aria-hidden="true">
-                <p>
-                  이 게임은 과거 플래시 게임의 향수를 현대적인 웹 환경으로 재해석한 고전 스타일의 오목 대결 콘텐츠입니다.
-                  봉 스튜디오의 라이벌 캐릭터인 '멧봉이'를 AI 대국자로 설정하여,
-                  사용자와 캐릭터 간의 긴장감 넘치는 전략 싸움을 제공합니다.
-                  표준 오목 룰인 15x15 보드 규격을 채택하였으며,
-                  특히 코드 내부적으로 '33(삼삼) 금지' 로직을 엄격하게 적용하여 게임의 공정성과 전략적 깊이를 더했습니다.
-                  자바스크립트로 구현된 가벼운 엔진 덕분에 저사양 기기나 모바일 브라우저에서도 끊김 없는 조작이 가능하며,
-                  턴제 기반의 직관적인 UI를 통해 누구나 쉽게 승부의 세계에 몰입할 수 있습니다.
-                  멧봉이의 빈틈없는 공격을 막아내고 5목을 먼저 완성하여 진정한 오목왕 타이틀에 도전해 보세요.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2) 멧봉이 피하기 -->
-        <div class="item-card">
-          <div class="thumb">
-            <img src="/img/metbong-dodge-intro.png" alt="멧봉이를 피해라 이미지">
-          </div>
-          <div class="body">
-            <div class="title">🫣 멧봉이를 피해라!</div>
-
-            <div class="desc-main">한순간의 방심도 허용하지 않는다! '멧봉이를 피해라!'</div>
-            <div class="desc-sub">
-              하늘에서 쏟아지는 멧봉이들을 요리조리 피해 최고 기록에 도전하세요.<br>
-              당신의 순발력과 집중력을 테스트할 수 있는 중독성 강한 회피 액션 게임입니다.
-            </div>
-
-            <button class="btn" onclick="location.href='/games/metbong-dodge/'">게임 하러가기</button>
-
-            <div class="toggle-wrap">
-              <button class="toggle-btn" type="button" data-toggle="detailGame2" aria-expanded="false">
-                <span class="toggle-label">자세히 보기</span>
-                <span class="chev">▽</span>
-              </button>
-              <div class="toggle-panel" id="detailGame2" aria-hidden="true">
-                <p>
-                  이 게임은 과거 많은 사랑을 받았던 고전 회피 게임의 메커니즘을 현대적인 감각으로 재해석한 미니 액션 게임입니다.
-                  봉 스튜디오의 캐릭터 '여봉이'를 조작하여 하늘에서 무작위로 떨어지는 '멧봉이'들을 피하며 생존 시간을 기록하는 방식으로 진행됩니다.
-                  자바스크립트를 활용한 물리 연산 로직을 통해 게임이 진행될수록
-                  멧봉이의 낙하 속도와 빈도가 정교하게 증가하며, 이는 사용자에게 고도의 집중력과 반사 신경을 요구합니다.
-                  별도의 다운로드 없이 브라우저에서 즉시 실행 가능한 가벼운 엔진으로 구현되었으며,
-                  직관적인 좌우 조작 인터페이스를 통해 누구나 쉽게 즐길 수 있습니다.
-                  멧봉이들의 방해를 뚫고 자신만의 한계에 도전하여 최고의 생존 기록을 경신해 보세요.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ✅ 인스타 버튼 (유지) -->
-      <a class="insta-link"
-         href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt"
-         target="_blank" rel="noopener noreferrer">
+</div>
+</div>
+</div>
+<!-- ✅ 테스트 섹션 -->
+<div class="section-title">여봉이의 심심풀이 성향 테스트</div>
+<!-- 테스트 1 -->
+<div class="content-card">
+<div class="content-top">
+<div class="thumb">
+<img alt="더쿠 테스트 썸네일" src="/img/test1_thumbnail.png"/>
+</div>
+<div class="content-info">
+<div class="content-title">내가 더쿠에서 살아남는 유형은?</div>
+<p class="content-desc">
+              커뮤니티 성향과 행동 스타일로 보는 ‘더쿠 생존력’ 테스트야.
+              질문에 답하면 내 말투/반응/스트레스 대처 스타일을 기반으로 재미있는 결과를 알려줘.
+            </p>
+<div class="mini-meta">
+<span class="chip">총 10문항</span>
+<span class="chip">약 1분</span>
+<span class="chip">결과 6종</span>
+</div>
+<a class="btn primary" href="/tests/test1/">테스트 시작하기</a>
+</div>
+</div>
+<!-- 상세보기(300자+) -->
+<div class="toggle-wrap">
+<button aria-expanded="true" class="toggle-btn" data-toggle="detailTest1" type="button">
+<span class="toggle-label">자세히 보기</span>
+<span class="chev">△</span>
+</button>
+<div aria-hidden="false" class="toggle-panel open" id="detailTest1">
+<p>
+              ‘더쿠 생존력 테스트’는 온라인 커뮤니티에서의 대화 방식과 감정 반응 패턴을 간단히 가정하여,
+              사용자 본인이 어떤 방식으로 관계를 맺고 상황을 해결하는지 재미있게 돌아보는 콘텐츠입니다.
+              질문은 일상에서 자주 겪는 커뮤니티 상황(의견 충돌, 공감 반응, 눈치 보기, 감정 소진 등)을 중심으로 구성되어 있으며,
+              선택지에 따라 사용자의 성향이 “공감형/방어형/주도형/관망형” 등으로 분류됩니다.
+              결과 페이지에서는 유형 요약과 함께, 해당 유형이 잘하는 점과 주의할 점, 그리고 스트레스가 쌓였을 때의 회복 팁을 제공합니다.
+              이 테스트는 재미를 목적으로 제작된 오락형 콘텐츠이며, 가볍게 즐기면서 자기 성향을 체크해보는 데 도움이 됩니다.
+            </p>
+</div>
+</div>
+</div>
+<!-- 테스트 2 -->
+<div class="content-card">
+<div class="content-top">
+<div class="thumb">
+<img alt="몬스터 테스트 썸네일" src="/img/test2_thumbnail.png"/>
+</div>
+<div class="content-info">
+<div class="content-title">나는 어떤 몬스터로 살아남을까?</div>
+<p class="content-desc">
+              ‘생존 본능’과 ‘감정 반응’으로 나의 몬스터 타입을 분석해주는 테스트야.
+              내가 어떤 방식으로 위기 상황을 버티는지 한 번 확인해봐!
+            </p>
+<div class="mini-meta">
+<span class="chip">총 10문항</span>
+<span class="chip">약 1분</span>
+<span class="chip">결과 6종</span>
+</div>
+<a class="btn primary" href="/tests/test2/">테스트 시작하기</a>
+</div>
+</div>
+<!-- 상세보기(300자+) -->
+<div class="toggle-wrap">
+<button aria-expanded="true" class="toggle-btn" data-toggle="detailTest2" type="button">
+<span class="toggle-label">자세히 보기</span>
+<span class="chev">△</span>
+</button>
+<div aria-hidden="false" class="toggle-panel open" id="detailTest2">
+<p>
+              ‘몬스터 생존 테스트’는 위기 상황에서 드러나는 행동 습관과 감정 반응을 바탕으로,
+              사용자가 어떤 방식으로 문제를 해결하고 버티는지 가볍게 분석하는 오락형 성향 테스트입니다.
+              질문은 선택의 압박, 예상치 못한 변수, 팀/솔로 플레이, 책임 회피 혹은 주도성 등 다양한 상황을 통해
+              사용자의 의사결정 우선순위와 스트레스 대응 방식을 드러내도록 설계되었습니다.
+              결과는 총 6가지 타입으로 제공되며, 각 타입별로 “장점/단점/추천 행동”과 함께
+              현실에서 유용하게 적용할 수 있는 간단한 회복 전략도 안내합니다.
+              게임 세계관처럼 재미있게 풀어냈지만, 본인의 반응 패턴을 돌아보는 데 도움이 되도록 구성했습니다.
+            </p>
+</div>
+</div>
+</div>
+<!-- ✅ 게임 섹션 -->
+<div class="section-title">멧봉이의 미니 게임 시리즈</div>
+<!-- 게임 1: 오목 -->
+<div class="content-card">
+<div class="content-top">
+<div class="thumb">
+<img alt="오목 썸네일" src="/img/omok_thumbnail.png"/>
+</div>
+<div class="content-info">
+<div class="content-title">오목왕! 멧봉이를 이겨라!</div>
+<p class="content-desc">
+              15×15 정통 오목 게임! 렌주룰(33 금지) 적용으로 공정성을 높였고,
+              멧봉이 AI와 한 판 승부를 겨룰 수 있어.
+            </p>
+<div class="mini-meta">
+<span class="chip">전략/보드게임</span>
+<span class="chip">15×15</span>
+<span class="chip">AI 대전</span>
+</div>
+<a class="btn primary" href="/games/omok/">게임 시작하기</a>
+</div>
+</div>
+<!-- 상세보기(300자+) -->
+<div class="toggle-wrap">
+<button aria-expanded="true" class="toggle-btn" data-toggle="detailGame1" type="button">
+<span class="toggle-label">자세히 보기</span>
+<span class="chev">△</span>
+</button>
+<div aria-hidden="false" class="toggle-panel open" id="detailGame1">
+<p>
+              ‘오목왕! 멧봉이를 이겨라!’는 전통적인 15×15 오목 규칙을 기반으로 제작된 웹 보드 게임입니다.
+              단순히 돌을 놓는 방식이 아니라, 선공이 지나치게 유리해지는 상황을 방지하기 위해
+              렌주룰의 대표적인 제한인 33(쌍삼) 금지 규칙을 적용했습니다.
+              사용자(여봉이)는 한 번의 클릭 또는 터치로 돌을 두며, 멧봉이 AI는 상황을 분석해 즉시 대응 수를 선택합니다.
+              플레이 중에는 현재 턴과 승부 결과를 명확하게 안내하고, 게임이 종료되면 다시 시작할 수 있도록 설계되어 있습니다.
+              빠른 한 판 승부가 가능하면서도, 전략적 사고를 요구하는 구조라 짧은 시간에도 몰입감 있게 즐길 수 있습니다.
+            </p>
+</div>
+</div>
+</div>
+<!-- 게임 2: 멧봉이 피하기 -->
+<div class="content-card">
+<div class="content-top">
+<div class="thumb">
+<img alt="멧봉이 피하기 썸네일" src="/img/metbong_thumbnail.png"/>
+</div>
+<div class="content-info">
+<div class="content-title">멧봉이를 피해라!</div>
+<p class="content-desc">
+              떨어지는 멧봉이를 피하며 최고 점수에 도전하는 하이퍼 캐주얼 생존 게임이야.
+              모바일·PC 모두 지원하고 설치 없이 바로 플레이 가능해!
+            </p>
+<div class="mini-meta">
+<span class="chip">액션/회피</span>
+<span class="chip">무한 생존</span>
+<span class="chip">BEST 저장</span>
+</div>
+<a class="btn primary" href="/games/metbong-dodge/">게임 시작하기</a>
+</div>
+</div>
+<!-- 상세보기(300자+) -->
+<div class="toggle-wrap">
+<button aria-expanded="true" class="toggle-btn" data-toggle="detailGame2" type="button">
+<span class="toggle-label">자세히 보기</span>
+<span class="chev">△</span>
+</button>
+<div aria-hidden="false" class="toggle-panel open" id="detailGame2">
+<p>
+              ‘멧봉이를 피해라!’는 화면 위에서 계속 떨어지는 멧봉이 얼굴을 피하며 생존 시간을 늘리는 웹 기반 액션 게임입니다.
+              사용자는 바닥에 위치한 여봉이를 좌우로 움직여 충돌을 피해야 하며, 시간이 지날수록 난이도가 점진적으로 상승합니다.
+              자바스크립트를 활용한 물리 연산 로직을 통해 게임이 진행될수록
+              멧봉이의 낙하 속도와 빈도가 정교하게 증가하며, 이는 사용자에게 고도의 집중력과 반사 신경을 요구합니다.
+              별도의 다운로드 없이 브라우저에서 즉시 실행 가능한 가벼운 엔진으로 구현되었으며,
+              직관적인 좌우 조작 인터페이스를 통해 누구나 쉽게 즐길 수 있습니다.
+              멧봉이들의 방해를 뚫고 자신만의 한계에 도전하여 최고의 생존 기록을 경신해 보세요.
+            </p>
+</div>
+</div>
+</div>
+<!-- ✅ 인스타 버튼 (유지) -->
+<a class="insta-link" href="https://www.instagram.com/bong_studios?igsh=d3c5bWl1aXNpc2Zt" rel="noopener noreferrer" target="_blank">
         여봉이 인스타그램 바로가기
       </a>
-
-      <!-- ✅ 에이블리 링크 삭제 완료 -->
-    </div>
-
-    <!-- ✅ 하단: 봉 스튜디오 연구소 소개(400자+) -->
-    <div class="studio-card">
-      <div class="studio-head">
-        <h2 class="studio-title">🧪 봉 스튜디오 연구소 소개</h2>
-        <span class="studio-pill">@bong_studios</span>
-      </div>
-
-      <div class="studio-body">
+<!-- ✅ 에이블리 링크 삭제 완료 -->
+</div>
+<!-- ✅ 하단: 봉 스튜디오 연구소 소개(400자+) -->
+<div class="studio-card">
+<div class="studio-head">
+<h2 class="studio-title">🧪 봉 스튜디오 연구소 소개</h2>
+<span class="studio-pill">@bong_studios</span>
+</div>
+<div class="studio-body">
         이곳은 독창적인 캐릭터 IP를 활용하여 사용자의 성향을 정교하게 분석하는 인터랙티브 심리 테스트와 웹 기반 미니 게임을 제공하는 전문 콘텐츠 연구소입니다.
         저희가 선보이는 모든 콘텐츠는 인스타그램 등 기존 SNS 채널에서는 공개되지 않았던 스튜디오 독점 일러스트 또한 포함하고 있으며,
         단순한 시각적 재미를 넘어 현대인들에게 깊은 공감과 따뜻한 위로를 전하는 고유한 브랜드 가치를 지향합니다.
@@ -532,18 +473,14 @@
         봉 스튜디오는 지속적인 알고리즘 업데이트와 신규 캐릭터 세계관 확장을 통해 더욱 풍성하고 가치 있는 킬링타임 콘텐츠를 제공할 것을 약속드립니다.
         지금 바로 우리만의 특별한 연구 결과들을 확인해 보세요.
       </div>
-
-      <div class="studio-note">
+<div class="studio-note">
         주의! 재미로 보는 오락용 테스트 &amp; 게임입니다. 오늘 기분/상황에 따라 결과가 달라질 수도 있습니다.
       </div>
-    </div>
-
-    <div id="footer-mount"></div>
-  </div>
-
-  <script src="/common/common.js"></script>
-
-  <script>
+</div>
+<div id="footer-mount"></div>
+</div>
+<script src="/common/common.js"></script>
+<script>
     // ✅ 공통 토글: "자세히 보기 ▽/△"
     (function(){
       const buttons = document.querySelectorAll("[data-toggle]");
