@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>오목왕! 멧봉이를 이겨라! - 안내 & 플레이</title>
+  <title>오목왕! 멧봉이를 이겨라!</title>
 
-  <meta name="description" content="설치 없이 바로 즐기는 15×15 오목! 규칙/전략/렌주룰(33 금지) 안내부터 멧봉이 AI와 실전 플레이까지 한 페이지에서 즐겨보세요." />
+  <meta name="description" content="설치 없이 바로 즐기는 15×15 오목! 규칙 설명을 읽고 같은 페이지에서 바로 멧봉이 AI와 대결해보세요. 렌주룰(33 금지) 기반의 브라우저 오목 게임입니다." />
   <link rel="canonical" href="https://bongstudiosad.com/games/omok/" />
 
-  <!-- ✅ JSON-LD (승인용) -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
+    crossorigin="anonymous"></script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -17,16 +20,18 @@
     "operatingSystem": "Web",
     "applicationCategory": "GameApplication",
     "genre": "Strategy, Board Game",
-    "description": "봉 스튜디오의 고유 캐릭터 여봉이와 멧봉이가 대결하는 15x15 정통 오목 게임입니다. 렌주룰(33 금지) 기반으로 공정성을 강화하고, 브라우저에서 실시간으로 AI가 수를 계산합니다.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
-    "publisher": { "@type": "Organization", "name": "봉 스튜디오" }
+    "description": "봉 스튜디오의 고유 캐릭터 여봉이와 멧봉이가 대결하는 15x15 정통 오목 게임입니다. 렌주룰(33 금지) 기반으로 공정성을 강화하고, 같은 페이지 안에서 안내 화면과 플레이 화면을 전환할 수 있습니다.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "KRW"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "봉 스튜디오"
+    }
   }
   </script>
-
-  <!-- Google AdSense (기존 client 유지) -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2371351351559028"
-    crossorigin="anonymous"></script>
 
   <style>
     :root{
@@ -42,38 +47,56 @@
     body{
       margin:0;
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background: radial-gradient(1200px 700px at 50% -100px, rgba(255,255,255,.14), transparent 65%),
-                  radial-gradient(1000px 600px at 10% 110%, rgba(255,255,255,.10), transparent 60%),
-                  var(--bg);
+      background:
+        radial-gradient(1200px 700px at 50% -100px, rgba(255,255,255,.14), transparent 65%),
+        radial-gradient(1000px 600px at 10% 110%, rgba(255,255,255,.10), transparent 60%),
+        var(--bg);
       color:var(--text);
     }
 
-    /* NAV */
+    .hidden{ display:none !important; }
+
     .global-nav{
-      position:sticky; top:0; z-index:1000;
+      position:sticky;
+      top:0;
+      z-index:1000;
       background:rgba(11,15,25,.75);
-      backdrop-filter: blur(10px);
+      backdrop-filter:blur(10px);
       border-bottom:1px solid rgba(255,255,255,.12);
     }
     .nav-inner{
-      max-width:760px; margin:0 auto;
+      max-width:760px;
+      margin:0 auto;
       padding:12px 14px;
-      display:flex; align-items:center; justify-content:space-between;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       gap:10px;
     }
-    .nav-logo{ font-weight:900; font-size:14px; color:#fff; text-decoration:none; }
+    .nav-logo{
+      font-weight:900;
+      font-size:14px;
+      color:#fff;
+      text-decoration:none;
+    }
     .nav-links a{
       margin-left:14px;
-      font-size:13px; font-weight:800;
+      font-size:13px;
+      font-weight:800;
       color:rgba(255,255,255,.75);
       text-decoration:none;
     }
     .nav-links a:hover{ color:#fff; }
 
+    .page{
+      min-height:calc(100vh - 56px);
+      width:100%;
+    }
+
     .wrap{
       max-width:760px;
       margin:0 auto;
-      padding:16px 14px 40px;
+      padding:16px 14px 28px;
     }
 
     .hero{
@@ -93,32 +116,20 @@
       margin:8px 0 0;
       font-size:13px;
       color:var(--muted);
-      line-height:1.55;
+      line-height:1.65;
       font-weight:800;
     }
 
-    /* ✅ 운영 안내(애매한 광고자리 문구 제거) */
-    .notice-slot{
+    .ad-slot{
       margin-top:14px;
-      border:1px solid rgba(255,255,255,.18);
+      border:1px dashed rgba(255,255,255,.28);
       border-radius:18px;
       padding:14px 12px;
       background:rgba(255,255,255,.06);
       color:rgba(255,255,255,.75);
-      text-align:left;
-      line-height:1.55;
+      text-align:center;
+      line-height:1.5;
       font-weight:900;
-    }
-    .notice-slot .title{
-      font-size:12px;
-      color:rgba(255,255,255,.92);
-      margin-bottom:6px;
-      letter-spacing:-.1px;
-    }
-    .notice-slot .body{
-      font-size:12px;
-      color:rgba(255,255,255,.70);
-      font-weight:800;
     }
 
     .btn-row{
@@ -151,7 +162,12 @@
       color:#0b0f19;
       border-color:rgba(255,255,255,.92);
     }
+    .btn.secondary{
+      background:rgba(255,255,255,.10);
+      color:var(--text);
+    }
     .btn:active{ transform:translateY(1px); }
+    .btn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
 
     .card{
       margin-top:14px;
@@ -181,8 +197,12 @@
       line-height:1.75;
       font-weight:800;
     }
-    .card ul{ margin:8px 0 0; padding-left:18px; display:grid; gap:8px; }
-
+    .card ul{
+      margin:8px 0 0;
+      padding-left:18px;
+      display:grid;
+      gap:8px;
+    }
     .pill{
       display:inline-block;
       margin-top:10px;
@@ -196,18 +216,14 @@
     }
     .pill b{ color:#fff; }
 
-    /* =========================
-       ✅ (전략 A) 인페이지 플레이 영역
-       ========================= */
-
-    /* 플레이 섹션 레이아웃 */
-    .play-shell{
-      margin-top:14px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      border-radius:20px;
-      padding:14px 14px 16px;
-      box-shadow:0 12px 34px rgba(0,0,0,.28);
+    .game-wrap{
+      max-width:760px;
+      margin:0 auto;
+      padding:14px 14px 22px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height:calc(100vh - 56px);
     }
 
     .header{
@@ -217,20 +233,52 @@
       border-radius:18px;
       box-shadow:0 10px 30px rgba(0,0,0,.25);
     }
-    .topRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .title{ margin:0; font-size:18px; font-weight:1000; letter-spacing:-.2px; }
-    .sub{ margin:6px 0 0; font-size:12px; color:var(--muted); line-height:1.35; font-weight:800; }
-    .faces{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .topRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .title{
+      margin:0;
+      font-size:18px;
+      font-weight:1000;
+      letter-spacing:-.2px;
+    }
+    .sub{
+      margin:6px 0 0;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.35;
+      font-weight:800;
+    }
+    .faces{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-shrink:0;
+    }
     .face{
-      width:28px; height:28px;
+      width:28px;
+      height:28px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.25);
       background:rgba(255,255,255,.10);
       object-fit:cover;
     }
-    .vs{ font-size:11px; color:var(--muted); font-weight:1000; }
+    .vs{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:1000;
+    }
 
-    .controls{ margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .controls{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
     .chip{
       margin-left:auto;
       padding:9px 12px;
@@ -245,35 +293,39 @@
       gap:8px;
     }
     .dot{
-      width:8px;height:8px;border-radius:999px;
+      width:8px;
+      height:8px;
+      border-radius:999px;
       background:rgba(255,255,255,.85);
       box-shadow:0 0 0 4px rgba(255,255,255,.10);
     }
 
     .boardCard{
-      margin-top:12px;
       border:1px solid var(--line);
       background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
       border-radius:20px;
       padding:8px;
       box-shadow:0 12px 34px rgba(0,0,0,.28);
     }
-    .boardWrap{display:flex; align-items:center; justify-content:center; padding:0;}
-
+    .boardWrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+    }
     canvas{
       width:100%;
       height:auto;
-      aspect-ratio:1 / 1;
+      aspect-ratio:1/1;
       border-radius:18px;
       border:1px solid rgba(255,255,255,.18);
       background:rgba(255,255,255,.92);
       box-shadow:0 14px 28px rgba(0,0,0,.28);
       touch-action:none;
-      max-height: calc(100svh - 320px);
+      max-height:calc(100svh - 320px);
     }
 
-    .footerBar{
-      margin-top:12px;
+    .footer{
       border:1px solid var(--line);
       background:var(--card);
       border-radius:18px;
@@ -283,12 +335,21 @@
       justify-content:space-between;
       gap:12px;
     }
-    .msg{ font-weight:1000; font-size:13px; letter-spacing:-.1px; }
-    .hint{ font-size:12px; color:var(--muted); font-weight:900; white-space:nowrap; }
+    .msg{
+      font-weight:1000;
+      font-size:13px;
+      letter-spacing:-.1px;
+    }
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      white-space:nowrap;
+    }
 
-    /* MODAL */
     .modal-backdrop{
-      position:fixed; inset:0;
+      position:fixed;
+      inset:0;
       background:rgba(0,0,0,.55);
       display:none;
       align-items:center;
@@ -297,6 +358,7 @@
       z-index:9999;
     }
     .modal-backdrop.show{ display:flex; }
+
     .modal{
       width:min(420px, 92vw);
       border-radius:22px;
@@ -304,19 +366,45 @@
       background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
       box-shadow:0 22px 60px rgba(0,0,0,.55);
       padding:16px 16px 14px;
-      backdrop-filter: blur(10px);
-      transform: translateY(8px) scale(.98);
+      backdrop-filter:blur(10px);
+      transform:translateY(8px) scale(.98);
       opacity:.98;
-      animation: pop .16s ease-out forwards;
+      animation:pop .16s ease-out forwards;
     }
-    @keyframes pop{ to{ transform: translateY(0) scale(1); opacity:1; } }
-    .modalTitle{ margin:0; font-size:18px; font-weight:1000; letter-spacing:-.2px; }
-    .modalDesc{ margin:8px 0 0; font-size:12px; color:var(--muted); font-weight:900; line-height:1.45; }
-    .modalBtns{ display:flex; gap:8px; margin-top:14px; }
-    .modalBtns .btn{ flex:1; justify-content:center; }
+    @keyframes pop{
+      to{
+        transform:translateY(0) scale(1);
+        opacity:1;
+      }
+    }
+    .modalTitle{
+      margin:0;
+      font-size:18px;
+      font-weight:1000;
+      letter-spacing:-.2px;
+    }
+    .modalDesc{
+      margin:8px 0 0;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      line-height:1.45;
+    }
+    .modalBtns{
+      display:flex;
+      gap:8px;
+      margin-top:14px;
+    }
+    .modalBtns .btn{
+      flex:1;
+      justify-content:center;
+    }
 
-    /* Start choice */
-    .choice-row{ display:flex; gap:8px; margin-top:12px; }
+    .choice-row{
+      display:flex;
+      gap:8px;
+      margin-top:12px;
+    }
     .choice{
       flex:1;
       border:1px solid rgba(255,255,255,.18);
@@ -345,7 +433,6 @@
     }
     .choice.active small{ color:rgba(11,15,25,.65); }
 
-    /* 33 토스트 */
     .toast33{
       position:fixed;
       inset:0;
@@ -362,14 +449,46 @@
       border:1px solid rgba(255,255,255,.20);
       background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
       box-shadow:0 18px 50px rgba(0,0,0,.55);
-      backdrop-filter: blur(10px);
+      backdrop-filter:blur(10px);
       font-weight:1000;
       letter-spacing:-.2px;
       color:rgba(255,255,255,.95);
-      transform: translateY(8px) scale(.98);
-      animation: toastPop .14s ease-out forwards;
+      transform:translateY(8px) scale(.98);
+      animation:toastPop .14s ease-out forwards;
     }
-    @keyframes toastPop{ to{ transform: translateY(0) scale(1); } }
+    @keyframes toastPop{
+      to{ transform:translateY(0) scale(1); }
+    }
+
+    .global-footer{
+      margin-top:22px;
+      padding:24px 16px 40px;
+      text-align:center;
+      color:rgba(255,255,255,.55);
+      font-size:12px;
+    }
+    .global-footer .footer-links{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:wrap;
+      font-size:12px;
+    }
+    .global-footer .footer-links a{
+      color:rgba(255,255,255,.72);
+      text-decoration:none;
+      font-weight:900;
+    }
+    .global-footer .footer-links a:hover{
+      color:#fff;
+      text-decoration:underline;
+    }
+    .global-footer .sep{
+      color:rgba(255,255,255,.35);
+      font-weight:900;
+    }
 
     @media (max-width:480px){
       .btn{ font-size:13px; padding:12px 12px; }
@@ -377,8 +496,8 @@
       .header{ padding:10px 10px; }
       .controls{ margin-top:8px; gap:6px; }
       .chip{ padding:8px 10px; font-size:11px; }
-      .footerBar{ padding:10px 12px; }
-      canvas{ max-height: calc(100svh - 300px); }
+      .footer{ padding:10px 12px; }
+      canvas{ max-height:calc(100svh - 300px); }
     }
   </style>
 </head>
@@ -389,71 +508,106 @@
       <a href="/" class="nav-logo">여봉이의 놀이터</a>
       <div class="nav-links">
         <a href="/tests/">성향테스트</a>
-        <a href="/games/metbong-dodge/">멧봉이 피하기</a>
+        <a href="/games/omok/">오목게임</a>
       </div>
     </div>
   </nav>
 
-  <main class="wrap">
-    <!-- 안내(상단) -->
-    <section class="hero">
-      <h1>♟️ 오목왕! 멧봉이를 이겨라!</h1>
-      <p>
-        이 페이지는 <b>오목 규칙/전략/렌주룰(33 금지)</b> 안내 + <b>실전 플레이</b>를 한 번에 제공하는 통합 페이지야.
-        아래 안내를 빠르게 훑고, 바로 아래에서 멧봉이 AI와 대결해봐!
-      </p>
+  <!-- 설명 화면 -->
+  <main id="page-intro" class="page">
+    <div class="wrap">
+      <section class="hero">
+        <h1>♟️ 오목왕! 멧봉이를 이겨라!</h1>
+        <p>
+          이 페이지는 먼저 <b>오목 규칙과 플레이 포인트</b>를 확인하고,
+          버튼을 누르면 같은 URL 안에서 바로 <b>플레이 화면으로 전환</b>되는 구조야.
+          테스트 페이지처럼 화면이 바뀌는 느낌으로 만들었어.
+        </p>
 
-      <div class="notice-slot" aria-label="운영 안내">
-        <div class="title">운영 안내</div>
-        <div class="body">
-          이 페이지에는 서비스 운영을 위한 광고/공지 배너가 표시될 수 있어.<br/>
-          <b>게임 플레이에는 영향을 주지 않습니다.</b>
+        <div class="ad-slot" aria-label="상단 안내">
+          <strong>페이지 안내</strong><br/>
+          아래에는 서비스 운영을 위한 광고가 노출될 수 있으며,<br/>
+          게임 플레이 자체에는 영향을 주지 않아.
         </div>
+
+        <div class="btn-row">
+          <button class="btn primary" id="goGameBtn">▶️ 게임 플레이 시작</button>
+          <a class="btn" href="/tests/">🧪 테스트 센터로 이동</a>
+        </div>
+
+        <span class="pill">규칙: <b>15×15</b> · 승리조건: <b>5목</b> · 공정성: <b>33 금지(렌주룰)</b></span>
+      </section>
+
+      <section class="card" aria-label="오목 게임 소개">
+        <h2>게임 소개</h2>
+        <p>
+          오목(Gomoku)은 가로·세로·대각선 중 어느 방향이든 <b>돌 5개를 연속</b>으로 먼저 놓으면 승리하는 전통 보드게임이야.
+          여기서는 봉 스튜디오 캐릭터 <b>여봉이</b>가 플레이어가 되고, <b>멧봉이</b>가 AI 상대가 되어 대결하는 방식으로 구성했어.
+        </p>
+
+        <h3>⚖️ 왜 33 금지를 적용했을까?</h3>
+        <p>
+          오목은 보통 선공이 유리해서, 공격만 밀어붙이면 흐름이 쉽게 기울어질 수 있어.
+          그래서 이 버전은 <b>렌주룰의 핵심 규칙인 3-3 금지</b>를 적용해서
+          한 번에 열린 3이 두 개 생기는 수를 막고, 더 깔끔한 수읽기 중심 대결이 되도록 만들었어.
+        </p>
+
+        <h3>💡 초반 운영 팁</h3>
+        <ul>
+          <li><b>중앙 선점:</b> 초반에는 중앙 근처를 선점하면 확장 방향이 많아져.</li>
+          <li><b>수비 우선:</b> 상대가 열린 3이나 4를 만들려는 흐름이면 먼저 끊는 게 중요해.</li>
+          <li><b>사삼 준비:</b> 한쪽을 막아도 다른 쪽이 이어지는 공격 형태를 목표로 하면 좋아.</li>
+        </ul>
+
+        <h3>🤖 AI는 어떻게 두나?</h3>
+        <p>
+          멧봉이 AI는 즉시 승리 수와 즉시 방어 수를 먼저 찾고,
+          그다음 중앙 장악·연속 수 확장·위험 수 차단 같은 점수를 종합해서 자리를 선택해.
+          그래서 너무 단순한 랜덤 플레이가 아니라, 기본적인 수비와 공격 흐름을 따라오는 느낌으로 설계했어.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>플레이 전 체크</h2>
+        <p>
+          게임 화면으로 들어가면 선공을 선택할 수 있고, 그 뒤에는 같은 페이지 안에서 바로 오목판이 열려.
+          다시 설명으로 돌아오고 싶으면 게임 화면의 <b>← 설명으로</b> 버튼을 누르면 돼.
+        </p>
+
+        <div class="btn-row">
+          <button class="btn primary" id="goGameBtnBottom">지금 바로 플레이하기</button>
+          <a class="btn secondary" href="/">← 메인으로</a>
+        </div>
+      </section>
+
+      <footer class="global-footer">
+        © YEOBONG TEST
+        <div class="footer-links">
+          <a href="/privacy/">개인정보처리방침</a>
+          <span class="sep">·</span>
+          <a href="/terms/">이용약관</a>
+          <span class="sep">·</span>
+          <a href="/contact/">문의</a>
+          <span class="sep">·</span>
+          <a href="/adsense-check.html">사이트 안내</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- 게임 화면 -->
+  <section id="page-game" class="page hidden">
+    <div class="game-wrap">
+      <div class="ad-slot" aria-label="페이지 안내">
+        <strong>페이지 안내</strong><br/>
+        아래 영역에는 서비스 운영을 위한 광고가 노출될 수 있으며,<br/>
+        게임 플레이에는 영향을 주지 않습니다.
       </div>
 
-      <div class="btn-row">
-        <a class="btn primary" href="#play">▶️ 아래에서 바로 플레이</a>
-        <a class="btn" href="/tests/">🧪 테스트 센터</a>
-      </div>
-
-      <span class="pill">규칙: <b>15×15</b> · 승리조건: <b>5목</b> · 공정성: <b>33 금지(렌주룰)</b></span>
-    </section>
-
-    <!-- 안내 카드(내용 유지/확장) -->
-    <section class="card" id="guide">
-      <h2>오목 규칙 & 렌주룰(33 금지) 빠른 안내</h2>
-      <p>
-        기본 규칙은 간단해. 번갈아 돌을 두고, <b>먼저 5목을 만들면 승리</b>야.
-        다만 “선공이 유리한 게임”이라 공정성을 위해 <b>렌주룰(33 금지)</b>를 적용했어.
-      </p>
-
-      <h3>33(쌍삼) 금지란?</h3>
-      <p>
-        한 수로 동시에 “열린 3”이 두 개 이상 만들어지는 형태(쌍삼)는 선공이 너무 유리해질 수 있어.
-        그래서 이 페이지의 오목은 <b>33을 금지</b>해서 승부가 조금 더 재미있게 나도록 만들었어.
-      </p>
-
-      <h3>기본 전략</h3>
-      <ul>
-        <li><b>중앙 장악</b>: 중앙을 먼저 잡으면 연결 가능성이 많아진다</li>
-        <li><b>공격/수비 균형</b>: 내 4목 만들기 + 상대 4목 차단을 동시에 본다</li>
-        <li><b>미끼 수</b>: 상대의 수비를 강제해 템포를 빼앗는다</li>
-      </ul>
-
-      <h3>이 페이지 AI는 어떻게 움직이나?</h3>
-      <p>
-        멧봉이 AI는 “이길 수 있는 수/막아야 하는 수”를 우선으로 보고,
-        상황에 따라 확률적으로 다음 수를 선택해 난이도를 조절해.
-        그래서 매 판이 똑같이 흘러가지 않게 설계했어.
-      </p>
-    </section>
-
-    <!-- ✅ (전략 A) 인페이지 플레이 -->
-    <section class="play-shell" id="play" aria-label="오목 플레이 영역">
       <div class="header">
         <div class="topRow">
           <div>
-            <h2 class="title" style="margin:0;">멧봉이를 이겨라! (실전 플레이)</h2>
+            <h1 class="title">멧봉이를 이겨라!</h1>
             <div class="sub">한 번 눌러서 돌 놓기 · 5목 먼저 만들면 승리 · 33(쌍삼) 금지</div>
           </div>
           <div class="faces">
@@ -466,6 +620,7 @@
         <div class="controls">
           <button class="btn primary" id="resetBtn">다시하기</button>
           <button class="btn" id="toggleFirstBtn">선공: 여봉이</button>
+          <button class="btn secondary" id="backToIntroBtn">← 설명으로</button>
           <div class="chip" id="turnChip"><span class="dot"></span><span>여봉이 차례</span></div>
         </div>
       </div>
@@ -476,65 +631,90 @@
         </div>
       </div>
 
-      <div class="footerBar">
+      <div class="footer">
         <div class="msg" id="msg">선공을 선택하고 시작하기 눌러줘!</div>
         <div class="hint" id="hint">15×15</div>
       </div>
 
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-        <a class="btn" href="#guide">← 규칙/전략으로</a>
-        <a class="btn" href="/games/metbong-dodge/">멧봉이 피하기</a>
-      </div>
-    </section>
-
-    <!-- Result modal -->
-    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
-      <div class="modal">
-        <h2 class="modalTitle" id="modalTitle">승리!</h2>
-        <div class="modalDesc" id="modalDesc">다시 한 판 가자 😎</div>
-        <div class="modalBtns">
-          <button class="btn primary" id="modalRestartBtn">다시하기</button>
-          <button class="btn" id="modalCloseBtn">닫기</button>
-        </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" id="backToIntroBtnBottom">← 설명으로</button>
+        <a class="btn" href="/tests/">테스트 센터</a>
       </div>
     </div>
+  </section>
 
-    <!-- Start modal -->
-    <div class="modal-backdrop" id="startBackdrop" role="dialog" aria-modal="true">
-      <div class="modal">
-        <h2 class="modalTitle">선공 선택</h2>
-        <div class="modalDesc">누가 먼저 둘래? 선택하고 <b>시작하기</b> 누르면 바로 시작!</div>
-
-        <div class="choice-row" id="startChoices">
-          <div class="choice active" data-first="PLAYER">나 (여봉이)<small>먼저 두고 시작</small></div>
-          <div class="choice" data-first="AI">멧봉이<small>상대가 먼저 둠</small></div>
-        </div>
-
-        <div class="modalBtns">
-          <button class="btn primary" id="startBtn">시작하기</button>
-        </div>
+  <!-- 결과 모달 -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h2 class="modalTitle" id="modalTitle">승리!</h2>
+      <div class="modalDesc" id="modalDesc">다시 한 판 가자 😎</div>
+      <div class="modalBtns">
+        <button class="btn primary" id="modalRestartBtn">다시하기</button>
+        <button class="btn" id="modalCloseBtn">닫기</button>
       </div>
     </div>
+  </div>
 
-    <!-- 33 토스트 -->
-    <div class="toast33" id="toast33" aria-live="polite">
-      <div class="bubble" id="toast33Text">33은 안돼!</div>
+  <!-- 시작 모달 -->
+  <div class="modal-backdrop" id="startBackdrop" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h2 class="modalTitle">선공 선택</h2>
+      <div class="modalDesc">누가 먼저 둘래? 선택하고 <b>시작하기</b> 누르면 바로 시작!</div>
+
+      <div class="choice-row" id="startChoices">
+        <div class="choice active" data-first="PLAYER">나 (여봉이)<small>먼저 두고 시작</small></div>
+        <div class="choice" data-first="AI">멧봉이<small>상대가 먼저 둠</small></div>
+      </div>
+
+      <div class="modalBtns">
+        <button class="btn primary" id="startBtn">시작하기</button>
+      </div>
     </div>
+  </div>
 
-    <!-- 하단 신뢰 카드 -->
-    <section class="card" style="margin-top:14px;">
-      <h2>한 줄 요약</h2>
-      <p>
-        이 오목은 <b>렌주룰(33 금지)</b>을 적용해 선공 편향을 줄였고,
-        브라우저에서 바로 실행되는 <b>캐주얼 AI 대전</b>이야.
-        친구랑 “선공 바꿔가며” 해보면 체감이 확 달라져!
-      </p>
-    </section>
-
-  </main>
+  <!-- 33 토스트 -->
+  <div class="toast33" id="toast33" aria-live="polite">
+    <div class="bubble" id="toast33Text">33은 안돼!</div>
+  </div>
 
 <script>
 (() => {
+  const pageIntro = document.getElementById("page-intro");
+  const pageGame = document.getElementById("page-game");
+
+  const goGameBtn = document.getElementById("goGameBtn");
+  const goGameBtnBottom = document.getElementById("goGameBtnBottom");
+  const backToIntroBtn = document.getElementById("backToIntroBtn");
+  const backToIntroBtnBottom = document.getElementById("backToIntroBtnBottom");
+
+  function showPage(name){
+    if(name === "game"){
+      pageIntro.classList.add("hidden");
+      pageGame.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "auto" });
+      updateMetrics();
+      draw();
+      if(!gameStarted){
+        openStartModal();
+      } else {
+        lockScroll(!gameOver);
+      }
+      return;
+    }
+
+    pageGame.classList.add("hidden");
+    pageIntro.classList.remove("hidden");
+    closeModal();
+    closeStartModal();
+    lockScroll(false);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  goGameBtn.addEventListener("click", () => showPage("game"));
+  goGameBtnBottom.addEventListener("click", () => showPage("game"));
+  backToIntroBtn.addEventListener("click", () => showPage("intro"));
+  backToIntroBtnBottom.addEventListener("click", () => showPage("intro"));
+
   const SIZE = 15;
   const WIN = 5;
 
@@ -617,7 +797,9 @@
   }
   function closeModal(){
     modalBackdrop.classList.remove("show");
-    if(gameStarted && !gameOver) lockScroll(true);
+    if(gameStarted && !gameOver && !pageGame.classList.contains("hidden")){
+      lockScroll(true);
+    }
   }
 
   function openStartModal(){
@@ -626,7 +808,9 @@
   }
   function closeStartModal(){
     startBackdrop.classList.remove("show");
-    if(gameStarted && !gameOver) lockScroll(true);
+    if(gameStarted && !gameOver && !pageGame.classList.contains("hidden")){
+      lockScroll(true);
+    }
   }
 
   function setControlsEnabled(on){
@@ -653,8 +837,8 @@
 
   function setTurnUI(){
     const label = (turn === PLAYER) ? "여봉이 차례" : "멧봉이 생각중…";
-    turnChip.innerHTML = `<span class="dot"></span><span>${label}</span>`;
-    toggleFirstBtn.textContent = `선공: ${nameOf(firstPlayer)}`;
+    turnChip.innerHTML = '<span class="dot"></span><span>' + label + '</span>';
+    toggleFirstBtn.textContent = '선공: ' + nameOf(firstPlayer);
   }
 
   function resizeCanvas(){
@@ -662,7 +846,7 @@
     const cssSize = Math.floor(Math.min(rect.width, rect.height));
     const dpr = window.devicePixelRatio || 1;
 
-    canvas.width  = Math.floor(cssSize * dpr);
+    canvas.width = Math.floor(cssSize * dpr);
     canvas.height = Math.floor(cssSize * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
@@ -676,6 +860,7 @@
   let r = 0;
 
   function updateMetrics(){
+    if(pageGame.classList.contains("hidden")) return;
     CANVAS_SIZE = resizeCanvas();
     margin = CANVAS_SIZE * 0.06;
     gridSize = CANVAS_SIZE - margin * 2;
@@ -683,10 +868,10 @@
     r = cell * 0.48;
   }
 
-  updateMetrics();
-
-  const img1 = new Image(); img1.src = IMG_P1;
-  const img2 = new Image(); img2.src = IMG_P2;
+  const img1 = new Image();
+  const img2 = new Image();
+  img1.src = IMG_P1;
+  img2.src = IMG_P2;
 
   function pointerToCell(clientX, clientY){
     const rect = canvas.getBoundingClientRect();
@@ -705,11 +890,19 @@
   }
 
   function inRange(x,y){ return x>=0 && x<SIZE && y>=0 && y<SIZE; }
+
   function countDir(x,y,dx,dy,p){
-    let c=0, nx=x+dx, ny=y+dy;
-    while(inRange(nx,ny) && board[ny][nx]===p){ c++; nx+=dx; ny+=dy; }
+    let c = 0;
+    let nx = x + dx;
+    let ny = y + dy;
+    while(inRange(nx,ny) && board[ny][nx] === p){
+      c++;
+      nx += dx;
+      ny += dy;
+    }
     return c;
   }
+
   function isWin(x,y,p){
     const dirs = [[1,0],[0,1],[1,1],[1,-1]];
     for(const [dx,dy] of dirs){
@@ -718,8 +911,13 @@
     }
     return false;
   }
+
   function isDraw(){
-    for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++) if(board[y][x]===0) return false;
+    for(let y=0;y<SIZE;y++){
+      for(let x=0;x<SIZE;x++){
+        if(board[y][x] === 0) return false;
+      }
+    }
     return true;
   }
 
@@ -732,24 +930,32 @@
     ctx.lineWidth = 1;
     ctx.strokeStyle = "rgba(0,0,0,.12)";
     for(let i=0;i<SIZE;i++){
-      const px = margin + i*cell;
-      const py = margin + i*cell;
-      ctx.beginPath(); ctx.moveTo(px, margin); ctx.lineTo(px, margin+(SIZE-1)*cell); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(margin, py); ctx.lineTo(margin+(SIZE-1)*cell, py); ctx.stroke();
+      const px = margin + i * cell;
+      const py = margin + i * cell;
+
+      ctx.beginPath();
+      ctx.moveTo(px, margin);
+      ctx.lineTo(px, margin + (SIZE - 1) * cell);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(margin, py);
+      ctx.lineTo(margin + (SIZE - 1) * cell, py);
+      ctx.stroke();
     }
 
     const stars = [{x:3,y:3},{x:11,y:3},{x:7,y:7},{x:3,y:11},{x:11,y:11}];
     ctx.fillStyle = "rgba(0,0,0,.22)";
     for(const s of stars){
       ctx.beginPath();
-      ctx.arc(margin + s.x*cell, margin + s.y*cell, 3.6, 0, Math.PI*2);
+      ctx.arc(margin + s.x * cell, margin + s.y * cell, 3.6, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
   function drawFallbackStone(cx, cy, rr, player){
     ctx.beginPath();
-    ctx.arc(cx, cy, rr, 0, Math.PI*2);
+    ctx.arc(cx, cy, rr, 0, Math.PI * 2);
     ctx.fillStyle = (player === PLAYER) ? "#ffffff" : "#0b0f19";
     ctx.fill();
     ctx.lineWidth = 2;
@@ -783,8 +989,8 @@
 
       const dw = iw * scale;
       const dh = ih * scale;
-
       const yOffset = r * 0.06;
+
       ctx.drawImage(img, cx - dw/2, cy - dh/2 + yOffset, dw, dh);
       ctx.restore();
 
@@ -792,306 +998,440 @@
       ctx.lineWidth = ring;
       ctx.strokeStyle = (p === PLAYER) ? "#ffffff" : "#0b0f19";
       ctx.beginPath();
-      ctx.arc(cx, cy, r - ring/2, 0, Math.PI*2);
+      ctx.arc(cx, cy, r - ring/2, 0, Math.PI * 2);
       ctx.stroke();
     } else {
       drawFallbackStone(cx, cy, r, p);
     }
 
-    if(isLast){
-      ctx.lineWidth = Math.max(2, r * 0.16);
-      ctx.strokeStyle = (p === PLAYER) ? "rgba(255,107,129,.95)" : "rgba(14,165,233,.95)";
-      ctx.beginPath();
-      ctx.arc(cx, cy, r + 1, 0, Math.PI*2);
-      ctx.stroke();
-    }
+    ctx.lineWidth = isLast ? 4 : 2;
+    const baseStroke = (p === PLAYER) ? "rgba(0,0,0,.22)" : "rgba(255,255,255,.22)";
+    const lastStroke = (p === PLAYER) ? "rgba(0,0,0,.70)" : "rgba(255,255,255,.70)";
+    ctx.strokeStyle = isLast ? lastStroke : baseStroke;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.stroke();
   }
 
-  function render(){
+  function draw(){
+    if(pageGame.classList.contains("hidden")) return;
     drawGrid();
     for(let y=0;y<SIZE;y++){
       for(let x=0;x<SIZE;x++){
-        const p = board[y][x];
-        if(p !== 0){
-          const isLast = lastMove && lastMove.x===x && lastMove.y===y;
-          drawStone(x,y,p,isLast);
-        }
+        const v = board[y][x];
+        if(!v) continue;
+        const isLast = lastMove && lastMove.x === x && lastMove.y === y;
+        drawStone(x,y,v,isLast);
       }
     }
   }
 
-  function resetBoard(){
-    board = Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
-    lastMove = null;
-    gameOver = false;
-    turn = firstPlayer;
-    gameStarted = false;
-
-    setControlsEnabled(true);
-    setMsg("선공을 선택하고 시작하기 눌러줘!");
-    setTurnUI();
-    render();
-    openStartModal();
+  function getWinRate(){
+    const w = results.filter(r => r === "W").length;
+    return results.length ? (w / results.length) : null;
   }
 
-  function addResult(r){
-    results.push(r);
-    results = results.slice(-10);
-
-    const recent = results.join("");
-    const wins = results.filter(x=>x==="W").length;
-    const total = results.length || 1;
-    const winRate = wins / total;
-
-    const k = 0.12;
-    if (winRate > TARGET_WIN_RATE) difficulty = clamp(difficulty + k, AI_MIN, AI_MAX);
-    else difficulty = clamp(difficulty - k, AI_MIN, AI_MAX);
-
-    saveState();
+  function adjustDifficulty(){
+    const wr = getWinRate();
+    if(wr === null) return;
+    const error = TARGET_WIN_RATE - wr;
+    difficulty -= error * 0.18;
+    difficulty = clamp(difficulty, AI_MIN, AI_MAX);
   }
 
-  function openEnd(winner){
-    gameOver = true;
-    setControlsEnabled(true);
-    lockScroll(false);
-
-    if(winner === PLAYER) addResult("W");
-    else if(winner === AI) addResult("L");
-
-    if(winner === PLAYER) openModal("승리!", "멧봉이를 이겼다! 😎");
-    else if(winner === AI) openModal("패배!", "멧봉이가 한 수 위였어… 😵");
-    else openModal("무승부!", "비겼다! 다시 한 판?");
+  function getMistakeRate(){
+    const t = 1 - difficulty;
+    return clamp(0.02 + t * 0.22, 0.02, 0.18);
   }
 
-  function isForbidden33(x,y,p){
-    // 간단 금지: 플레이어(선공)에게만 적용
-    if(p !== PLAYER) return false;
-
-    // 임시로 돌 두고 열린3 개수 계산
-    board[y][x] = p;
-
-    function openThreeCount(){
-      let cnt = 0;
-      const dirs = [[1,0],[0,1],[1,1],[1,-1]];
-      for(const [dx,dy] of dirs){
-        // 패턴: 0 1 1 1 0 형태를 단순 체크(근사)
-        // 중심 기준으로 4칸 범위 검사
-        let line = [];
-        for(let k=-4;k<=4;k++){
-          const nx = x + dx*k;
-          const ny = y + dy*k;
-          if(!inRange(nx,ny)) line.push(9);
-          else line.push(board[ny][nx]);
-        }
-        // 중심이 4 인덱스
-        // 0 1 1 1 0 찾기
-        for(let i=0;i<=line.length-5;i++){
-          const seg = line.slice(i,i+5);
-          if(seg[0]===0 && seg[1]===p && seg[2]===p && seg[3]===p && seg[4]===0){
-            cnt++;
-            break;
-          }
-        }
-      }
-      return cnt;
-    }
-
-    const c = openThreeCount();
-    board[y][x] = 0;
-    return c >= 2;
-  }
-
-  function placeStone(x,y,p){
-    if(board[y][x] !== 0) return false;
-    if(isForbidden33(x,y,p)){
-      showToast33("33은 안돼!");
-      return false;
-    }
-
-    board[y][x] = p;
-    lastMove = {x,y,p};
-
-    render();
-
-    if(isWin(x,y,p)){
-      openEnd(p);
-      return true;
-    }
-    if(isDraw()){
-      openEnd(0);
-      return true;
-    }
-
-    turn = (p === PLAYER) ? AI : PLAYER;
-    setTurnUI();
-    return true;
-  }
-
-  function scoreMove(x,y,p){
-    // 단순 휴리스틱: 즉시승/즉시차단 우선
-    // 공격 라인 + 수비 라인 점수 합산
-    const dirs = [[1,0],[0,1],[1,1],[1,-1]];
-
-    function lineScore(pp){
-      let s = 0;
-      for(const [dx,dy] of dirs){
-        const a = countDir(x,y,dx,dy,pp);
-        const b = countDir(x,y,-dx,-dy,pp);
-        const len = 1 + a + b;
-        if(len >= 5) s += 100000;
-        else if(len === 4) s += 2500;
-        else if(len === 3) s += 260;
-        else if(len === 2) s += 40;
-        else s += 6;
-      }
-      return s;
-    }
-
-    // 중앙 보정
-    const cx = (SIZE-1)/2, cy = (SIZE-1)/2;
-    const dist = Math.abs(x-cx) + Math.abs(y-cy);
-    const centerBonus = Math.max(0, 14 - dist);
-
-    // AI는 공격 + 방어
-    const attack = lineScore(p);
-    const defend = lineScore(p === AI ? PLAYER : AI) * 0.92;
-
-    return attack + defend + centerBonus;
-  }
-
-  function listCandidates(){
-    // 주변에 돌이 있는 곳만 후보로(속도)
+  function genCandidates(){
     const cand = [];
-    const R = 2;
-    let any = false;
+    let hasStone = false;
+    const mark = Array.from({length: SIZE}, () => Array(SIZE).fill(false));
 
     for(let y=0;y<SIZE;y++){
       for(let x=0;x<SIZE;x++){
-        if(board[y][x] !== 0) any = true;
-      }
-    }
-    if(!any){
-      // 첫 수는 중앙 주변
-      cand.push({x:7,y:7});
-      cand.push({x:7,y:6});
-      cand.push({x:6,y:7});
-      cand.push({x:8,y:7});
-      cand.push({x:7,y:8});
-      return cand;
-    }
-
-    for(let y=0;y<SIZE;y++){
-      for(let x=0;x<SIZE;x++){
-        if(board[y][x] !== 0) continue;
-
-        let near = false;
-        for(let yy=Math.max(0,y-R); yy<=Math.min(SIZE-1,y+R) && !near; yy++){
-          for(let xx=Math.max(0,x-R); xx<=Math.min(SIZE-1,x+R); xx++){
-            if(board[yy][xx] !== 0){ near = true; break; }
+        if(board[y][x] !== 0){
+          hasStone = true;
+          for(let dy=-2; dy<=2; dy++){
+            for(let dx=-2; dx<=2; dx++){
+              const nx = x + dx;
+              const ny = y + dy;
+              if(inRange(nx,ny) && board[ny][nx] === 0) mark[ny][nx] = true;
+            }
           }
         }
-        if(near) cand.push({x,y});
+      }
+    }
+
+    if(!hasStone){
+      const c = Math.floor(SIZE/2);
+      return [
+        {x:c,y:c},{x:c-1,y:c},{x:c+1,y:c},{x:c,y:c-1},{x:c,y:c+1}
+      ].filter(m => inRange(m.x,m.y));
+    }
+
+    for(let y=0;y<SIZE;y++){
+      for(let x=0;x<SIZE;x++){
+        if(mark[y][x]) cand.push({x,y});
       }
     }
     return cand;
   }
 
-  function aiMove(){
+  function maxLineIfPlace(x,y,p){
+    const dirs = [[1,0],[0,1],[1,1],[1,-1]];
+    let best = 1;
+    for(const [dx,dy] of dirs){
+      const line = 1 + countDir(x,y,dx,dy,p) + countDir(x,y,-dx,-dy,p);
+      if(line > best) best = line;
+    }
+    return best;
+  }
+
+  function playerHasImmediateWinAfterAI(){
+    const cand = genCandidates();
+    for(const m of cand){
+      board[m.y][m.x] = PLAYER;
+      const win = isWin(m.x, m.y, PLAYER);
+      board[m.y][m.x] = 0;
+      if(win) return true;
+    }
+    return false;
+  }
+
+  function scoreMove(x,y){
+    const aiLine = maxLineIfPlace(x,y,AI);
+    const plLine = maxLineIfPlace(x,y,PLAYER);
+
+    const c = (SIZE - 1) / 2;
+    const dist = Math.abs(x - c) + Math.abs(y - c);
+    const centerScore = (SIZE * 2 - dist);
+
+    let score = 0;
+
+    if(aiLine >= 5) score += 200000;
+    else if(aiLine === 4) score += 9000;
+    else if(aiLine === 3) score += 1400;
+    else if(aiLine === 2) score += 180;
+
+    if(plLine >= 5) score += 180000;
+    else if(plLine === 4) score += 12000;
+    else if(plLine === 3) score += 1600;
+    else if(plLine === 2) score += 140;
+
+    score += centerScore * 4;
+
+    if(lastMove){
+      const dx = Math.abs(x - lastMove.x);
+      const dy = Math.abs(y - lastMove.y);
+      const near = Math.max(0, 7 - (dx + dy));
+      score += near * 10;
+    }
+
+    return score;
+  }
+
+  function findForcedMove(p){
+    const cand = genCandidates();
+    for(const m of cand){
+      board[m.y][m.x] = p;
+      const win = isWin(m.x, m.y, p);
+      board[m.y][m.x] = 0;
+      if(win) return m;
+    }
+    return null;
+  }
+
+  function rankMoves(){
+    const cand = genCandidates();
+    const ranked = cand.map(m => ({ ...m, score: scoreMove(m.x, m.y) }));
+    ranked.sort((a,b) => b.score - a.score);
+    return ranked;
+  }
+
+  function cellToCharFor(who, x, y){
+    if(!inRange(x,y)) return "2";
+    const v = board[y][x];
+    if(v === 0) return "0";
+    if(v === who) return "1";
+    return "2";
+  }
+
+  function hasOpenThreeInDirFor(who, cx, cy, dx, dy){
+    const line = [];
+    for(let k=-4; k<=4; k++){
+      line.push(cellToCharFor(who, cx + k*dx, cy + k*dy));
+    }
+    const center = 4;
+
+    const p5 = [["0","1","1","1","0"]];
+    const p6 = [["0","1","1","0","1","0"],["0","1","0","1","1","0"]];
+
+    function matchAt(arr, pat, start){
+      for(let i=0;i<pat.length;i++){
+        if(arr[start+i] !== pat[i]) return false;
+      }
+      return true;
+    }
+
+    for(let s=0; s<=line.length-5; s++){
+      if(center < s || center > s+4) continue;
+      if(matchAt(line, p5[0], s)){
+        const left = (s-1>=0) ? line[s-1] : "2";
+        const right = (s+5<line.length) ? line[s+5] : "2";
+        if(!(left === "1" || right === "1")) return true;
+      }
+    }
+
+    for(let s=0; s<=line.length-6; s++){
+      if(center < s || center > s+5) continue;
+      for(const pat of p6){
+        if(matchAt(line, pat, s)) return true;
+      }
+    }
+
+    return false;
+  }
+
+  function isDoubleThreeMoveFor(who, x, y){
+    if(board[y][x] !== 0) return false;
+    board[y][x] = who;
+    const dirs = [[1,0],[0,1],[1,1],[1,-1]];
+    let cnt = 0;
+    for(const [dx,dy] of dirs){
+      if(hasOpenThreeInDirFor(who, x, y, dx, dy)) cnt++;
+    }
+    board[y][x] = 0;
+    return cnt >= 2;
+  }
+
+  function chooseAIMove(){
+    const winMove = findForcedMove(AI);
+    if(winMove && !isDoubleThreeMoveFor(AI, winMove.x, winMove.y)) return winMove;
+
+    const blockMove = findForcedMove(PLAYER);
+    if(blockMove && !isDoubleThreeMoveFor(AI, blockMove.x, blockMove.y)) return blockMove;
+
+    const ranked = rankMoves();
+    if(!ranked.length) return null;
+
+    const filtered = [];
+    for(const m of ranked.slice(0, Math.min(18, ranked.length))){
+      if(isDoubleThreeMoveFor(AI, m.x, m.y)) continue;
+
+      board[m.y][m.x] = AI;
+      const bad = playerHasImmediateWinAfterAI();
+      board[m.y][m.x] = 0;
+
+      filtered.push({
+        x:m.x,
+        y:m.y,
+        score:m.score - (bad ? 50000 : 0)
+      });
+    }
+
+    filtered.sort((a,b) => b.score - a.score);
+
+    if(!filtered.length){
+      const safe = ranked.find(m => !isDoubleThreeMoveFor(AI, m.x, m.y));
+      return safe || ranked[0];
+    }
+
+    const doMistake = Math.random() < getMistakeRate();
+    if(!doMistake) return { x: filtered[0].x, y: filtered[0].y };
+
+    const widen = Math.floor((1 - difficulty) * MAX_SOFT_CHOICE);
+    const maxIdx = clamp(1 + widen, 1, Math.min(MAX_SOFT_CHOICE, filtered.length)) - 1;
+    const pick = Math.floor(Math.random() * (maxIdx + 1));
+    return { x: filtered[pick].x, y: filtered[pick].y };
+  }
+
+  function endGame(type){
+    gameOver = true;
+    lockScroll(false);
+
+    if(type === "PLAYER"){
+      results.push("W");
+      results = results.slice(-10);
+      adjustDifficulty();
+      saveState();
+      openModal("🎉 승리!", "여봉이가 멧봉이를 이겼어!");
+      setMsg("승리했어!");
+      return;
+    }
+
+    if(type === "AI"){
+      results.push("L");
+      results = results.slice(-10);
+      adjustDifficulty();
+      saveState();
+      openModal("😵 패배!", "멧봉이가 먼저 5목을 만들었어.");
+      setMsg("멧봉이 승리!");
+      return;
+    }
+
+    openModal("🤝 무승부", "판이 전부 차서 이번 판은 무승부야.");
+    setMsg("무승부!");
+  }
+
+  function place(x,y,p){
+    if(!inRange(x,y)) return false;
+    if(board[y][x] !== 0) return false;
+
+    board[y][x] = p;
+    lastMove = { x, y };
+    draw();
+
+    if(isWin(x,y,p)){
+      endGame(p === PLAYER ? "PLAYER" : "AI");
+      return true;
+    }
+
+    if(isDraw()){
+      endGame("DRAW");
+      return true;
+    }
+
+    return true;
+  }
+
+  function nextTurn(){
     if(gameOver) return;
 
-    const cand = listCandidates();
-    const scored = [];
+    turn = AI;
+    setTurnUI();
+    setMsg("멧봉이 생각중…");
 
-    for(const c of cand){
-      // AI는 33 제한 없음
-      const s = scoreMove(c.x,c.y,AI);
-      scored.push({ ...c, s });
-    }
-    scored.sort((a,b)=>b.s - a.s);
+    setTimeout(() => {
+      if(gameOver) return;
 
-    // “강하게” 고르되, 가끔 상위 후보 중 랜덤
-    const top = scored.slice(0, Math.max(2, MAX_SOFT_CHOICE));
-    const softness = clamp(1 - difficulty, 0, 0.32);
-    const pickRange = clamp(1 + Math.floor(softness * top.length), 1, top.length);
-    const idx = Math.floor(Math.random() * pickRange);
-    const choice = top[idx] || scored[0];
+      const m = chooseAIMove();
+      if(!m){
+        endGame("DRAW");
+        return;
+      }
 
-    if(choice){
-      placeStone(choice.x, choice.y, AI);
+      place(m.x, m.y, AI);
+
+      if(!gameOver){
+        turn = PLAYER;
+        setTurnUI();
+        setMsg("여봉이 차례!");
+      }
+    }, AI_DELAY);
+  }
+
+  function resetBoard(){
+    closeModal();
+
+    board = Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
+    gameOver = false;
+    lastMove = null;
+    turn = firstPlayer;
+
+    setTurnUI();
+    saveState();
+    draw();
+
+    if(turn === AI){
+      lockScroll(true);
+      setMsg("멧봉이 선공!");
+      setTimeout(() => {
+        const m = chooseAIMove();
+        if(m){
+          place(m.x, m.y, AI);
+          if(!gameOver){
+            turn = PLAYER;
+            setTurnUI();
+            setMsg("여봉이 차례!");
+          }
+        }
+      }, AI_DELAY);
+    } else {
+      lockScroll(true);
+      setMsg("원하는 곳을 눌러 돌을 둬!");
     }
   }
 
   canvas.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    if(pageGame.classList.contains("hidden")) return;
+    if(!gameStarted) return;
     if(gameOver) return;
     if(turn !== PLAYER) return;
 
-    const cellPos = pointerToCell(e.clientX, e.clientY);
-    if(!cellPos) return;
+    const pos = pointerToCell(e.clientX, e.clientY);
+    if(!pos) return;
 
-    const ok = placeStone(cellPos.x, cellPos.y, PLAYER);
-    if(ok){
-      gameStarted = true;
-      lockScroll(true);
-      setControlsEnabled(false);
+    const { x, y } = pos;
 
-      if(turn === AI && !gameOver){
-        setTimeout(aiMove, AI_DELAY);
-      }
+    if(isDoubleThreeMoveFor(PLAYER, x, y)){
+      showToast33("33은 안돼!", 1500);
+      setMsg("33은 금지야!");
+      return;
     }
-  });
 
-  resetBtn.addEventListener("click", () => resetBoard());
+    const ok = place(x, y, PLAYER);
+    if(!ok) return;
+    if(!gameOver) nextTurn();
+  }, { passive:false });
+
+  canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  resetBtn.addEventListener("click", () => {
+    if(!gameStarted) return;
+    resetBoard();
+  });
 
   toggleFirstBtn.addEventListener("click", () => {
     firstPlayer = (firstPlayer === PLAYER) ? AI : PLAYER;
     saveState();
-    resetBoard();
+    if(gameStarted) resetBoard();
+    else setTurnUI();
   });
 
   modalRestartBtn.addEventListener("click", () => {
-    closeModal();
     resetBoard();
   });
-  modalCloseBtn.addEventListener("click", () => closeModal());
+
+  modalCloseBtn.addEventListener("click", () => {
+    closeModal();
+  });
+
+  let startFirst = "PLAYER";
 
   startChoices.addEventListener("click", (e) => {
-    const el = e.target.closest(".choice");
-    if(!el) return;
-    startChoices.querySelectorAll(".choice").forEach(x=>x.classList.remove("active"));
-    el.classList.add("active");
-    firstPlayer = (el.dataset.first === "AI") ? AI : PLAYER;
+    const item = e.target.closest(".choice");
+    if(!item) return;
+
+    startFirst = item.dataset.first === "AI" ? "AI" : "PLAYER";
+    startChoices.querySelectorAll(".choice").forEach(el => el.classList.remove("active"));
+    item.classList.add("active");
   });
 
   startBtn.addEventListener("click", () => {
-    closeStartModal();
+    firstPlayer = (startFirst === "AI") ? AI : PLAYER;
     saveState();
-    resetBoard(); // 상태 반영 + 새 시작
-    closeStartModal();
-
-    // 첫 턴이 AI면 바로 둠
     gameStarted = true;
-    gameOver = false;
-    turn = firstPlayer;
-    setTurnUI();
-    render();
-    lockScroll(true);
-    setControlsEnabled(false);
-
-    if(turn === AI){
-      setTimeout(aiMove, AI_DELAY);
-    }
+    setControlsEnabled(true);
+    closeStartModal();
+    resetBoard();
   });
 
   window.addEventListener("resize", () => {
     updateMetrics();
-    render();
+    draw();
   });
 
+  setControlsEnabled(false);
   setTurnUI();
-  render();
-  openStartModal();
+  showPage("intro");
+
+  requestAnimationFrame(() => {
+    showPage("intro");
+  });
 })();
 </script>
-
 </body>
 </html>
